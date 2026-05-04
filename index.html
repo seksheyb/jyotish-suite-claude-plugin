@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Plugins Marketplace</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0f;
+      --surface: #16161a;
+      --surface-2: #1e1e24;
+      --surface-3: #26262e;
+      --border: #2e2e38;
+      --border-light: #3a3a48;
+      --accent: #cc785c;
+      --accent-dim: rgba(204,120,92,.15);
+      --accent-hover: #d98a70;
+      --text: #e8e8ed;
+      --text-2: #a0a0b0;
+      --text-3: #6a6a7e;
+      --tag-bg: rgba(255,255,255,.06);
+      --tag-text: #b0b0c8;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --shadow: 0 4px 24px rgba(0,0,0,.4);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .logo-icon {
+      width: 30px;
+      height: 30px;
+    }
+
+    .logo-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
+
+    .logo-badge {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(204,120,92,.3);
+      padding: 2px 7px;
+      border-radius: 20px;
+      letter-spacing: .3px;
+    }
+
+    .search-bar {
+      flex: 1;
+      max-width: 380px;
+      margin-left: auto;
+      position: relative;
+    }
+
+    .search-bar input {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px 8px 36px;
+      font-size: 13.5px;
+      color: var(--text);
+      outline: none;
+      transition: border-color .15s;
+    }
+
+    .search-bar input::placeholder { color: var(--text-3); }
+    .search-bar input:focus { border-color: var(--accent); }
+
+    .search-icon {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-3);
+      pointer-events: none;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, #16161a 0%, #1a1520 50%, #16161a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 24px 48px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(26px, 4vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-2);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 28px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      margin-top: 2px;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 24px 80px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 32px;
+    }
+
+    @media (max-width: 700px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: sticky;
+      top: 80px;
+      height: fit-content;
+    }
+
+    .sidebar-section {
+      margin-bottom: 28px;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-bottom: 10px;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 7px;
+      font-size: 13.5px;
+      color: var(--text-2);
+      cursor: pointer;
+      transition: background .12s, color .12s;
+      user-select: none;
+    }
+
+    .sidebar-item:hover { background: var(--surface-2); color: var(--text); }
+    .sidebar-item.active { background: var(--accent-dim); color: var(--accent); font-weight: 500; }
+
+    .sidebar-count {
+      margin-left: auto;
+      font-size: 11px;
+      background: var(--surface-3);
+      color: var(--text-3);
+      padding: 1px 6px;
+      border-radius: 10px;
+    }
+
+    /* ── CONTENT ── */
+    .content {}
+
+    .content-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .content-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .results-count {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+
+    /* ── PLUGIN CARDS ── */
+    .plugin-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .plugin-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      cursor: pointer;
+      transition: border-color .15s, box-shadow .15s, transform .1s;
+      position: relative;
+    }
+
+    .plugin-card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow), 0 0 0 1px rgba(204,120,92,.1);
+      transform: translateY(-1px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .plugin-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, #2a1f3d, #1e2a3d);
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+
+    .card-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-name {
+      font-size: 17px;
+      font-weight: 650;
+      color: var(--text);
+      letter-spacing: -0.3px;
+      margin-bottom: 3px;
+    }
+
+    .card-slug {
+      font-size: 12px;
+      color: var(--text-3);
+      font-family: "SF Mono", "Fira Code", monospace;
+    }
+
+    .card-version {
+      font-size: 11.5px;
+      color: var(--accent);
+      background: var(--accent-dim);
+      padding: 2px 7px;
+      border-radius: 20px;
+      margin-left: auto;
+      flex-shrink: 0;
+      font-weight: 500;
+      align-self: flex-start;
+    }
+
+    .card-description {
+      font-size: 13.5px;
+      color: var(--text-2);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .tag {
+      font-size: 11.5px;
+      color: var(--tag-text);
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 5px;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-author {
+      font-size: 12.5px;
+      color: var(--text-3);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .card-author a { color: var(--text-2); text-decoration: none; }
+    .card-author a:hover { color: var(--accent); }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background .12s, color .12s, border-color .12s;
+      text-decoration: none;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-2);
+      border-color: var(--border-light);
+    }
+
+    .btn-outline:hover { background: var(--surface-2); color: var(--text); border-color: var(--accent); }
+
+    .commands-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .command-chip {
+      font-size: 12px;
+      font-family: "SF Mono", "Fira Code", monospace;
+      color: #8ab4f8;
+      background: rgba(138,180,248,.08);
+      border: 1px solid rgba(138,180,248,.2);
+      padding: 3px 9px;
+      border-radius: 5px;
+    }
+
+    /* ── DETAIL PANEL (modal) ── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.7);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 16px;
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s;
+    }
+
+    .overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .detail-panel {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 780px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.6);
+      transform: translateY(16px);
+      transition: transform .2s;
+      overflow: hidden;
+    }
+
+    .overlay.open .detail-panel { transform: translateY(0); }
+
+    .detail-header {
+      padding: 28px 32px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .detail-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #2a1f3d, #1e2a3d);
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      flex-shrink: 0;
+    }
+
+    .detail-title-block { flex: 1; }
+
+    .detail-name {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .detail-slug {
+      font-size: 13px;
+      color: var(--text-3);
+      font-family: "SF Mono", "Fira Code", monospace;
+      margin-bottom: 8px;
+    }
+
+    .detail-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .meta-chip {
+      font-size: 12px;
+      color: var(--text-3);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .close-btn {
+      width: 32px;
+      height: 32px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-2);
+      flex-shrink: 0;
+      font-size: 16px;
+      transition: background .12s, color .12s;
+    }
+
+    .close-btn:hover { background: var(--surface-3); color: var(--text); }
+
+    .detail-body {
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: 32px;
+    }
+
+    @media (max-width: 600px) {
+      .detail-body { grid-template-columns: 1fr; }
+    }
+
+    .detail-section { margin-bottom: 28px; }
+
+    .section-heading {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      margin-bottom: 14px;
+    }
+
+    .long-description {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    /* Commands table */
+    .commands-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .commands-table th {
+      text-align: left;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      padding: 0 0 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .commands-table td {
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    .commands-table tr:last-child td { border-bottom: none; }
+
+    .commands-table td:first-child {
+      font-family: "SF Mono", "Fira Code", monospace;
+      color: #8ab4f8;
+      padding-right: 12px;
+      white-space: nowrap;
+    }
+
+    .cmd-system {
+      font-size: 11.5px;
+      color: var(--text-3);
+      margin-bottom: 2px;
+    }
+
+    .cmd-desc { color: var(--text-2); }
+
+    .py-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 10.5px;
+      color: #f0c674;
+      background: rgba(240,198,116,.1);
+      border: 1px solid rgba(240,198,116,.25);
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-top: 3px;
+    }
+
+    /* Install box */
+    .install-sidebar {}
+
+    .install-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .install-card .section-heading { margin-bottom: 12px; }
+
+    .code-block {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 12px 14px;
+      font-size: 12.5px;
+      font-family: "SF Mono", "Fira Code", monospace;
+      color: #a8d8a0;
+      line-height: 1.7;
+      white-space: pre;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--surface-3);
+      border: 1px solid var(--border-light);
+      border-radius: 5px;
+      padding: 3px 8px;
+      font-size: 11px;
+      color: var(--text-3);
+      cursor: pointer;
+      transition: background .12s, color .12s;
+    }
+
+    .copy-btn:hover { background: var(--surface-2); color: var(--text); }
+    .copy-btn.copied { color: #7ec88b; }
+
+    .req-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .req-item:first-child { border-top: none; padding-top: 0; }
+
+    .req-name {
+      font-family: "SF Mono", "Fira Code", monospace;
+      color: #f0c674;
+      font-size: 12.5px;
+    }
+
+    .req-desc { color: var(--text-3); font-size: 12px; margin-top: 2px; }
+
+    .req-optional {
+      font-size: 10.5px;
+      color: var(--text-3);
+      background: var(--surface-3);
+      border-radius: 4px;
+      padding: 1px 5px;
+      margin-top: 4px;
+      display: inline-block;
+    }
+
+    .detail-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-3);
+    }
+
+    .empty-icon { font-size: 40px; margin-bottom: 12px; }
+    .empty-text { font-size: 15px; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <svg class="logo-icon" viewBox="0 0 30 30" fill="none">
+        <rect width="30" height="30" rx="8" fill="#cc785c" fill-opacity=".15"/>
+        <path d="M15 6C10.03 6 6 10.03 6 15s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16a7 7 0 110-14 7 7 0 010 14z" fill="#cc785c" opacity=".4"/>
+        <path d="M15 9a6 6 0 100 12A6 6 0 0015 9zm0 9a3 3 0 110-6 3 3 0 010 6z" fill="#cc785c"/>
+      </svg>
+      <span class="logo-text">Claude</span>
+      <span class="logo-badge">Marketplace</span>
+    </a>
+    <div class="search-bar">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input id="searchInput" type="text" placeholder="Search plugins…" autocomplete="off" />
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Claude Code <span>Plugins</span></h1>
+  <p>Community-built skills, commands, and tools that extend Claude Code's capabilities.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num" id="statPlugins">—</div>
+      <div class="stat-label" id="statPluginsLabel">Plugins</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="statCommands">—</div>
+      <div class="stat-label">Commands</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">MIT</div>
+      <div class="stat-label">License</div>
+    </div>
+  </div>
+</section>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title">Browse</div>
+      <div class="sidebar-item active" data-filter="all">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        All Plugins
+        <span class="sidebar-count" id="allCount">1</span>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Categories</div>
+      <div class="sidebar-item" data-filter="Productivity">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        Productivity
+        <span class="sidebar-count" id="prodCount">1</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="content-header">
+      <span class="content-title" id="contentTitle">All Plugins</span>
+      <span class="results-count" id="resultsCount">1 result</span>
+    </div>
+    <div class="plugin-grid" id="pluginGrid"></div>
+  </main>
+</div>
+
+<!-- Detail overlay -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true">
+  <div class="detail-panel" id="detailPanel"></div>
+</div>
+
+<script>
+(async () => {
+  let plugins = [];
+  let activeFilter = 'all';
+  let searchQuery = '';
+
+  try {
+    const res = await fetch('marketplace.json');
+    const data = await res.json();
+    plugins = data.plugins;
+  } catch {
+    plugins = [];
+  }
+
+  // ── Hydrate stats & sidebar counts ──────────────────────────────────────────
+  const totalCommands = plugins.reduce((n, p) => n + p.commands.length, 0);
+  document.getElementById('statPlugins').textContent = plugins.length;
+  document.getElementById('statPluginsLabel').textContent = plugins.length === 1 ? 'Plugin' : 'Plugins';
+  document.getElementById('statCommands').textContent = totalCommands;
+  document.getElementById('allCount').textContent = plugins.length;
+
+  // Per-category counts
+  const catCounts = {};
+  plugins.forEach(p => { catCounts[p.category] = (catCounts[p.category] || 0) + 1; });
+  document.querySelectorAll('.sidebar-item[data-filter]').forEach(el => {
+    const f = el.dataset.filter;
+    if (f !== 'all') {
+      const badge = el.querySelector('.sidebar-count');
+      if (badge) badge.textContent = catCounts[f] || 0;
+    }
+  });
+
+  function escHtml(s) {
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;');
+  }
+
+  function renderGrid() {
+    const grid = document.getElementById('pluginGrid');
+    const filtered = plugins.filter(p => {
+      const q = searchQuery.toLowerCase();
+      const matchSearch = !q ||
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.tags.some(t => t.includes(q)) ||
+        p.author.name.toLowerCase().includes(q);
+      const matchFilter = activeFilter === 'all' || p.category === activeFilter;
+      return matchSearch && matchFilter;
+    });
+
+    document.getElementById('resultsCount').textContent =
+      filtered.length === 1 ? '1 result' : `${filtered.length} results`;
+
+    if (!filtered.length) {
+      grid.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div><div class="empty-text">No plugins found</div></div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map(p => {
+      const multiCmd = p.commands.length > 1;
+      return `
+      <div class="plugin-card" data-id="${escHtml(p.id)}" tabindex="0" role="button" aria-label="View ${escHtml(p.name)}">
+        <div class="card-header">
+          <div class="plugin-icon">${escHtml(p.icon)}</div>
+          <div class="card-meta">
+            <div class="card-name">${escHtml(p.name)}</div>
+            <div class="card-slug">${escHtml(p.slug)}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0">
+            <div class="card-version">v${escHtml(p.version)}</div>
+            ${multiCmd ? `<span style="font-size:10.5px;color:var(--text-3);background:var(--surface-3);border:1px solid var(--border);padding:2px 7px;border-radius:10px">${p.commands.length} commands</span>` : ''}
+          </div>
+        </div>
+        <div class="card-description">${escHtml(p.description)}</div>
+        <div class="commands-preview">
+          ${p.commands.map(c => `<span class="command-chip">${escHtml(c.command)}</span>`).join('')}
+        </div>
+        <div class="card-tags">
+          ${p.tags.slice(0,5).map(t => `<span class="tag">${escHtml(t)}</span>`).join('')}
+        </div>
+        <div class="card-footer">
+          <div class="card-author">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <a href="${escHtml(p.author.url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${escHtml(p.author.name)}</a>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-outline" onclick="event.stopPropagation(); openDetail('${escHtml(p.id)}')">Details</button>
+            <button class="btn btn-primary" onclick="event.stopPropagation(); openDetail('${escHtml(p.id)}')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Install
+            </button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    grid.querySelectorAll('.plugin-card').forEach(card => {
+      card.addEventListener('click', () => openDetail(card.dataset.id));
+      card.addEventListener('keydown', e => e.key === 'Enter' && openDetail(card.dataset.id));
+    });
+  }
+
+  function openDetail(id) {
+    const p = plugins.find(x => x.id === id);
+    if (!p) return;
+    const panel = document.getElementById('detailPanel');
+
+    panel.innerHTML = `
+      <div class="detail-header">
+        <div class="detail-icon">${escHtml(p.icon)}</div>
+        <div class="detail-title-block">
+          <div class="detail-name">${escHtml(p.name)}</div>
+          <div class="detail-slug">${escHtml(p.slug)}</div>
+          <div class="detail-meta-row">
+            <span class="card-version" style="margin-left:0">v${escHtml(p.version)}</span>
+            <span class="meta-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              ${escHtml(p.author.name)}
+            </span>
+            <span class="meta-chip">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+              </svg>
+              <a href="${escHtml(p.repository)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">GitHub</a>
+            </span>
+            <span class="meta-chip">${escHtml(p.license)}</span>
+          </div>
+        </div>
+        <button class="close-btn" id="closeBtn" aria-label="Close">✕</button>
+      </div>
+
+      <div class="detail-body">
+        <div class="detail-main">
+          <div class="detail-section">
+            <div class="section-heading">About</div>
+            <div class="long-description">${escHtml(p.longDescription)}</div>
+          </div>
+
+          <div class="detail-section">
+            <div class="section-heading">Commands (${p.commands.length})</div>
+            <table class="commands-table">
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${p.commands.map(c => `
+                  <tr>
+                    <td>${escHtml(c.command)}</td>
+                    <td>
+                      <div class="cmd-system">${escHtml(c.system)}</div>
+                      <div class="cmd-desc">${escHtml(c.description)}</div>
+                      ${c.requiresPython ? `<span class="py-badge">⚡ requires pyswisseph</span>` : ''}
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="detail-section">
+            <div class="section-heading">Tags</div>
+            <div class="detail-tags">
+              ${p.tags.map(t => `<span class="tag">${escHtml(t)}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+
+        <div class="install-sidebar">
+          <div class="install-card">
+            <div class="section-heading">Install</div>
+            <div style="position:relative">
+              <div class="code-block" id="installCode">${escHtml(p.installCommand)}</div>
+              <button class="copy-btn" id="copyInstall">Copy</button>
+            </div>
+          </div>
+
+          ${p.requirements && p.requirements.length ? `
+          <div class="install-card">
+            <div class="section-heading">Requirements</div>
+            ${p.requirements.map(r => `
+              <div class="req-item">
+                <div>
+                  <div class="req-name">${escHtml(r.name)}</div>
+                  <div class="req-desc">${escHtml(r.description)}</div>
+                  <div style="margin-top:6px;position:relative">
+                    <div class="code-block" style="font-size:11.5px;padding:8px 40px 8px 10px">${escHtml(r.install)}</div>
+                    <button class="copy-btn" data-copy="${escHtml(r.install)}" style="top:6px">Copy</button>
+                  </div>
+                  ${r.optional ? `<span class="req-optional">optional</span>` : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          ` : ''}
+
+          <div class="install-card">
+            <div class="section-heading">Info</div>
+            <div style="font-size:13px;color:var(--text-3);line-height:1.8">
+              <div>Published <strong style="color:var(--text-2)">${escHtml(p.publishedAt)}</strong></div>
+              <div>License <strong style="color:var(--text-2)">${escHtml(p.license)}</strong></div>
+              <div style="margin-top:8px">
+                <a href="${escHtml(p.repository)}" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-size:12.5px">
+                  View on GitHub →
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    document.getElementById('closeBtn').addEventListener('click', closeDetail);
+
+    panel.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.copy ||
+          btn.previousElementSibling?.textContent?.trim() ||
+          panel.querySelector('#installCode')?.textContent?.trim();
+        navigator.clipboard.writeText(target || '').then(() => {
+          btn.textContent = '✓';
+          btn.classList.add('copied');
+          setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+        });
+      });
+    });
+  }
+
+  function closeDetail() {
+    document.getElementById('overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('overlay').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeDetail();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeDetail();
+  });
+
+  document.querySelectorAll('.sidebar-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      activeFilter = item.dataset.filter;
+      document.getElementById('contentTitle').textContent =
+        activeFilter === 'all' ? 'All Plugins' : activeFilter;
+      renderGrid();
+    });
+  });
+
+  document.getElementById('searchInput').addEventListener('input', e => {
+    searchQuery = e.target.value;
+    renderGrid();
+  });
+
+  renderGrid();
+})();
+</script>
+</body>
+</html>

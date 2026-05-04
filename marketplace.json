@@ -1,0 +1,174 @@
+{
+  "marketplace": {
+    "name": "Claude Plugins Marketplace",
+    "description": "Community-built plugins for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "id": "vedic-astrology",
+      "name": "Vedic Astrology",
+      "slug": "sekshey/vedic-astrology",
+      "version": "1.0.0",
+      "description": "Deep multi-layered Parashari natal chart readings for Claude Code — Nakshatras, Padas, degrees, aspects, Vimshottari Dasha, and composite synthesis.",
+      "longDescription": "A rigorous Parashari Jyotish skill locked to classical methodology. Accepts a pre-computed D1 + D9 chart, verifies it with you, then walks through Nakshatras, Padas, functional roles, degree flags (Gandanta, Mrityu Bhaga, Pushkara, Sandhi, Planetary War), Ashtakavarga, and Vimshottari Dasha timing. Handles yes/no questions with reverse analysis, domain questions, full life readings, and timing requests.",
+      "author": {
+        "name": "Sekshey",
+        "url": "https://github.com/sekshey"
+      },
+      "repository": "https://github.com/sekshey/jyotish-suite-marketplace",
+      "homepage": "https://github.com/sekshey/jyotish-suite-marketplace",
+      "license": "MIT",
+      "category": "Productivity",
+      "tags": ["vedic", "parashari", "jyotish", "natal-chart", "dasha", "nakshatra", "d9", "navamsa"],
+      "icon": "☀️",
+      "commands": [
+        {
+          "command": "/vedic-astro",
+          "system": "Classical Vedic (Parashari)",
+          "description": "Multi-layered natal chart reading: Nakshatras, Padas, degrees, aspects, Vimshottari Dasha, and composite synthesis",
+          "hint": "[optional notes — focus area, life domain, time horizon]"
+        }
+      ],
+      "requirements": [],
+      "installCommand": "/plugin marketplace add sekshey/jyotish-suite-marketplace\n/plugin install vedic-astrology@sekshey-jyotish",
+      "publishedAt": "2025-05-04",
+      "stats": { "installs": 1, "stars": 0 }
+    },
+    {
+      "id": "bnn-astrology",
+      "name": "BNN (Brighu Nadi) Astrology",
+      "slug": "sekshey/bnn-astrology",
+      "version": "1.0.0",
+      "description": "Brighu Nadi Nadi system for Claude Code — natural Karakas, sign fields, flow/trine/growth positions, degree-based timing, and Dasha activation.",
+      "longDescription": "Implements the BNN (Brighu Nadi) system where every judgment is made relative to the natural Karaka planet — not the Lagna. Maps each Karaka through its sign field, flow positions (2nd/12th), trine support (5th/9th), growth positions (3rd/11th), and opposition (7th). Applies Parashari aspects with degree orbs, Mrityu Bhaga, Pushkara, Gandanta, Sandhi, Planetary War, combustion flags, and D9 confirmation.",
+      "author": {
+        "name": "Sekshey",
+        "url": "https://github.com/sekshey"
+      },
+      "repository": "https://github.com/sekshey/jyotish-suite-marketplace",
+      "homepage": "https://github.com/sekshey/jyotish-suite-marketplace",
+      "license": "MIT",
+      "category": "Productivity",
+      "tags": ["bnn", "brighu-nadi", "nadi", "karaka", "vedic", "jyotish", "degree-timing"],
+      "icon": "🌙",
+      "commands": [
+        {
+          "command": "/bnn",
+          "system": "BNN (Brighu Nadi)",
+          "description": "Natural Karaka analysis through sign fields, flow/trine/growth positions, degree-based timing, and Dasha activation",
+          "hint": "[pre-computed D1 + D9 chart]"
+        }
+      ],
+      "requirements": [],
+      "installCommand": "/plugin marketplace add sekshey/jyotish-suite-marketplace\n/plugin install bnn-astrology@sekshey-jyotish",
+      "publishedAt": "2025-05-04",
+      "stats": { "installs": 1, "stars": 0 }
+    },
+    {
+      "id": "jaimini-astrology",
+      "name": "Jaimini Astrology",
+      "slug": "sekshey/jaimini-astrology",
+      "version": "1.0.0",
+      "description": "Full Jaimini system for Claude Code — Chara Karakas, Arudha Padas, Swamsha, Argala, Upapada Lagna, and Chara Dasha timing.",
+      "longDescription": "Computes and displays the full Jaimini baseline — Chara Karakas (AK through DK), Arudha Padas (AL through A11), Swamsha, Karakamsha Lagna, Argala/Virodha Argala, and current Chara Dasha — before asking any question. Uses Jaimini sign aspects only (no degree orbs), applies Bhava vs Arudha duality, and handles career, marriage (Upapada Lagna), dharma (Swamsha), and full-life readings.",
+      "author": {
+        "name": "Sekshey",
+        "url": "https://github.com/sekshey"
+      },
+      "repository": "https://github.com/sekshey/jyotish-suite-marketplace",
+      "homepage": "https://github.com/sekshey/jyotish-suite-marketplace",
+      "license": "MIT",
+      "category": "Productivity",
+      "tags": ["jaimini", "chara-dasha", "arudha", "karaka", "swamsha", "argala", "vedic", "jyotish"],
+      "icon": "🔮",
+      "commands": [
+        {
+          "command": "/jaimini",
+          "system": "Jaimini",
+          "description": "Chara Karakas, Arudha Padas, Swamsha, Argala, Upapada Lagna, and Chara Dasha — full Jaimini baseline before every reading",
+          "hint": "[pre-computed D1 + D9 chart]"
+        }
+      ],
+      "requirements": [],
+      "installCommand": "/plugin marketplace add sekshey/jyotish-suite-marketplace\n/plugin install jaimini-astrology@sekshey-jyotish",
+      "publishedAt": "2025-05-04",
+      "stats": { "installs": 1, "stars": 0 }
+    },
+    {
+      "id": "lal-kitab-astrology",
+      "name": "Lal Kitab Astrology",
+      "slug": "sekshey/lal-kitab-astrology",
+      "version": "1.0.0",
+      "description": "Complete Lal Kitab system for Claude Code — pakka ghar, sleeping planets, six rins, teva classification, varshphal, family chart impact, and ranked upaay with Farman citations.",
+      "longDescription": "Implements Pt. Roop Chand Joshi's original Farmans (1939–1952) as an immutable reference. Re-maps the Vedic D1 to Lal Kitab's fixed-house frame (Aries = always 1st), computes pakka ghar and dignity by house, identifies sleeping planets, diagnoses all six rins (Pitri/Matri/Stri/Kanya/Bhratra/Atma), classifies teva, and delivers house-by-house analysis, family chart impact, varshphal predictions, and prioritized upaay — every remedy with its Farman citation.",
+      "author": {
+        "name": "Sekshey",
+        "url": "https://github.com/sekshey"
+      },
+      "repository": "https://github.com/sekshey/jyotish-suite-marketplace",
+      "homepage": "https://github.com/sekshey/jyotish-suite-marketplace",
+      "license": "MIT",
+      "category": "Productivity",
+      "tags": ["lal-kitab", "rin", "upaay", "farman", "vedic", "remedies", "varshphal", "pakka-ghar"],
+      "icon": "📕",
+      "commands": [
+        {
+          "command": "/lal-kitab",
+          "system": "Lal Kitab (Pt. Roop Chand Joshi)",
+          "description": "Rin diagnosis, pakka ghar, sleeping planets, teva, varshphal, family chart impact, and ranked upaay with Farman citations",
+          "hint": "[pre-computed Vedic D1 chart]"
+        }
+      ],
+      "requirements": [],
+      "installCommand": "/plugin marketplace add sekshey/jyotish-suite-marketplace\n/plugin install lal-kitab-astrology@sekshey-jyotish",
+      "publishedAt": "2025-05-04",
+      "stats": { "installs": 1, "stars": 0 }
+    },
+    {
+      "id": "kp-system-astrology",
+      "name": "KP System Astrology",
+      "slug": "sekshey/kp-system-astrology",
+      "version": "1.0.0",
+      "description": "Krishnamurti Paddhati for Claude Code — two skills: natal life/event-timing readings from a KP chart, and horary yes/no/timing answers computed from scratch via pyswisseph.",
+      "longDescription": "Two complementary KP skills in one plugin. KP Natal accepts a pre-computed chart and delivers either a life reading (all 12 cuspal sub-lords) or event-timing prediction via Sookshma (4th-level) dasha + Ruling Planets cross-check. KP Horary takes a number 1–249 + moment + place and computes the entire horary chart from scratch using pyswisseph (KP New ayanamsa, Placidus cusps), then applies the same cuspal sub-lord + RP methodology to deliver a verdict with timing window.",
+      "author": {
+        "name": "Sekshey",
+        "url": "https://github.com/sekshey"
+      },
+      "repository": "https://github.com/sekshey/jyotish-suite-marketplace",
+      "homepage": "https://github.com/sekshey/jyotish-suite-marketplace",
+      "license": "MIT",
+      "category": "Productivity",
+      "tags": ["kp", "krishnamurti", "horary", "natal", "significators", "ruling-planets", "sookshma-dasha", "placidus"],
+      "icon": "🪐",
+      "commands": [
+        {
+          "command": "/kp-natal",
+          "system": "KP Natal",
+          "description": "Life reading or event-timing prediction from a pre-computed KP chart — cuspal sub-lord analysis, Sookshma dasha, and Ruling Planets",
+          "hint": "[pre-computed KP natal chart as markdown]"
+        },
+        {
+          "command": "/kp-horary",
+          "system": "KP Horary",
+          "description": "Compute a horary chart from scratch (number 1–249 + moment + place) and deliver a yes/no verdict with timing window",
+          "hint": "[horary number 1–249] [your question]",
+          "requiresPython": true
+        }
+      ],
+      "requirements": [
+        {
+          "name": "pyswisseph",
+          "description": "Required by /kp-horary to compute the horary chart from scratch. Not needed for /kp-natal.",
+          "install": "pip install pyswisseph",
+          "optional": true,
+          "forCommands": ["/kp-horary"]
+        }
+      ],
+      "installCommand": "/plugin marketplace add sekshey/jyotish-suite-marketplace\n/plugin install kp-system-astrology@sekshey-jyotish",
+      "publishedAt": "2025-05-04",
+      "stats": { "installs": 1, "stars": 0 }
+    }
+  ]
+}

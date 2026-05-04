@@ -1,0 +1,22 @@
+{
+  "name": "jyotish-suite",
+  "version": "1.0.0",
+  "description": "Six-system Vedic astrology toolkit for Claude Code: classical Vedic, BNN (Brighu Nadi), Jaimini, Lal Kitab, KP natal, and KP horary. Each system runs as a rigorously-scripted skill with its own slash command.",
+  "author": {
+    "name": "Sekshey"
+  },
+  "homepage": "https://github.com/sekshey/jyotish-suite-marketplace",
+  "repository": "https://github.com/sekshey/jyotish-suite-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "astrology",
+    "vedic",
+    "jyotish",
+    "kp-astrology",
+    "lal-kitab",
+    "jaimini",
+    "bnn",
+    "nadi",
+    "horary"
+  ]
+}
