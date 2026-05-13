@@ -10,14 +10,16 @@ Also triggered by phrases like "Lal Kitab reading", "rin diagnosis", "Pitri Rin"
 
 ## What It Does
 
-1. Accepts a pre-computed Vedic D1 chart
-2. Re-maps to Lal Kitab fixed-house frame (Aries always 1st)
-3. Computes pakka ghar / dignity / friendship status by **house number, not sign**
-4. Identifies sleeping planets via Lal Kitab aspect rules
-5. Diagnoses six karmic debts (Pitri / Matri / Stri / Kanya / Bhratra / Atma Rin)
-6. Classifies teva (chart type)
-7. Reads house-by-house OR family chart impact OR varshphal — user's choice
-8. Prescribes ranked upaay with Farman citations
+1. Captures user intent up front (specific question vs. full read) to tilt narration and pre-route the reading mode — baseline always runs in full
+2. Accepts a pre-computed Vedic D1 chart
+3. Re-maps to Lal Kitab fixed-house frame (Aries always 1st)
+4. Computes pakka ghar / dignity / friendship status by **house number, not sign**
+5. Identifies sleeping planets via Lal Kitab aspect rules
+6. Diagnoses six karmic debts (Pitri / Matri / Stri / Kanya / Bhratra / Atma Rin)
+7. Classifies teva (chart type)
+8. Reads house-by-house OR family chart impact OR varshphal OR event timing — user's choice
+9. Event timing — answers "when will X happen?" via a four-signal convergence engine (maturation + year-ruler + house cycle + Jupiter sanctification) with every window paired to an activating upaay
+10. Prescribes ranked upaay with Farman citations
 
 ## What It Does NOT Do
 
@@ -39,15 +41,18 @@ lal-kitab/
     ├── teva_types.md       — Eight chart-type classifications
     ├── family_chart.md     — Father / mother / spouse / children impact
     ├── varshphal.md        — Age-based annual predictions
-    └── upaay_catalog.md    — Full remedy catalog with Farman citations
+    ├── upaay_catalog.md    — Full remedy catalog with Farman citations
+    └── timing.md           — Generic event-timing engine (4-signal convergence)
 ```
 
 ## Usage Pattern
 
 User: `/lal-kitab`
+→ Skill captures user intent (full read / specific question / not sure) — this only tilts narration and pre-routes the mode; the diagnostic baseline always runs
 → Skill prompts for Vedic D1 chart
 → Skill re-maps and verifies
-→ Skill asks: full reading / family impact / varshphal / upaay-only
+→ Skill runs full baseline (pakka ghar, sleeping check, rin diagnosis, teva classification)
+→ Skill asks (or confirms pre-routed): A) full natal · B) family impact · C) varshphal · D) full (A+B+C) · E) upaay-only · F) event timing
 → Skill delivers structured output with summary card at end
 
 ## Authority

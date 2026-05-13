@@ -40,18 +40,80 @@ This skill performs full Lal Kitab readings strictly per the original Farmans of
 | `references/rin_diagnosis.md` | Phase 5 — debt detection rules with Farman citations |
 | `references/teva_types.md` | Phase 6 — chart classification rules |
 | `references/upaay_catalog.md` | Phase 9 — full remedy catalog with Farman citations |
-| `references/varshphal.md` | Phase 8 — year-rulership and annual prediction rules |
-| `references/family_chart.md` | Phase 7 — father/mother/spouse/children impact analysis |
+| `references/varshphal.md` | Phase 8C — year-rulership and annual prediction rules |
+| `references/family_chart.md` | Phase 8B — father/mother/spouse/children impact analysis |
+| `references/timing.md` | Phase 8D — generic event-timing convergence engine (maturation + year-ruler + house cycle + Jupiter sanctification) |
+
+---
+
+## PHASE 0 — Intent Capture (Optional Pre-Filter)
+
+When `/lal-kitab` is triggered, BEFORE asking for the chart, prompt the user:
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LAL KITAB READING
+
+What brings you here today?
+
+  1. Just read my chart — full diagnostic + house-by-house
+     (defaults to Mode D after baseline)
+
+  2. Specific question — tell me what you want answered
+     Examples:
+       • "When will I change jobs?"          → Mode F (timing)
+       • "How is my father affected?"        → Mode B (family)
+       • "What about this year ahead?"       → Mode C (varshphal)
+       • "Just give me the upaay priorities" → Mode E (remedies)
+       • "Do I have Pitri Rin?"              → Mode A + Phase 5 focus
+
+  3. Not sure — show me what's possible after baseline
+     (defaults to Phase 7 mode menu)
+
+You can also just answer in your own words. I'll run the full
+diagnostic baseline either way — your answer helps me weight
+the reading toward what matters to you.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**Intent capture rules:**
+
+1. **Store the intent** as `user_intent` for use across all baseline phases (1–6) and the eventual mode routing in Phase 7.
+2. **The baseline ALWAYS runs in full.** Intent does not skip phases — it only tilts narration and weights what to emphasize.
+3. **Mode pre-routing.** If intent maps cleanly to one of Modes A–F, mark it as the *suggested* mode. Phase 7 then asks for confirmation rather than presenting the full menu:
+   ```
+   Based on what you asked, I'd run Mode F (event timing for "[event]").
+   Confirm, or pick a different mode?
+   ```
+4. **Ambiguous intent → default behaviour.** If the user picks option 3 or gives unclear input, treat as standard flow and present full Phase 7 menu.
+5. **Intent-driven narration tilting.** During baseline phases, emphasize configurations relevant to the user's question:
+
+| User Intent Signals | Baseline Phases Should Emphasize |
+|---------------------|----------------------------------|
+| Marriage / partnership / relationship | Venus condition, 7th house, 2nd house, Stri Rin (P5), Sukhi vs Dukhi teva (P6) |
+| Career / job / promotion | Sun + Saturn condition, 10th & 6th houses, Pitri Rin (P5), Rajyogi vs Lula teva (P6) |
+| Father / paternal | Sun condition, 9th house, Pitri Rin (P5), family chart routing (P8B) |
+| Mother / maternal / home | Moon condition, 4th house, Matri Rin (P5), family chart routing (P8B) |
+| Children | Jupiter condition, 5th house, Kanya Rin (P5) |
+| Money / finance / wealth | 2nd, 11th houses, Jupiter & Venus condition |
+| Health | 6th, 8th houses, Sun + Mars condition, danger years (P8D) |
+| Foreign / travel / settlement | Rahu condition, 12th & 9th houses |
+| Spiritual / detachment | Ketu + Jupiter condition, 12th house, Pujari teva (P6) |
+| Generic / no question | Standard emphasis across all axes |
+
+6. **Honesty rule.** If intent suggests something the chart can't cleanly answer (e.g. "tell me my exact death date"), state the boundary directly in Phase 0 itself and offer the closest legitimate read.
+
+After capturing intent, proceed to Phase 1.
 
 ---
 
 ## PHASE 1 — Chart Collection
 
-When `/lal-kitab` is triggered, prompt the user:
+After Phase 0 captures intent, prompt the user for chart data:
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-LAL KITAB READING
+CHART INPUT
 
 Please share your Vedic D1 chart. Either:
   • Upload a markdown file with the chart data
@@ -229,6 +291,25 @@ Output the dominant teva + any secondary types, with explanation tied to specifi
 
 ## PHASE 7 — Mode Selection
 
+**If Phase 0 captured a clear intent that maps to a specific mode**, present a confirm-or-override prompt instead of the full menu:
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MODE ROUTING
+
+You asked: "[user's original question]"
+
+Suggested mode: [A / B / C / D / E / F] — [mode name]
+Reason: [why this mode fits the question]
+
+Confirm this mode, or pick a different one:
+  • Press confirm → run Mode [X]
+  • Or pick from full menu (A–F)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**If Phase 0 intent was ambiguous, skipped, or user picked option 3**, present the full menu:
+
 ```
 What kind of reading?
 
@@ -247,6 +328,12 @@ What kind of reading?
 
   E. Upaay focus — skip to remedies based on what's
      already been diagnosed
+
+  F. Event timing — when will [X] happen for this chart?
+     Specify the event (marriage, career pivot, child,
+     property, foreign travel, business launch, etc.)
+     Returns probability-weighted age windows + activation
+     upaay using the four-signal convergence engine.
 ```
 
 Wait for user's choice. Proceed to corresponding phase(s).
@@ -367,6 +454,58 @@ Pay particular attention to the "danger years" — 21, 36, 42, 48, 63 — even i
 
 ---
 
+## PHASE 8D — Lal Kitab Timing Synthesis (Generic Event-Timing Engine)
+
+Load `references/timing.md`.
+
+This phase answers "when will [event] happen?" for **any** life event — marriage, career pivot, child, property, foreign travel, business launch, health, recognition, loss. It is event-agnostic; only the significator mapping changes.
+
+**Invoke this phase when:**
+- User selected Mode F in Phase 7
+- User asks a "when" question after any other reading mode
+- Mode D (full reading) — run this for the top 2–3 events user flags as relevant
+
+**Required input from user:** the specific event being timed. Do not assume. If the user says "tell me about my career," ask whether they want career *condition* (Phase 8A house 10 read) or career *timing* (this phase).
+
+### Step-by-step protocol
+
+Follow Part D of `references/timing.md` literally. Summary:
+
+1. **Map the event** to primary houses, primary planet(s), secondary planets using the table in Part B of `timing.md`. If the event is not in the table, derive from `pakka_ghar.md` and karaka logic — and state the derivation.
+
+2. **Build the signal timeline** across the relevant age window (default: current age to current age + 15 years; extend if user asks for full-life).
+
+3. **Score each candidate year** by counting how many of the four signals fire:
+   - Signal 1: Planetary maturation age of primary significator
+   - Signal 2: Year-ruler matches event's planets
+   - Signal 3: Primary house in active period (35-year cycle)
+   - Signal 4: Jupiter year-ruler OR Jupiter aspect on primary house
+
+4. **Apply Filter 1 (sleeping significator).** If primary planet is sleeping, demote unless an awakening trigger fires that year.
+
+5. **Apply Filter 2 (rin overlay).** Push windows if event-relevant rin is active.
+
+6. **Apply Filter 3 (danger year).** Invert probability for positive vs. negative events.
+
+7. **Rank and output** using the template in Part E of `timing.md`.
+
+### Output requirements
+
+- Always 2–3 windows ranked by probability — never a single date
+- Each window must show *why* it scored (which signals fired)
+- Each window must be paired with the upaay that activates or stabilizes it
+- Caveats block must appear: probabilistic-not-deterministic, year-not-date, upaay-can-pull-or-collapse
+
+### Hard rules for this phase
+
+1. **Never give specific dates.** Lal Kitab gives years and probability tiers. For date-precision, redirect to KP horary.
+2. **Never time-call from one signal.** A single-signal year is weak evidence. Minimum two signals for a "moderate window," three for "strong."
+3. **Always pair timing with upaay.** Lal Kitab refuses prediction without prescription. If no upaay is needed, state that explicitly.
+4. **Never use Vimshottari Mahadasha logic.** Even if the user asks for it, refuse and explain — Lal Kitab's four-signal system is the complete toolkit.
+5. **State derivations.** If you map an event using non-table karaka logic, show the derivation so the user can audit it.
+
+---
+
 ## PHASE 9 — Upaay (Remedies)
 
 Load `references/upaay_catalog.md`.
@@ -452,6 +591,8 @@ Watch-year upaay:                    [name]
 8. **No mixing of systems mid-reading.** If the user asks "but in KP / BNN / Jaimini...", redirect to those skills — do not blend.
 9. **Be honest about ambiguity.** Where Farmans conflict or are cryptic, say so. Do not fabricate certainty.
 10. **Ancestor lineage:** When citing a Farman, cite Pt. Roop Chand Joshi's volumes only. Modern commentaries (Arun Sanhita, U.C. Mahajan, etc.) are flagged as such, not stated as authoritative.
+11. **Timing is probabilistic, never deterministic.** Phase 8D outputs year-windows with probability tiers, never specific dates. Use the four-signal convergence engine (maturation + year-ruler + house cycle + Jupiter sanctification). Single-signal timing calls are prohibited. Every timing window must be paired with the upaay that activates or stabilizes it.
+12. **Intent capture is pre-baseline, not pre-diagnostic.** Phase 0 captures user intent BEFORE chart collection but the full baseline (Phases 1–6) always runs. Intent only *tilts narration emphasis* and *pre-routes Phase 7* — it never skips diagnostic steps. A user asking "when will I marry" still receives full pakka ghar, sleeping, rin, and teva diagnostics; what changes is which configurations get highlighted in the narration.
 
 ---
 
