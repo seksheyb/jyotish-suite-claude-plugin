@@ -1,38 +1,44 @@
 # KP Natal Skill — Install
 
-## Place at:
+This skill is part of the **jyotish-suite** plugin. Deterministic computation is
+shared across all six skills — there is no per-skill `scripts/` directory.
+
+## Layout
 ```
-/mnt/skills/user/kp-natal/
-├── SKILL.md
-├── references/
-│   ├── methodology.md
-│   ├── house-combinations.md
-│   ├── ruling-planets.md
-│   └── significators-rules.md
-└── scripts/
-    ├── compute_ruling_planets.py
-    └── compute_sookshma.py
+plugins/jyotish-suite/
+├── lib/                       # shared: jyotish_primitives.py, ephemeris.py
+├── scripts/
+│   └── compute_kp_natal_baseline.py   # cusps, CSL, significators, RP, Sookshma
+├── agents/                    # chart-calculator, baseline-runner, chart-verifier,
+│                              # unit-analyzer, synthesizer
+└── skills/kp-natal/
+    ├── SKILL.md               # wave orchestrator
+    └── references/
+        ├── methodology.md
+        ├── house-combinations.md
+        ├── ruling-planets.md
+        ├── significators-rules.md
+        └── orchestration-notes.md
 ```
 
 ## Dependencies
-- `pyswisseph` (for Ruling Planets script — Moon/Lagna at moment of reading)
+- `pyswisseph` (Swiss Ephemeris — Ruling Planets, Sookshma, chart computation)
 - `pytz`
 
+Install once: `pip install pyswisseph pytz --break-system-packages`
+
 ## How to invoke
-Type `/kp-natal` and either:
-- Upload your KP natal chart as a markdown file (e.g. `sekshey-kp-natal.md`)
-- Or paste the chart contents
+Type `/kp-natal` and either upload/paste your KP natal chart, or give birth
+data (date, time, place) for the chart to be computed.
 
-The skill will:
-1. Echo back the chart for verification
-2. Ask: life reading or event timing?
-3. If event timing — ask which area + horizon
-4. Compute current Ruling Planets at moment of reading + your location (default New Delhi)
-5. Compute Sookshma dasha if needed for timing
-6. Deliver the reading
-
-## Companion data file
-`sekshey-kp-natal.md` is provided separately — the parsed natal chart from AstroSage Vedic Report PDF. This is the chart input you paste/upload when running `/kp-natal`.
+The skill runs as a wave orchestrator:
+1. **Intake** — chart or birth data; mode (life reading vs event timing).
+2. **Wave 0** — compute/verify the chart, then `compute_kp_natal_baseline.py`
+   produces all deterministic data (12 cusps + CSL, 4-level significators,
+   Ruling Planets, Sookshma dasha) in one pass.
+3. **Wave 1** — parallel per-cusp analysis (12 workers in life-reading mode).
+4. **Wave 2** — synthesis into the final reading.
 
 ## Validation
-Sookshma computation was cross-validated against AstroSage's MD-AD dates for Sekshey's chart — Mercury MD start 1 Dec 2024 ✓, Mercury-Mercury bhukti end 28 Apr 2027 ✓.
+Sookshma computation was cross-validated against AstroSage MD-AD dates —
+Mercury MD start 1 Dec 2024, Mercury-Mercury bhukti end 28 Apr 2027.

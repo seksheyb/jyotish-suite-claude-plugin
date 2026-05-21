@@ -1,32 +1,45 @@
 # KP Horary Skill — Install
 
-## Place at:
+This skill is part of the **jyotish-suite** plugin. Deterministic computation is
+shared across all six skills — there is no per-skill `scripts/` directory.
+
+## Layout
 ```
-/mnt/skills/user/kp-horary/
-├── SKILL.md
-├── references/
-│   ├── methodology.md
-│   ├── house-combinations.md
-│   ├── 249-table.md
-│   └── ruling-planets.md
-└── scripts/
-    ├── compute_horary_chart.py
-    └── compute_ruling_planets.py
+plugins/jyotish-suite/
+├── lib/                        # shared: jyotish_primitives.py, ephemeris.py
+├── scripts/
+│   └── compute_kp_horary_baseline.py   # horary chart, cusps, CSL, RP, significators
+├── agents/                     # chart-calculator, baseline-runner, chart-verifier,
+│                               # unit-analyzer, synthesizer
+└── skills/kp-horary/
+    ├── SKILL.md                # wave orchestrator
+    └── references/
+        ├── methodology.md
+        ├── house-combinations.md
+        ├── 249-table.md
+        ├── ruling-planets.md
+        └── orchestration-notes.md
 ```
 
 ## Dependencies
-The Python scripts require:
 - `pyswisseph` (Swiss Ephemeris)
 - `pytz`
 
-The skill execution environment must `pip install pyswisseph pytz --break-system-packages` before first use. Add this to bash setup if not already present.
+Install once: `pip install pyswisseph pytz --break-system-packages`
 
 ## How to invoke
-Type `/kp-horary` and follow the prompts. Provide:
-1. Your question
-2. Horary number (1-249)
-3. Location of the questioner
-4. Time of question (defaults to "now")
+Type `/kp-horary` and provide:
+1. Your question (specific, time-bound, single-issue)
+2. A horary number (1-249)
+3. The location of the questioner
+4. The time the question is taken
+
+`compute_kp_horary_baseline.py` builds the entire horary chart from the 1-249
+number, plus the Ruling Planets (from the real rising sign at question time —
+kept separate from the number-derived chart Lagna), cusps, CSL and
+significators, in one deterministic pass.
 
 ## Validation
-The chart computation logic was validated against AstroSage natal chart output for Sekshey Bakhshi (30 July 1991, 10:20 IST, Phagwara) — all 9 planet sign/star/sub/sub-sub lord chains match 100%, with degree precision within 1-2 arc-minutes.
+Chart computation was validated against AstroSage output for a reference
+nativity (30 July 1991, 10:20 IST, Phagwara) — all 9 planet sign/star/sub/
+sub-sub lord chains match, degree precision within 1-2 arc-minutes.

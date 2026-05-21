@@ -12,247 +12,96 @@ description: >
   "Prashna in KP", or provides a 1-249 number with a question.
 ---
 
-# KP Horary Astrology Skill
+# KP Horary — Krishnamurti Paddhati Prashna
 
-## Overview
-This skill performs full Krishnamurti Paddhati horary readings:
-1. Collect question, horary number (1-249), location of questioner, time of question
-2. Compute the horary chart from scratch (pyswisseph, KP New ayanamsa, Placidus cusps)
-3. Compute Ruling Planets — show the full calculation
-4. Identify question category and apply standard KP house combinations
-5. Cuspal sub-lord analysis of relevant house cusps
-6. Significator analysis and Ruling Planet cross-check
-7. Timing via dasha-bhukti-antara of activated significators
-8. Verdict with confidence level and caveats
+KP horary answers one specific, time-bound question. The chart is computed from
+a 1-249 number (never user-supplied), the planets/dasha/RP from the question
+moment. The verdict rests on the Cuspal Sub Lord of the question's primary
+house, cross-checked by Ruling Planets and timed by dasha.
 
-**Reference files — load before every reading:**
-| File | Load When |
-|------|-----------|
-| `references/methodology.md` | Always — full KP horary analysis framework |
-| `references/house-combinations.md` | After question category is identified |
-| `references/249-table.md` | When mapping horary number to Lagna degree |
-| `references/ruling-planets.md` | When computing and interpreting RP |
+## Orchestration
 
-**Computation scripts:**
-| File | Purpose |
-|------|---------|
-| `scripts/compute_horary_chart.py` | Generate horary chart from number + time + place |
-| `scripts/compute_ruling_planets.py` | Compute RP with full calculation breakdown |
+WAVE ORCHESTRATOR. The chart + all deterministic computation is done by a
+Python sidecar; per-cusp interpretation is fanned out. Paths use
+${CLAUDE_PLUGIN_ROOT}. The win here is the sidecar — fan-out is light because
+the horary method is inherently sequential.
 
----
+### Phase A — Intake (with the user)
 
-## PHASE 1 — Question Collection
-
-When `/kp-horary` is triggered, ask:
+Ask for, in one prompt:
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KP Horary Reading
 
-Please provide:
-
-1. Your question (specific, time-bound, yes/no preferred)
-2. Horary number (1 to 249) — pick mentally without looking
-3. Location of the questioner (city, country)
-   [defaults to New Delhi, India if not specified]
-4. Time of question
-   [defaults to "now" — current IST if not specified]
+1. Your question (specific, time-bound, single-issue, yes/no preferred)
+2. Horary number 1-249 — pick mentally without looking
+3. Location of the questioner (city, country) [default: New Delhi, India]
+4. Time the question is taken [default: now — current IST]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-**Validation:**
-- Number must be 1-249. Reject otherwise.
-- Question should be specific. If vague ("will I be happy?"), ask for narrower framing.
-- Time must include timezone or city — if "now", use system time + IST default.
+Validate before proceeding (see Question intake below). Do not continue past a
+vague question or a number outside 1-249.
 
----
+### Wave 0 — Chart + deterministic baseline
 
-## PHASE 2 — Chart Computation
+Dispatch `baseline-runner` (school `kp_horary`) → runs
+`${CLAUDE_PLUGIN_ROOT}/scripts/compute_kp_horary_baseline.py` with the number,
+datetime, tz, lat, lon → returns the baseline.json path + a gloss. One pass
+builds the horary chart from the 1-249 number, the 12 Placidus cusps with
+CSLs, the 9 planets with full lord chains, the Ruling Planets (with calculation
+breakdown), the 4-level significators, the dasha, and the house-combination
+tables. The baseline keeps the **chart Lagna** (from the number) and the
+**RP Lagna** (real rising sign at question time) separate — workers must not
+mix them.
 
-Run `scripts/compute_horary_chart.py` with arguments: number, datetime (ISO), latitude, longitude, timezone.
+Then dispatch `chart-verifier` (school `kp_horary`) to render the computed
+chart and the RP calculation — pass it the **Verification Display Format** in
+`references/orchestration-notes.md` so the two-Lagna layout (chart Lagna vs RP
+Lagna), the cusp/planet tables and the dasha block are exact. Show the output
+to the user and get explicit confirmation before analysis — never skip this
+gate.
 
-The script outputs:
-- **Lagna**: derived from horary number 1-249 (each number = ~1°26'24" arc starting from 0° Aries)
-- **Cusps 1-12**: Placidus, with sign-lord, star-lord, sub-lord, sub-sub-lord
-- **Planets** (Sun through Ketu, plus Uranus/Neptune/Pluto for reference): longitude, sign, star-lord, sub-lord, sub-sub-lord, retrograde flag
-- **Vimshottari dasha** at moment of question
+### Wave 1 — Cuspal sub-lord analysis
 
-Display the full chart back to the user in a clean markdown table for verification.
+Determine the question category and its primary + supporting houses from the
+baseline's house-combination tables. Dispatch `unit-analyzer` agents for the
+relevant cusps only — the primary house plus supporting houses, typically 2-4.
+Each worker gets: the baseline.json path, `references/methodology.md` +
+`references/orchestration-notes.md`, its one cusp, and the question.
 
-**Critical note:** The horary Lagna is determined by the 1-249 number, NOT by the rising sign at the time of the question. The time and place determine planetary positions and dasha — the number determines the Lagna. This is the defining feature of KP horary.
+The CSL-verdict → RP-cross-check → timing chain is **sequential** — only the
+per-cusp CSL examination fans out. Do not over-parallelize; resolve the primary
+CSL verdict first, then RP cross-check, then timing.
 
----
+### Wave 2 — Synthesis
 
-## PHASE 3 — Ruling Planets Computation (Show All Work)
+Dispatch one `synthesizer` with the baseline, the Wave-1 cusp blocks, the
+question, and `references/orchestration-notes.md` for the Phase-8 verdict
+(outcome, confidence, timing window, caveats, recommended action).
 
-Run `scripts/compute_ruling_planets.py` with the same time + place.
+## Question intake
 
-The skill must **display the calculation explicitly**:
+- **Number** must be an integer 1-249. Reject 0, 250+, or non-integers — ask
+  again.
+- **Question** must be specific, time-bound, single-issue. Reject "will I be
+  happy" or "what is my future"; redirect to a narrow framing like "will I get
+  the job at X within 3 months". If no clear category fits, ask the user to
+  clarify rather than force-fitting.
+- **Time** must carry a timezone or city. "Now" → system time + IST default.
+  Question asked before sunrise still uses the previous weekday's day-lord.
+- One chart, one question. Never combine a horary chart with natal data.
 
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-RULING PLANETS — Calculation
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## Methodology
 
-Time: [datetime + timezone]
-Place: [city, lat, long]
+Full interpretive methodology lives in `references/`. Workers load these; the
+orchestrator does not.
 
-1. Day Lord (weekday at sunrise):
-   [Day name] → [Planet]
-
-2. Moon's position at this moment:
-   • Longitude: [deg-min-sec]
-   • Sign: [sign] → Sign Lord: [planet]
-   • Nakshatra: [nakshatra] → Star Lord: [planet]
-   • Sub: [sub] → Sub Lord: [planet]
-
-3. Lagna's position at this moment (rising at this place):
-   • Longitude: [deg-min-sec]
-   • Sign: [sign] → Sign Lord: [planet]
-   • Nakshatra: [nakshatra] → Star Lord: [planet]
-   • Sub: [sub] → Sub Lord: [planet]
-
-4. RP Set (deduplicated, in standard order):
-   [Lagna Sub Lord, Lagna Star Lord, Lagna Sign Lord,
-    Moon Sub Lord, Moon Star Lord, Moon Sign Lord,
-    Day Lord]
-   = [final list]
-
-Strongest RP: Lagna Sub Lord = [planet]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-Apply Krishnamurti's strength order: Lagna Sub > Lagna Star > Lagna Sign > Moon Sub > Moon Star > Moon Sign > Day Lord. Retrograde planets (except nodes) are excluded unless their depositor is also RP.
-
----
-
-## PHASE 4 — Question Category & House Combinations
-
-Identify the category. Load `references/house-combinations.md` for the full table. Common ones:
-
-| Category | Houses | Logic |
-|----------|--------|-------|
-| Marriage | 2, 7, 11 | 7 (spouse), 2 (family), 11 (fulfillment of desire) |
-| Career / new job | 6, 10, 11 | 10 (profession), 6 (employment/service), 11 (gain) |
-| Job change | 1, 5, 9, 10 (leaving) + 2, 6, 10, 11 (new job) | Two-step analysis |
-| Promotion | 2, 6, 10, 11 | Same as new job; 2 = financial gain |
-| Litigation (own case) | 1, 6, 11 (win); 5, 8, 12 (loss) | 6 = victory over opponent |
-| Litigation (opponent's case) | 7, 12, 5 (their loss) | Mirror houses |
-| Property purchase | 4, 11, 12 | 4 (property), 12 (investment), 11 (gain) |
-| Property sale | 3, 5, 10 | 3 (transfer), 5 (negation of 4), 10 (cash flow) |
-| Childbirth | 2, 5, 11 | 5 (child), 2 (family addition), 11 (fulfillment) |
-| Loan / money | 2, 6, 11 (gain); 8, 12 (loss) | 6 = borrowing |
-| Travel (long-term) | 3, 9, 12 | 9 (long journey), 12 (foreign), 3 (short) |
-| Travel (foreign settlement) | 9, 12 + 7 (away from home) | |
-| Lost item (recovery) | 2, 11 (recovery); 6, 8, 12 (loss) | |
-| Health / disease cure | 1, 5, 11 (cure); 6, 8, 12 (disease) | |
-| Education / exam | 4, 9, 11 (success); 8, 12 (failure) | |
-
-**Rule of fructification:** A house "matter" fructifies if the **Cuspal Sub Lord (CSL) of that house signifies the relevant house combination** AND is connected (by occupation, ownership, or signification) to the supporting houses.
-
----
-
-## PHASE 5 — Cuspal Sub Lord Analysis
-
-For each relevant house cusp, examine its Sub Lord:
-
-```
-Cusp [N] — [house name]
-  Sub Lord: [planet]
-    • Owns houses: [...]
-    • Occupies house: [...]
-    • In star of: [planet] → which signifies houses [...]
-    • Itself signifies (via star + own): houses [...]
-    • Connection to question's positive set: [yes/no, which houses]
-    • Connection to question's negative set: [yes/no]
-    • Verdict for this cusp: [favourable / unfavourable / mixed]
-```
-
-The CSL of the **primary house** (e.g., 7th for marriage, 10th for career) is decisive. If it signifies the positive combination, matter fructifies. If it signifies the negative set (6/8/12 for marriage, 5/8/12 for career), matter is denied.
-
----
-
-## PHASE 6 — Ruling Planets Cross-Check
-
-Compare the Ruling Planets list against the significators of the relevant houses.
-
-**Strong YES:** RP planets are also significators of the positive house combination, and the CSL of the primary house is in the RP list (or in the star/sub of an RP planet).
-
-**Strong NO:** RP planets are significators of the negative set; primary CSL is unconnected to RP.
-
-**Mixed / conditional:** Some RP align, some don't — adjust confidence accordingly.
-
----
-
-## PHASE 7 — Timing
-
-Identify the running Vimshottari Dasha-Bhukti-Antara at the moment of the question. The matter fructifies during the joint period when:
-
-1. **Mahadasha lord** is a significator of the positive house combination (or its sub-lord is)
-2. **Bhukti lord** is also a significator
-3. **Antara lord** is also a significator
-4. Ideally, **Sookshma lord** completes the chain
-5. **Transit confirmation:** Jupiter and Sun transiting through significator stars at the time of fructification
-
-If the current DBA all signify the positive combo and CSL is favourable, fructification is **near-term** (within current Antara). If only MD-Bhukti align but Antara doesn't, fructification waits for the next favourable Antara.
-
-Provide the **specific window**: "Between [start date] and [end date], during the [MD]-[BD]-[AD]-[SD] period."
-
----
-
-## PHASE 8 — Verdict
-
-Deliver a structured verdict:
-
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-VERDICT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Question: [restated]
-Horary number: [N]
-
-Outcome: [YES / NO / CONDITIONAL]
-
-Confidence: [HIGH / MEDIUM / LOW]
-  • CSL of primary house: [favourable / unfavourable]
-  • Ruling Planets alignment: [strong / partial / weak]
-  • Dasha alignment: [supports / does not support]
-
-Timing window: [date range, with DBA period]
-
-Key supporting factors:
-  • [...]
-  • [...]
-
-Caveats / what could change the call:
-  • [degree-sensitive flags, e.g., CSL near sandhi]
-  • [retrograde considerations]
-  • [sub-sub-lord conflicts]
-  • [transit confirmation needed]
-
-Recommended action: [specific, actionable]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
----
-
-## Critical Rules
-
-1. **Never override the CSL with sentiment.** If the CSL of the 7th says no, the marriage doesn't happen — even if Jupiter is exalted in the 7th.
-2. **Always show RP calculation.** The user must see how each ruling planet was derived.
-3. **Show degrees and lord chains.** Every claim about a planet's signification must be traceable.
-4. **Confidence ≠ certainty.** A high-confidence call still has caveats. State them.
-5. **Don't combine charts.** The horary chart stands alone — never mix in natal data.
-6. **Question framing matters.** If question is mis-asked, redirect before reading.
-7. **Outer planets (Uranus/Neptune/Pluto)** — display for reference but do not use in core KP analysis. KP is a 9-graha system.
-8. **Retrograde planets** — when retrograde, a planet gives the result of the planet in whose star it sits, not its own. Apply this rule when retrograde significators appear.
-
----
-
-## Output Style
-- Authoritative, precise, advisory tone (per user's professional output preferences)
-- Show calculations explicitly — user wants to see the work
-- Use tables liberally for cusps, planets, significators
-- Pyramid principle — verdict first in summary, then full reasoning below
-- Never hedge unnecessarily; if the chart says no, say no
+| File | Contents |
+|------|----------|
+| `references/methodology.md` | Eight-step horary read, sub-lord primacy, signification-through-stars, special rules (retrograde, combust, sandhi), failure modes |
+| `references/house-combinations.md` | Question categories with primary / positive / negative house sets |
+| `references/ruling-planets.md` | RP factors, strength order, computation, exclusions, RP-in-verdict use |
+| `references/249-table.md` | How the 1-249 number maps to the horary Lagna degree |
+| `references/orchestration-notes.md` | Two-Lagna rule, per-cusp CSL output block, RP-cross-check criteria, timing chain, verdict template, critical rules, output style, verification display format |

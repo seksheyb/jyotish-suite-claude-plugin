@@ -14,259 +14,88 @@ description: >
   KP", "KP timing for [event]".
 ---
 
-# KP Natal Astrology Skill
+# KP Natal — Krishnamurti Paddhati
 
-## Overview
-This skill performs full KP natal readings — both life readings and event-timing predictions — from a pre-computed natal chart provided by the user.
+KP natal readings — comprehensive life readings and event-timing predictions —
+from a natal KP chart. The cuspal sub-lord decides; Ruling Planets cross-confirm;
+DBA-Sookshma dates the event.
 
-1. Accept the natal KP chart as a markdown file or pasted block
-2. Echo back the parsed chart for verification
-3. Ask conversationally: life reading or event timing? If event, which area + time horizon?
-4. Compute current Ruling Planets at moment of reading (show calculation)
-5. Compute Sookshma dasha (4th level — skill computes this; chart only provides MD/BD/AD)
-6. Apply KP methodology: significators, cuspal sub-lord analysis, RP cross-check, DBA timing
-7. Deliver verdict / life reading
+## Orchestration
 
-**Reference files — load before every reading:**
-| File | Load When |
-|------|-----------|
-| `references/methodology.md` | Always — full KP natal analysis framework |
-| `references/house-combinations.md` | When event timing question is asked |
-| `references/ruling-planets.md` | When computing and interpreting RP |
-| `references/significators-rules.md` | When listing significators |
+WAVE ORCHESTRATOR. Deterministic computation -> Python sidecar; per-cusp
+interpretation -> parallel subagents. Paths use `${CLAUDE_PLUGIN_ROOT}`.
 
-**Computation scripts:**
-| File | Purpose |
-|------|---------|
-| `scripts/compute_ruling_planets.py` | RP at moment of reading + place |
-| `scripts/compute_sookshma.py` | Compute 4th-level Sookshma dasha within current Antara |
+### Phase A — Intake (with the user)
+1. Ask for the pre-computed KP chart (12 cuspal positions with full lord chain,
+   9 planets, significator table, Vimshottari MD-BD-AD), OR birth data (date,
+   time, place, lat/long). If only birth data is given, a KP chart is computed
+   in Wave 0. Use the chart intake prompt in `references/orchestration-notes.md`
+   ("Chart Intake Format").
+2. Ask the mode — **Life Reading** or **Event Timing** (if timing, get the
+   event area and time horizon: next 1 yr / 3 yr / open-ended) — using the
+   **Mode Selection Prompt** in `references/orchestration-notes.md`.
 
----
+### Wave 0 — Chart + deterministic baseline
+1. Get a chart JSON one of two ways:
+   - User gave **birth data only** -> dispatch `chart-calculator`
+     (mode `kp-natal` — KP-New ayanamsa, Placidus houses).
+   - User **pasted a pre-computed KP chart** -> dispatch `chart-verifier`; it
+     extracts the 12 cusp + 9 planet positions and expands them into the chart
+     JSON via `${CLAUDE_PLUGIN_ROOT}/lib/chart_io.py` (mode `kp`).
+2. Dispatch `chart-verifier` (school `kp-natal`) to render the chart — pass it
+   the **Verification Display Format** in `references/orchestration-notes.md` so
+   the cusps, planets, significators and dasha tables are exact. Show the output
+   to the user and get explicit confirmation before any analysis — never skip
+   this gate.
+3. Dispatch `baseline-runner` (school `kp_natal`) -> runs
+   `${CLAUDE_PLUGIN_ROOT}/scripts/compute_kp_natal_baseline.py`. This returns
+   one baseline.json: 12 cusps with full lord chains + CSL, 9 planets, 4-level
+   significators, current Ruling Planets (full derivation), Sookshma dasha, and
+   house-combination tables. Keep the JSON out of orchestrator context — pass
+   the path forward.
 
-## PHASE 1 — Chart Collection
+### Wave 1 — Analysis
+- **Life Reading:** dispatch **12 parallel `unit-analyzer`** agents — one per
+  cuspal sub-lord (`unit_type: cusp`, `unit_id: 1..12`). The 12 cusps are
+  independent, so this wave is genuinely wide.
+- **Event Timing:** the 8-step KP read is **largely sequential** — CSL verdict
+  -> significators -> RP cross-check -> DBA-Sookshma window -> transit -> final
+  verdict, each step feeding the next. Fan out **only Step 3**, the significator
+  listing: 2-4 `unit-analyzer` workers, one per positive-set house. Be honest
+  that the speed win here is the baseline sidecar (it pre-computes CSL chains,
+  significators, RP and Sookshma), not fan-out.
 
-When `/kp-natal` is triggered:
+Each worker gets the baseline.json path, the methodology references, its
+assigned unit, and the user's question/horizon.
 
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-KP Natal Reading
+### Wave 2 — Synthesis
+Dispatch one `synthesizer` (school `kp-natal`):
+- **Life Reading:** weave the 12 cuspal verdicts into life themes — strong
+  areas, blocked areas, conditional areas, dominant themes, work areas.
+- **Event Timing:** the Step-8 verdict — outcome, confidence, primary
+  DBA-Sookshma window with dates, reasoning chain (CSL, significators, RP
+  alignment, dasha, transit), caveats, action recommendation.
 
-Please share your natal KP chart. Either:
-  • Upload a markdown file with the chart data
-  • Or paste it directly
+## Reading modes
 
-Required data:
-  • Birth details (date, time, place, lat/long)
-  • Ayanamsa used (e.g. KP New / Krishnamurti)
-  • All 12 cuspal positions with: degree, sign-lord, star-lord, sub-lord, sub-sub-lord
-  • All 9 planets (Sun through Ketu) + optionally outer planets:
-    longitude, sign, star-lord, sub-lord, sub-sub-lord, retrograde flag
-  • Significators of houses (which planets signify each house)
-  • Vimshottari dasha sequence (MD-BD-AD with start dates)
+- **Life Reading** — comprehensive analysis of all 12 houses, declaring which
+  life areas fructify and which do not, via the cuspal sub-lords across every
+  house.
+- **Event Timing** — a specific WHEN question (marriage, job, child, property,
+  health, etc.). Follows the 8-step KP natal read in `references/methodology.md`.
 
-If you don't have the significator table, I can derive it from planet positions.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
+## Methodology
 
----
-
-## PHASE 2 — Verification Echo
-
-Display the parsed chart back in clean tables:
-
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-CHART VERIFICATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Native: [name]
-Born: [date] at [time] [tz]
-Place: [city] ([lat], [lon])
-Ayanamsa: [type] = [value]
-Lagna: [sign] [degree]
-Moon: [sign] [degree] in [nakshatra]
-
-CUSPAL POSITIONS
-| Cusp | Degree     | Sign  | Star  | Sub   | SS    |
-|------|------------|-------|-------|-------|-------|
-|  1   | ddd-mm-ss  | XXX   | XXX   | XXX   | XXX   |
-| ...  |            |       |       |       |       |
-
-PLANETARY POSITIONS
-| Planet  | Degree     | Sign  | Star  | Sub   | SS    | Retro |
-|---------|------------|-------|-------|-------|-------|-------|
-| Sun     | ...                                                   |
-| ...     |                                                       |
-
-SIGNIFICATORS OF HOUSES
-| House | Planets                          |
-|-------|----------------------------------|
-|   1   | XX, XX                           |
-| ...   |                                  |
-
-CURRENT DASHA (as per chart):
-[MD] Mahadasha — running [start] to [end]
-  [BD] Bhukti — running [start] to [end]
-    [AD] Antara — running [start] to [end]
-
-Confirm this matches your records before I proceed?
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-After confirmation, proceed to Phase 3.
-
----
-
-## PHASE 3 — Mode Selection (Conversational)
-
-```
-What kind of reading?
-
-  A. Life reading — comprehensive analysis of all 12 houses,
-     declaring which life areas will fructify and which won't
-     (uses cuspal sub-lords across all houses)
-
-  B. Event timing — specific question about WHEN something
-     will happen (e.g. marriage, job change, child, property,
-     health recovery). Tell me:
-        • What event?
-        • Time horizon (next 1 year / 3 years / open-ended)?
-```
-
-Wait for user's choice.
-
----
-
-## PHASE 4A — Life Reading Mode
-
-Walk through all 12 cuspal sub-lords. For each:
-
-```
-HOUSE [N] — [significance]
-  Cuspal Sub Lord: [planet]
-    • In star of: [planet] → which signifies houses [...]
-    • Itself: occupies [house], owns [houses]
-    • Total signification: houses [...]
-    • Retrograde: [yes/no, with implication]
-
-  Verdict for matters of house [N]:
-    [Will fructify / Partial / Will not fructify]
-    Reasoning: [explanation tied to positive/negative house combo]
-```
-
-After all 12 cusps, deliver a synthesis:
-
-```
-LIFE THEMES — KP SYNTHESIS
-
-Strong areas (CSL connected to positive combinations):
-  • [House X — life theme] — [why]
-
-Weak / blocked areas (CSL connected to negative set):
-  • [House Y — life theme] — [why]
-
-Mixed / conditional:
-  • [House Z] — [conditions for fructification]
-
-Top 3 dominant themes for this lifetime: [...]
-Top 3 areas that need conscious work: [...]
-```
-
----
-
-## PHASE 4B — Event Timing Mode
-
-### Step 1: Identify house combination
-Load `references/house-combinations.md`. Identify positive set + negative set + primary house for the event.
-
-### Step 2: Examine primary CSL
-```
-Primary house: [N] ([significance])
-Cuspal Sub Lord: [planet]
-  • Star-lord chain signifies: houses [...]
-  • Own signification: houses [...]
-  • Connection to positive set: [yes/no]
-  • Connection to negative set: [yes/no]
-  • Verdict: [will fructify / will not / mixed → check sub-sub]
-```
-
-If CSL signifies negative set only → matter denied. Stop here, deliver "will not fructify in this life" verdict.
-
-### Step 3: Significators of relevant houses
-For each house in the positive combination, list significators in 4 levels:
-- L1: Planets in star of planet occupying the house
-- L2: Planets occupying the house
-- L3: Planets in star of the lord of the house
-- L4: Lord of the house itself
-
-### Step 4: Compute current Ruling Planets
-Run `scripts/compute_ruling_planets.py` for **moment of this reading + user's location**.
-
-Show full RP calculation (per `references/ruling-planets.md`).
-
-### Step 5: RP cross-check with significators
-Identify which planets are BOTH significators of the positive set AND Ruling Planets. These are the **strongest activation candidates** for fructification.
-
-### Step 6: Identify fructification window
-Examine the user's current and upcoming Vimshottari periods. Find the DBA-Sookshma where:
-- MD lord is a significator (or is in star of one) of positive set
-- BD lord same
-- AD lord same
-- SD lord narrows to days
-
-Run `scripts/compute_sookshma.py` to compute Sookshma divisions inside current/relevant Antara periods.
-
-### Step 7: Transit confirmation
-Note key transit triggers — Jupiter and Sun transiting through significator stars at the timing window add confirmation.
-
-### Step 8: Verdict
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-VERDICT — [event]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Outcome: [WILL FRUCTIFY / WILL NOT / CONDITIONAL]
-
-Confidence: [HIGH / MEDIUM / LOW]
-
-Primary timing window:
-  [MD]-[BD]-[AD]-[SD]
-  [start date] to [end date]
-
-Reasoning:
-  • CSL of house [N]: [verdict]
-  • Significators activated: [planets, with houses they signify]
-  • Ruling Planet alignment: [planets in both sets]
-  • Dasha alignment: [running periods supporting]
-  • Transit triggers: [Jupiter/Sun transit windows in this period]
-
-Caveats:
-  • [degree-sensitive flags — sandhi, gandanta]
-  • [retrograde considerations]
-  • [sub-sub-lord conflicts if any]
-
-Action recommendation:
-  [specific, actionable]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
----
-
-## Critical Rules
-
-1. **Never guess significators.** Use the chart's pre-computed table; if not provided, derive from planet positions explicitly.
-2. **Always show RP calculation.** User wants to see the work.
-3. **Sookshma is non-negotiable for event timing.** Antara alone is too coarse for date-level prediction.
-4. **CSL of primary house is final.** If it says no, it's no — don't override with "but Jupiter is exalted."
-5. **Retrograde rule:** Retrograde planet (except nodes) gives result of star-lord, not own. Apply consistently.
-6. **No mixing with Parashari.** This is KP. Don't bring in Vimshottari Parashari rules like aspects or yogas — KP uses signification only.
-7. **Outer planets (Uranus/Neptune/Pluto)** — display if provided but do not use in core KP analysis.
-
----
-
-## Output Style
-- Authoritative, precise, advisory tone (per user's professional output preferences)
-- Show calculations explicitly
-- Use tables liberally
-- Pyramid principle — verdict first in summary, then full reasoning
-- Don't hedge unnecessarily; if chart says no, say no
+Full interpretive methodology lives in `references/` — workers and the
+synthesizer load these; the orchestrator does not:
+- `references/methodology.md` — core principles, the 8-step event-timing read,
+  life-reading method, special rules (retrograde, combust, sandhi, gandanta).
+- `references/house-combinations.md` — positive/negative house sets per question
+  category.
+- `references/ruling-planets.md` — RP factors, computation, use in the verdict.
+- `references/significators-rules.md` — the 4-level significator framework,
+  fruitful vs barren sub-lord check.
+- `references/orchestration-notes.md` — chart-intake + mode-selection prompts,
+  critical rules, output style, mode parallelism, and the **Verification
+  Display Format** (the exact cusps, planets, significators and dasha echo
+  layout with confirm gate).
