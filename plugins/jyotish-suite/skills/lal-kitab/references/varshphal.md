@@ -163,7 +163,8 @@ AGE [N] — Year Ruler: [planet name]
 
 ## Multi-Planet Year Handling
 
-For ages with two rulers (1, 28, 42, 54), read **both planets** and weight by:
+For ages with two rulers (1, 42, 54 — per the Year-Ruler Table above; age 28
+is Mars alone, single-ruler), read **both planets** and weight by:
 
 - The more afflicted planet dominates the year's challenges
 - The stronger planet shows where opportunities lie

@@ -39,7 +39,7 @@ Each planet matures *once per lifetime* at a fixed age. At maturation, the plane
 
 See `varshphal.md` for the full age-to-ruler table. Each year of life is assigned to a planet. The year-ruler is **universal** (same for every native); the natal condition of that planet determines *quality of delivery*.
 
-**Recurrence pattern:** Each planet recurs as year-ruler approximately every 9 years (Sun: 10, 19, 28, 37, 46, 55, 64, 73; Moon: 11, 20, 29, 38…; etc.), with major years flagged (21 Jupiter major, 24 Venus major, 36 Saturn major, 42 Saturn-Rahu severity, 48 Saturn major, 54 Mars-Saturn, 63 Rahu major).
+**Recurrence pattern:** Year-rulership is NOT a clean 9-year cycle per planet — read the actual recurrence off `varshphal.md`'s full age-to-ruler table (e.g. Sun rules ages 1, 10, 19, 32, 40, 44, 50, 56 — not an even 9-year spacing). Major years are flagged in that table: 21 Jupiter major, 24 Venus major, 36 Saturn major, 42 Saturn-Rahu severity, 48 Saturn major, 54 Mars-Saturn, 63 Rahu major.
 
 **Year-ruler delivery rule:**
 - Year-ruler is the *primary executor* for that year's events
@@ -86,7 +86,7 @@ Jupiter's role in Lal Kitab timing is **the sanctifier** — Jupiter aspect or y
 **The sanctification protocol:**
 - An event signal (Signals 1–3 aligned) without Jupiter involvement = the event happens but **without legitimacy** (e.g. career change without family support, marriage without ceremony, child without acknowledgment)
 - An event signal **with** Jupiter aspect on the relevant house OR a Jupiter year-ruler = event manifests with full social/legal/karmic stamp
-- Jupiter year-rulers (21, 30, 39, 48, 57, 66) are the strongest sanctification windows
+- Jupiter year-rulers — per `varshphal.md`'s age-to-ruler table: ages 5, 14, 21 (major), 46, 52, 58 — are the strongest sanctification windows
 - Jupiter sleeping or debilitated natally = sanctification is structurally weak across the entire life; events tend to happen "off-the-books"
 
 ---

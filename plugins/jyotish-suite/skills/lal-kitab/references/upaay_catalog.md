@@ -270,7 +270,9 @@ For each sleeping planet, run the Phase 7 strengthening upaay PLUS:
 
 ## 9. Year-Specific Varshphal Upaay
 
-For the danger years (21, 36, 42, 48, 63), perform the year-ruler's strengthening upaay PLUS:
+For the danger years (21, 36, 42, 48, 54, 63 — matching `timing.md` Filter 3
+and `varshphal.md`'s Major Year Markers, both of which include age 54's
+Mars+Saturn health watch), perform the year-ruler's strengthening upaay PLUS:
 
 ### 9.1 — Age 36 (First Saturn Year)
 - Add: Donate iron items (small iron utensils, iron nails) on Saturdays
@@ -296,6 +298,15 @@ For the danger years (21, 36, 42, 48, 63), perform the year-ruler's strengthenin
 - Add: Daily reading of a chosen sacred text (15+ minutes)
 - Restrict: Avoid taking on new business ventures
 - Farman: F.63, V.5
+
+### 9.5 — Age 54 (Mars + Saturn — Health Watch)
+- Combined Mars + Saturn protocol:
+  - Donate honey + sealed sweets on Tuesdays (Mars) AND mustard oil on
+    Saturdays (Saturn) — do not combine on the same day (see §11 conflict rules)
+  - Schedule a full health check-up (surgical/structural risk emphasis) in
+    the months surrounding the birthday
+  - Avoid strenuous physical risk-taking in months 4–6 of the year
+- Farman: F.7, V.2 + F.10, V.2 + F.54, V.5
 
 ---
 

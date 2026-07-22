@@ -185,6 +185,31 @@ See `upaay_catalog.md` §6.
 
 ---
 
+## Per-Rin Output Format
+
+For every rin tested — triggered or not — present it in this template (mirrors
+`family_chart.md`'s "Output Structure (Per Relative)" and `varshphal.md`'s
+"Output Format Per Year"):
+
+```
+RIN: [Pitri / Matri / Stri / Kanya / Bhratra / Atma] Rin
+Trigger Farman: [which configuration(s) fired, with Farman citation(s), or
+                 "none — tested all N configurations, all absent"]
+Configuration:  [the specific planetary placement/aspect that satisfied the
+                 trigger — house, planet, dignity]
+Severity:       [Mild / Moderate / Severe / not present] — cite compounding
+                 factors and any cross-rin escalation applied
+Manifestation:  [1-2 lines from the rin's "Manifestation in life" section,
+                 tailored to the specific trigger(s) that fired]
+Remedy reference: [upaay_catalog.md section + upaay number(s), or "n/a — no
+                   rin present"]
+```
+
+Run this for all six rins in sequence (never skip one silently), then apply
+Cross-Rin Compounding Rules below across the full set.
+
+---
+
 ## Cross-Rin Compounding Rules
 
 When **multiple rins** are present, severity escalates non-linearly:

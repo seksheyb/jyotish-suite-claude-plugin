@@ -106,6 +106,9 @@ BLIND_HOUSES = {2, 6, 8, 12}
 
 # Lal Kitab aspects — houses aspected counted inclusive from the planet's
 # own house — references/aspects.md. NOT Parashari.
+# Ketu's aspect is [5, 7, 9] only. aspects.md notes "some Farmans add 2nd" —
+# that 2nd-house variant is intentionally excluded here as an optional,
+# lineage-specific extension, not an oversight (A7).
 LK_ASPECTS = {
     "Sun": [7], "Moon": [7], "Mars": [4, 7, 8], "Mercury": [7],
     "Jupiter": [5, 7, 9], "Venus": [7], "Saturn": [3, 7, 10],
@@ -236,6 +239,23 @@ def build_pakka_ghar(fixed_chart):
             "buried_by": buried_by,
             "debil_never_redeemed": (p, h) in NEVER_REDEEMED,
         }
+
+    # Neecha Bhanga (debilitation cancellation) — pakka_ghar.md §3 / aspects.md
+    # "Houses That Never Give Aspect Relief": the most common cancellation is
+    # when the lord of the house where debilitation occurs sits in its own
+    # pakka ghar. This applies even to the six never-redeemed debilitations —
+    # aspects.md is explicit that only pakka-ghar-of-lord (not aspects) can
+    # truly cancel those. Second pass: needs every planet's in_pakka_ghar,
+    # computed above.
+    for p in LK_PLANETS:
+        info = out[p]
+        cancelled = False
+        if info["lk_dignity"] == "debilitated":
+            lord = HOUSE_OWNER.get(info["fixed_house"])
+            if lord is not None and out[lord]["in_pakka_ghar"]:
+                cancelled = True
+        info["debil_cancelled"] = cancelled
+
     return out
 
 
@@ -271,7 +291,14 @@ def build_aspect_map(fixed_chart):
 
 
 def build_sleeping(fixed_chart, aspect_map):
-    """A planet is sleeping if it has no co-tenant AND no planet aspects it."""
+    """A planet is sleeping if it has no co-tenant AND no planet aspects it.
+
+    Dead-pair exception (aspects.md "Aspect-Triggered Awakening"): a natal
+    aspect on a sleeping planet does not count as awakening if both planets
+    are in mutual aspect-isolation from the rest of the chart — i.e. planet A
+    aspects/co-tenants only B, and B aspects/co-tenants only A. Such a pair
+    stays effectively dead ("dead pair") and both are re-marked sleeping.
+    """
     planets = fixed_chart["planets"]
     house_occupants = fixed_chart["houses"]
 
@@ -286,16 +313,36 @@ def build_sleeping(fixed_chart, aspect_map):
             if planets[p]["fixed_house"] in qaspects:
                 aspected_by[p].append(q)
 
-    out = {}
+    co_tenants = {}
     for p in LK_PLANETS:
         h = planets[p]["fixed_house"]
-        co_tenants = [q for q in house_occupants[str(h)] if q != p]
-        sleeping = (not co_tenants) and (not aspected_by[p])
+        co_tenants[p] = [q for q in house_occupants[str(h)] if q != p]
+
+    out = {}
+    for p in LK_PLANETS:
+        sleeping = (not co_tenants[p]) and (not aspected_by[p])
         out[p] = {
             "sleeping": sleeping,
-            "co_tenants": co_tenants,
+            "co_tenants": co_tenants[p],
             "aspected_by": aspected_by[p],
+            "dead_pair_with": None,
         }
+
+    # Dead-pair second pass: p and q have no co-tenants, and aspect only each
+    # other (aspected_by[p] == [q] and aspected_by[q] == [p]) -> the aspect
+    # doesn't count as awakening; both are re-marked sleeping.
+    for p in LK_PLANETS:
+        if co_tenants[p] or len(aspected_by[p]) != 1:
+            continue
+        (q,) = aspected_by[p]
+        if co_tenants[q]:
+            continue
+        if aspected_by[q] == [p]:
+            out[p]["sleeping"] = True
+            out[p]["dead_pair_with"] = q
+            out[q]["sleeping"] = True
+            out[q]["dead_pair_with"] = p
+
     return out
 
 
@@ -323,6 +370,53 @@ def _buried_by(p, q, pakka):
     return q in pakka[p]["buried_by"]
 
 
+def _general_afflicted(p, pakka, sleeping, planets, aspect_map):
+    """General Lal Kitab affliction test — references/aspects.md 'Aspect-
+    Triggered Awakening' + references/teva_types.md §1: a planet is afflicted
+    if debilitated, sleeping, OR conjunct/aspected by Saturn, Rahu, or Ketu.
+    Distinct from `_lord_afflicted` below (used only for house-lord triggers
+    such as '9th lord afflicted'), which does not check sleeping."""
+    if pakka[p]["lk_dignity"] == "debilitated":
+        return True
+    if sleeping[p]["sleeping"]:
+        return True
+    return any(_afflicts(mal, p, planets, aspect_map) for mal in ("Saturn", "Rahu", "Ketu"))
+
+
+def _lord_afflicted(lord, pakka, planets, aspect_map):
+    """A house-lord is 'afflicted' if conjunct/aspected by Saturn/Rahu/Ketu or
+    sitting in its own debilitation house. Used for lord-based rin/teva
+    triggers (e.g. '9th lord afflicted', Behra Teva's '3rd lord afflicted')."""
+    for mal in ("Saturn", "Rahu", "Ketu"):
+        if mal != lord and _afflicts(mal, lord, planets, aspect_map):
+            return True
+    return pakka[lord]["lk_dignity"] == "debilitated"
+
+
+# Houses each rin's triggers structurally implicate — used only to test
+# whether Jupiter's protective 5th-house aspect (aspects.md "Special Aspect
+# Rules -> Jupiter's 5th-house Aspect") lands on a house involved in that rin,
+# in which case severity is mitigated one tier.
+RIN_HOUSES = {
+    "pitri_rin": {1, 7, 9, 10},
+    "matri_rin": {4, 8},
+    "stri_rin": {6, 7},
+    "kanya_rin": {5, 9, 12},
+    "bhratra_rin": {3, 4, 11},
+    "atma_rin": {1, 5, 9, 10},
+}
+
+TIER_ORDER = ["Mild", "Moderate", "Severe"]
+
+
+def _bump_tier(severity, delta):
+    """Move a Mild/Moderate/Severe severity up (+1) or down (-1) a tier,
+    clamped at both ends."""
+    idx = TIER_ORDER.index(severity)
+    idx = max(0, min(len(TIER_ORDER) - 1, idx + delta))
+    return TIER_ORDER[idx]
+
+
 def build_rin_diagnosis(fixed_chart, pakka, aspect_map, sleeping):
     """Run all six rin checks. Each rin: triggered bool + which configs fired."""
     planets = fixed_chart["planets"]
@@ -338,13 +432,14 @@ def build_rin_diagnosis(fixed_chart, pakka, aspect_map, sleeping):
     def house_has(h, plist):
         return any(p in occ[str(h)] for p in plist)
 
+    def house_present(h, plist):
+        """Subset of plist actually occupying house h — used to tag which
+        specific planet(s) a 'Saturn or Rahu sits in house N' trigger fired
+        on (references A11: structural attribution, not desc substring)."""
+        return [p for p in plist if p in occ[str(h)]]
+
     def lord_afflicted(lord):
-        """A house-lord is 'afflicted' if conjunct/aspected by Saturn/Rahu/Ketu
-        or sitting in its own debilitation house."""
-        for mal in ("Saturn", "Rahu", "Ketu"):
-            if mal != lord and _afflicts(mal, lord, planets, aspect_map):
-                return True
-        return pakka[lord]["lk_dignity"] == "debilitated"
+        return _lord_afflicted(lord, pakka, planets, aspect_map)
 
     results = {}
 
@@ -352,151 +447,190 @@ def build_rin_diagnosis(fixed_chart, pakka, aspect_map, sleeping):
     pitri = []
     if _afflicts("Saturn", "Sun", planets, aspect_map):
         pitri.append({"trigger": 1, "desc": "Sun afflicted by Saturn",
-                      "farman": "Farman 8, Vol 2 (1940)"})
+                      "farman": "Farman 8, Vol 2 (1940)", "planets": ["Sun", "Saturn"]})
     if _afflicts("Rahu", "Sun", planets, aspect_map):
         pitri.append({"trigger": 2, "desc": "Sun afflicted by Rahu",
-                      "farman": "Farman 8, Vol 2 (1940)"})
+                      "farman": "Farman 8, Vol 2 (1940)", "planets": ["Sun", "Rahu"]})
     if in_house("Sun", 7):
         pitri.append({"trigger": 3, "desc": "Sun debilitated (house 7)",
-                      "farman": "Farman 12, Vol 1 (1939)"})
+                      "farman": "Farman 12, Vol 1 (1939)", "planets": ["Sun"]})
     if house_empty(9) and lord_afflicted("Jupiter"):
         pitri.append({"trigger": 4, "desc": "9th house empty AND Jupiter (9th lord) afflicted",
-                      "farman": "Farman 22, Vol 3 (1941)"})
+                      "farman": "Farman 22, Vol 3 (1941)", "planets": ["Jupiter"]})
     if house_has(9, ["Saturn", "Rahu"]):
         pitri.append({"trigger": 5, "desc": "Saturn or Rahu sits in 9th house",
-                      "farman": "Farman 22, Vol 3 (1941)"})
+                      "farman": "Farman 22, Vol 3 (1941)",
+                      "planets": house_present(9, ["Saturn", "Rahu"])})
     if _buried_by("Sun", "Saturn", pakka):
         pitri.append({"trigger": 6, "desc": "Sun buried (12th) by Saturn",
-                      "farman": "Farman 16, Vol 4 (1942)"})
+                      "farman": "Farman 16, Vol 4 (1942)", "planets": ["Sun", "Saturn"]})
     if (house_empty(1) and house_empty(9)
             and not aspect_map_has_house(aspect_map, 1)
             and not aspect_map_has_house(aspect_map, 9)):
         pitri.append({"trigger": 7, "desc": "Houses 1 and 9 both empty AND unaspected",
-                      "farman": "Farman 31, Vol 5 (1952)"})
-    results["pitri_rin"] = _rin_record(pitri, sleeping["Sun"]["sleeping"],
-                                       pakka["Jupiter"]["lk_dignity"] == "debilitated"
-                                       or sleeping["Jupiter"]["sleeping"])
+                      "farman": "Farman 31, Vol 5 (1952)",
+                      "planets": [HOUSE_OWNER[1], HOUSE_OWNER[9]]})
+    tenth_damaged = (
+        (pakka["Saturn"]["lk_dignity"] == "debilitated" and house["Saturn"] == 10)
+        or (house_empty(10) and lord_afflicted("Saturn")))
+    results["pitri_rin"] = _rin_record(
+        pitri,
+        [sleeping["Sun"]["sleeping"],
+         pakka["Jupiter"]["lk_dignity"] == "debilitated" or sleeping["Jupiter"]["sleeping"],
+         tenth_damaged],
+        multi_trigger_severe=True)
 
     # --- 2. Matri Rin -------------------------------------------------
     matri = []
     if _afflicts("Saturn", "Moon", planets, aspect_map):
         matri.append({"trigger": 1, "desc": "Moon afflicted by Saturn",
-                      "farman": "Farman 5, Vol 2 (1940)"})
+                      "farman": "Farman 5, Vol 2 (1940)", "planets": ["Moon", "Saturn"]})
     if _afflicts("Ketu", "Moon", planets, aspect_map):
         matri.append({"trigger": 2, "desc": "Moon afflicted by Ketu",
-                      "farman": "Farman 5, Vol 2 (1940)"})
+                      "farman": "Farman 5, Vol 2 (1940)", "planets": ["Moon", "Ketu"]})
     if _conjunct("Rahu", "Moon", planets):
         matri.append({"trigger": 3, "desc": "Moon conjunct Rahu",
-                      "farman": "Farman 9, Vol 2 (1940)"})
+                      "farman": "Farman 9, Vol 2 (1940)", "planets": ["Moon", "Rahu"]})
     if in_house("Moon", 8):
         matri.append({"trigger": 4, "desc": "Moon debilitated (house 8)",
-                      "farman": "Farman 14, Vol 1 (1939)"})
+                      "farman": "Farman 14, Vol 1 (1939)", "planets": ["Moon"]})
     if house_empty(4) and lord_afflicted("Moon"):
         matri.append({"trigger": 5, "desc": "4th house empty AND Moon (4th lord) afflicted",
-                      "farman": "Farman 19, Vol 3 (1941)"})
+                      "farman": "Farman 19, Vol 3 (1941)", "planets": ["Moon"]})
     if house_has(4, ["Saturn", "Ketu"]):
         matri.append({"trigger": 6, "desc": "Saturn or Ketu sits in 4th house",
-                      "farman": "Farman 19, Vol 3 (1941)"})
+                      "farman": "Farman 19, Vol 3 (1941)",
+                      "planets": house_present(4, ["Saturn", "Ketu"])})
     if _buried_by("Moon", "Rahu", pakka):
         matri.append({"trigger": 7, "desc": "Moon buried (12th) by Rahu",
-                      "farman": "Farman 18, Vol 4 (1942)"})
-    results["matri_rin"] = _rin_record(matri, sleeping["Moon"]["sleeping"],
-                                       "Mars" in occ[str(4)])
+                      "farman": "Farman 18, Vol 4 (1942)", "planets": ["Moon", "Rahu"]})
+    results["matri_rin"] = _rin_record(
+        matri, [sleeping["Moon"]["sleeping"], "Mars" in occ[str(4)]])
 
     # --- 3. Stri Rin --------------------------------------------------
     stri = []
     if _afflicts("Saturn", "Venus", planets, aspect_map):
         stri.append({"trigger": 1, "desc": "Venus afflicted by Saturn",
-                     "farman": "Farman 11, Vol 2 (1940)"})
+                     "farman": "Farman 11, Vol 2 (1940)", "planets": ["Venus", "Saturn"]})
     if _afflicts("Rahu", "Venus", planets, aspect_map):
         stri.append({"trigger": 2, "desc": "Venus afflicted by Rahu",
-                     "farman": "Farman 11, Vol 2 (1940)"})
+                     "farman": "Farman 11, Vol 2 (1940)", "planets": ["Venus", "Rahu"]})
     if in_house("Venus", 6):
         stri.append({"trigger": 3, "desc": "Venus debilitated (house 6)",
-                     "farman": "Farman 17, Vol 1 (1939)"})
+                     "farman": "Farman 17, Vol 1 (1939)", "planets": ["Venus"]})
     if house_has(7, ["Saturn", "Rahu"]):
         stri.append({"trigger": 4, "desc": "Saturn or Rahu sits in 7th house",
-                     "farman": "Farman 25, Vol 3 (1941)"})
+                     "farman": "Farman 25, Vol 3 (1941)",
+                     "planets": house_present(7, ["Saturn", "Rahu"])})
     if house_empty(7) and lord_afflicted("Venus"):
         stri.append({"trigger": 5, "desc": "7th house empty AND Venus (7th lord) afflicted",
-                     "farman": "Farman 25, Vol 3 (1941)"})
+                     "farman": "Farman 25, Vol 3 (1941)", "planets": ["Venus"]})
     if _buried_by("Venus", "Saturn", pakka):
         stri.append({"trigger": 6, "desc": "Venus buried (12th) by Saturn",
-                     "farman": "Farman 21, Vol 4 (1942)"})
+                     "farman": "Farman 21, Vol 4 (1942)", "planets": ["Venus", "Saturn"]})
     if in_house("Mars", 7) and not pakka["Mars"]["in_pakka_ghar"]:
         stri.append({"trigger": 7, "desc": "Mars in 7th AND not in pakka ghar",
-                     "farman": "Farman 27, Vol 5 (1952)"})
-    results["stri_rin"] = _rin_record(stri,
-                                      pakka["Mercury"]["lk_dignity"] == "debilitated",
-                                      _afflicts("Saturn", "Moon", planets, aspect_map))
+                     "farman": "Farman 27, Vol 5 (1952)", "planets": ["Mars"]})
+    results["stri_rin"] = _rin_record(
+        stri,
+        [lord_afflicted("Mercury"),
+         _general_afflicted("Moon", pakka, sleeping, planets, aspect_map)])
 
     # --- 4. Kanya Rin -------------------------------------------------
     kanya = []
     if in_house("Mercury", 12) and _afflicts("Sun", "Mercury", planets, aspect_map):
         kanya.append({"trigger": 1, "desc": "Mercury debilitated (12) AND afflicted by Sun",
-                      "farman": "Farman 13, Vol 2 (1940)"})
+                      "farman": "Farman 13, Vol 2 (1940)", "planets": ["Mercury", "Sun"]})
     if _afflicts("Rahu", "Jupiter", planets, aspect_map) and house["Jupiter"] in (5, 9):
         kanya.append({"trigger": 2, "desc": "Jupiter afflicted by Rahu in 5th or 9th",
-                      "farman": "Farman 23, Vol 3 (1941)"})
+                      "farman": "Farman 23, Vol 3 (1941)", "planets": ["Jupiter", "Rahu"]})
     if "Mars" in occ[str(5)] and "Ketu" in occ[str(5)]:
         kanya.append({"trigger": 3, "desc": "5th house has Mars + Ketu combination",
-                      "farman": "Farman 24, Vol 3 (1941)"})
+                      "farman": "Farman 24, Vol 3 (1941)", "planets": ["Mars", "Ketu"]})
     if in_house("Venus", 5):
         kanya.append({"trigger": 4, "desc": "Venus in 5th, debilitated by association",
-                      "farman": "Farman 28, Vol 5 (1952)"})
-    results["kanya_rin"] = _rin_record(kanya, False, False)
+                      "farman": "Farman 28, Vol 5 (1952)", "planets": ["Venus"]})
+    results["kanya_rin"] = _rin_record(kanya, [])
 
     # --- 5. Bhratra Rin ----------------------------------------------
     bhratra = []
     if (_afflicts("Saturn", "Mars", planets, aspect_map)
             or _afflicts("Rahu", "Mars", planets, aspect_map)):
+        afflicting = [m for m in ("Saturn", "Rahu") if _afflicts(m, "Mars", planets, aspect_map)]
         bhratra.append({"trigger": 1, "desc": "Mars afflicted by Saturn or Rahu",
-                        "farman": "Farman 7, Vol 2 (1940)"})
+                        "farman": "Farman 7, Vol 2 (1940)", "planets": ["Mars"] + afflicting})
     if in_house("Mars", 4):
         bhratra.append({"trigger": 2, "desc": "Mars debilitated (house 4)",
-                        "farman": "Farman 15, Vol 1 (1939)"})
+                        "farman": "Farman 15, Vol 1 (1939)", "planets": ["Mars"]})
     if "Saturn" in occ[str(3)]:
         bhratra.append({"trigger": 3, "desc": "Saturn sits in 3rd house",
-                        "farman": "Farman 20, Vol 3 (1941)"})
+                        "farman": "Farman 20, Vol 3 (1941)", "planets": ["Saturn"]})
     if (_afflicts("Mercury", "Mars", planets, aspect_map)
             and "Mercury" in LK_ENEMIES["Mars"]):
         bhratra.append({"trigger": 4, "desc": "Mercury and Mars in mutual enmity-aspect",
-                        "farman": "Farman 26, Vol 4 (1942)"})
+                        "farman": "Farman 26, Vol 4 (1942)", "planets": ["Mercury", "Mars"]})
     if (house_empty(3) and house_empty(11)
             and lord_afflicted("Mercury") and lord_afflicted("Saturn")):
         bhratra.append({"trigger": 5, "desc": "Houses 3 and 11 empty AND their lords afflicted",
-                        "farman": "Farman 30, Vol 5 (1952)"})
-    results["bhratra_rin"] = _rin_record(bhratra,
-                                         pakka["Mercury"]["lk_dignity"] == "debilitated",
-                                         False)
+                        "farman": "Farman 30, Vol 5 (1952)", "planets": ["Mercury", "Saturn"]})
+    # No Compounding subsection exists for Bhratra Rin in rin_diagnosis.md §5 —
+    # do not fabricate one (A5); compounders list stays empty.
+    results["bhratra_rin"] = _rin_record(bhratra, [])
 
     # --- 6. Self / Atma Rin ------------------------------------------
     atma = []
     if _conjunct("Rahu", "Jupiter", planets):
         atma.append({"trigger": 1, "desc": "Jupiter conjunct Rahu",
-                     "farman": "Farman 4, Vol 2 (1940)"})
+                     "farman": "Farman 4, Vol 2 (1940)", "planets": ["Jupiter", "Rahu"]})
     if in_house("Jupiter", 10):
         atma.append({"trigger": 2, "desc": "Jupiter debilitated (house 10)",
-                     "farman": "Farman 18, Vol 1 (1939)"})
+                     "farman": "Farman 18, Vol 1 (1939)", "planets": ["Jupiter"]})
     if all(house_empty(h) for h in (1, 5, 9)):
         atma.append({"trigger": 3, "desc": "Blind chart — no planets in trines (1, 5, 9)",
-                     "farman": "Farman 32, Vol 5 (1952)"})
+                     "farman": "Farman 32, Vol 5 (1952)", "planets": []})
     if in_house("Ketu", 1) and not aspect_map_planet_aspected_by_benefic(
             "Ketu", aspect_map, sleeping):
         atma.append({"trigger": 4, "desc": "Ketu in 1 with no benefic aspect",
-                     "farman": "Farman 29, Vol 4 (1942)"})
+                     "farman": "Farman 29, Vol 4 (1942)", "planets": ["Ketu"]})
     if sleeping["Jupiter"]["sleeping"] and sleeping["Ketu"]["sleeping"]:
         atma.append({"trigger": 5, "desc": "Jupiter and Ketu both sleeping",
-                     "farman": "Farman 33, Vol 5 (1952)"})
-    results["atma_rin"] = _rin_record(atma, sleeping["Jupiter"]["sleeping"], False)
+                     "farman": "Farman 33, Vol 5 (1952)", "planets": ["Jupiter", "Ketu"]})
+    # No Compounding subsection exists for Atma Rin in rin_diagnosis.md §6 —
+    # do not fabricate one (A5); compounders list stays empty.
+    results["atma_rin"] = _rin_record(atma, [])
 
-    # --- cross-rin compounding ---------------------------------------
+    # --- Jupiter's 5th-house protective aspect (M1) -------------------
+    # aspects.md "Special Aspect Rules -> Jupiter's 5th-house Aspect":
+    # "Mitigates rin severity by one tier wherever it lands." Apply before
+    # cross-rin escalation so escalation acts on the mitigated severities.
+    jupiter_land_house = house_n_from(house["Jupiter"], 5)
+    for rname, rdata in results.items():
+        mitigated = rdata["triggered"] and jupiter_land_house in RIN_HOUSES.get(rname, set())
+        rdata["jupiter_5th_aspect_mitigation"] = mitigated
+        if mitigated:
+            rdata["severity_before_mitigation"] = rdata["severity"]
+            rdata["severity"] = _bump_tier(rdata["severity"], -1)
+
+    # --- cross-rin compounding (M2) ------------------------------------
+    # rin_diagnosis.md "Cross-Rin Compounding Rules": 2 rins active -> each
+    # one tier worse than diagnosed individually; 3+ -> debt-saturation.
     active = [k for k, v in results.items() if v["triggered"]]
+    active_count = len(active)
+    if active_count >= 2:
+        for rname in active:
+            rdata = results[rname]
+            rdata["severity_before_cross_rin_escalation"] = rdata["severity"]
+            rdata["severity"] = _bump_tier(rdata["severity"], +1)
+            rdata["cross_rin_escalated"] = True
+    else:
+        for rname in active:
+            results[rname]["cross_rin_escalated"] = False
+
     return {
         "rins": results,
         "active_rins": active,
-        "active_count": len(active),
-        "debt_saturation": len(active) >= 3,
+        "active_count": active_count,
+        "debt_saturation": active_count >= 3,
         "blocked_house_pattern": (
             results["pitri_rin"]["triggered"]
             and results["pitri_rin"]["severity"] == "Severe"
@@ -526,18 +660,24 @@ def aspect_map_planet_aspected_by_benefic(planet, aspect_map, sleeping):
     return False
 
 
-def _rin_record(triggers, compound_a, compound_b):
-    """Build a rin record. Severity per references/rin_diagnosis.md:
-    Mild = 1 trigger no compounding; Moderate = +1 compound factor;
-    Severe = 2+ triggers, or 1 trigger + 2 compound factors."""
+def _rin_record(triggers, compounders, multi_trigger_severe=False):
+    """Build a rin record. Severity per references/rin_diagnosis.md's shared
+    "Severity Scale": Mild = single trigger, no compounding; Moderate =
+    trigger + one compounding factor; Severe = trigger + two or more
+    compounding factors. `multi_trigger_severe` applies the Pitri-Rin-only
+    rule ("any one is sufficient; multiple = severe", §1) — the audit (A1)
+    found this had been generalized to all six rins; it is NOT generalized
+    here — only pitri_rin's call site passes multi_trigger_severe=True."""
     triggered = bool(triggers)
-    compounders = [c for c in (compound_a, compound_b) if c]
+    compounders = [c for c in compounders if c]
     n = len(triggers)
     if not triggered:
         severity = None
-    elif n >= 2 or len(compounders) >= 2:
+    elif multi_trigger_severe and n >= 2:
         severity = "Severe"
-    elif n == 1 and len(compounders) == 1:
+    elif len(compounders) >= 2:
+        severity = "Severe"
+    elif len(compounders) == 1:
         severity = "Moderate"
     else:
         severity = "Mild"
@@ -554,18 +694,31 @@ def _rin_record(triggers, compound_a, compound_b):
 # Phase 6 — teva (chart type) classification
 # ====================================================================
 
-def build_teva(fixed_chart, pakka, sleeping, rin):
-    """Classify the chart into 7 teva archetypes; Mishra if no clean match."""
+def build_teva(fixed_chart, pakka, sleeping, rin, aspect_map):
+    """Classify the chart into 7 teva archetypes; Mishra if no clean match.
+
+    Each archetype's trigger is expressed as a set of named boolean
+    sub-conditions. A clean match requires all of them true. "Dominant" is
+    the matched archetype with the highest count of satisfied sub-conditions
+    (a coarse strength score — teva_types.md L3/L6 "name the strongest
+    first"), not simply the first one tried in code order (A8). On full
+    Mishra fallback, the same per-archetype fractional scores are used to
+    name the closest two archetypes with matched/unmatched traits
+    (teva_types.md §8) (A9).
+
+    `aspect_map` is passed in (built once in build_baseline) rather than
+    recomputed here (previously recomputed 3x — P2-14).
+    """
     planets = fixed_chart["planets"]
     occ = fixed_chart["houses"]
     house = {p: planets[p]["fixed_house"] for p in LK_PLANETS}
 
     def afflicted(p):
-        """A planet is 'afflicted' for teva purposes if debilitated, sleeping,
-        buried, or in an enemy house."""
-        return (pakka[p]["lk_dignity"] in ("debilitated", "enemy")
-                or sleeping[p]["sleeping"]
-                or pakka[p]["buried"])
+        """A planet is 'afflicted' — aspects.md general definition (also used
+        by teva_types.md §1): debilitated, sleeping, or conjunct/aspected by
+        Saturn/Rahu/Ketu. (W2: previously substituted enemy-house + buried for
+        "with Saturn/Rahu/Ketu" — a different, unreferenced criterion.)"""
+        return _general_afflicted(p, pakka, sleeping, planets, aspect_map)
 
     kendras = [1, 4, 7, 10]
     empty_kendras = [h for h in kendras if not occ[str(h)]]
@@ -577,47 +730,15 @@ def build_teva(fixed_chart, pakka, sleeping, rin):
         pakka[lum]["lk_dignity"] == "debilitated" or pakka[lum]["buried"]
         for lum in ("Sun", "Moon"))
 
-    matched = []
-
-    # 1. Andha Teva (blind) — both luminaries afflicted + >=2 empty kendras.
-    if afflicted("Sun") and afflicted("Moon") and len(empty_kendras) >= 2:
-        matched.append({
-            "teva": "Andha",
-            "label": "Blind Chart",
-            "farman": "Farman 36, Vol 5 (1952)",
-            "matched_pattern": "Both luminaries afflicted AND "
-                               f"{len(empty_kendras)} kendras empty {empty_kendras}",
-        })
-
-    # 2. Lula Teva (lame) — Mars & Saturn conjunct/mutual-aspect + one in 1/4/8.
     ms_conjunct = _conjunct("Mars", "Saturn", planets)
-    ms_aspect = _afflicts("Mars", "Saturn", planets, build_aspect_map(fixed_chart))
-    if (ms_conjunct or ms_aspect) and (house["Mars"] in (1, 4, 8)
-                                       or house["Saturn"] in (1, 4, 8)):
-        variant = ("Mars-led" if house["Mars"] in (1, 4, 8) else "Saturn-led")
-        matched.append({
-            "teva": "Lula",
-            "label": "Lame Chart",
-            "farman": "Farman 39, Vol 5 (1952)",
-            "matched_pattern": f"Mars-Saturn {'conjunction' if ms_conjunct else 'mutual aspect'} "
-                               f"with one in house 1/4/8 ({variant})",
-        })
-
-    # 3. Behra Teva (deaf) — Mercury debil/sleeping + 3rd house compromised.
+    ms_aspect = _afflicts("Mars", "Saturn", planets, aspect_map)
     merc_bad = (pakka["Mercury"]["lk_dignity"] == "debilitated"
                 or sleeping["Mercury"]["sleeping"])
-    third_bad = ("Saturn" in occ["3"] or "Ketu" in occ["3"]
-                 or pakka["Mars"]["lk_dignity"] == "debilitated")
-    if merc_bad and third_bad:
-        matched.append({
-            "teva": "Behra",
-            "label": "Deaf Chart",
-            "farman": "Farman 41, Vol 5 (1952)",
-            "matched_pattern": "Mercury debilitated/sleeping AND 3rd house compromised",
-        })
-
-    # 4. Sukhi Teva (happy) — 2+ in pakka ghar, no severe rin (<=1 mild),
-    #    luminaries at least neutral.
+    # W1: 3rd house's owner (lord) is Mercury (LK_HOUSES_OWNED), not Mars —
+    # Mars's *pakka ghar* is house 3, but the 3rd *lord* is Mercury. Use the
+    # same lord_afflicted() helper Bhratra-Rin trigger 5 uses for this lord.
+    third_lord_afflicted = _lord_afflicted(HOUSE_OWNER[3], pakka, planets, aspect_map)
+    third_bad = ("Saturn" in occ["3"] or "Ketu" in occ["3"] or third_lord_afflicted)
     lum_ok = all(pakka[lum]["lk_dignity"] not in ("debilitated", "enemy")
                  and not sleeping[lum]["sleeping"]
                  for lum in ("Sun", "Moon"))
@@ -625,69 +746,128 @@ def build_teva(fixed_chart, pakka, sleeping, rin):
                  and sum(1 for v in rin["rins"].values()
                          if v["severity"] in ("Moderate",)) == 0
                  and active_rins <= 1)
-    if n_pakka >= 2 and only_mild and lum_ok:
-        matched.append({
-            "teva": "Sukhi",
-            "label": "Happy Chart",
-            "farman": "Farman 35, Vol 5 (1952)",
-            "matched_pattern": f"{n_pakka} planets in pakka ghar, "
-                               f"no severe/moderate rin, luminaries sound",
-        })
-
-    # 5. Dukhi Teva (sorrowful) — 2+ rins, 2+ sleeping, >=1 luminary deb/buried.
-    if active_rins >= 2 and n_sleeping >= 2 and luminary_deb_or_buried:
-        matched.append({
-            "teva": "Dukhi",
-            "label": "Sorrowful Chart",
-            "farman": "Farman 38, Vol 5 (1952)",
-            "matched_pattern": f"{active_rins} active rins, {n_sleeping} sleeping "
-                               f"planets, a luminary debilitated/buried",
-        })
-
-    # 6. Rajyogi Teva — Sun in pakka/exalted house 1 + aspected by Jupiter,
-    #    Saturn in pakka (10) or exalted (7), no severe rin.
     sun_royal = house["Sun"] == 1
     jup_aspects_sun = any(hit["planet"] == "Sun"
-                          for hit in build_aspect_map(fixed_chart)["Jupiter"]["planets_aspected"])
+                          for hit in aspect_map["Jupiter"]["planets_aspected"])
     saturn_royal = house["Saturn"] in (10, 7)
-    if sun_royal and jup_aspects_sun and saturn_royal and severe_rins == 0:
-        matched.append({
-            "teva": "Rajyogi",
-            "label": "Royal Chart",
-            "farman": "Farman 34, Vol 5 (1952)",
-            "matched_pattern": "Sun in house 1 aspected by Jupiter, Saturn in "
-                               f"house {house['Saturn']}, no severe rin",
-        })
-
-    # 7. Pujari Teva — Jupiter in 9, Ketu in 9/12 or aspecting Jupiter,
-    #    Saturn supportive (10 or 7).
     jup_pakka = house["Jupiter"] == 9
     ketu_spirit = (house["Ketu"] in (9, 12)
                    or any(hit["planet"] == "Jupiter"
-                          for hit in build_aspect_map(fixed_chart)["Ketu"]["planets_aspected"]))
+                          for hit in aspect_map["Ketu"]["planets_aspected"]))
     saturn_support = house["Saturn"] in (10, 7)
-    if jup_pakka and ketu_spirit and saturn_support:
-        matched.append({
-            "teva": "Pujari",
-            "label": "Spiritual / Priest Chart",
-            "farman": "Farman 37, Vol 5 (1952)",
-            "matched_pattern": "Jupiter in pakka ghar 9, Ketu spiritual, Saturn supportive",
+
+    archetypes = {
+        "Andha": {
+            "label": "Blind Chart", "farman": "Farman 36, Vol 5 (1952)",
+            "conditions": {
+                "Sun afflicted": afflicted("Sun"),
+                "Moon afflicted": afflicted("Moon"),
+                "2+ kendras empty": len(empty_kendras) >= 2,
+            },
+            "pattern": ("Both luminaries afflicted AND "
+                        f"{len(empty_kendras)} kendras empty {empty_kendras}"),
+        },
+        "Lula": {
+            "label": "Lame Chart", "farman": "Farman 39, Vol 5 (1952)",
+            "conditions": {
+                "Mars-Saturn conjunct or mutual aspect": ms_conjunct or ms_aspect,
+                "Mars or Saturn in house 1/4/8": (house["Mars"] in (1, 4, 8)
+                                                  or house["Saturn"] in (1, 4, 8)),
+            },
+            "pattern": (f"Mars-Saturn {'conjunction' if ms_conjunct else 'mutual aspect'} "
+                        "with one in house 1/4/8 "
+                        f"({'Mars-led' if house['Mars'] in (1, 4, 8) else 'Saturn-led'})"),
+        },
+        "Behra": {
+            "label": "Deaf Chart", "farman": "Farman 41, Vol 5 (1952)",
+            "conditions": {
+                "Mercury debilitated/sleeping": merc_bad,
+                "3rd house compromised (Saturn/Ketu in 3, or 3rd lord Mercury afflicted)": third_bad,
+            },
+            "pattern": "Mercury debilitated/sleeping AND 3rd house compromised",
+        },
+        "Sukhi": {
+            "label": "Happy Chart", "farman": "Farman 35, Vol 5 (1952)",
+            "conditions": {
+                "2+ planets in pakka ghar": n_pakka >= 2,
+                "no severe/moderate rin (<=1 mild)": only_mild,
+                "luminaries at least neutral": lum_ok,
+            },
+            "pattern": (f"{n_pakka} planets in pakka ghar, "
+                        "no severe/moderate rin, luminaries sound"),
+        },
+        "Dukhi": {
+            "label": "Sorrowful Chart", "farman": "Farman 38, Vol 5 (1952)",
+            "conditions": {
+                "2+ rins active": active_rins >= 2,
+                "2+ sleeping planets": n_sleeping >= 2,
+                "a luminary debilitated/buried": luminary_deb_or_buried,
+            },
+            "pattern": (f"{active_rins} active rins, {n_sleeping} sleeping "
+                        "planets, a luminary debilitated/buried"),
+        },
+        "Rajyogi": {
+            "label": "Royal Chart", "farman": "Farman 34, Vol 5 (1952)",
+            "conditions": {
+                "Sun in house 1": sun_royal,
+                "Jupiter aspects Sun": jup_aspects_sun,
+                "Saturn in pakka(10)/exalted(7)": saturn_royal,
+                "no severe rin": severe_rins == 0,
+            },
+            "pattern": ("Sun in house 1 aspected by Jupiter, Saturn in "
+                        f"house {house['Saturn']}, no severe rin"),
+        },
+        "Pujari": {
+            "label": "Spiritual / Priest Chart", "farman": "Farman 37, Vol 5 (1952)",
+            "conditions": {
+                "Jupiter in pakka ghar 9": jup_pakka,
+                "Ketu spiritual (9/12 or aspecting Jupiter)": ketu_spirit,
+                "Saturn supportive (10/7)": saturn_support,
+            },
+            "pattern": "Jupiter in pakka ghar 9, Ketu spiritual, Saturn supportive",
+        },
+    }
+
+    matched = []
+    partial_scores = []
+    for name, data in archetypes.items():
+        conds = data["conditions"]
+        n_true = sum(1 for v in conds.values() if v)
+        n_total = len(conds)
+        partial_scores.append({
+            "teva": name,
+            "fraction": round(n_true / n_total, 3),
+            "matched_conditions": [k for k, v in conds.items() if v],
+            "unmatched_conditions": [k for k, v in conds.items() if not v],
         })
+        if n_true == n_total:
+            matched.append({
+                "teva": name,
+                "label": data["label"],
+                "farman": data["farman"],
+                "matched_pattern": data["pattern"],
+                "strength_score": n_true,
+            })
 
     if not matched:
+        partial_scores.sort(key=lambda s: s["fraction"], reverse=True)
         dominant = {
             "teva": "Mishra",
             "label": "Mixed / Composite Chart",
             "farman": None,
             "matched_pattern": "No single teva archetype matched cleanly; "
                                "most modern charts are Mishra",
+            "closest_two": partial_scores[:2],
         }
-        return {"dominant": dominant, "secondary": [], "all_matched": []}
+        return {"dominant": dominant, "secondary": [], "all_matched": [],
+                "partial_scores": partial_scores}
 
+    matched.sort(key=lambda m: m["strength_score"], reverse=True)
     return {
         "dominant": matched[0],
         "secondary": matched[1:3],
         "all_matched": matched,
+        "partial_scores": partial_scores,
     }
 
 
@@ -738,10 +918,22 @@ def year_ruler(age):
 
 def planet_condition(planet, pakka, sleeping, rin):
     """Compact natal condition of a planet for Varshphal / timing read-out."""
+    # A11: attribution is structural — each fired trigger is tagged with an
+    # explicit "planets" list at creation time (build_rin_diagnosis) instead
+    # of substring-matching the planet's name against the free-text "desc".
+    # Substring matching missed lord-only triggers whose desc names the lord
+    # planet but not the karaka planet being asked about (or vice versa), and
+    # is fragile to renames/casing. Fall back to the old substring check only
+    # if an older/foreign trigger dict has no "planets" key.
     rin_involved = []
     for rname, rdata in rin["rins"].items():
         for trig in rdata["fired_triggers"]:
-            if planet.lower() in trig["desc"].lower():
+            trig_planets = trig.get("planets")
+            if trig_planets is not None:
+                hit = planet in trig_planets
+            else:
+                hit = planet.lower() in trig["desc"].lower()
+            if hit:
                 rin_involved.append(rname)
                 break
     return {
@@ -751,6 +943,10 @@ def planet_condition(planet, pakka, sleeping, rin):
         "sleeping": sleeping[planet]["sleeping"],
         "buried": pakka[planet]["buried"],
         "rin_involved": sorted(set(rin_involved)),
+        # A12: varshphal.md "How to Read a Year" Step 2 needs the houses the
+        # year-ruler aspects and owns, not just its own placement.
+        "aspected_houses": sorted(aspected_houses(planet, pakka[planet]["fixed_house"])),
+        "owned_houses": LK_HOUSES_OWNED[planet],
     }
 
 
@@ -793,10 +989,13 @@ MATURATION_AGE = {
 }
 
 # Signal 3 — 35/36-year house cycle (6 years per house) — references/timing.md.
+# House 9's 2nd band is documented as "84+" (open-ended, timing.md Signal 3
+# table) — finitised here to a very high age (200) so it behaves as
+# effectively open-ended rather than capping out at a plausible lifespan (A10).
 HOUSE_CYCLE = {
     1: [(1, 6), (36, 41)], 2: [(7, 12), (42, 47)], 3: [(13, 18), (48, 53)],
     4: [(19, 24), (54, 59)], 5: [(25, 30), (60, 65)], 6: [(31, 36), (66, 71)],
-    7: [(37, 42), (72, 77)], 8: [(43, 48), (78, 83)], 9: [(49, 54), (84, 90)],
+    7: [(37, 42), (72, 77)], 8: [(43, 48), (78, 83)], 9: [(49, 54), (84, 200)],
     10: [(55, 60)], 11: [(61, 66)], 12: [(67, 72)],
 }
 
@@ -807,6 +1006,14 @@ HOUSE_CYCLE = {
 JUPITER_YEARS = sorted(a for a, rs in YEAR_RULER.items() if "Jupiter" in rs)
 
 
+def _absolute_longitude(planet_info):
+    """Absolute (sidereal) longitude reconstructed from the Lal Kitab fixed
+    house (= sign index + 1) and the degree within that sign — used only for
+    the combustion orb check (A6), since fixed-house identity alone loses the
+    within-sign degree needed for a 10-degree Sun orb."""
+    return (planet_info["fixed_house"] - 1) * 30 + planet_info["deg_in_sign"]
+
+
 def build_timing_signals(age, fixed_chart, pakka, sleeping):
     """Raw four-signal timing-engine outputs — deterministic only. The skill's
     Phase 8D layers the event mapping, filters and convergence ranking on top."""
@@ -814,10 +1021,22 @@ def build_timing_signals(age, fixed_chart, pakka, sleeping):
     house = {p: planets[p]["fixed_house"] for p in LK_PLANETS}
 
     # Signal 1 — maturation ages with the planet's delivery posture.
+    # timing.md Signal 1: "combust (within 10 deg of Sun) -> maturation
+    # distorted" (A6) — computed from the reconstructed absolute longitude,
+    # independent of the sleeping/dignity-based delivery switch below.
+    sun_lon = _absolute_longitude(planets["Sun"])
     maturation = {}
     for p in LK_PLANETS:
         mage = MATURATION_AGE[p]
         dig = pakka[p]["lk_dignity"]
+        if p != "Sun":
+            p_lon = _absolute_longitude(planets[p])
+            raw_diff = abs(p_lon - sun_lon) % 360
+            orb = min(raw_diff, 360 - raw_diff)
+            combust = orb < 10
+        else:
+            orb = 0.0
+            combust = False
         if sleeping[p]["sleeping"]:
             delivery = "muted (sleeping — needs awakening trigger)"
         elif dig == "exalted":
@@ -832,7 +1051,14 @@ def build_timing_signals(age, fixed_chart, pakka, sleeping):
             delivery = "friction"
         else:
             delivery = "neutral"
-        maturation[p] = {"maturation_age": mage, "delivery": delivery}
+        if combust:
+            delivery += " (combust — maturation distorted, Sun-domain interferes)"
+        maturation[p] = {
+            "maturation_age": mage,
+            "delivery": delivery,
+            "combust": combust,
+            "orb_from_sun_deg": round(orb, 2),
+        }
 
     # Signal 2 — year-ruler per age across a default 15-year window.
     window_start = age if age is not None else 1
@@ -889,7 +1115,7 @@ def build_baseline(chart, age):
     aspect_map = build_aspect_map(fixed_chart)
     sleeping = build_sleeping(fixed_chart, aspect_map)
     rin = build_rin_diagnosis(fixed_chart, pakka, aspect_map, sleeping)
-    teva = build_teva(fixed_chart, pakka, sleeping, rin)
+    teva = build_teva(fixed_chart, pakka, sleeping, rin, aspect_map)
     varshphal = build_varshphal(age, pakka, sleeping, rin)
     timing = build_timing_signals(age, fixed_chart, pakka, sleeping)
 

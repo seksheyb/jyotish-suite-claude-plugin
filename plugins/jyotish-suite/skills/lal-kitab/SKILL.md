@@ -76,6 +76,33 @@ every downstream phase too (see Wave 2).
 
 ### Phase A — Intake
 
+Present this box (matching Phase 0's formatted style) before collecting the
+chart:
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CHART INPUT
+
+I need one of the following:
+
+  1. A pre-computed Vedic D1 chart (planet positions by sign/degree,
+     Lagna, birth details)
+
+  2. Raw birth data — I'll compute the D1 myself:
+       • Date of birth
+       • Time of birth (as exact as possible)
+       • Place of birth (city, or lat/long)
+       • Ayanamsa (Lahiri is the default if unsure)
+       • Current age (needed for Varshphal / timing — can be added later)
+
+Required data:  D1 planetary positions (sign + degree), Lagna, birth date/
+                time/place. Current age unlocks Varshphal + timing.
+NOT used:       D9, Nakshatras, Vimshottari Dasha — Lal Kitab is a single-
+                chart, dasha-free system. If you provide any of these, I'll
+                display them but exclude them from analysis with a note.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
 1. Ask for the Vedic D1 chart, OR birth data (date, time, place, lat/long,
    ayanamsa, current age for Varshphal). If only birth data is given, a D1 is
    computed in Wave 0. D9 / Nakshatras / Vimshottari are not used — if supplied,

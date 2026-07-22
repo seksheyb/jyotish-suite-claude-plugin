@@ -189,6 +189,33 @@ several rins, a relative, a year window, timing, upaay) dispatch below.
 
 ---
 
+## Per-House Output Format (Mode A / Phase 8A)
+
+Each house write-up produced by a Mode A `unit-analyzer` (one per 3-house
+cluster) uses this template — short and consistent across all 12 houses so
+the cross-house synthesis in Wave 2 can scan them uniformly (mirrors
+`rin_diagnosis.md`'s "Per-Rin Output Format" and `family_chart.md`'s "Output
+Structure (Per Relative)"):
+
+```
+HOUSE [N] — [signification, e.g. "3rd — courage, siblings, initiative"]
+Sign:            [Aries/Taurus/... — fixed, Aries always house 1]
+Owner:           [planet, or "none" for Rahu/Ketu-owned N/A houses]
+Planets in:      [list, or "empty"]
+  Per planet:    [pakka ghar Y/N, dignity, sleeping Y/N, buried Y/N]
+Aspects on:      [planets aspecting this house, friend/enemy/neutral]
+Key dynamics:    [1-2 lines — pakka ghar substitution, blind-house status,
+                  any rin trigger housed here]
+Verdict:         [strong / mixed / weak — one line]
+Reasoning:       [2-3 lines tying dignity + aspects + rin/teva context together]
+```
+
+Each cluster worker produces 3 of these (one per house in its cluster); the
+synthesizer pulls strongest/weakest houses from across all 4 clusters for the
+Phase 10 summary.
+
+---
+
 ## Synthesis weighting (Wave 2)
 
 The `synthesizer` (model opus, effort high — synthesis is the product, so the
