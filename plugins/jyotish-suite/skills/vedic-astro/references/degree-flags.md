@@ -25,20 +25,20 @@ A planet at its Mrityu Bhaga degree in a sign struggles to deliver its significa
 
 Pushkara Navamsas are specific 3°20' zones within signs that are considered highly auspicious. A planet placed here is empowered to give its best results.
 
-| Sign | Pushkara Navamsa Degrees |
-|------|--------------------------|
-| Aries | 6°40'–10°00' (Pada 3, Navamsa = Gemini) |
-| Taurus | 10°00'–13°20' (Pada 4, Navamsa = Pisces... also 23°20'–26°40') |
-| Gemini | 3°20'–6°40' and 16°40'–20°00' |
-| Cancer | 10°00'–13°20' and 20°00'–23°20' |
-| Leo | 6°40'–10°00' and 26°40'–30°00' |
-| Virgo | 0°00'–3°20' and 20°00'–23°20' |
-| Libra | 3°20'–6°40' and 23°20'–26°40' |
-| Scorpio | 10°00'–13°20' and 16°40'–20°00' |
-| Sagittarius | 6°40'–10°00' and 26°40'–30°00' |
-| Capricorn | 0°00'–3°20' and 20°00'–23°20' |
-| Aquarius | 3°20'–6°40' and 23°20'–26°40' |
-| Pisces | 6°40'–10°00' and 16°40'–20°00' |
+| Sign | Pushkara Navamsa Zones (degrees within the sign) |
+|------|--------------------------------------------------|
+| Aries | 6°40'–10°00' and 23°20'–26°40' |
+| Taurus | 3°20'–6°40' and 16°40'–20°00' |
+| Gemini | 6°40'–10°00' and 20°00'–23°20' |
+| Cancer | 0°00'–3°20' and 16°40'–20°00' |
+| Leo | 3°20'–6°40' and 20°00'–23°20' |
+| Virgo | 6°40'–10°00' and 23°20'–26°40' |
+| Libra | 0°00'–3°20' and 16°40'–20°00' |
+| Scorpio | 3°20'–6°40' and 20°00'–23°20' |
+| Sagittarius | 6°40'–10°00' and 23°20'–26°40' |
+| Capricorn | 0°00'–3°20' and 16°40'–20°00' |
+| Aquarius | 3°20'–6°40' and 20°00'–23°20' |
+| Pisces | 6°40'–10°00' and 23°20'–26°40' |
 
 ---
 

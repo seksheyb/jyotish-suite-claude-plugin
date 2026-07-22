@@ -21,6 +21,7 @@ import os
 import sys
 import json
 import argparse
+from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "lib"))
 import jyotish_primitives as jp  # noqa: E402
@@ -203,6 +204,24 @@ def orb_band(orb):
     return "loose"
 
 
+def ordinal(n):
+    """1->'1st', 2->'2nd', 3->'3rd', 4->'4th', ... (with the teens exception)."""
+    if 10 <= n % 100 <= 20:
+        suffix = "th"
+    else:
+        suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"
+
+
+def _dms_to_deg(dms):
+    """'DDD-MM-SS' -> decimal degrees."""
+    parts = str(dms).split("-")
+    d = float(parts[0]) if parts and parts[0] else 0.0
+    m = float(parts[1]) if len(parts) > 1 else 0.0
+    s = float(parts[2]) if len(parts) > 2 else 0.0
+    return d + m / 60.0 + s / 3600.0
+
+
 def compute_aspect_map(planets, lagna_si):
     """For every planet, the houses and planets it aspects under Parashari
     graha drishti (universal 7th + Mars 4/8, Jupiter 5/9, Saturn 3/10)."""
@@ -229,9 +248,21 @@ def compute_aspect_map(planets, lagna_si):
                 sep = min(sep, 360 - sep)
                 hit.append({"planet": q, "orb": round(sep, 2),
                             "strength": orb_band(sep)})
-            aspects.append({"aspect": f"{dist}th", "sign": jp.SIGNS[tsi],
+            aspects.append({"aspect": ordinal(dist), "sign": jp.SIGNS[tsi],
                             "house": thouse, "planets_aspected": hit})
         aspect_map[p] = aspects
+
+    # Second pass — flag mutual aspects (A aspects B and B aspects A).
+    aspected_by = {p: set() for p in aspect_map}
+    for p, entries in aspect_map.items():
+        for e in entries:
+            for h in e["planets_aspected"]:
+                aspected_by[p].add(h["planet"])
+    for p, entries in aspect_map.items():
+        for e in entries:
+            for h in e["planets_aspected"]:
+                h["mutual"] = p in aspected_by.get(h["planet"], set())
+
     return aspect_map
 
 
@@ -252,6 +283,7 @@ def build_planet_block(p, info, planets_raw):
         "house": info["house"],
         "nakshatra": info["nakshatra"],
         "pada": info["pada"],
+        "gana": jp.gana_of(lon),
         "star_lord": info["star_lord"],
         "sign_lord": info["sign_lord"],
         "retrograde": info.get("retrograde", False),
@@ -270,20 +302,150 @@ def build_planet_block(p, info, planets_raw):
 
 
 # ====================================================================
+# D9 (Navamsa) sub-chart
+# ====================================================================
+
+def d9_longitude(d1_lon):
+    """Expanded Navamsa longitude — the D9 sign plus the planet's position
+    within its 3deg20' navamsa scaled up to a full 30deg sign."""
+    d9_si, _ = jp.navamsa_sign(d1_lon)
+    pos_in_navamsa = jp.deg_in_sign(d1_lon) % jp.NAVAMSA_ARC
+    return d9_si * 30.0 + pos_in_navamsa * 9.0
+
+
+def build_d9(lagna_lon, planets_raw):
+    """Deterministic D9 sub-chart: D9 Lagna, per-planet D9 sign/house/degree/
+    dignity/flags, and the D9 graha-drishti aspect map (methodology Step 3)."""
+    d9_lagna_lon = d9_longitude(lagna_lon)
+    d9_lagna_si = int(d9_lagna_lon // 30)
+
+    d9_planets = {}
+    for p, info in planets_raw.items():
+        d9_lon = d9_longitude(info["longitude"])
+        d9_si = int(d9_lon // 30)
+        flags = jp.degree_flags(p, d9_lon)
+        d9_planets[p] = {
+            "sign": jp.SIGNS[d9_si],
+            "deg_in_sign": round(jp.deg_in_sign(d9_lon), 4),
+            "house": jp.house_of(d9_si, d9_lagna_si),
+            "sign_lord": jp.SIGN_LORDS[d9_si],
+            "dignity": jp.dignity(p, d9_lon),
+            "vargottama": jp.is_vargottama(info["longitude"]),
+            "degree_flags": {
+                "gandanta": flags["gandanta"],
+                "sandhi": flags["sandhi"],
+                "mrityu_bhaga": flags["mrityu_bhaga"],
+                "pushkara_bhaga": flags["pushkara_bhaga"],
+                "pushkara_navamsa": flags["pushkara_navamsa"],
+            },
+        }
+
+    return {
+        "lagna": {
+            "sign": jp.SIGNS[d9_lagna_si],
+            "lord": jp.SIGN_LORDS[d9_lagna_si],
+            "deg_in_sign": round(jp.deg_in_sign(d9_lagna_lon), 4),
+        },
+        "planets": d9_planets,
+        "aspect_map": compute_aspect_map(d9_planets, d9_lagna_si),
+    }
+
+
+# ====================================================================
+# Vimshottari dasha — resolved at the reading date, not at birth
+# ====================================================================
+
+def build_dasha_block(chart, asof_dt):
+    """Resolve the Vimshottari dasha running at `asof_dt`. The tree is anchored
+    at birth (Moon longitude + birth datetime) and spans 9 mahadashas so any
+    reasonable reading date is covered. Emits the running MD/AD/PD/SD, the full
+    mahadasha timeline, and the antardasha timeline of the current MD."""
+    raw = chart.get("dasha") or {}
+    birth_iso = chart.get("datetime_utc")
+    moon = chart.get("d1", {}).get("planets", {}).get("Moon")
+
+    if birth_iso and moon:
+        birth_dt = datetime.fromisoformat(birth_iso)
+        moon_lon = moon["longitude"]
+        tree = jp.build_dasha_tree(moon_lon, birth_dt, n_md=9)
+        running = jp.find_running(tree, asof_dt)
+        start_lord, balance, _elapsed = jp.vimshottari_balance(moon_lon)
+        block = {
+            "available": True,
+            "asof": asof_dt.isoformat(),
+            "starting_mahadasha": start_lord,
+            "balance_years": round(balance, 3),
+            "mahadasha_sequence": [
+                {"md_lord": md["md_lord"], "start": md["start"], "end": md["end"]}
+                for md in tree],
+        }
+        if running:
+            block["running"] = {
+                "mahadasha": {"lord": running["md_lord"],
+                              "start": running["md_period"][0],
+                              "end": running["md_period"][1]},
+                "antardasha": {"lord": running["bd_lord"],
+                               "start": running["bd_period"][0],
+                               "end": running["bd_period"][1]},
+                "pratyantardasha": {"lord": running["ad_lord"],
+                                    "start": running["ad_period"][0],
+                                    "end": running["ad_period"][1]},
+                "sookshma": {"lord": running["sd_lord"],
+                             "start": running["sd_period"][0],
+                             "end": running["sd_period"][1]},
+            }
+            bhuktis = []
+            for md in tree:
+                if md["start"] == running["md_period"][0]:
+                    bhuktis = [{"bd_lord": b["bd_lord"], "start": b["start"],
+                                "end": b["end"]} for b in md["bhuktis"]]
+                    break
+            block["current_mahadasha_bhuktis"] = bhuktis
+        else:
+            block["running"] = None
+            block["note"] = ("asof date falls outside the 9-mahadasha span; "
+                             "no running dasha resolved.")
+        return block
+
+    if raw.get("source") == "user-supplied":
+        return {"available": True, "source": "user-supplied",
+                **{k: v for k, v in raw.items() if k != "source"}}
+
+    return {"available": False,
+            "note": "No birth datetime supplied — Vimshottari dasha omitted. "
+                    "Share birth date, time and place for dasha timing."}
+
+
+# ====================================================================
 # Main
 # ====================================================================
 
-def build_baseline(chart):
+def build_baseline(chart, asof_dt):
     d1 = chart["d1"]
     planets_raw = d1["planets"]
     lagna_sign = d1["lagna_sign"]
     lagna_si = jp.SIGNS.index(lagna_sign)
     lagna_lord = jp.SIGN_LORDS[lagna_si]
+    lagna_lon = d1.get("lagna_longitude")
+    if lagna_lon is None:
+        lagna_lon = _dms_to_deg(d1.get("lagna_longitude_dms", "000-00-00"))
 
     benefics, malefics, yogakaraka = FUNCTIONAL_ROLES[lagna_sign]
 
     planets = {p: build_planet_block(p, info, planets_raw)
                for p, info in planets_raw.items()}
+
+    # Planetary War (Graha Yuddha) — needs all positions together.
+    positions = {p: info["longitude"] for p, info in planets_raw.items()}
+    wars = jp.planetary_war(positions)
+    war_by_planet = {}
+    for w in wars:
+        war_by_planet[w["winner"]] = {"role": "winner", "opponent": w["loser"],
+                                      "separation": w["separation"]}
+        war_by_planet[w["loser"]] = {"role": "loser", "opponent": w["winner"],
+                                     "separation": w["separation"]}
+    for p in planets:
+        planets[p]["degree_flags"]["planetary_war"] = war_by_planet.get(p, False)
 
     # Ashtakavarga uses the 7 visible planets' D1 sign indices.
     planet_sign_idx = {p: jp.SIGNS.index(planets_raw[p]["sign"])
@@ -310,9 +472,11 @@ def build_baseline(chart):
             "yogakaraka": yogakaraka,
         },
         "planets": planets,
+        "planetary_war": wars,
         "chara_karakas": compute_chara_karakas(planets),
         "aspect_map": compute_aspect_map(planets, lagna_si),
-        "dasha": chart.get("dasha", {}).get("running"),
+        "d9": build_d9(lagna_lon, planets_raw),
+        "dasha": build_dasha_block(chart, asof_dt),
         "ashtakavarga": {
             "sav_per_sign": sav,
             "sav_total": sum(sav.values()),
@@ -329,7 +493,14 @@ def main():
     ap.add_argument("--lat", type=float, help="Latitude (decimal degrees)")
     ap.add_argument("--lon", type=float, help="Longitude (decimal degrees)")
     ap.add_argument("--chart", help="Path to a pre-computed parashari_natal_chart JSON")
+    ap.add_argument("--asof", help="Reading date (ISO) the Vimshottari dasha is "
+                                   "resolved at. Default: today (UTC).")
     args = ap.parse_args()
+
+    if args.asof:
+        asof_dt = datetime.fromisoformat(args.asof)
+    else:
+        asof_dt = datetime.now(timezone.utc).replace(tzinfo=None)
 
     if args.chart:
         with open(args.chart) as f:
@@ -342,7 +513,7 @@ def main():
             ap.error("provide --chart, or all of: " + ", ".join(missing))
         chart = eph.parashari_natal_chart(args.datetime, args.tz, args.lat, args.lon)
 
-    baseline = build_baseline(chart)
+    baseline = build_baseline(chart, asof_dt)
     print(json.dumps(baseline, indent=2, default=str))
 
 

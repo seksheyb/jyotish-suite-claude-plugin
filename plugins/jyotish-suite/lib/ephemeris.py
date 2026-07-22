@@ -218,6 +218,7 @@ def assemble_parashari(asc_lon, planets_raw, dasha, meta):
         "datetime_utc": meta.get("datetime_utc"),
         "location": meta.get("location"),
         "d1": {"lagna_sign": asc_sign,
+               "lagna_longitude": round(asc_lon, 4),
                "lagna_longitude_dms": jp.deg_to_dms(asc_lon),
                "lagna_nakshatra": jp.get_nakshatra(asc_lon)[1],
                "planets": planets},

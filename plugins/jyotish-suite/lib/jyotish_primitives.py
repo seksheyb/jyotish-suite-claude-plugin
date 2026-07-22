@@ -41,6 +41,15 @@ NAKSHATRAS = [
     ("Purva Bhadrapada", "Jupiter"), ("Uttara Bhadrapada", "Saturn"), ("Revati", "Mercury"),
 ]
 
+# Gana (temperament) per nakshatra — same index order as NAKSHATRAS.
+NAKSHATRA_GANA = [
+    "Deva", "Manushya", "Rakshasa", "Manushya", "Deva", "Manushya",
+    "Deva", "Deva", "Rakshasa", "Rakshasa", "Manushya", "Manushya",
+    "Deva", "Rakshasa", "Deva", "Rakshasa", "Deva", "Rakshasa",
+    "Rakshasa", "Manushya", "Manushya", "Deva", "Rakshasa", "Rakshasa",
+    "Manushya", "Manushya", "Deva",
+]
+
 VIM_SEQ = ["Ketu", "Venus", "Sun", "Moon", "Mars", "Rahu", "Jupiter", "Saturn", "Mercury"]
 VIM_YEARS = {"Ketu": 7, "Venus": 20, "Sun": 6, "Moon": 10, "Mars": 7,
              "Rahu": 18, "Jupiter": 16, "Saturn": 19, "Mercury": 17}
@@ -116,6 +125,10 @@ MOOLATRIKONA = {
     "Mercury": (5, 16, 20), "Jupiter": (8, 0, 10), "Venus": (6, 0, 15),
     "Saturn": (10, 0, 20),
 }
+# Node dignity (school-dependent) per references/chart-tables.md.
+# Sign indices: Taurus=1, Gemini=2, Scorpio=7, Sagittarius=8.
+NODE_EXALT = {"Rahu": [1, 2], "Ketu": [7, 8]}
+NODE_DEBIL = {"Rahu": [7, 8], "Ketu": [1, 2]}
 # Natural friendships (Parashari).
 NATURAL_FRIENDS = {
     "Sun": ["Moon", "Mars", "Jupiter"],
@@ -183,6 +196,11 @@ def get_pada(lon):
     _idx, _n, _sl, nak_start = get_nakshatra(lon)
     pos = norm360(lon) - nak_start
     return int(pos // (NAK_ARC / 4)) + 1
+
+
+def gana_of(lon):
+    """Return the Gana (Deva / Manushya / Rakshasa) of the nakshatra at lon."""
+    return NAKSHATRA_GANA[int(norm360(lon) // NAK_ARC)]
 
 
 def get_sub_and_subsub(lon):
@@ -384,11 +402,18 @@ def degree_flags(planet, lon, sun_lon=None, retrograde=False):
 
 def dignity(planet, lon):
     """Return the Parashari placement dignity of a planet at a longitude:
-    'exalted' | 'debilitated' | 'moolatrikona' | 'own' | 'great_friend'
-    | 'friend' | 'neutral' | 'enemy' | 'great_enemy' | 'n/a'."""
-    if planet in ("Rahu", "Ketu") or planet not in EXALTATION:
-        return "n/a"
+    'exalted' | 'debilitated' | 'moolatrikona' | 'own' | 'friend' |
+    'neutral' | 'enemy' | 'n/a'. Rahu/Ketu resolve to exalted /
+    debilitated / neutral per references/chart-tables.md."""
     si = int(norm360(lon) // 30)
+    if planet in ("Rahu", "Ketu"):
+        if si in NODE_EXALT[planet]:
+            return "exalted"
+        if si in NODE_DEBIL[planet]:
+            return "debilitated"
+        return "neutral"
+    if planet not in EXALTATION:
+        return "n/a"
     d = deg_in_sign(lon)
     ex_sign, _ex_deg = EXALTATION[planet]
     if si == ex_sign:

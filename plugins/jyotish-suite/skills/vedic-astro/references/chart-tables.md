@@ -59,21 +59,12 @@ Pada placement determines the Navamsa sign:
 
 Total cycle: 120 years. Sequence always follows: Ketu → Venus → Sun → Moon → Mars → Rahu → Jupiter → Saturn → Mercury → repeat.
 
-## Mrityu Bhaga (Death Degrees) by Planet & Sign
-| Sign | Sun | Moon | Mars | Mercury | Jupiter | Venus | Saturn | Rahu/Ketu |
-|------|-----|------|------|---------|---------|-------|--------|-----------|
-| Aries | 20 | 26 | — | — | 17 | — | — | — |
-| Taurus | — | 12 | 28 | — | — | 15 | — | — |
-| Gemini | — | — | — | 14 | — | — | — | — |
-| Cancer | — | 25 | — | — | — | — | 28 | — |
-| Leo | 24 | — | — | — | — | 16 | — | — |
-| Virgo | — | — | 11 | 13 | — | — | — | — |
-| Libra | — | 26 | — | — | 18 | — | — | — |
-| Scorpio | 16 | — | — | — | — | 14 | — | — |
-| Sagittarius | — | — | 23 | — | — | — | — | — |
-| Capricorn | — | 29 | — | — | — | — | 21 | — |
-| Aquarius | — | — | — | 19 | — | — | — | — |
-| Pisces | — | 12 | — | — | 21 | — | — | — |
+## Mrityu Bhaga (Death Degrees)
+
+The full Mrityu Bhaga table — every planet, every sign, plus the Lagna row —
+lives in `degree-flags.md`. That file is the single source of truth the
+baseline script (`compute_vedic_baseline.py`) implements; do not maintain a
+second copy here.
 
 ## Gandanta Zones (Karmically Sensitive)
 Junction of water-to-fire sign transitions:

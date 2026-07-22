@@ -57,9 +57,11 @@ produce the D9 alongside the D1, and `compute_vedic_baseline.py` carries it. So:
 2. **Never skip question intake.** Classify the question before analyzing.
 3. **Always cite degrees and Nakshatras** when making claims about planetary
    strength — the baseline JSON carries these; workers must quote them.
-4. **Trust the baseline.** Deterministic facts (degree flags, dignity, dasha
-   dates, chara karakas, Ashtakavarga, aspect map) are pre-computed by the
-   sidecar. Workers do not recompute them; they interpret them.
+4. **Trust the baseline.** Deterministic facts (degree flags including
+   planetary war, dignity, the as-of Vimshottari dasha, chara karakas,
+   Ashtakavarga, the D1 + D9 aspect maps and the full D9 sub-chart) are
+   pre-computed by the sidecar. Workers do not recompute them; they
+   interpret them.
 5. **Distinguish D1 from D9** clearly at all times; never conflate the two.
 6. **Flag missing data** — e.g. absent dasha balance — and proceed with
    caveats rather than guessing.

@@ -2,7 +2,7 @@
 name: vedic-astro
 description: >
   Trigger this skill immediately and exclusively when the user types "/vedic-astro" anywhere in their
-  message. This skill accepts a pre-computed Vedic birth chart (D1 + D9) — or birth data to compute one —
+  message. This skill accepts a pasted Vedic birth chart (just the D1 with degrees — the D9 Navamsa is derived) — or birth data to compute one —
   displays it back for verification, then performs a deep multi-layered Vedic astrological reading using
   rigorous methodology covering Nakshatras, Padas, degrees, aspects, Dashas, and composite synthesis.
   Always use this skill — never attempt Vedic chart work without it. Also trigger when user says
@@ -96,7 +96,9 @@ Full interpretive methodology lives in `references/`; the `unit-analyzer` and
 | `references/navamsa-table.md` | D9 computation and Vargottama check |
 | `references/degree-flags.md` | Mrityu Bhaga, Pushkara, Gandanta, Sandhi, Planetary War |
 | `references/functional-roles.md` | Functional benefic/malefic and Raja Yoga karaka by Lagna |
+| `references/ashtakavarga.md` | Bhinnashtakavarga contribution tables, SAV scheme, strength thresholds |
 
-Deterministic computation (degree-flag scans, dignity, dasha math,
-Ashtakavarga) is owned by `compute_vedic_baseline.py`; the reference tables
-above remain the human-readable spec for that logic.
+Deterministic computation (degree-flag scans incl. planetary war, dignity,
+the as-of Vimshottari dasha, the D1 + D9 sub-charts, Ashtakavarga) is owned by
+`compute_vedic_baseline.py`; the reference tables above remain the
+human-readable spec for that logic.

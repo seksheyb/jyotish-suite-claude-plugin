@@ -64,7 +64,7 @@ For each planet:
 - Sign, degree, Nakshatra, Pada
 - **Degree checks:** Gandanta / Mrityu Bhaga / Pushkara / Sandhi / Planetary War
 - **Nakshatra Lord** — which planet rules this Nakshatra? What houses does it rule for this Lagna? What does it signify?
-- **Pada Lord** *(only if D9 chart is provided)* — the Pada Lord is the lord of the planet's D9 sign (Navamsa sign). Look up the planet's D9 sign from the provided D9 chart, then identify the lord of that sign. That lord is the Pada Lord. What houses does it rule in D1? How does its nature and placement add texture to how this planet expresses? If D9 is not provided, skip Pada Lord entirely — do not attempt to derive it from Pada number.
+- **Pada Lord** — the Pada Lord is the lord of the planet's D9 sign (Navamsa sign). The D9 is always derived in the baseline; look up the planet's D9 sign there, then identify the lord of that sign. That lord is the Pada Lord. What houses does it rule in D1? How does its nature and placement add texture to how this planet expresses?
 - **Nakshatra Gana:**
   - Deva Gana = structured, righteous, consistent expression
   - Manushya Gana = conditional, worldly, self-interested expression
@@ -78,7 +78,7 @@ For each planet:
 ### c. House Lord
 - Where is the House Lord placed? House, sign, degree, Nakshatra, Pada
 - Full degree checks (Gandanta, Mrityu Bhaga, Pushkara, Sandhi, War)
-- Nakshatra Lord and Pada Lord analysis *(Pada Lord only if D9 is provided — use D9 sign of the house lord to identify its Pada Lord)*
+- Nakshatra Lord and Pada Lord analysis *(use the D9 sign of the house lord to identify its Pada Lord)*
 - Dignity and combustion check
 - **House connection** — the house the lord sits in is connected to the house it rules (mutual activation)
 
@@ -206,7 +206,7 @@ Synthesize all layers using this priority order:
 | 5 | **D9 confirmation** | Validates or qualifies D1 promise |
 | 6 | **One-way aspects** | Modifying forces; weight by orb + dignity |
 | 7 | **Ashtakavarga score** | Quantitative strength check |
-| 8 | **Nakshatra nuance + Pada Lord** *(Pada Lord only if D9 provided)* | Qualitative texture and method of expression |
+| 8 | **Nakshatra nuance + Pada Lord** | Qualitative texture and method of expression |
 
 ### Output Structure
 
