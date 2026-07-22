@@ -10,238 +10,91 @@ description: >
   Swamsha, or Chara Karaka analysis with chart data already provided.
 ---
 
-# Jaimini Astrology Skill
+# Jaimini Astrology
 
-## Overview
-This skill handles the complete Jaimini astrology reading workflow:
-1. Accept chart data from the user (no computation — user provides the chart)
-2. Display chart back in structured format for verification
-3. Compute Jaimini baseline — Chara Karakas, Arudhas, Swamsha, Argala, Chara Dasha
-4. Collect the question
-5. Execute the full Jaimini analysis methodology
+Deep Jaimini reading from a D1 + D9 chart — Chara Karakas, Arudha Padas,
+Swamsha, Karakamsha, Argala, and Chara Dasha timing. The skill orchestrates
+deterministic computation and parallel interpretation; it does no arithmetic
+or per-unit analysis inline.
 
-**Reference files — load when needed:**
-| File | Load When |
-|------|-----------|
-| `references/methodology.md` | Before every reading — full Jaimini analysis framework |
-| `references/computation.md` | When computing Chara Karakas, Arudhas, Navamsa, Chara Dasha |
-| `references/jaimini-drishti.md` | When applying sign aspects — full tables for all 12 signs |
-| `references/degree-flags.md` | When checking Gandanta, Mrityu Bhaga, Pushkara, Sandhi, Planetary War |
-| `references/argala.md` | When computing Argala and Virodha Argala on any sign |
+## Orchestration
 
----
+WAVE ORCHESTRATOR. Deterministic computation -> Python sidecar; per-Karaka and
+per-Arudha interpretation -> parallel subagents. Paths use `${CLAUDE_PLUGIN_ROOT}`.
 
-## PHASE 1 — Chart Collection
+### Phase A — Chart intake (with the user)
 
-When `/jaimini-astrology` is triggered, ask the user to provide their chart:
+Ask for the D1 chart (with degrees), OR birth data (date, exact time, place).
+If only birth data is given, a chart is computed in Wave 0. The D9 is always
+derived from the D1 degrees — the user need not supply it; see the D9 note in
+`references/orchestration-notes.md`. Use the chart intake prompt in
+`references/orchestration-notes.md` ("Chart Intake Format"); any format is
+accepted — software export, table, or conversational.
 
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Please share your Vedic birth chart data. Include:
+The question is **not** asked here. Jaimini shows the user the computed
+baseline first (Wave 0), then takes the question in Phase B — this is a
+deliberate sequence: the baseline is the foundation the user sees before
+framing what to explore.
 
-D1 (Rashi) Chart:
-  • Lagna — sign and degree
-  • Each planet — sign, degree, house (retrograde status if known)
+### Wave 0 — Chart + deterministic baseline
 
-D9 (Navamsa) Chart:
-  • Lagna sign
-  • Each planet — sign and house
+1. Get a chart JSON one of two ways:
+   - User gave **birth data only** -> dispatch `chart-calculator`
+     (mode `parashari`) -> computes D1 + D9 via `lib/ephemeris.py`.
+   - User **pasted a pre-computed chart** -> dispatch `chart-verifier`; it
+     extracts the positions and expands them into the chart JSON via
+     `${CLAUDE_PLUGIN_ROOT}/lib/chart_io.py` (mode `parashari`). The D9 is
+     derived deterministically from the D1 degrees — the user need not supply
+     it.
+2. Dispatch `chart-verifier` (school `jaimini`) to render the chart — pass it
+   the **Verification Display Format** in `references/orchestration-notes.md`
+   so the display, the Jaimini baseline block and the flag legend are exact.
+   Show the output to the user and get explicit confirmation before proceeding
+   — never skip this gate.
+3. Dispatch `baseline-runner` (school `jaimini`) -> runs
+   `${CLAUDE_PLUGIN_ROOT}/scripts/compute_jaimini_baseline.py`, returns the
+   baseline.json path + gloss. The baseline holds Chara Karakas, Arudha Padas,
+   Swamsha/Karakamsha, Argala pre-map, Chara Dasha, the 12×12 Jaimini drishti
+   map, and planets.
+4. Show the user the displayed Jaimini baseline (Chara Karakas, Arudhas,
+   Swamsha, Chara Dasha) — the analytical foundation they can see and
+   reference. Then proceed to Phase B.
 
-Dasha Balance:
-  • Current Mahadasha planet and remaining period
-    (or date of birth so I can compute Vimshottari balance)
+### Phase B — Question intake (with the user)
 
-Paste from Jagannatha Hora, Astro-Seek, Astro.com (Vedic/Lahiri setting),
-or any Vedic software. Any format is fine.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
+Only **after** the baseline is displayed, ask the question — use the
+**Question Intake Prompt** in `references/orchestration-notes.md` (worked
+examples of each question type). Classify the answer (yes/no, domain, Swamsha,
+Dasha, Arudha-specific, full reading) per the classification table there, and
+state the classification in one line — primary Karaka, primary Arudha, and
+whether reverse analysis applies. Do not begin Wave 1 until the user answers.
 
-**Accept any format** — tabular, paragraph, software export, or conversational. Parse it into the internal chart structure.
+### Wave 1 — Parallel per-unit analysis
 
-- If D9 is not provided → proceed with D1 only; flag that D9 Karaka confirmation will be unavailable
-- If Dasha balance is missing but DOB is given → compute from Moon's Nakshatra
+Dispatch parallel `unit-analyzer` agents — one per relevant Karaka and per
+relevant Arudha, each covering D1 and D9. A full reading groups ~12-16 units
+(7 Karakas + 8 Arudhas); a domain question narrows to 2-4 per the topic map in
+`references/orchestration-notes.md`. Each worker receives the baseline.json
+path, the methodology references, its assigned unit, and the question. Workers
+read the baseline as ground truth — no recomputation.
 
----
+### Wave 2 — Synthesis
 
-## PHASE 2 — Chart Verification Display
+Dispatch one `synthesizer` — execution order D1 -> D9 -> reverse check (yes/no
+questions only) -> composite reading -> Chara Dasha timing. It applies the
+composite priority order and Dasha-timing output rules from methodology
+Section 5.
 
-Reformat the provided chart data into the standard display. User MUST confirm before proceeding.
+## Methodology
 
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        JAIMINI BIRTH CHART (D1 — Rashi)
-        Ayanamsa: Lahiri | Houses: Whole Sign
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Full interpretive methodology lives in `references/` — workers load these; the
+orchestrator does not.
 
-LAGNA: [Sign] [Degree]°[Min]' — [Nakshatra] Pada [#]
-
-D1 PLANET POSITIONS:
-┌─────────┬──────────┬────────────┬──────────────────────┬──────┬──────┬────────┐
-│ Planet  │ Sign     │ Degree     │ Nakshatra (Pada)     │ House│  R?  │ Flags  │
-├─────────┼──────────┼────────────┼──────────────────────┼──────┼──────┼────────┤
-│ Sun     │          │ XX°XX'XX"  │                      │      │      │        │
-│ Moon    │          │ XX°XX'XX"  │                      │      │      │        │
-│ Mars    │          │ XX°XX'XX"  │                      │      │      │        │
-│ Mercury │          │ XX°XX'XX"  │                      │      │      │        │
-│ Jupiter │          │ XX°XX'XX"  │                      │      │      │        │
-│ Venus   │          │ XX°XX'XX"  │                      │      │      │        │
-│ Saturn  │          │ XX°XX'XX"  │                      │      │  R   │        │
-│ Rahu    │          │ XX°XX'XX"  │                      │      │  R   │        │
-│ Ketu    │          │ XX°XX'XX"  │                      │      │  R   │        │
-└─────────┴──────────┴────────────┴──────────────────────┴──────┴──────┴────────┘
-
-Flags: [Ex]=Exalted [Db]=Debilitated [Own]=Own Sign [Vo]=Vargottama
-       [MB]=Mrityu Bhaga [PK]=Pushkara [Sd]=Sandhi [Gd]=Gandanta [PW]=Planetary War
-
-D9 (NAVAMSA):
-┌─────────┬──────────────────┬───────┬────────────┐
-│ Planet  │ Sign             │ House │ Notes      │
-├─────────┼──────────────────┼───────┼────────────┤
-│ Lagna   │                  │  1st  │            │
-│ Sun     │                  │       │            │
-│ Moon    │                  │       │            │
-│ Mars    │                  │       │            │
-│ Mercury │                  │       │            │
-│ Jupiter │                  │       │            │
-│ Venus   │                  │       │            │
-│ Saturn  │                  │       │            │
-│ Rahu    │                  │       │            │
-│ Ketu    │                  │       │            │
-└─────────┴──────────────────┴───────┴────────────┘
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠ Does this match your chart?
-  Reply "Confirmed" — or — tell me what needs correction.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-**Do NOT proceed until the user explicitly confirms.**
-
----
-
-## PHASE 3 — Jaimini Baseline Display
-
-After chart confirmation, compute and display the full Jaimini baseline **before asking for the question.** This establishes the analytical foundation the user can see and reference.
-
-Load `references/computation.md` for all computation rules. Display:
-
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        JAIMINI BASELINE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-CHARA KARAKAS (Sapta Karaka — 7-planet system):
-┌──────────────────┬──────┬──────────┬──────────┬──────────────────────┐
-│ Karaka           │ Abbr │ Planet   │ Degree   │ Degree Flags         │
-├──────────────────┼──────┼──────────┼──────────┼──────────────────────┤
-│ Atmakaraka       │ AK   │          │          │                      │
-│ Amatyakaraka     │ AmK  │          │          │                      │
-│ Bhratrukaraka    │ BK   │          │          │                      │
-│ Matrukaraka      │ MK   │          │          │                      │
-│ Putrakaraka      │ PK   │          │          │                      │
-│ Gnatikaraka      │ GK   │          │          │                      │
-│ Darakaraka       │ DK   │          │          │                      │
-└──────────────────┴──────┴──────────┴──────────┴──────────────────────┘
-
-Planetary War: [list warring pairs — state winner / defeated and Karaka impact]
-Close-degree flags: [list Karakas within 1° of each other — note shared quality]
-
-SWAMSHA: [AK's D9 sign] — [brief soul/dharma indication]
-KARAKAMSHA LAGNA (in D1): [Swamsha sign as Lagna in D1]
-
-ARUDHA PADAS:
-┌───────┬──────────────────────┬────────┐
-│ Arudha│ Signifies            │ Sign   │
-├───────┼──────────────────────┼────────┤
-│ AL    │ Social identity      │        │
-│ UL    │ Marriage/partnership │        │
-│ A2    │ Wealth image         │        │
-│ A3    │ Efforts/skills image │        │
-│ A6    │ Enemies/debts image  │        │
-│ A7    │ Business partner img │        │
-│ A10   │ Career/reputation    │        │
-│ A11   │ Gains/networks image │        │
-└───────┴──────────────────────┴────────┘
-
-ARGALA ON AL: [2nd, 4th, 11th from AL — planets and net effect]
-ARGALA ON SWAMSHA: [2nd, 4th, 11th from Swamsha sign — planets and net effect]
-
-CHARA DASHA (Current):
-Mahadasha : [Rasi] — [start] to [end]
-Antardasha: [Rasi] — [start] to [end]
-Next shift : [Rasi] begins [date]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
----
-
-## PHASE 4 — Question Intake *(Mandatory gate before analysis)*
-
-After the baseline, **ask this before any analysis — do not skip:**
-
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Baseline established. Before I begin the reading, tell me:
-
-1. What do you want to explore?
-   → "Will I change careers this year?" (yes/no — reverse analysis applied)
-   → "Read my career and social status through Jaimini"
-   → "What does my Swamsha say about my dharma?"
-   → "Full reading — all life domains"
-   → "What is my current Chara Dasha activating?"
-   → "Tell me about marriage through Upapada Lagna"
-
-2. Is there a specific timeframe?
-   (e.g., "next 2 years", "before I turn 35", "right now")
-
-3. Any context I should know? (optional)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-**Do NOT begin analysis until the user answers.**
-
-Internally classify the question:
-
-| Question Type | How to Handle |
-|--------------|---------------|
-| Yes/No (binary) | Full methodology + reverse question analysis |
-| Domain-specific | Map to primary Karaka + Arudha per Section 2 of methodology |
-| Swamsha / Karakamsha | Lead with Step D + Step E of methodology |
-| Dasha question | Lead with Chara Dasha interpretation (Section 4B of methodology) |
-| Arudha specific | Lead with Step B of methodology for that Arudha |
-| Full reading | Full baseline + all Karakas + all Arudhas |
-| UL / marriage | Run Step C in full |
-
-State classification in one line:
-> *"Reading this as a [yes/no / domain / Swamsha / Dasha / full] question. Primary Karaka: [X]. Primary Arudha: [Y]. Applying [reverse analysis / full Jaimini methodology]."*
-
----
-
-## PHASE 5 — Analysis
-
-Load `references/methodology.md` and execute the full Jaimini methodology without skipping steps.
-
-Methodology covers:
-- **Step 0** — Baseline (already displayed in Phase 3; reference throughout)
-- **Section 1** — Jaimini Core Mechanics: Drishti rules, Argala, Bhava vs Arudha distinction
-- **Section 2** — Question mapping: Karaka-topic table, primary/secondary Karakas and Arudhas
-- **Section 3** — Full analysis Steps A–F for D1 and D9: Karaka placement, Arudha analysis, UL, Swamsha, Karakamsha, AK dignity — including mutual aspects, aspect quality weighting, conjunctions, and Argala for each relevant sign
-- **Section 4** — Chara Dasha computation and interpretation
-- **Section 5** — Mandatory execution sequence: D1 → D9 → Reverse → Composite → Dasha timing
-
----
-
-## CONDUCT RULES
-
-1. **Never skip Phase 2 verification** — always confirm chart before baseline computation
-2. **Never skip Phase 3 baseline** — Karakas, Arudhas, Dasha must be shown before the question
-3. **Never skip Phase 4 question intake** — classify before analyzing
-4. **Jaimini Drishti only within Jaimini steps** — load `references/jaimini-drishti.md`; apply sign aspects only; no orbs; no Parashari degree-based aspects
-5. **Always cite degrees** when making Karaka assignments or degree-flag claims
-6. **Flag close-degree Karakas** (within 1°) — shared quality must be noted
-7. **Flag Planetary War** — state which Karaka is defeated and what that suppresses
-8. **Always read Bhava and Arudha both** — note divergence explicitly when they conflict
-9. **Never mix systems** — Parashari observations go in a labeled supplementary note after Jaimini analysis only
-10. **Flag missing data** — absent D9 or Dasha balance; note and proceed with caveats
-11. **Tone** — analytical, structured, formal; Jaimini terminology throughout; define terms on first use; no fatalism, no sensationalism
-12. **Cross-check recommendation** — Jagannatha Hora (free, supports Jaimini Chara Dasha) for chart verification
+| File | Holds |
+|------|-------|
+| `references/methodology.md` | Full Jaimini analysis framework — Steps 0–F, Sections 1–5 |
+| `references/computation.md` | Deterministic spec — Karakas, D9, Arudhas, Chara Dasha math (the sidecar is verified against this) |
+| `references/jaimini-drishti.md` | Complete 12-sign Jaimini sign-aspect tables |
+| `references/degree-flags.md` | Gandanta, Mrityu Bhaga, Pushkara, Sandhi, Planetary War |
+| `references/argala.md` | Argala and Virodha Argala rules |
+| `references/orchestration-notes.md` | Chart-intake + question-intake prompts, question classification, topic-to-unit map, D9-derivation note, verification display format, conduct rules, wave-to-methodology map |
