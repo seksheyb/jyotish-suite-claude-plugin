@@ -102,9 +102,9 @@ timing window before Wave 2.
 
 ### Wave 2 — Synthesis
 
-Dispatch one `synthesizer` (model **sonnet**, effort **high** — this is a
-single sequential verdict chain, not cross-domain reconciliation, so opus
-would be waste here) with the baseline, the Wave-1 cusp blocks, the
+Dispatch one `synthesizer` (model **opus**, effort **high** — synthesis is
+the product, so the suite runs one opus synthesizer for every school) with
+the baseline, the Wave-1 cusp blocks, the
 transit-confirmation dates, the question, and `references/orchestration-notes.md`
 for the Phase-8 verdict (outcome, confidence, timing window, caveats,
 recommended action).

@@ -34,7 +34,7 @@ re-mapped automatically).
 commands/            thin slash-command triggers
 skills/<school>/     wave-orchestrator SKILL.md + interpretive references
 agents/              shared roles: chart-calculator, chart-verifier, baseline-runner (haiku)
-                     unit-analyzer (sonnet) · synthesizer (sonnet) · synthesizer-deep (opus)
+                     unit-analyzer (sonnet) · synthesizer (opus)
 scripts/             compute_<school>_baseline.py per school + delta scripts
                      (compute_transits.py, find_fruitful_window.py, lk_upaay_check.py)
 lib/                 jyotish_primitives.py (pure math) · ephemeris.py (pyswisseph)

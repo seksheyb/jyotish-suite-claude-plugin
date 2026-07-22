@@ -90,7 +90,7 @@ Wait for the user's choice before Wave 1.
 - **Conditional dispatch:** a narrow single-house event-timing question with
   no timing window requested skips Wave 1 entirely — answer inline off
   baseline.json, zero agents dispatched.
-- **Synthesis barrier:** the synthesizer (sonnet, effort high) never starts
+- **Synthesis barrier:** the synthesizer (opus, effort high) never starts
   until every dispatched Wave-1 worker has returned — 4 for Life Reading, 1 for
   full-chain Event Timing, 0 to synthesize when the conditional-dispatch inline
   path was used instead.

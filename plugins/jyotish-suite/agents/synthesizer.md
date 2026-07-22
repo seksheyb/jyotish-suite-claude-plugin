@@ -2,7 +2,7 @@
 name: synthesizer
 description: Takes all the Wave-1 unit-analysis blocks plus the deterministic baseline and produces the final composite Jyotish reading — weighting the layers, resolving contradictions, assigning a verdict and confidence. This is Wave 2 — it runs once, last, after every unit-analyzer has returned. The judgment layer of the reading.
 tools: Read
-model: sonnet
+model: opus
 effort: high
 ---
 

@@ -103,9 +103,8 @@ question. Workers read the baseline as ground truth — no recomputation.
 **Explicit barrier:** do not dispatch the synthesizer until every Wave 1
 worker that was launched has returned.
 
-Dispatch one `synthesizer-deep` (opus, effort medium) — jaimini is one of the
-two schools that keeps opus, because the composite step is genuinely
-contradiction-prone cross-domain reconciliation: D1 vs D9 Karaka confirmation,
+Dispatch one `synthesizer` (opus, effort high) — the composite step here is
+genuinely contradiction-prone cross-domain reconciliation: D1 vs D9 Karaka confirmation,
 Bhava vs Arudha divergence, and Chara Dasha activation all have to be weighed
 against each other, not just concatenated. Execution order: D1 -> D9 ->
 reverse check (yes/no questions only) -> composite reading -> Chara Dasha

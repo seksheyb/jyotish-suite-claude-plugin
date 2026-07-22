@@ -245,9 +245,9 @@ Do not proceed to Wave 1 until the user explicitly confirms.
 | Wave 1 — D9 analyst | Section 3 Steps A–F on D9 data, Step D (Swamsha), Step E (Karakamsha) | `unit-analyzer` (medium) |
 | Wave 1 — reverse-question analyst | Section 5 Step 5 (yes/no questions only) | `unit-analyzer` (medium) |
 | Wave 1 — Chara-Dasha-timeline analyst | Section 4A/4B, Step 7 | `unit-analyzer` (medium) |
-| Wave 2 synthesis | Section 4B (Dasha interpretation), Section 5 (execution sequence, composite priority, Dasha timing output) | single `synthesizer-deep` (opus, medium) |
+| Wave 2 synthesis | Section 4B (Dasha interpretation), Section 5 (execution sequence, composite priority, Dasha timing output) | single `synthesizer` (opus, high) |
 
-The synthesizer-deep executes the mandatory sequence: D1 → D9 → reverse check
+The synthesizer executes the mandatory sequence: D1 → D9 → reverse check
 (yes/no only) → composite reading (priority order in methodology Section 5) →
 Chara Dasha timing output. It only runs after the explicit Wave 1 barrier —
 every dispatched unit-analyzer must have returned first.

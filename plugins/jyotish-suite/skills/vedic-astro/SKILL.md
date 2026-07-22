@@ -110,7 +110,7 @@ ground truth and never recompute.
 
 Once all dispatched Wave-1 tracks have returned (the explicit barrier — never
 start synthesis early, and never skip a track that was dispatched), dispatch
-one `synthesizer` agent (school `vedic`, **sonnet, high** effort) with the
+one `synthesizer` agent (school `vedic`, **opus, high** effort) with the
 baseline path, all Wave-1 analysis blocks, the user's question, and the
 reading mode. It applies the Step 6 weighting in `methodology.md` and resolves
 contradictions. For a yes/no question it consumes the reverse-question

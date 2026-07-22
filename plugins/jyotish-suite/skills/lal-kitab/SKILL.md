@@ -169,8 +169,8 @@ Per-mode dispatch detail and which reference files each worker loads:
 
 ### Wave 2 — Synthesis
 
-Dispatch one `synthesizer` (model **sonnet**, effort **high** — this is a
-single-domain school throughout; opus is overkill here) for the one-page
+Dispatch one `synthesizer` (model **opus**, effort **high** — synthesis is
+the product, so the suite runs one opus synthesizer for every school) for the one-page
 summary — weights rin overlay over isolated house strength, flags sleeping
 benefics, applies teva-driven upaay priority, and (Mode D/E) assigns final
 upaay tiers from the Wave-1 candidate analysis. Runs once, last, only after

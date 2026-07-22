@@ -191,8 +191,8 @@ several rins, a relative, a year window, timing, upaay) dispatch below.
 
 ## Synthesis weighting (Wave 2)
 
-The `synthesizer` (model sonnet, effort high — single-domain school throughout,
-opus would be overkill) produces the Phase-10 one-page summary. It runs once,
+The `synthesizer` (model opus, effort high — synthesis is the product, so the
+suite runs one opus synthesizer for every school) produces the Phase-10 one-page summary. It runs once,
 last, after every Wave-1 worker has returned (see Mode D join barrier above) —
 never on a partial set. Its dispatch payload must carry, verbatim, the school's
 honesty/boundary rules: the Phase 0 boundary rule (state what the chart can't

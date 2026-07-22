@@ -61,8 +61,8 @@ BNN synthesis is **tiered**. Decide the tier right after classification (Phase A
 | Question scope | Wave 1 (workers) | Wave 2 (synthesis) |
 |---|---|---|
 | Single-Karaka narrow question (one Karaka, no dasha/timing angle) | **None** — no `unit-analyzer` dispatch | **None** — no synthesizer dispatch. Run BNN Steps A–F (`methodology.md` Section 2-3) **inline in the orchestrator** against the baseline JSON, then answer directly |
-| Domain question (1-2 Karakas) | `unit-analyzer` — sonnet / **medium** effort, one per Karaka | `synthesizer` — sonnet / **high** effort (standard synthesizer) |
-| Full reading, or reverse-question (yes/no) reading | `unit-analyzer` — sonnet / **medium** effort, one per dispatched Karaka (up to 7: Sun, Moon, Jupiter, Venus, Saturn, Mars, + reverse-question Karaka) | `synthesizer-deep` — opus / **medium** effort — 10-priority weighting across up to 7 worker outputs is contradiction-heavy and needs the deeper synthesizer |
+| Domain question (1-2 Karakas) | `unit-analyzer` — sonnet / **medium** effort, one per Karaka | `synthesizer` — opus / **high** effort |
+| Full reading, or reverse-question (yes/no) reading | `unit-analyzer` — sonnet / **medium** effort, one per dispatched Karaka (up to 7: Sun, Moon, Jupiter, Venus, Saturn, Mars, + reverse-question Karaka) | `synthesizer` — opus / **high** effort — 10-priority weighting across up to 7 worker outputs is contradiction-heavy; opus is warranted |
 
 A domain or full-reading dasha/timing question uses `unit-analyzer` at **medium**
 effort per the dasha-timing unit type below.
@@ -95,8 +95,8 @@ dasha-lord unit if one was added — has returned its analysis block.
 
 ### Wave 2 — Synthesis (domain / full / reverse-question tiers only)
 
-Dispatch the synthesizer tier selected above (`synthesizer` for domain
-questions, `synthesizer-deep` for full readings and reverse-question readings)
+Dispatch one `synthesizer` (opus, effort high — for both domain and
+full/reverse-question readings)
 for the composite reading — BNN 10-level priority order, D1/D9 convergence,
 Dasha activation, confidence rating, and the reverse question check for yes/no
 questions (`methodology.md` Sections 4-5). Pass it every Wave 1 unit-analysis

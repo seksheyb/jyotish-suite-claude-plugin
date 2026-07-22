@@ -115,7 +115,7 @@ the one dense worker, so the barrier is trivially satisfied when it returns.
 Never let the synthesizer begin on partial results.
 
 ### Wave 2 — Synthesis
-Dispatch one `synthesizer` (school `kp-natal`, model **sonnet**, effort
+Dispatch one `synthesizer` (school `kp-natal`, model **opus**, effort
 **high**):
 - **Life Reading:** weave the 4 trine-group blocks (12 house verdicts total)
   into life themes — strong areas, blocked areas, conditional areas, dominant
