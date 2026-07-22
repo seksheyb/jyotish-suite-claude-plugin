@@ -26,7 +26,11 @@
       "sub_lord": "Venus",
       "sub_sub_lord": "Mercury",
       "cusp": 1,
-      "CSL": "Venus"
+      "CSL": "Venus",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false
+      }
     },
     {
       "longitude": 123.6492,
@@ -40,7 +44,11 @@
       "sub_lord": "Sun",
       "sub_sub_lord": "Venus",
       "cusp": 2,
-      "CSL": "Sun"
+      "CSL": "Sun",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false
+      }
     },
     {
       "longitude": 151.2011,
@@ -54,7 +62,11 @@
       "sub_lord": "Rahu",
       "sub_sub_lord": "Mars",
       "cusp": 3,
-      "CSL": "Rahu"
+      "CSL": "Rahu",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false
+      }
     },
     {
       "longitude": 183.1877,
@@ -68,7 +80,11 @@
       "sub_lord": "Venus",
       "sub_sub_lord": "Moon",
       "cusp": 4,
-      "CSL": "Venus"
+      "CSL": "Venus",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false
+      }
     },
     {
       "longitude": 217.2851,
@@ -82,7 +98,11 @@
       "sub_lord": "Mercury",
       "sub_sub_lord": "Saturn",
       "cusp": 5,
-      "CSL": "Mercury"
+      "CSL": "Mercury",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false
+      }
     },
     {
       "longitude": 250.0243,
@@ -96,7 +116,11 @@
       "sub_lord": "Saturn",
       "sub_sub_lord": "Ketu",
       "cusp": 6,
-      "CSL": "Saturn"
+      "CSL": "Saturn",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false
+      }
     },
     {
       "longitude": 279.9848,
@@ -110,7 +134,11 @@
       "sub_lord": "Venus",
       "sub_sub_lord": "Ketu",
       "cusp": 7,
-      "CSL": "Venus"
+      "CSL": "Venus",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false
+      }
     },
     {
       "longitude": 303.6492,
@@ -124,7 +152,11 @@
       "sub_lord": "Venus",
       "sub_sub_lord": "Rahu",
       "cusp": 8,
-      "CSL": "Venus"
+      "CSL": "Venus",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false
+      }
     },
     {
       "longitude": 331.2011,
@@ -138,7 +170,11 @@
       "sub_lord": "Mars",
       "sub_sub_lord": "Venus",
       "cusp": 9,
-      "CSL": "Mars"
+      "CSL": "Mars",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false
+      }
     },
     {
       "longitude": 3.1877,
@@ -152,7 +188,11 @@
       "sub_lord": "Sun",
       "sub_sub_lord": "Rahu",
       "cusp": 10,
-      "CSL": "Sun"
+      "CSL": "Sun",
+      "degree_flags": {
+        "gandanta": true,
+        "sandhi": false
+      }
     },
     {
       "longitude": 37.2851,
@@ -166,7 +206,11 @@
       "sub_lord": "Ketu",
       "sub_sub_lord": "Mars",
       "cusp": 11,
-      "CSL": "Ketu"
+      "CSL": "Ketu",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false
+      }
     },
     {
       "longitude": 70.0243,
@@ -180,7 +224,11 @@
       "sub_lord": "Jupiter",
       "sub_sub_lord": "Moon",
       "cusp": 12,
-      "CSL": "Jupiter"
+      "CSL": "Jupiter",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false
+      }
     }
   ],
   "planets": {
@@ -196,7 +244,12 @@
       "sub_lord": "Rahu",
       "sub_sub_lord": "Ketu",
       "planet": "Sun",
-      "retrograde": false
+      "retrograde": false,
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": true,
+        "mrityu_bhaga": false
+      }
     },
     "Moon": {
       "longitude": 269.9423,
@@ -210,7 +263,13 @@
       "sub_lord": "Rahu",
       "sub_sub_lord": "Saturn",
       "planet": "Moon",
-      "retrograde": false
+      "retrograde": false,
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": true,
+        "mrityu_bhaga": false,
+        "combust": false
+      }
     },
     "Mars": {
       "longitude": 324.4915,
@@ -224,7 +283,13 @@
       "sub_lord": "Mercury",
       "sub_sub_lord": "Venus",
       "planet": "Mars",
-      "retrograde": false
+      "retrograde": false,
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false,
+        "mrityu_bhaga": false,
+        "combust": false
+      }
     },
     "Mercury": {
       "longitude": 14.4251,
@@ -238,7 +303,13 @@
       "sub_lord": "Venus",
       "sub_sub_lord": "Rahu",
       "planet": "Mercury",
-      "retrograde": true
+      "retrograde": true,
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false,
+        "mrityu_bhaga": true,
+        "combust": false
+      }
     },
     "Jupiter": {
       "longitude": 75.8609,
@@ -252,7 +323,13 @@
       "sub_lord": "Venus",
       "sub_sub_lord": "Moon",
       "planet": "Jupiter",
-      "retrograde": false
+      "retrograde": false,
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false,
+        "mrityu_bhaga": false,
+        "combust": false
+      }
     },
     "Venus": {
       "longitude": 348.86,
@@ -266,7 +343,13 @@
       "sub_lord": "Ketu",
       "sub_sub_lord": "Mars",
       "planet": "Venus",
-      "retrograde": false
+      "retrograde": false,
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false,
+        "mrityu_bhaga": false,
+        "combust": false
+      }
     },
     "Saturn": {
       "longitude": 271.6286,
@@ -280,7 +363,13 @@
       "sub_lord": "Jupiter",
       "sub_sub_lord": "Saturn",
       "planet": "Saturn",
-      "retrograde": true
+      "retrograde": true,
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false,
+        "mrityu_bhaga": false,
+        "combust": false
+      }
     },
     "Rahu": {
       "longitude": 287.7289,
@@ -294,7 +383,12 @@
       "sub_lord": "Saturn",
       "sub_sub_lord": "Jupiter",
       "planet": "Rahu",
-      "retrograde": false
+      "retrograde": false,
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false,
+        "mrityu_bhaga": false
+      }
     },
     "Ketu": {
       "longitude": 107.7289,
@@ -308,7 +402,12 @@
       "sub_lord": "Mercury",
       "sub_sub_lord": "Rahu",
       "planet": "Ketu",
-      "retrograde": false
+      "retrograde": false,
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": false,
+        "mrityu_bhaga": false
+      }
     }
   },
   "significators": {
@@ -465,6 +564,172 @@
       ]
     }
   },
+  "significator_amplifications": {},
+  "fruitful_barren": {
+    "sub_lord_signifies": {
+      "Ketu": [
+        1,
+        2,
+        3,
+        6,
+        10,
+        12
+      ],
+      "Rahu": [
+        1,
+        2,
+        6,
+        7,
+        8,
+        10
+      ],
+      "Moon": [
+        1,
+        2,
+        6,
+        10
+      ],
+      "Saturn": [
+        2,
+        6,
+        7,
+        8,
+        10
+      ],
+      "Sun": [
+        2,
+        10
+      ],
+      "Venus": [
+        3,
+        4,
+        9,
+        10,
+        11,
+        12
+      ],
+      "Mercury": [
+        3,
+        4,
+        9,
+        10,
+        11,
+        12
+      ],
+      "Mars": [
+        5,
+        6,
+        8,
+        9,
+        10,
+        12
+      ],
+      "Jupiter": [
+        6,
+        7,
+        9,
+        12
+      ]
+    },
+    "planet_sub_lord": {
+      "Sun": {
+        "sub_lord": "Rahu",
+        "sub_lord_signifies": [
+          1,
+          2,
+          6,
+          7,
+          8,
+          10
+        ]
+      },
+      "Moon": {
+        "sub_lord": "Rahu",
+        "sub_lord_signifies": [
+          1,
+          2,
+          6,
+          7,
+          8,
+          10
+        ]
+      },
+      "Mars": {
+        "sub_lord": "Mercury",
+        "sub_lord_signifies": [
+          3,
+          4,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      "Mercury": {
+        "sub_lord": "Venus",
+        "sub_lord_signifies": [
+          3,
+          4,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      "Jupiter": {
+        "sub_lord": "Venus",
+        "sub_lord_signifies": [
+          3,
+          4,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      "Venus": {
+        "sub_lord": "Ketu",
+        "sub_lord_signifies": [
+          1,
+          2,
+          3,
+          6,
+          10,
+          12
+        ]
+      },
+      "Saturn": {
+        "sub_lord": "Jupiter",
+        "sub_lord_signifies": [
+          6,
+          7,
+          9,
+          12
+        ]
+      },
+      "Rahu": {
+        "sub_lord": "Saturn",
+        "sub_lord_signifies": [
+          2,
+          6,
+          7,
+          8,
+          10
+        ]
+      },
+      "Ketu": {
+        "sub_lord": "Mercury",
+        "sub_lord_signifies": [
+          3,
+          4,
+          9,
+          10,
+          11,
+          12
+        ]
+      }
+    }
+  },
   "ruling_planets": {
     "moment_local": "2026-01-01T09:00:00+05:30",
     "moment_utc": "2026-01-01T03:30:00",
@@ -472,7 +737,7 @@
     "day_lord": {
       "lord": "Jupiter",
       "weekday_at_sunrise": "Thursday",
-      "sunrise_utc": "2026-01-01T01:43:38"
+      "sunrise_local": "2026-01-01T06:52:28.695291"
     },
     "moon": {
       "longitude_dms": "044-46-46",
@@ -531,23 +796,37 @@
       "Rahu": "node \u2014 retrograde rule N/A",
       "Moon": "Direct",
       "Saturn": "Direct",
-      "Jupiter": "RETROGRADE \u2014 depositor Mercury not RP, weakened/excluded",
+      "Jupiter": "RETROGRADE \u2014 depositor Mercury not RP, excluded",
       "Venus": "Direct"
     },
+    "retrograde_excluded": [
+      "Jupiter"
+    ],
     "rahu_check": {
-      "rahu_sign_lord": "Saturn",
+      "sign_lord": "Saturn",
+      "star_lord": "Rahu",
+      "conjunct_rp": [],
+      "reasons": [
+        "sign-lord Saturn is RP",
+        "star-lord Rahu is RP"
+      ],
       "added_to_rp": true
     },
     "ketu_check": {
-      "ketu_sign_lord": "Sun",
-      "added_to_rp": false
+      "sign_lord": "Sun",
+      "star_lord": "Venus",
+      "conjunct_rp": [],
+      "reasons": [
+        "star-lord Venus is RP"
+      ],
+      "added_to_rp": true
     },
     "final_rp": [
       "Rahu",
       "Moon",
       "Saturn",
-      "Jupiter",
-      "Venus"
+      "Venus",
+      "Ketu"
     ],
     "strongest_rp": "Rahu"
   },
@@ -22014,7 +22293,30 @@
           }
         ]
       }
-    ]
+    ],
+    "target_datetime": "2026-01-01T09:00:00",
+    "running_at_target": {
+      "md_lord": "Rahu",
+      "md_period": [
+        "2011-11-23T13:36:33.084000",
+        "2029-11-23T01:36:33.084000"
+      ],
+      "bd_lord": "Venus",
+      "bd_period": [
+        "2023-06-12T04:54:33.084000",
+        "2026-06-11T22:54:33.084000"
+      ],
+      "ad_lord": "Mercury",
+      "ad_period": [
+        "2025-11-04T19:18:33.084000",
+        "2026-04-09T00:51:33.084000"
+      ],
+      "sd_lord": "Sun",
+      "sd_period": [
+        "2025-12-31T17:20:39.084000",
+        "2026-01-08T11:37:18.084000"
+      ]
+    }
   },
   "house_combinations": {
     "marriage": {

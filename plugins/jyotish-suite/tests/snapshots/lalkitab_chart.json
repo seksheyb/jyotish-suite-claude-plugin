@@ -126,7 +126,8 @@
       "buried_by": [
         "Jupiter"
       ],
-      "debil_never_redeemed": false
+      "debil_never_redeemed": false,
+      "debil_cancelled": false
     },
     "Moon": {
       "fixed_house": 9,
@@ -144,7 +145,8 @@
         "Saturn",
         "Rahu"
       ],
-      "debil_never_redeemed": false
+      "debil_never_redeemed": false,
+      "debil_cancelled": false
     },
     "Mars": {
       "fixed_house": 11,
@@ -161,7 +163,8 @@
       "buried_by": [
         "Venus"
       ],
-      "debil_never_redeemed": false
+      "debil_never_redeemed": false,
+      "debil_cancelled": false
     },
     "Mercury": {
       "fixed_house": 1,
@@ -176,7 +179,8 @@
       "buried_by": [
         "Sun"
       ],
-      "debil_never_redeemed": false
+      "debil_never_redeemed": false,
+      "debil_cancelled": false
     },
     "Jupiter": {
       "fixed_house": 3,
@@ -193,7 +197,8 @@
       "buried_by": [
         "Ketu"
       ],
-      "debil_never_redeemed": false
+      "debil_never_redeemed": false,
+      "debil_cancelled": false
     },
     "Venus": {
       "fixed_house": 12,
@@ -208,7 +213,8 @@
       "buried_by": [
         "Mercury"
       ],
-      "debil_never_redeemed": false
+      "debil_never_redeemed": false,
+      "debil_cancelled": false
     },
     "Saturn": {
       "fixed_house": 10,
@@ -226,7 +232,8 @@
       "buried_by": [
         "Mars"
       ],
-      "debil_never_redeemed": false
+      "debil_never_redeemed": false,
+      "debil_cancelled": false
     },
     "Rahu": {
       "fixed_house": 10,
@@ -243,7 +250,8 @@
       "buried_by": [
         "Mars"
       ],
-      "debil_never_redeemed": false
+      "debil_never_redeemed": false,
+      "debil_cancelled": false
     },
     "Ketu": {
       "fixed_house": 4,
@@ -256,7 +264,8 @@
       "pakka_ghar_occupants": [],
       "buried": false,
       "buried_by": [],
-      "debil_never_redeemed": false
+      "debil_never_redeemed": false,
+      "debil_cancelled": false
     }
   },
   "aspect_map": {
@@ -399,7 +408,8 @@
       "aspected_by": [
         "Mars",
         "Rahu"
-      ]
+      ],
+      "dead_pair_with": null
     },
     "Moon": {
       "sleeping": false,
@@ -407,26 +417,30 @@
       "aspected_by": [
         "Jupiter",
         "Rahu"
-      ]
+      ],
+      "dead_pair_with": null
     },
     "Mars": {
       "sleeping": false,
       "co_tenants": [],
       "aspected_by": [
         "Jupiter"
-      ]
+      ],
+      "dead_pair_with": null
     },
     "Mercury": {
       "sleeping": true,
       "co_tenants": [],
-      "aspected_by": []
+      "aspected_by": [],
+      "dead_pair_with": null
     },
     "Jupiter": {
       "sleeping": false,
       "co_tenants": [],
       "aspected_by": [
         "Moon"
-      ]
+      ],
+      "dead_pair_with": null
     },
     "Venus": {
       "sleeping": false,
@@ -434,7 +448,8 @@
       "aspected_by": [
         "Saturn",
         "Ketu"
-      ]
+      ],
+      "dead_pair_with": null
     },
     "Saturn": {
       "sleeping": false,
@@ -443,7 +458,8 @@
       ],
       "aspected_by": [
         "Ketu"
-      ]
+      ],
+      "dead_pair_with": null
     },
     "Rahu": {
       "sleeping": false,
@@ -452,7 +468,8 @@
       ],
       "aspected_by": [
         "Ketu"
-      ]
+      ],
+      "dead_pair_with": null
     },
     "Ketu": {
       "sleeping": false,
@@ -460,7 +477,8 @@
       "aspected_by": [
         "Saturn",
         "Rahu"
-      ]
+      ],
+      "dead_pair_with": null
     }
   },
   "rin_diagnosis": {
@@ -471,12 +489,20 @@
           {
             "trigger": 2,
             "desc": "Sun afflicted by Rahu",
-            "farman": "Farman 8, Vol 2 (1940)"
+            "farman": "Farman 8, Vol 2 (1940)",
+            "planets": [
+              "Sun",
+              "Rahu"
+            ]
           }
         ],
         "trigger_count": 1,
         "compounding_factors": 0,
-        "severity": "Mild"
+        "severity": "Moderate",
+        "jupiter_5th_aspect_mitigation": true,
+        "severity_before_mitigation": "Mild",
+        "severity_before_cross_rin_escalation": "Mild",
+        "cross_rin_escalated": true
       },
       "matri_rin": {
         "triggered": true,
@@ -484,17 +510,27 @@
           {
             "trigger": 6,
             "desc": "Saturn or Ketu sits in 4th house",
-            "farman": "Farman 19, Vol 3 (1941)"
+            "farman": "Farman 19, Vol 3 (1941)",
+            "planets": [
+              "Ketu"
+            ]
           },
           {
             "trigger": 7,
             "desc": "Moon buried (12th) by Rahu",
-            "farman": "Farman 18, Vol 4 (1942)"
+            "farman": "Farman 18, Vol 4 (1942)",
+            "planets": [
+              "Moon",
+              "Rahu"
+            ]
           }
         ],
         "trigger_count": 2,
         "compounding_factors": 0,
-        "severity": "Severe"
+        "severity": "Moderate",
+        "jupiter_5th_aspect_mitigation": false,
+        "severity_before_cross_rin_escalation": "Mild",
+        "cross_rin_escalated": true
       },
       "stri_rin": {
         "triggered": true,
@@ -502,38 +538,52 @@
           {
             "trigger": 1,
             "desc": "Venus afflicted by Saturn",
-            "farman": "Farman 11, Vol 2 (1940)"
+            "farman": "Farman 11, Vol 2 (1940)",
+            "planets": [
+              "Venus",
+              "Saturn"
+            ]
           },
           {
             "trigger": 5,
             "desc": "7th house empty AND Venus (7th lord) afflicted",
-            "farman": "Farman 25, Vol 3 (1941)"
+            "farman": "Farman 25, Vol 3 (1941)",
+            "planets": [
+              "Venus"
+            ]
           }
         ],
         "trigger_count": 2,
-        "compounding_factors": 0,
-        "severity": "Severe"
+        "compounding_factors": 1,
+        "severity": "Moderate",
+        "jupiter_5th_aspect_mitigation": true,
+        "severity_before_mitigation": "Moderate",
+        "severity_before_cross_rin_escalation": "Mild",
+        "cross_rin_escalated": true
       },
       "kanya_rin": {
         "triggered": false,
         "fired_triggers": [],
         "trigger_count": 0,
         "compounding_factors": 0,
-        "severity": null
+        "severity": null,
+        "jupiter_5th_aspect_mitigation": false
       },
       "bhratra_rin": {
         "triggered": false,
         "fired_triggers": [],
         "trigger_count": 0,
         "compounding_factors": 0,
-        "severity": null
+        "severity": null,
+        "jupiter_5th_aspect_mitigation": false
       },
       "atma_rin": {
         "triggered": false,
         "fired_triggers": [],
         "trigger_count": 0,
         "compounding_factors": 0,
-        "severity": null
+        "severity": null,
+        "jupiter_5th_aspect_mitigation": false
       }
     },
     "active_rins": [
@@ -550,10 +600,110 @@
       "teva": "Mishra",
       "label": "Mixed / Composite Chart",
       "farman": null,
-      "matched_pattern": "No single teva archetype matched cleanly; most modern charts are Mishra"
+      "matched_pattern": "No single teva archetype matched cleanly; most modern charts are Mishra",
+      "closest_two": [
+        {
+          "teva": "Andha",
+          "fraction": 0.667,
+          "matched_conditions": [
+            "Sun afflicted",
+            "Moon afflicted"
+          ],
+          "unmatched_conditions": [
+            "2+ kendras empty"
+          ]
+        },
+        {
+          "teva": "Dukhi",
+          "fraction": 0.667,
+          "matched_conditions": [
+            "2+ rins active",
+            "a luminary debilitated/buried"
+          ],
+          "unmatched_conditions": [
+            "2+ sleeping planets"
+          ]
+        }
+      ]
     },
     "secondary": [],
-    "all_matched": []
+    "all_matched": [],
+    "partial_scores": [
+      {
+        "teva": "Andha",
+        "fraction": 0.667,
+        "matched_conditions": [
+          "Sun afflicted",
+          "Moon afflicted"
+        ],
+        "unmatched_conditions": [
+          "2+ kendras empty"
+        ]
+      },
+      {
+        "teva": "Dukhi",
+        "fraction": 0.667,
+        "matched_conditions": [
+          "2+ rins active",
+          "a luminary debilitated/buried"
+        ],
+        "unmatched_conditions": [
+          "2+ sleeping planets"
+        ]
+      },
+      {
+        "teva": "Behra",
+        "fraction": 0.5,
+        "matched_conditions": [
+          "Mercury debilitated/sleeping"
+        ],
+        "unmatched_conditions": [
+          "3rd house compromised (Saturn/Ketu in 3, or 3rd lord Mercury afflicted)"
+        ]
+      },
+      {
+        "teva": "Rajyogi",
+        "fraction": 0.5,
+        "matched_conditions": [
+          "Saturn in pakka(10)/exalted(7)",
+          "no severe rin"
+        ],
+        "unmatched_conditions": [
+          "Sun in house 1",
+          "Jupiter aspects Sun"
+        ]
+      },
+      {
+        "teva": "Pujari",
+        "fraction": 0.333,
+        "matched_conditions": [
+          "Saturn supportive (10/7)"
+        ],
+        "unmatched_conditions": [
+          "Jupiter in pakka ghar 9",
+          "Ketu spiritual (9/12 or aspecting Jupiter)"
+        ]
+      },
+      {
+        "teva": "Lula",
+        "fraction": 0.0,
+        "matched_conditions": [],
+        "unmatched_conditions": [
+          "Mars-Saturn conjunct or mutual aspect",
+          "Mars or Saturn in house 1/4/8"
+        ]
+      },
+      {
+        "teva": "Sukhi",
+        "fraction": 0.0,
+        "matched_conditions": [],
+        "unmatched_conditions": [
+          "2+ planets in pakka ghar",
+          "no severe/moderate rin (<=1 mild)",
+          "luminaries at least neutral"
+        ]
+      }
+    ]
   },
   "varshphal": {
     "current_age": 35,
@@ -571,7 +721,14 @@
           "in_pakka_ghar": false,
           "sleeping": true,
           "buried": true,
-          "rin_involved": []
+          "rin_involved": [],
+          "aspected_houses": [
+            7
+          ],
+          "owned_houses": [
+            3,
+            6
+          ]
         }
       }
     },
@@ -591,8 +748,16 @@
             "sleeping": false,
             "buried": true,
             "rin_involved": [
-              "matri_rin",
               "stri_rin"
+            ],
+            "aspected_houses": [
+              4,
+              7,
+              12
+            ],
+            "owned_houses": [
+              10,
+              11
             ]
           }
         }
@@ -614,7 +779,14 @@
             "rin_involved": [
               "matri_rin",
               "pitri_rin"
-            ]
+            ],
+            "aspected_houses": [
+              2,
+              4,
+              6,
+              9
+            ],
+            "owned_houses": []
           }
         }
       },
@@ -634,7 +806,13 @@
             "buried": false,
             "rin_involved": [
               "matri_rin"
-            ]
+            ],
+            "aspected_houses": [
+              8,
+              10,
+              12
+            ],
+            "owned_houses": []
           }
         }
       },
@@ -654,6 +832,13 @@
             "buried": true,
             "rin_involved": [
               "stri_rin"
+            ],
+            "aspected_houses": [
+              6
+            ],
+            "owned_houses": [
+              2,
+              7
             ]
           }
         }
@@ -674,6 +859,12 @@
             "buried": true,
             "rin_involved": [
               "pitri_rin"
+            ],
+            "aspected_houses": [
+              8
+            ],
+            "owned_houses": [
+              5
             ]
           }
         }
@@ -694,7 +885,16 @@
             "in_pakka_ghar": false,
             "sleeping": false,
             "buried": true,
-            "rin_involved": []
+            "rin_involved": [],
+            "aspected_houses": [
+              7,
+              9,
+              11
+            ],
+            "owned_houses": [
+              9,
+              12
+            ]
           }
         }
       },
@@ -714,6 +914,13 @@
             "buried": true,
             "rin_involved": [
               "stri_rin"
+            ],
+            "aspected_houses": [
+              6
+            ],
+            "owned_houses": [
+              2,
+              7
             ]
           }
         }
@@ -734,6 +941,12 @@
             "buried": true,
             "rin_involved": [
               "matri_rin"
+            ],
+            "aspected_houses": [
+              3
+            ],
+            "owned_houses": [
+              4
             ]
           }
         }
@@ -752,7 +965,16 @@
             "in_pakka_ghar": false,
             "sleeping": false,
             "buried": true,
-            "rin_involved": []
+            "rin_involved": [],
+            "aspected_houses": [
+              2,
+              5,
+              6
+            ],
+            "owned_houses": [
+              1,
+              8
+            ]
           }
         }
       },
@@ -771,8 +993,16 @@
             "sleeping": false,
             "buried": true,
             "rin_involved": [
-              "matri_rin",
               "stri_rin"
+            ],
+            "aspected_houses": [
+              4,
+              7,
+              12
+            ],
+            "owned_houses": [
+              10,
+              11
             ]
           }
         }
@@ -793,8 +1023,16 @@
             "sleeping": false,
             "buried": true,
             "rin_involved": [
-              "matri_rin",
               "stri_rin"
+            ],
+            "aspected_houses": [
+              4,
+              7,
+              12
+            ],
+            "owned_houses": [
+              10,
+              11
             ]
           },
           "Rahu": {
@@ -806,7 +1044,14 @@
             "rin_involved": [
               "matri_rin",
               "pitri_rin"
-            ]
+            ],
+            "aspected_houses": [
+              2,
+              4,
+              6,
+              9
+            ],
+            "owned_houses": []
           }
         }
       },
@@ -825,8 +1070,16 @@
             "sleeping": false,
             "buried": true,
             "rin_involved": [
-              "matri_rin",
               "stri_rin"
+            ],
+            "aspected_houses": [
+              4,
+              7,
+              12
+            ],
+            "owned_houses": [
+              10,
+              11
             ]
           }
         }
@@ -846,7 +1099,16 @@
             "in_pakka_ghar": false,
             "sleeping": false,
             "buried": true,
-            "rin_involved": []
+            "rin_involved": [],
+            "aspected_houses": [
+              2,
+              5,
+              6
+            ],
+            "owned_houses": [
+              1,
+              8
+            ]
           },
           "Saturn": {
             "fixed_house": 10,
@@ -855,8 +1117,16 @@
             "sleeping": false,
             "buried": true,
             "rin_involved": [
-              "matri_rin",
               "stri_rin"
+            ],
+            "aspected_houses": [
+              4,
+              7,
+              12
+            ],
+            "owned_houses": [
+              10,
+              11
             ]
           }
         }
@@ -878,7 +1148,14 @@
             "rin_involved": [
               "matri_rin",
               "pitri_rin"
-            ]
+            ],
+            "aspected_houses": [
+              2,
+              4,
+              6,
+              9
+            ],
+            "owned_houses": []
           }
         }
       }
@@ -888,39 +1165,57 @@
     "signal_1_maturation": {
       "Sun": {
         "maturation_age": 22,
-        "delivery": "friction"
+        "delivery": "friction",
+        "combust": false,
+        "orb_from_sun_deg": 0.0
       },
       "Moon": {
         "maturation_age": 24,
-        "delivery": "neutral"
+        "delivery": "neutral",
+        "combust": false,
+        "orb_from_sun_deg": 120.55
       },
       "Mars": {
         "maturation_age": 28,
-        "delivery": "neutral"
+        "delivery": "neutral",
+        "combust": false,
+        "orb_from_sun_deg": 66.0
       },
       "Mercury": {
         "maturation_age": 32,
-        "delivery": "muted (sleeping \u2014 needs awakening trigger)"
+        "delivery": "muted (sleeping \u2014 needs awakening trigger)",
+        "combust": false,
+        "orb_from_sun_deg": 16.06
       },
       "Jupiter": {
         "maturation_age": 16,
-        "delivery": "friction"
+        "delivery": "friction",
+        "combust": false,
+        "orb_from_sun_deg": 45.37
       },
       "Venus": {
         "maturation_age": 25,
-        "delivery": "amplified positive"
+        "delivery": "amplified positive",
+        "combust": false,
+        "orb_from_sun_deg": 41.63
       },
       "Saturn": {
         "maturation_age": 36,
-        "delivery": "full positive"
+        "delivery": "full positive",
+        "combust": false,
+        "orb_from_sun_deg": 118.86
       },
       "Rahu": {
         "maturation_age": 42,
-        "delivery": "smooth modest positive"
+        "delivery": "smooth modest positive",
+        "combust": false,
+        "orb_from_sun_deg": 102.76
       },
       "Ketu": {
         "maturation_age": 48,
-        "delivery": "friction"
+        "delivery": "friction",
+        "combust": false,
+        "orb_from_sun_deg": 77.24
       }
     },
     "signal_2_year_rulers": {
@@ -1070,7 +1365,7 @@
           ],
           [
             84,
-            90
+            200
           ]
         ],
         "10": [

@@ -6,7 +6,7 @@
     "datetime_utc": "2026-01-01T03:30:00",
     "timezone": "Asia/Kolkata",
     "latitude": 28.6139,
-    "longitude": 77.209,
+    "longitude": 138.0395,
     "question": "Golden regression fixture \u2014 will the querent's pending matter resolve favourably?"
   },
   "ayanamsa": {
@@ -18,11 +18,14 @@
   "horary_lagna": {
     "number": 108,
     "nakshatra": "Uttara Phalguni",
+    "sign": "Virgo",
     "star_lord": "Sun",
     "sub_lord": "Venus",
     "segment_start": 157.7778,
     "segment_end": 160.0,
-    "lagna_deg": 158.8889
+    "lagna_deg": 158.8889,
+    "sandhi": null,
+    "sandhi_warning": false
   },
   "rp_lagna": {
     "longitude": 283.5573,
@@ -219,7 +222,12 @@
       "sub_lord": "Moon",
       "sub_sub_lord": "Jupiter",
       "planet": "Sun",
-      "retrograde": false
+      "retrograde": false,
+      "house": 4,
+      "combust": false,
+      "gandanta": false,
+      "mrityu_bhaga": false,
+      "pushkara_bhaga": false
     },
     "Moon": {
       "longitude": 44.7795,
@@ -233,7 +241,12 @@
       "sub_lord": "Jupiter",
       "sub_sub_lord": "Venus",
       "planet": "Moon",
-      "retrograde": false
+      "retrograde": false,
+      "house": 9,
+      "combust": false,
+      "gandanta": false,
+      "mrityu_bhaga": false,
+      "pushkara_bhaga": true
     },
     "Mars": {
       "longitude": 258.6765,
@@ -247,7 +260,12 @@
       "sub_lord": "Rahu",
       "sub_sub_lord": "Jupiter",
       "planet": "Mars",
-      "retrograde": false
+      "retrograde": false,
+      "house": 4,
+      "combust": true,
+      "gandanta": false,
+      "mrityu_bhaga": false,
+      "pushkara_bhaga": false
     },
     "Mercury": {
       "longitude": 244.7507,
@@ -261,7 +279,12 @@
       "sub_lord": "Moon",
       "sub_sub_lord": "Sun",
       "planet": "Mercury",
-      "retrograde": false
+      "retrograde": false,
+      "house": 4,
+      "combust": false,
+      "gandanta": false,
+      "mrityu_bhaga": false,
+      "pushkara_bhaga": false
     },
     "Jupiter": {
       "longitude": 87.2152,
@@ -275,7 +298,12 @@
       "sub_lord": "Venus",
       "sub_sub_lord": "Moon",
       "planet": "Jupiter",
-      "retrograde": true
+      "retrograde": true,
+      "house": 10,
+      "combust": false,
+      "gandanta": false,
+      "mrityu_bhaga": false,
+      "pushkara_bhaga": false
     },
     "Venus": {
       "longitude": 255.2665,
@@ -289,7 +317,12 @@
       "sub_lord": "Venus",
       "sub_sub_lord": "Mercury",
       "planet": "Venus",
-      "retrograde": false
+      "retrograde": false,
+      "house": 4,
+      "combust": true,
+      "gandanta": false,
+      "mrityu_bhaga": false,
+      "pushkara_bhaga": false
     },
     "Saturn": {
       "longitude": 332.0523,
@@ -303,7 +336,12 @@
       "sub_lord": "Rahu",
       "sub_sub_lord": "Saturn",
       "planet": "Saturn",
-      "retrograde": false
+      "retrograde": false,
+      "house": 7,
+      "combust": false,
+      "gandanta": false,
+      "mrityu_bhaga": false,
+      "pushkara_bhaga": false
     },
     "Rahu": {
       "longitude": 318.0395,
@@ -317,7 +355,12 @@
       "sub_lord": "Sun",
       "sub_sub_lord": "Venus",
       "planet": "Rahu",
-      "retrograde": false
+      "retrograde": false,
+      "house": 6,
+      "combust": false,
+      "gandanta": false,
+      "mrityu_bhaga": false,
+      "pushkara_bhaga": false
     },
     "Ketu": {
       "longitude": 138.0395,
@@ -331,7 +374,12 @@
       "sub_lord": "Mars",
       "sub_sub_lord": "Sun",
       "planet": "Ketu",
-      "retrograde": false
+      "retrograde": false,
+      "house": 12,
+      "combust": false,
+      "gandanta": false,
+      "mrityu_bhaga": false,
+      "pushkara_bhaga": false
     }
   },
   "ruling_planets": {
@@ -396,8 +444,8 @@
       "Rahu": "node \u2014 retrograde rule N/A",
       "Moon": "direct \u2014 retained",
       "Saturn": "direct \u2014 retained",
-      "Jupiter": "retrograde \u2014 EXCLUDED (depositor Mercury not RP)",
-      "Venus": "direct \u2014 retained"
+      "Venus": "direct \u2014 retained",
+      "Jupiter": "retrograde \u2014 EXCLUDED (depositor Mercury not RP)"
     },
     "node_agent_check": {
       "Rahu": {
@@ -432,7 +480,7 @@
     "strongest_rp": "Rahu",
     "day_lord": {
       "planet": "Jupiter",
-      "sunrise_utc": "2026-01-01T01:43:38",
+      "sunrise_local": "2026-01-01T06:52:26.045569",
       "weekday_at_sunrise": "Thursday"
     }
   },
