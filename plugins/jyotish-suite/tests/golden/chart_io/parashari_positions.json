@@ -1,0 +1,59 @@
+{
+  "lagna": {
+    "sign": "Cancer",
+    "deg": 9.8879
+  },
+  "planets": {
+    "Sun": {
+      "sign": "Taurus",
+      "deg": 0.3923,
+      "retrograde": false
+    },
+    "Moon": {
+      "sign": "Sagittarius",
+      "deg": 29.8455,
+      "retrograde": false
+    },
+    "Mars": {
+      "sign": "Aquarius",
+      "deg": 24.3947,
+      "retrograde": false
+    },
+    "Mercury": {
+      "sign": "Aries",
+      "deg": 14.3282,
+      "retrograde": true
+    },
+    "Jupiter": {
+      "sign": "Gemini",
+      "deg": 15.764,
+      "retrograde": false
+    },
+    "Venus": {
+      "sign": "Pisces",
+      "deg": 18.7632,
+      "retrograde": false
+    },
+    "Saturn": {
+      "sign": "Capricorn",
+      "deg": 1.5318,
+      "retrograde": true
+    },
+    "Rahu": {
+      "sign": "Capricorn",
+      "deg": 17.632,
+      "retrograde": false
+    },
+    "Ketu": {
+      "sign": "Cancer",
+      "deg": 17.632,
+      "retrograde": false
+    }
+  },
+  "birth": {
+    "datetime": "1990-05-15T10:30:00",
+    "tz": "Asia/Kolkata",
+    "lat": 28.6139,
+    "lon": 77.209
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "lagna": {
+    "sign": "Cancer",
+    "deg": 9.9848
+  },
+  "planets": {
+    "Sun": {
+      "sign": "Taurus",
+      "deg": 0.4892,
+      "retrograde": false
+    },
+    "Moon": {
+      "sign": "Sagittarius",
+      "deg": 29.9423,
+      "retrograde": false
+    },
+    "Mars": {
+      "sign": "Aquarius",
+      "deg": 24.4915,
+      "retrograde": false
+    },
+    "Mercury": {
+      "sign": "Aries",
+      "deg": 14.4251,
+      "retrograde": true
+    },
+    "Jupiter": {
+      "sign": "Gemini",
+      "deg": 15.8609,
+      "retrograde": false
+    },
+    "Venus": {
+      "sign": "Pisces",
+      "deg": 18.86,
+      "retrograde": false
+    },
+    "Saturn": {
+      "sign": "Capricorn",
+      "deg": 1.6286,
+      "retrograde": true
+    },
+    "Rahu": {
+      "sign": "Capricorn",
+      "deg": 17.7289,
+      "retrograde": false
+    },
+    "Ketu": {
+      "sign": "Cancer",
+      "deg": 17.7289,
+      "retrograde": false
+    }
+  },
+  "birth": {
+    "datetime": "1990-05-15T10:30:00",
+    "tz": "Asia/Kolkata",
+    "lat": 28.6139,
+    "lon": 77.209
+  },
+  "cusps": {
+    "1": {
+      "sign": "Cancer",
+      "deg": 9.9848
+    },
+    "2": {
+      "sign": "Leo",
+      "deg": 3.6492
+    },
+    "3": {
+      "sign": "Virgo",
+      "deg": 1.2011
+    },
+    "4": {
+      "sign": "Libra",
+      "deg": 3.1877
+    },
+    "5": {
+      "sign": "Scorpio",
+      "deg": 7.2851
+    },
+    "6": {
+      "sign": "Sagittarius",
+      "deg": 10.0243
+    },
+    "7": {
+      "sign": "Capricorn",
+      "deg": 9.9848
+    },
+    "8": {
+      "sign": "Aquarius",
+      "deg": 3.6492
+    },
+    "9": {
+      "sign": "Pisces",
+      "deg": 1.2011
+    },
+    "10": {
+      "sign": "Aries",
+      "deg": 3.1877
+    },
+    "11": {
+      "sign": "Taurus",
+      "deg": 7.2851
+    },
+    "12": {
+      "sign": "Gemini",
+      "deg": 10.0243
+    }
+  }
+}

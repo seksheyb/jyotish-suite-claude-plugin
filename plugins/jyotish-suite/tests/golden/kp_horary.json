@@ -9,5 +9,6 @@
     "--lat": "28.6139",
     "--lon": "77.2090",
     "--question": "Golden regression fixture — will the querent's pending matter resolve favourably?"
-  }
+  },
+  "chart_path_note": "kp-horary has no --chart flag (see compute_kp_horary_baseline.py's argparse) — the chart is always number-derived (Lagna rotated from --number), so there is no pasted-chart path to exercise here. Ephemeris-only by nature; intentionally NOT given a chart_path block."
 }

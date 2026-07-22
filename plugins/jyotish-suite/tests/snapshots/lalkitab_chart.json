@@ -1,0 +1,1183 @@
+{
+  "chart_type": "lalkitab_baseline",
+  "methodology_note": "Lal Kitab fixed-house frame (Aries=1). Dignity by house number per Lal Kitab tables, not Parashari. D1 only \u2014 no D9, nakshatras or Vimshottari. Interpretation stays in the skill.",
+  "datetime_local": "1990-05-15T10:30:00+05:30",
+  "datetime_utc": "1990-05-15T05:00:00",
+  "location": {
+    "lat": 28.6139,
+    "lon": 77.209,
+    "tz": "Asia/Kolkata"
+  },
+  "ayanamsa": {
+    "mode": "user-supplied"
+  },
+  "age": 35,
+  "fixed_house_chart": {
+    "frame": "fixed (Aries=1, Taurus=2, ... Pisces=12)",
+    "birth_lagna_sign_flavour": "Cancer",
+    "birth_lagna_note": "recorded as flavour only; houses do not rotate",
+    "planets": {
+      "Sun": {
+        "sign": "Taurus",
+        "fixed_house": 2,
+        "deg_in_sign": 0.3923,
+        "retrograde": false
+      },
+      "Moon": {
+        "sign": "Sagittarius",
+        "fixed_house": 9,
+        "deg_in_sign": 29.8455,
+        "retrograde": false
+      },
+      "Mars": {
+        "sign": "Aquarius",
+        "fixed_house": 11,
+        "deg_in_sign": 24.3947,
+        "retrograde": false
+      },
+      "Mercury": {
+        "sign": "Aries",
+        "fixed_house": 1,
+        "deg_in_sign": 14.3282,
+        "retrograde": true
+      },
+      "Jupiter": {
+        "sign": "Gemini",
+        "fixed_house": 3,
+        "deg_in_sign": 15.764,
+        "retrograde": false
+      },
+      "Venus": {
+        "sign": "Pisces",
+        "fixed_house": 12,
+        "deg_in_sign": 18.7632,
+        "retrograde": false
+      },
+      "Saturn": {
+        "sign": "Capricorn",
+        "fixed_house": 10,
+        "deg_in_sign": 1.5318,
+        "retrograde": true
+      },
+      "Rahu": {
+        "sign": "Capricorn",
+        "fixed_house": 10,
+        "deg_in_sign": 17.632,
+        "retrograde": false
+      },
+      "Ketu": {
+        "sign": "Cancer",
+        "fixed_house": 4,
+        "deg_in_sign": 17.632,
+        "retrograde": false
+      }
+    },
+    "houses": {
+      "1": [
+        "Mercury"
+      ],
+      "2": [
+        "Sun"
+      ],
+      "3": [
+        "Jupiter"
+      ],
+      "4": [
+        "Ketu"
+      ],
+      "5": [],
+      "6": [],
+      "7": [],
+      "8": [],
+      "9": [
+        "Moon"
+      ],
+      "10": [
+        "Saturn",
+        "Rahu"
+      ],
+      "11": [
+        "Mars"
+      ],
+      "12": [
+        "Venus"
+      ]
+    },
+    "empty_houses": [
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "pakka_ghar": {
+    "Sun": {
+      "fixed_house": 2,
+      "pakka_ghar": 1,
+      "in_pakka_ghar": false,
+      "lk_dignity": "enemy",
+      "blind_house": true,
+      "thrives_despite_blind": false,
+      "pakka_ghar_owner": "Mars",
+      "pakka_ghar_occupants": [
+        "Mercury"
+      ],
+      "buried": true,
+      "buried_by": [
+        "Jupiter"
+      ],
+      "debil_never_redeemed": false
+    },
+    "Moon": {
+      "fixed_house": 9,
+      "pakka_ghar": 4,
+      "in_pakka_ghar": false,
+      "lk_dignity": "neutral",
+      "blind_house": false,
+      "thrives_despite_blind": false,
+      "pakka_ghar_owner": "Moon",
+      "pakka_ghar_occupants": [
+        "Ketu"
+      ],
+      "buried": true,
+      "buried_by": [
+        "Saturn",
+        "Rahu"
+      ],
+      "debil_never_redeemed": false
+    },
+    "Mars": {
+      "fixed_house": 11,
+      "pakka_ghar": 3,
+      "in_pakka_ghar": false,
+      "lk_dignity": "neutral",
+      "blind_house": false,
+      "thrives_despite_blind": false,
+      "pakka_ghar_owner": "Mercury",
+      "pakka_ghar_occupants": [
+        "Jupiter"
+      ],
+      "buried": true,
+      "buried_by": [
+        "Venus"
+      ],
+      "debil_never_redeemed": false
+    },
+    "Mercury": {
+      "fixed_house": 1,
+      "pakka_ghar": 7,
+      "in_pakka_ghar": false,
+      "lk_dignity": "neutral",
+      "blind_house": false,
+      "thrives_despite_blind": false,
+      "pakka_ghar_owner": "Venus",
+      "pakka_ghar_occupants": [],
+      "buried": true,
+      "buried_by": [
+        "Sun"
+      ],
+      "debil_never_redeemed": false
+    },
+    "Jupiter": {
+      "fixed_house": 3,
+      "pakka_ghar": 9,
+      "in_pakka_ghar": false,
+      "lk_dignity": "enemy",
+      "blind_house": false,
+      "thrives_despite_blind": false,
+      "pakka_ghar_owner": "Jupiter",
+      "pakka_ghar_occupants": [
+        "Moon"
+      ],
+      "buried": true,
+      "buried_by": [
+        "Ketu"
+      ],
+      "debil_never_redeemed": false
+    },
+    "Venus": {
+      "fixed_house": 12,
+      "pakka_ghar": 7,
+      "in_pakka_ghar": false,
+      "lk_dignity": "exalted",
+      "blind_house": true,
+      "thrives_despite_blind": false,
+      "pakka_ghar_owner": "Venus",
+      "pakka_ghar_occupants": [],
+      "buried": true,
+      "buried_by": [
+        "Mercury"
+      ],
+      "debil_never_redeemed": false
+    },
+    "Saturn": {
+      "fixed_house": 10,
+      "pakka_ghar": 10,
+      "in_pakka_ghar": true,
+      "lk_dignity": "own",
+      "blind_house": false,
+      "thrives_despite_blind": false,
+      "pakka_ghar_owner": "Saturn",
+      "pakka_ghar_occupants": [
+        "Saturn",
+        "Rahu"
+      ],
+      "buried": true,
+      "buried_by": [
+        "Mars"
+      ],
+      "debil_never_redeemed": false
+    },
+    "Rahu": {
+      "fixed_house": 10,
+      "pakka_ghar": 12,
+      "in_pakka_ghar": false,
+      "lk_dignity": "friend",
+      "blind_house": false,
+      "thrives_despite_blind": false,
+      "pakka_ghar_owner": "Jupiter",
+      "pakka_ghar_occupants": [
+        "Venus"
+      ],
+      "buried": true,
+      "buried_by": [
+        "Mars"
+      ],
+      "debil_never_redeemed": false
+    },
+    "Ketu": {
+      "fixed_house": 4,
+      "pakka_ghar": 6,
+      "in_pakka_ghar": false,
+      "lk_dignity": "enemy",
+      "blind_house": false,
+      "thrives_despite_blind": false,
+      "pakka_ghar_owner": "Mercury",
+      "pakka_ghar_occupants": [],
+      "buried": false,
+      "buried_by": [],
+      "debil_never_redeemed": false
+    }
+  },
+  "aspect_map": {
+    "Sun": {
+      "aspects_houses": [
+        8
+      ],
+      "planets_aspected": []
+    },
+    "Moon": {
+      "aspects_houses": [
+        3
+      ],
+      "planets_aspected": [
+        {
+          "planet": "Jupiter",
+          "house": 3,
+          "relationship": "neutral"
+        }
+      ]
+    },
+    "Mars": {
+      "aspects_houses": [
+        2,
+        5,
+        6
+      ],
+      "planets_aspected": [
+        {
+          "planet": "Sun",
+          "house": 2,
+          "relationship": "friend"
+        }
+      ]
+    },
+    "Mercury": {
+      "aspects_houses": [
+        7
+      ],
+      "planets_aspected": []
+    },
+    "Jupiter": {
+      "aspects_houses": [
+        7,
+        9,
+        11
+      ],
+      "planets_aspected": [
+        {
+          "planet": "Moon",
+          "house": 9,
+          "relationship": "friend"
+        },
+        {
+          "planet": "Mars",
+          "house": 11,
+          "relationship": "friend"
+        }
+      ]
+    },
+    "Venus": {
+      "aspects_houses": [
+        6
+      ],
+      "planets_aspected": []
+    },
+    "Saturn": {
+      "aspects_houses": [
+        4,
+        7,
+        12
+      ],
+      "planets_aspected": [
+        {
+          "planet": "Ketu",
+          "house": 4,
+          "relationship": "neutral"
+        },
+        {
+          "planet": "Venus",
+          "house": 12,
+          "relationship": "friend"
+        }
+      ]
+    },
+    "Rahu": {
+      "aspects_houses": [
+        2,
+        4,
+        6,
+        9
+      ],
+      "planets_aspected": [
+        {
+          "planet": "Sun",
+          "house": 2,
+          "relationship": "enemy"
+        },
+        {
+          "planet": "Ketu",
+          "house": 4,
+          "relationship": "neutral"
+        },
+        {
+          "planet": "Moon",
+          "house": 9,
+          "relationship": "enemy"
+        }
+      ]
+    },
+    "Ketu": {
+      "aspects_houses": [
+        8,
+        10,
+        12
+      ],
+      "planets_aspected": [
+        {
+          "planet": "Saturn",
+          "house": 10,
+          "relationship": "friend"
+        },
+        {
+          "planet": "Rahu",
+          "house": 10,
+          "relationship": "neutral"
+        },
+        {
+          "planet": "Venus",
+          "house": 12,
+          "relationship": "friend"
+        }
+      ]
+    }
+  },
+  "sleeping_planets": {
+    "Sun": {
+      "sleeping": false,
+      "co_tenants": [],
+      "aspected_by": [
+        "Mars",
+        "Rahu"
+      ]
+    },
+    "Moon": {
+      "sleeping": false,
+      "co_tenants": [],
+      "aspected_by": [
+        "Jupiter",
+        "Rahu"
+      ]
+    },
+    "Mars": {
+      "sleeping": false,
+      "co_tenants": [],
+      "aspected_by": [
+        "Jupiter"
+      ]
+    },
+    "Mercury": {
+      "sleeping": true,
+      "co_tenants": [],
+      "aspected_by": []
+    },
+    "Jupiter": {
+      "sleeping": false,
+      "co_tenants": [],
+      "aspected_by": [
+        "Moon"
+      ]
+    },
+    "Venus": {
+      "sleeping": false,
+      "co_tenants": [],
+      "aspected_by": [
+        "Saturn",
+        "Ketu"
+      ]
+    },
+    "Saturn": {
+      "sleeping": false,
+      "co_tenants": [
+        "Rahu"
+      ],
+      "aspected_by": [
+        "Ketu"
+      ]
+    },
+    "Rahu": {
+      "sleeping": false,
+      "co_tenants": [
+        "Saturn"
+      ],
+      "aspected_by": [
+        "Ketu"
+      ]
+    },
+    "Ketu": {
+      "sleeping": false,
+      "co_tenants": [],
+      "aspected_by": [
+        "Saturn",
+        "Rahu"
+      ]
+    }
+  },
+  "rin_diagnosis": {
+    "rins": {
+      "pitri_rin": {
+        "triggered": true,
+        "fired_triggers": [
+          {
+            "trigger": 2,
+            "desc": "Sun afflicted by Rahu",
+            "farman": "Farman 8, Vol 2 (1940)"
+          }
+        ],
+        "trigger_count": 1,
+        "compounding_factors": 0,
+        "severity": "Mild"
+      },
+      "matri_rin": {
+        "triggered": true,
+        "fired_triggers": [
+          {
+            "trigger": 6,
+            "desc": "Saturn or Ketu sits in 4th house",
+            "farman": "Farman 19, Vol 3 (1941)"
+          },
+          {
+            "trigger": 7,
+            "desc": "Moon buried (12th) by Rahu",
+            "farman": "Farman 18, Vol 4 (1942)"
+          }
+        ],
+        "trigger_count": 2,
+        "compounding_factors": 0,
+        "severity": "Severe"
+      },
+      "stri_rin": {
+        "triggered": true,
+        "fired_triggers": [
+          {
+            "trigger": 1,
+            "desc": "Venus afflicted by Saturn",
+            "farman": "Farman 11, Vol 2 (1940)"
+          },
+          {
+            "trigger": 5,
+            "desc": "7th house empty AND Venus (7th lord) afflicted",
+            "farman": "Farman 25, Vol 3 (1941)"
+          }
+        ],
+        "trigger_count": 2,
+        "compounding_factors": 0,
+        "severity": "Severe"
+      },
+      "kanya_rin": {
+        "triggered": false,
+        "fired_triggers": [],
+        "trigger_count": 0,
+        "compounding_factors": 0,
+        "severity": null
+      },
+      "bhratra_rin": {
+        "triggered": false,
+        "fired_triggers": [],
+        "trigger_count": 0,
+        "compounding_factors": 0,
+        "severity": null
+      },
+      "atma_rin": {
+        "triggered": false,
+        "fired_triggers": [],
+        "trigger_count": 0,
+        "compounding_factors": 0,
+        "severity": null
+      }
+    },
+    "active_rins": [
+      "pitri_rin",
+      "matri_rin",
+      "stri_rin"
+    ],
+    "active_count": 3,
+    "debt_saturation": true,
+    "blocked_house_pattern": false
+  },
+  "teva": {
+    "dominant": {
+      "teva": "Mishra",
+      "label": "Mixed / Composite Chart",
+      "farman": null,
+      "matched_pattern": "No single teva archetype matched cleanly; most modern charts are Mishra"
+    },
+    "secondary": [],
+    "all_matched": []
+  },
+  "varshphal": {
+    "current_age": 35,
+    "current_year": {
+      "age": 35,
+      "year_rulers": [
+        "Mercury"
+      ],
+      "major_year": null,
+      "danger_year": false,
+      "ruler_conditions": {
+        "Mercury": {
+          "fixed_house": 1,
+          "lk_dignity": "neutral",
+          "in_pakka_ghar": false,
+          "sleeping": true,
+          "buried": true,
+          "rin_involved": []
+        }
+      }
+    },
+    "next_5_years": [
+      {
+        "age": 36,
+        "year_rulers": [
+          "Saturn"
+        ],
+        "major_year": "Saturn major (1st) \u2014 career legitimacy test",
+        "danger_year": true,
+        "ruler_conditions": {
+          "Saturn": {
+            "fixed_house": 10,
+            "lk_dignity": "own",
+            "in_pakka_ghar": true,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": [
+              "matri_rin",
+              "stri_rin"
+            ]
+          }
+        }
+      },
+      {
+        "age": 37,
+        "year_rulers": [
+          "Rahu"
+        ],
+        "major_year": null,
+        "danger_year": false,
+        "ruler_conditions": {
+          "Rahu": {
+            "fixed_house": 10,
+            "lk_dignity": "friend",
+            "in_pakka_ghar": false,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": [
+              "matri_rin",
+              "pitri_rin"
+            ]
+          }
+        }
+      },
+      {
+        "age": 38,
+        "year_rulers": [
+          "Ketu"
+        ],
+        "major_year": null,
+        "danger_year": false,
+        "ruler_conditions": {
+          "Ketu": {
+            "fixed_house": 4,
+            "lk_dignity": "enemy",
+            "in_pakka_ghar": false,
+            "sleeping": false,
+            "buried": false,
+            "rin_involved": [
+              "matri_rin"
+            ]
+          }
+        }
+      },
+      {
+        "age": 39,
+        "year_rulers": [
+          "Venus"
+        ],
+        "major_year": null,
+        "danger_year": false,
+        "ruler_conditions": {
+          "Venus": {
+            "fixed_house": 12,
+            "lk_dignity": "exalted",
+            "in_pakka_ghar": false,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": [
+              "stri_rin"
+            ]
+          }
+        }
+      },
+      {
+        "age": 40,
+        "year_rulers": [
+          "Sun"
+        ],
+        "major_year": null,
+        "danger_year": false,
+        "ruler_conditions": {
+          "Sun": {
+            "fixed_house": 2,
+            "lk_dignity": "enemy",
+            "in_pakka_ghar": false,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": [
+              "pitri_rin"
+            ]
+          }
+        }
+      }
+    ],
+    "major_years": {
+      "21": {
+        "age": 21,
+        "year_rulers": [
+          "Jupiter"
+        ],
+        "major_year": "Jupiter major \u2014 direction-setting",
+        "danger_year": true,
+        "ruler_conditions": {
+          "Jupiter": {
+            "fixed_house": 3,
+            "lk_dignity": "enemy",
+            "in_pakka_ghar": false,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": []
+          }
+        }
+      },
+      "24": {
+        "age": 24,
+        "year_rulers": [
+          "Venus"
+        ],
+        "major_year": "Venus major \u2014 marriage / partnership pivot",
+        "danger_year": false,
+        "ruler_conditions": {
+          "Venus": {
+            "fixed_house": 12,
+            "lk_dignity": "exalted",
+            "in_pakka_ghar": false,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": [
+              "stri_rin"
+            ]
+          }
+        }
+      },
+      "27": {
+        "age": 27,
+        "year_rulers": [
+          "Moon"
+        ],
+        "major_year": "Moon major \u2014 emotional re-set",
+        "danger_year": false,
+        "ruler_conditions": {
+          "Moon": {
+            "fixed_house": 9,
+            "lk_dignity": "neutral",
+            "in_pakka_ghar": false,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": [
+              "matri_rin"
+            ]
+          }
+        }
+      },
+      "28": {
+        "age": 28,
+        "year_rulers": [
+          "Mars"
+        ],
+        "major_year": "Mars major \u2014 energy / conflict / decisive action",
+        "danger_year": false,
+        "ruler_conditions": {
+          "Mars": {
+            "fixed_house": 11,
+            "lk_dignity": "neutral",
+            "in_pakka_ghar": false,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": []
+          }
+        }
+      },
+      "36": {
+        "age": 36,
+        "year_rulers": [
+          "Saturn"
+        ],
+        "major_year": "Saturn major (1st) \u2014 career legitimacy test",
+        "danger_year": true,
+        "ruler_conditions": {
+          "Saturn": {
+            "fixed_house": 10,
+            "lk_dignity": "own",
+            "in_pakka_ghar": true,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": [
+              "matri_rin",
+              "stri_rin"
+            ]
+          }
+        }
+      },
+      "42": {
+        "age": 42,
+        "year_rulers": [
+          "Saturn",
+          "Rahu"
+        ],
+        "major_year": "Saturn + Rahu (severe) \u2014 most dangerous Lal Kitab year",
+        "danger_year": true,
+        "ruler_conditions": {
+          "Saturn": {
+            "fixed_house": 10,
+            "lk_dignity": "own",
+            "in_pakka_ghar": true,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": [
+              "matri_rin",
+              "stri_rin"
+            ]
+          },
+          "Rahu": {
+            "fixed_house": 10,
+            "lk_dignity": "friend",
+            "in_pakka_ghar": false,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": [
+              "matri_rin",
+              "pitri_rin"
+            ]
+          }
+        }
+      },
+      "48": {
+        "age": 48,
+        "year_rulers": [
+          "Saturn"
+        ],
+        "major_year": "Saturn major (3rd) \u2014 career consolidation",
+        "danger_year": true,
+        "ruler_conditions": {
+          "Saturn": {
+            "fixed_house": 10,
+            "lk_dignity": "own",
+            "in_pakka_ghar": true,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": [
+              "matri_rin",
+              "stri_rin"
+            ]
+          }
+        }
+      },
+      "54": {
+        "age": 54,
+        "year_rulers": [
+          "Mars",
+          "Saturn"
+        ],
+        "major_year": "Mars + Saturn \u2014 health watch",
+        "danger_year": true,
+        "ruler_conditions": {
+          "Mars": {
+            "fixed_house": 11,
+            "lk_dignity": "neutral",
+            "in_pakka_ghar": false,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": []
+          },
+          "Saturn": {
+            "fixed_house": 10,
+            "lk_dignity": "own",
+            "in_pakka_ghar": true,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": [
+              "matri_rin",
+              "stri_rin"
+            ]
+          }
+        }
+      },
+      "63": {
+        "age": 63,
+        "year_rulers": [
+          "Rahu"
+        ],
+        "major_year": "Rahu major \u2014 legacy phase begins",
+        "danger_year": true,
+        "ruler_conditions": {
+          "Rahu": {
+            "fixed_house": 10,
+            "lk_dignity": "friend",
+            "in_pakka_ghar": false,
+            "sleeping": false,
+            "buried": true,
+            "rin_involved": [
+              "matri_rin",
+              "pitri_rin"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "timing_signals": {
+    "signal_1_maturation": {
+      "Sun": {
+        "maturation_age": 22,
+        "delivery": "friction"
+      },
+      "Moon": {
+        "maturation_age": 24,
+        "delivery": "neutral"
+      },
+      "Mars": {
+        "maturation_age": 28,
+        "delivery": "neutral"
+      },
+      "Mercury": {
+        "maturation_age": 32,
+        "delivery": "muted (sleeping \u2014 needs awakening trigger)"
+      },
+      "Jupiter": {
+        "maturation_age": 16,
+        "delivery": "friction"
+      },
+      "Venus": {
+        "maturation_age": 25,
+        "delivery": "amplified positive"
+      },
+      "Saturn": {
+        "maturation_age": 36,
+        "delivery": "full positive"
+      },
+      "Rahu": {
+        "maturation_age": 42,
+        "delivery": "smooth modest positive"
+      },
+      "Ketu": {
+        "maturation_age": 48,
+        "delivery": "friction"
+      }
+    },
+    "signal_2_year_rulers": {
+      "window": [
+        35,
+        50
+      ],
+      "year_ruler_by_age": {
+        "35": [
+          "Mercury"
+        ],
+        "36": [
+          "Saturn"
+        ],
+        "37": [
+          "Rahu"
+        ],
+        "38": [
+          "Ketu"
+        ],
+        "39": [
+          "Venus"
+        ],
+        "40": [
+          "Sun"
+        ],
+        "41": [
+          "Moon"
+        ],
+        "42": [
+          "Saturn",
+          "Rahu"
+        ],
+        "43": [
+          "Ketu"
+        ],
+        "44": [
+          "Sun"
+        ],
+        "45": [
+          "Mercury"
+        ],
+        "46": [
+          "Jupiter"
+        ],
+        "47": [
+          "Mars"
+        ],
+        "48": [
+          "Saturn"
+        ],
+        "49": [
+          "Venus"
+        ],
+        "50": [
+          "Sun"
+        ]
+      }
+    },
+    "signal_3_house_cycle": {
+      "cycle_model": "6-years-per-house (72-year completion, Joshi tradition)",
+      "full_cycle_table": {
+        "1": [
+          [
+            1,
+            6
+          ],
+          [
+            36,
+            41
+          ]
+        ],
+        "2": [
+          [
+            7,
+            12
+          ],
+          [
+            42,
+            47
+          ]
+        ],
+        "3": [
+          [
+            13,
+            18
+          ],
+          [
+            48,
+            53
+          ]
+        ],
+        "4": [
+          [
+            19,
+            24
+          ],
+          [
+            54,
+            59
+          ]
+        ],
+        "5": [
+          [
+            25,
+            30
+          ],
+          [
+            60,
+            65
+          ]
+        ],
+        "6": [
+          [
+            31,
+            36
+          ],
+          [
+            66,
+            71
+          ]
+        ],
+        "7": [
+          [
+            37,
+            42
+          ],
+          [
+            72,
+            77
+          ]
+        ],
+        "8": [
+          [
+            43,
+            48
+          ],
+          [
+            78,
+            83
+          ]
+        ],
+        "9": [
+          [
+            49,
+            54
+          ],
+          [
+            84,
+            90
+          ]
+        ],
+        "10": [
+          [
+            55,
+            60
+          ]
+        ],
+        "11": [
+          [
+            61,
+            66
+          ]
+        ],
+        "12": [
+          [
+            67,
+            72
+          ]
+        ]
+      },
+      "active_house_by_age": {
+        "35": [
+          6
+        ],
+        "36": [
+          1,
+          6
+        ],
+        "37": [
+          1,
+          7
+        ],
+        "38": [
+          1,
+          7
+        ],
+        "39": [
+          1,
+          7
+        ],
+        "40": [
+          1,
+          7
+        ],
+        "41": [
+          1,
+          7
+        ],
+        "42": [
+          2,
+          7
+        ],
+        "43": [
+          2,
+          8
+        ],
+        "44": [
+          2,
+          8
+        ],
+        "45": [
+          2,
+          8
+        ],
+        "46": [
+          2,
+          8
+        ],
+        "47": [
+          2,
+          8
+        ],
+        "48": [
+          3,
+          8
+        ],
+        "49": [
+          3,
+          9
+        ],
+        "50": [
+          3,
+          9
+        ]
+      }
+    },
+    "signal_4_jupiter_sanctification": {
+      "jupiter_fixed_house": 3,
+      "jupiter_aspects_houses": [
+        7,
+        9,
+        11
+      ],
+      "jupiter_sleeping": false,
+      "jupiter_dignity": "enemy",
+      "all_jupiter_year_rulers": [
+        5,
+        14,
+        21,
+        46,
+        52,
+        58
+      ],
+      "jupiter_years_in_window": [
+        46
+      ]
+    }
+  }
+}

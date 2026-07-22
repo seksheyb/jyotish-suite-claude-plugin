@@ -8,5 +8,13 @@
     "--lat": "28.6139",
     "--lon": "77.2090",
     "--rp-datetime": "2026-01-01T09:00:00"
+  },
+  "chart_path": {
+    "description": "Same pinned birth chart (KP/Placidus cusps, KP ayanamsa), entered as a hand-authored pasted chart instead of ephemeris inputs, expanded via lib/chart_io.py --mode kp and fed to the baseline via --chart. The positions fixture carries a 'birth' block so meta.location is populated and Ruling Planets still resolves from --rp-datetime alone (no --lat/--lon/--tz needed on the CLI). Only ayanamsa.mode/value_dms differ from the ephemeris-path snapshot.",
+    "mode": "kp",
+    "positions": "chart_io/kp_natal_positions.json",
+    "args": {
+      "--rp-datetime": "2026-01-01T09:00:00"
+    }
   }
 }

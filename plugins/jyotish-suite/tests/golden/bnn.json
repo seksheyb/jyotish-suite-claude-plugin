@@ -7,5 +7,11 @@
     "--tz": "Asia/Kolkata",
     "--lat": "28.6139",
     "--lon": "77.2090"
+  },
+  "chart_path": {
+    "description": "Same pinned birth chart, entered as a hand-authored pasted chart instead of ephemeris inputs, expanded via lib/chart_io.py --mode parashari and fed to the baseline via --chart. Only chart_meta.ayanamsa.mode/value_dms differ from the ephemeris-path snapshot (pasted charts don't carry an ayanamsa value).",
+    "mode": "parashari",
+    "positions": "chart_io/parashari_positions.json",
+    "args": {}
   }
 }

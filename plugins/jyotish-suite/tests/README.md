@@ -10,8 +10,12 @@ reading quality — see "Synthesis-quality eval" below for that gap.
 ```
 tests/
   golden/            one fully-pinned input per school (JSON: script + CLI args)
+    chart_io/          hand-authored pasted-chart positions fixtures (see below)
   snapshots/         the expected baseline JSON per school, checked in
-  run_golden.py       regenerates every baseline, diffs against snapshots
+                      (both the ephemeris-path and, where applicable, the
+                      <school>_chart.json pasted-chart-path snapshot)
+  run_golden.py       regenerates every baseline via BOTH entry points, diffs
+                      against snapshots
   README.md           this file
 ```
 
@@ -31,6 +35,75 @@ Birth data is the same fixed chart everywhere it's used: **1990-05-15T10:30:00,
 Asia/Kolkata, lat 28.6139, lon 77.2090 (Delhi)**. The "moment of reading"
 (2026-01-01T09:00:00 IST) is likewise shared across every KP-flavored
 parameter that needs one.
+
+## Pasted-chart coverage (`lib/chart_io.py`)
+
+Each `compute_<school>_baseline.py` accepts a chart two ways: the ephemeris
+entry point (`--datetime/--tz/--lat/--lon`) covered above, or a **pasted
+chart** — a user-supplied positions JSON expanded by `lib/chart_io.py` into
+the same chart shape, then fed to the baseline via `--chart <file>`. The
+`assemble_parashari`/`assemble_kp` code that both paths converge on is
+shared, but the expansion in `lib/chart_io.py` (nakshatra, navamsa, dignity,
+lord chains, dasha-from-birth-block) is its own surface and can regress
+independently of the ephemeris path.
+
+Every school whose baseline has a `--chart` flag now gets a second golden
+fixture for it:
+
+| School      | Positions fixture                              | Notes |
+| ----------- | ----------------------------------------------- | ----- |
+| `vedic`     | `golden/chart_io/parashari_positions.json`      | `--mode parashari`; `--asof` still pinned |
+| `bnn`       | `golden/chart_io/parashari_positions.json`      | `--mode parashari`; no extra args (no clock dependency) |
+| `jaimini`   | `golden/chart_io/parashari_positions.json`      | `--mode parashari`; `--target-date` still pinned |
+| `kp_natal`  | `golden/chart_io/kp_natal_positions.json`       | `--mode kp`; `--rp-datetime` still pinned |
+| `lalkitab`  | `golden/chart_io/parashari_positions.json`      | `--mode parashari`; `--age` still pinned |
+| `kp_horary` | **none — ephemeris-only, see below**            | — |
+
+The four parashari-mode fixtures (vedic, bnn, jaimini, lalkitab) all reuse
+`golden/chart_io/parashari_positions.json` — the same pinned birth chart
+(1990-05-15T10:30:00, Asia/Kolkata, lat 28.6139, lon 77.2090) hand-transcribed
+as sign+degree-in-sign for the Lagna and all 9 planets, with a `birth` block
+so Vimshottari dasha still resolves from real birth data rather than being
+marked unavailable. `kp_natal` gets its own `golden/chart_io/kp_natal_positions.json`
+because KP houses are Placidus cusps (not signs) and use the KP ayanamsa
+(not Lahiri) — its Lagna/planet degrees are a few arcminutes off the parashari
+fixture's for that reason, not by mistake.
+
+Each `golden/<school>.json` carries this as an optional `"chart_path"` block
+(`mode`, `positions`, `args`) alongside the existing `"args"` block for the
+ephemeris path; `run_golden.py` expands the fixture through `lib/chart_io.py`,
+runs the baseline against the result with `--chart`, and snapshots it
+separately as `snapshots/<school>_chart.json`. A clean run now shows two rows
+per school:
+
+```
+School       Path       Status
+--------------------------------------------------
+vedic        ephemeris  PASS
+vedic        chart      PASS
+...
+kp_horary    ephemeris  PASS
+kp_horary    chart      N/A
+    no pasted-chart path for this school (ephemeris-only)
+--------------------------------------------------
+11/11 PASS, 0 FAIL (1 N/A — ephemeris-only school)
+```
+
+**`kp_horary` has no pasted-chart path and is not given a `chart_path` block.**
+`compute_kp_horary_baseline.py` has no `--chart` flag at all — a horary chart's
+Lagna is always derived from the querent's 1-249 number (rotated Placidus
+cusps), never from a pre-computed chart a user could paste in. That's a
+structural property of horary astrology, not a coverage gap, so it's recorded
+as an `N/A` row rather than forced.
+
+Expect small, well-understood diffs between a school's ephemeris-path and
+chart-path snapshot: the pasted-chart path can't know the true ayanamsa
+*value* (only its mode), so `ayanamsa.mode` reads `"user-supplied"` instead of
+`"lahiri"`/`"kp"` and `ayanamsa.value_dms` is absent. `jaimini`'s baseline
+never reads the ayanamsa block at all, so its two snapshots are byte-identical.
+Everything else — signs, houses, nakshatras, dignities, dasha, and every
+school-specific unit-analyzer field — must match between the two paths for
+the same underlying chart.
 
 Determinism was verified by hand before the first snapshot was cut: every
 baseline was run twice from its pinned `golden/*.json` input and the two
@@ -64,36 +137,37 @@ python3 run_golden.py --out-dir /tmp/jyotish-golden-out
 A clean run looks like:
 
 ```
-School       Status
-----------------------------------------
-vedic        PASS
-bnn          PASS
-jaimini      PASS
-kp_natal     PASS
-kp_horary    PASS
-lalkitab     PASS
-----------------------------------------
-6/6 PASS, 0 FAIL
+School       Path       Status
+--------------------------------------------------
+vedic        ephemeris  PASS
+vedic        chart      PASS
+bnn          ephemeris  PASS
+bnn          chart      PASS
+jaimini      ephemeris  PASS
+jaimini      chart      PASS
+kp_natal     ephemeris  PASS
+kp_natal     chart      PASS
+kp_horary    ephemeris  PASS
+kp_horary    chart      N/A
+    no pasted-chart path for this school (ephemeris-only)
+lalkitab     ephemeris  PASS
+lalkitab     chart      PASS
+--------------------------------------------------
+11/11 PASS, 0 FAIL (1 N/A — ephemeris-only school)
 ```
 
 A `FAIL` row prints a unified diff preview (first ~15 lines) against the
 snapshot and the script's stderr if it crashed outright. If a script fails to
 run at all (import error, missing dependency, argparse mismatch), that's
 recorded as `FAIL: runtime error: <stderr>` rather than silently skipped —
-treat that as a P0, not a snapshot problem.
+treat that as a P0, not a snapshot problem. `kp_horary`'s chart row is always
+`N/A`, never `PASS`/`FAIL` — see "Pasted-chart coverage" above.
 
 ## What this does NOT guard
 
 - **Reading quality.** A baseline can be numerically identical and still feed
   a worse synthesis if the synthesizer prompt, model, or effort earmark
   regresses. That's the gate below.
-- **The chart-verifier / chart-io pasted-chart path.** These snapshots only
-  exercise the ephemeris (`--datetime/--tz/--lat/--lon`) entry point of each
-  script, not the `--chart <path>` entry point that consumes a pasted chart
-  via `lib/chart_io.py`. The underlying `assemble_parashari`/`assemble_kp`
-  code is shared, so this is a narrower gap than it looks, but it is a real
-  one — worth a second golden fixture per school if pasted-chart drift is
-  ever suspected.
 - **The delta scripts** (`compute_transits.py`, `find_fruitful_window.py`,
   `lk_upaay_check.py`) — not baselines in the six-school sense, not covered
   here.
