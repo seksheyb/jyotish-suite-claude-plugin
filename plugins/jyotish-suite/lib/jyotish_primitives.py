@@ -87,26 +87,36 @@ MRITYU_BHAGA = {
     "Lagna":   [18, 16, 14, 12, 10, 8, 6, 4, 2, 28, 26, 24],
 }
 
-# Pushkara Bhaga — single auspicious degrees per sign (0=Aries..11=Pisces).
+# Pushkara Bhaga — single auspicious degree per sign (0=Aries..11=Pisces),
+# element-based: Fire 21deg, Earth 14deg, Air 24deg, Water 7deg.
+# Source: Komilla Sutton, "The Nakshatras" / komilla.com Pushkara reference;
+# cross-checked so each sign's Bhaga falls inside one of its Pushkara Navamsa
+# arcs below. (Corrected 2026-07; the prior per-sign values were internally
+# inconsistent with the navamsa arcs — e.g. Aries Bhaga 21deg fell outside both.)
 PUSHKARA_BHAGA = {
-    0: [21], 1: [14], 2: [7, 21], 3: [12], 4: [17, 22], 5: [11],
-    6: [20], 7: [5, 19], 8: [11, 23], 9: [10, 22], 10: [14, 20], 11: [9, 27],
+    0: [21], 1: [14], 2: [24], 3: [7], 4: [21], 5: [14],
+    6: [24], 7: [7], 8: [21], 9: [14], 10: [24], 11: [7],
 }
 
 # Pushkara Navamsa — auspicious 3deg20' zones per sign, as (start, end) in-sign.
+# Element-based (Komilla Sutton): each element shares one pair of navamsa arcs.
+#   Fire  (Ar/Le/Sg): 20deg00'-23deg20' and 26deg40'-30deg00'
+#   Earth (Ta/Vi/Cp):  6deg40'-10deg00' and 13deg20'-16deg40'
+#   Air   (Ge/Li/Aq): 16deg40'-20deg00' and 23deg20'-26deg40'
+#   Water (Cn/Sc/Pi):  0deg00'- 3deg20' and  6deg40'-10deg00'
 PUSHKARA_NAVAMSA = {
-    0: [(6.6667, 10.0), (23.3333, 26.6667)],
-    1: [(3.3333, 6.6667), (16.6667, 20.0)],
-    2: [(6.6667, 10.0), (20.0, 23.3333)],
-    3: [(0.0, 3.3333), (16.6667, 20.0)],
-    4: [(3.3333, 6.6667), (20.0, 23.3333)],
-    5: [(6.6667, 10.0), (23.3333, 26.6667)],
-    6: [(0.0, 3.3333), (16.6667, 20.0)],
-    7: [(3.3333, 6.6667), (20.0, 23.3333)],
-    8: [(6.6667, 10.0), (23.3333, 26.6667)],
-    9: [(0.0, 3.3333), (16.6667, 20.0)],
-    10: [(3.3333, 6.6667), (20.0, 23.3333)],
-    11: [(6.6667, 10.0), (23.3333, 26.6667)],
+    0: [(20.0, 23.3333), (26.6667, 30.0)],
+    1: [(6.6667, 10.0), (13.3333, 16.6667)],
+    2: [(16.6667, 20.0), (23.3333, 26.6667)],
+    3: [(0.0, 3.3333), (6.6667, 10.0)],
+    4: [(20.0, 23.3333), (26.6667, 30.0)],
+    5: [(6.6667, 10.0), (13.3333, 16.6667)],
+    6: [(16.6667, 20.0), (23.3333, 26.6667)],
+    7: [(0.0, 3.3333), (6.6667, 10.0)],
+    8: [(20.0, 23.3333), (26.6667, 30.0)],
+    9: [(6.6667, 10.0), (13.3333, 16.6667)],
+    10: [(16.6667, 20.0), (23.3333, 26.6667)],
+    11: [(0.0, 3.3333), (6.6667, 10.0)],
 }
 
 # Parashari dignity — (exalt_sign_idx, exalt_deg), debilitation = exalt + 6 signs.

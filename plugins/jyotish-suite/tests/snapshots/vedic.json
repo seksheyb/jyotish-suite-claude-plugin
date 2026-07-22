@@ -76,7 +76,7 @@
         "sandhi": "late",
         "mrityu_bhaga": false,
         "pushkara_bhaga": false,
-        "pushkara_navamsa": false,
+        "pushkara_navamsa": true,
         "combust": false,
         "planetary_war": false
       }
@@ -99,8 +99,8 @@
         "gandanta": false,
         "sandhi": null,
         "mrityu_bhaga": false,
-        "pushkara_bhaga": false,
-        "pushkara_navamsa": false,
+        "pushkara_bhaga": true,
+        "pushkara_navamsa": true,
         "combust": false,
         "planetary_war": false
       }
@@ -196,7 +196,7 @@
         "sandhi": null,
         "mrityu_bhaga": false,
         "pushkara_bhaga": false,
-        "pushkara_navamsa": true,
+        "pushkara_navamsa": false,
         "combust": false,
         "planetary_war": false
       }
@@ -220,7 +220,7 @@
         "sandhi": null,
         "mrityu_bhaga": false,
         "pushkara_bhaga": false,
-        "pushkara_navamsa": true,
+        "pushkara_navamsa": false,
         "combust": false,
         "planetary_war": false
       }
@@ -244,7 +244,7 @@
         "sandhi": null,
         "mrityu_bhaga": false,
         "pushkara_bhaga": false,
-        "pushkara_navamsa": true,
+        "pushkara_navamsa": false,
         "combust": false,
         "planetary_war": false
       }
@@ -494,7 +494,7 @@
           "sandhi": null,
           "mrityu_bhaga": false,
           "pushkara_bhaga": false,
-          "pushkara_navamsa": false
+          "pushkara_navamsa": true
         }
       },
       "Mars": {
@@ -509,7 +509,7 @@
           "sandhi": null,
           "mrityu_bhaga": false,
           "pushkara_bhaga": false,
-          "pushkara_navamsa": false
+          "pushkara_navamsa": true
         }
       },
       "Mercury": {
@@ -539,7 +539,7 @@
           "sandhi": null,
           "mrityu_bhaga": false,
           "pushkara_bhaga": false,
-          "pushkara_navamsa": true
+          "pushkara_navamsa": false
         }
       },
       "Venus": {
@@ -568,8 +568,8 @@
           "gandanta": false,
           "sandhi": null,
           "mrityu_bhaga": false,
-          "pushkara_bhaga": false,
-          "pushkara_navamsa": false
+          "pushkara_bhaga": true,
+          "pushkara_navamsa": true
         }
       },
       "Rahu": {
@@ -584,7 +584,7 @@
           "sandhi": null,
           "mrityu_bhaga": false,
           "pushkara_bhaga": false,
-          "pushkara_navamsa": true
+          "pushkara_navamsa": false
         }
       },
       "Ketu": {
@@ -599,7 +599,7 @@
           "sandhi": null,
           "mrityu_bhaga": false,
           "pushkara_bhaga": false,
-          "pushkara_navamsa": true
+          "pushkara_navamsa": false
         }
       }
     },

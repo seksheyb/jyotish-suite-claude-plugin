@@ -73,19 +73,22 @@ Junction of water-to-fire sign transitions:
 - Pisces 26°40' – Aries 3°20'
 
 ## Pushkara Navamsa Degrees
-Especially auspicious placements that strengthen a planet's results:
-- Aries: 6°40'–10° and 23°20'–26°40'
-- Taurus: 3°20'–6°40' and 16°40'–20°
-- Gemini: 6°40'–10° and 20°–23°20'
-- Cancer: 0°–3°20' and 16°40'–20°
-- Leo: 3°20'–6°40' and 20°–23°20'
-- Virgo: 6°40'–10° and 23°20'–26°40'
-- Libra: 0°–3°20' and 16°40'–20°
-- Scorpio: 3°20'–6°40' and 20°–23°20'
-- Sagittarius: 6°40'–10° and 23°20'–26°40'
-- Capricorn: 0°–3°20' and 16°40'–20°
-- Aquarius: 3°20'–6°40' and 20°–23°20'
-- Pisces: 6°40'–10° and 23°20'–26°40'
+Especially auspicious placements that strengthen a planet's results. Element-based
+(Fire / Earth / Air / Water each share one pair of arcs); source: Komilla Sutton.
+Each sign's Pushkara Bhaga (Fire 21°, Earth 14°, Air 24°, Water 7°) falls inside
+one of its two arcs. Mirrors `lib/jyotish_primitives.py` PUSHKARA_NAVAMSA exactly.
+- Aries: 20°–23°20' and 26°40'–30°
+- Taurus: 6°40'–10° and 13°20'–16°40'
+- Gemini: 16°40'–20° and 23°20'–26°40'
+- Cancer: 0°–3°20' and 6°40'–10°
+- Leo: 20°–23°20' and 26°40'–30°
+- Virgo: 6°40'–10° and 13°20'–16°40'
+- Libra: 16°40'–20° and 23°20'–26°40'
+- Scorpio: 0°–3°20' and 6°40'–10°
+- Sagittarius: 20°–23°20' and 26°40'–30°
+- Capricorn: 6°40'–10° and 13°20'–16°40'
+- Aquarius: 16°40'–20° and 23°20'–26°40'
+- Pisces: 0°–3°20' and 6°40'–10°
 
 ## Planetary Combustion Orbs
 Planet is combust when within this distance of the Sun:

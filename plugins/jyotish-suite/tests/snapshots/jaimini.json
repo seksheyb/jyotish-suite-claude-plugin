@@ -877,7 +877,7 @@
         "sandhi": "late",
         "mrityu_bhaga": false,
         "pushkara_bhaga": false,
-        "pushkara_navamsa": false,
+        "pushkara_navamsa": true,
         "vargottama": true,
         "combust": false
       },
@@ -893,8 +893,8 @@
         "gandanta": false,
         "sandhi": null,
         "mrityu_bhaga": false,
-        "pushkara_bhaga": false,
-        "pushkara_navamsa": false,
+        "pushkara_bhaga": true,
+        "pushkara_navamsa": true,
         "vargottama": false,
         "combust": false
       },
@@ -962,7 +962,7 @@
         "sandhi": null,
         "mrityu_bhaga": false,
         "pushkara_bhaga": false,
-        "pushkara_navamsa": true,
+        "pushkara_navamsa": false,
         "vargottama": true,
         "combust": false
       },
@@ -979,7 +979,7 @@
         "sandhi": null,
         "mrityu_bhaga": false,
         "pushkara_bhaga": false,
-        "pushkara_navamsa": true,
+        "pushkara_navamsa": false,
         "vargottama": false,
         "combust": false
       },
@@ -996,7 +996,7 @@
         "sandhi": null,
         "mrityu_bhaga": false,
         "pushkara_bhaga": false,
-        "pushkara_navamsa": true,
+        "pushkara_navamsa": false,
         "vargottama": false,
         "combust": false
       },

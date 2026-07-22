@@ -109,16 +109,16 @@
         "sandhi": "late",
         "mrityu_bhaga": false,
         "pushkara_bhaga": false,
-        "pushkara_navamsa": false,
+        "pushkara_navamsa": true,
         "vargottama": true,
         "combust": false
       },
       "planetary_war": null,
       "degree_flag_verdict": {
-        "dominant": "sandhi",
-        "code": "Sd",
-        "color": "yellow",
-        "note": "Sandhi — immature or unstable expression of themes."
+        "dominant": "vargottama_pushkara",
+        "code": "Vo+PK",
+        "color": "green",
+        "note": "Vargottama + Pushkara — exceptional, soul-endorsed delivery."
       }
     },
     "Mars": {
@@ -133,17 +133,17 @@
         "gandanta": false,
         "sandhi": null,
         "mrityu_bhaga": false,
-        "pushkara_bhaga": false,
-        "pushkara_navamsa": false,
+        "pushkara_bhaga": true,
+        "pushkara_navamsa": true,
         "vargottama": false,
         "combust": false
       },
       "planetary_war": null,
       "degree_flag_verdict": {
-        "dominant": "none",
-        "code": "-",
-        "color": "neutral",
-        "note": "No dominating degree flag."
+        "dominant": "pushkara",
+        "code": "PK",
+        "color": "green",
+        "note": "Pushkara — empowered; delivers with ease."
       }
     },
     "Mercury": {
@@ -234,16 +234,16 @@
         "sandhi": null,
         "mrityu_bhaga": false,
         "pushkara_bhaga": false,
-        "pushkara_navamsa": true,
+        "pushkara_navamsa": false,
         "vargottama": true,
         "combust": false
       },
       "planetary_war": null,
       "degree_flag_verdict": {
-        "dominant": "vargottama_pushkara",
-        "code": "Vo+PK",
+        "dominant": "vargottama",
+        "code": "Vo",
         "color": "green",
-        "note": "Vargottama + Pushkara — exceptional, soul-endorsed delivery."
+        "note": "Vargottama — D1 promise soul-endorsed; operates with coherence."
       }
     },
     "Rahu": {
@@ -259,16 +259,16 @@
         "sandhi": null,
         "mrityu_bhaga": false,
         "pushkara_bhaga": false,
-        "pushkara_navamsa": true,
+        "pushkara_navamsa": false,
         "vargottama": false,
         "combust": false
       },
       "planetary_war": null,
       "degree_flag_verdict": {
-        "dominant": "pushkara",
-        "code": "PK",
-        "color": "green",
-        "note": "Pushkara — empowered; delivers with ease."
+        "dominant": "none",
+        "code": "-",
+        "color": "neutral",
+        "note": "No dominating degree flag."
       }
     },
     "Ketu": {
@@ -284,16 +284,16 @@
         "sandhi": null,
         "mrityu_bhaga": false,
         "pushkara_bhaga": false,
-        "pushkara_navamsa": true,
+        "pushkara_navamsa": false,
         "vargottama": false,
         "combust": false
       },
       "planetary_war": null,
       "degree_flag_verdict": {
-        "dominant": "pushkara",
-        "code": "PK",
-        "color": "green",
-        "note": "Pushkara — empowered; delivers with ease."
+        "dominant": "none",
+        "code": "-",
+        "color": "neutral",
+        "note": "No dominating degree flag."
       }
     }
   },
