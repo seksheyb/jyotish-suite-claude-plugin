@@ -1,137 +1,151 @@
 # KP House Combinations — Question Categories
 
-The CSL of the **primary house** must signify the **positive set**, not the **negative set**, for the matter to fructify.
+The CSL of the **primary house** must signify the **positive set**, not the
+**negative set**, for the matter to fructify. The tables below mirror
+`HOUSE_COMBINATIONS` in `scripts/compute_kp_horary_baseline.py` exactly (same
+keys, same primary/positive/negative house numbers) — this file adds only the
+interpretive notes the script doesn't carry. If a future script edit changes a
+number, update it here too; this file must never drift from the source dict.
 
-## Marriage / partnership
+## marriage / partnership
 
-**Primary:** 7 (spouse, partnership)
-**Positive:** 2 (family expansion), 7 (spouse), 11 (fulfillment of desire)
-**Negative:** 1 (self alone), 6 (separation, dispute), 10 (career over family)
-**Notes:**
+**Primary:** 7 · **Positive:** 2, 7, 11 · **Negative:** 1, 6, 10
 - 7th CSL must signify 2, 7, or 11. If signifies 1, 6, or 10 → denial.
 - For *love* marriage specifically, also check 5 (romance) connection.
 - Rahu in 7 or 7th CSL = unconventional partner; nodes need careful sub-sub check.
 
-## New job / employment
+## new_job — new job / employment
 
-**Primary:** 10 (career, status)
-**Positive:** 2 (income), 6 (employment, service), 10 (profession), 11 (gain, fulfillment)
-**Negative:** 5 (speculation over service), 8 (obstacles, transformation), 12 (loss, isolation)
-**Notes:**
+**Primary:** 10 · **Positive:** 2, 6, 10, 11 · **Negative:** 5, 8, 12
 - 10th CSL must signify 2, 6, 10, or 11.
 - 6 is essential — without 6, no employment (only self-employment via 7).
 - For self-employment / consulting, primary becomes 7, supporting 2 and 11.
 
-## Job change / leaving current job
+## job_change_leaving / job_change_new — job change
 
-**Two-step:**
-1. **Leaving:** Check 1, 5, 9, 10 cusps. CSL of 1 (or 10) signifying 5/9 = inclination to change.
-2. **New job:** Standard new-job combination above.
-**Verdict:** Both must align. If 1-CSL says "stay" but new-job CSL says "you'll get one," outcome is delayed/conflicted.
+Two independent CSL chains — score both, don't blend them:
 
-## Promotion / raise
+- **job_change_leaving** — **Primary:** 1, 10 · **Positive:** 5, 9 ·
+  **Negative:** 2, 6, 10, 11. CSL of 1 (or 10) signifying 5/9 = inclination to
+  leave; signifying 2/6/10/11 = staying put.
+- **job_change_new** — identical combination to `new_job` above (**Primary:**
+  10 · **Positive:** 2, 6, 10, 11 · **Negative:** 5, 8, 12) — "will I get a new
+  one."
 
-**Primary:** 10 (status increase) + 2 (income increase)
-**Positive:** 2, 6, 10, 11
-**Negative:** 5, 8, 12
-**Notes:** Same as new job, but 10th CSL must signify 11 strongly (gain over status). 2 = financial gain.
+**Verdict:** Both chains must align. If the leaving-CSL says "stay" but the
+new-job CSL says "you'll get one," the outcome is delayed/conflicted — say so
+rather than picking one chain to report.
 
-## Litigation — own case
+## promotion — promotion / raise
 
-**Primary:** 6 (victory over opponent)
-**Positive:** 1 (self), 6 (victory), 11 (fulfillment)
-**Negative:** 5 (defeat = 12th from 6), 8 (obstacle), 12 (loss = 7th from 6 = opponent's 6th)
-**Notes:**
-- 6th CSL signifying 1, 6, 11 = win
-- 6th CSL signifying 7, 8, 12 = lose
+**Primary:** 10, 2 · **Positive:** 2, 6, 10, 11 · **Negative:** 5, 8, 12
+- Same combination as new job, but 10th CSL must signify 11 strongly (gain
+  over status). 2 = financial gain.
+
+## litigation_own — litigation, own case
+
+**Primary:** 6 · **Positive:** 1, 6, 11 · **Negative:** 5, 8, 12
+- 6th CSL signifying 1, 6, 11 = win. Signifying 5, 8, 12 = lose.
 - For settlement out of court, check 9 (compromise, dharma).
 
-## Litigation — opponent's case
+## litigation_opponent — litigation, opponent's case
 
-Mirror houses: their 1 = your 7, their 6 = your 12, their 11 = your 5.
-**Their victory = your defeat:** check 12th CSL (= their 6th).
+**Primary:** 12 · **Positive:** 5, 8, 12 · **Negative:** 1, 6, 11
+- Mirror of `litigation_own` from the opponent's side: their 1 = your 7, their
+  6 = your 12, their 11 = your 5. Their victory (their positive set) is your
+  defeat — check the 12th CSL against this category's own positive/negative
+  sets directly rather than re-deriving the mirror by hand.
 
-## Property purchase
+## property_purchase
 
-**Primary:** 4 (property, fixed asset)
-**Positive:** 4 (acquisition), 11 (gain), 12 (investment, expense)
-**Negative:** 3 (transfer/sale), 5 (loss of 4 = 12th from 6th... use 5 = 2nd from 4 negation), 9 (residence change away from)
-**Notes:**
-- 4th CSL signifying 4, 11, 12 = acquisition
-- 4th CSL signifying 3, 5, 10 = sale (don't acquire; relinquish)
+**Primary:** 4 · **Positive:** 4, 11, 12 · **Negative:** 3, 5, 10
+- 4th CSL signifying 4, 11, 12 = acquisition.
+- 4th CSL signifying 3, 5, 10 = sale (don't acquire; relinquish) — this is the
+  negative set exactly as `property_sale`'s positive set below.
 
-## Property sale
+## property_sale
 
-**Primary:** 3 (transfer, exchange)
-**Positive:** 3, 5 (negation of 4), 10 (cash flow from asset)
-**Negative:** 4, 11, 12 (acquisition mode)
+**Primary:** 3 · **Positive:** 3, 5, 10 · **Negative:** 4, 11, 12
+- Inverse of `property_purchase` — 3rd CSL signifying 3, 5, 10 = transfer
+  completes; signifying 4, 11, 12 = buyer's-side acquisition energy dominates
+  and the sale stalls.
 
-## Childbirth / conception
+## childbirth / conception
 
-**Primary:** 5 (children)
-**Positive:** 2 (family addition), 5 (child), 11 (fulfillment of desire)
-**Negative:** 1 (self alone), 4 (no progression past mother stage), 10 (career over family)
-**Notes:**
-- For male native, also check 11 = elder sibling of 5 = first child timing
-- Saturn or Ketu CSL on 5 = delay or denial; sub-sub crucial
+**Primary:** 5 · **Positive:** 2, 5, 11 · **Negative:** 1, 4, 10
+- For male native, also check 11 = elder sibling of 5 = first-child timing.
+- Saturn or Ketu on the 5th CSL = delay or denial; sub-sub crucial.
 
-## Loan / borrowing
+## loan_borrowing
 
-**Primary:** 6 (borrowing, debt)
-**Positive:** 2 (money received), 6 (loan granted), 11 (gain)
-**Negative:** 8 (debt that won't be repaid easily), 12 (loss)
-**Notes:** For *giving* a loan, primary becomes 8 (others' money) and look for 11 (you'll be repaid).
+**Primary:** 6 · **Positive:** 2, 6, 11 · **Negative:** 8, 12
 
-## Investment return / speculation
+## loan_giving
 
-**Primary:** 5 (speculation)
-**Positive:** 2 (gain), 5 (speculation), 11 (fulfillment)
-**Negative:** 8 (sudden loss), 12 (loss)
+**Primary:** 8 · **Positive:** 8, 11, 2 · **Negative:** 6, 12
+- Separate category from `loan_borrowing`, not a note on it — the primary
+  house flips (8 = others' money placed at risk, vs 6 = your own debt), so it
+  needs its own CSL chain. Positive set centers on 11 (repayment received).
 
-## Travel — long journey
+## investment_return — speculation
 
-**Primary:** 9 (long journey)
-**Positive:** 3 (movement), 9 (long), 12 (foreign land)
-**Negative:** 4 (stay home), 8 (travel obstacle/danger)
+**Primary:** 5 · **Positive:** 2, 5, 11 · **Negative:** 8, 12
 
-## Foreign settlement / immigration
+## travel_long — long journey
 
-**Primary:** 12 (foreign land, moksha)
-**Positive:** 9 (long journey, dharma in new place), 12 (foreign), 7 (away from home, partnership/sponsor)
-**Negative:** 4 (homeland holds you), 11 (gain at home)
+**Primary:** 9 · **Positive:** 3, 9, 12 · **Negative:** 4, 8
 
-## Health / disease cure
+## foreign_settlement — immigration
 
-**Primary:** 1 (vitality) or 6 (disease — wanting to free FROM 6)
-**Positive for cure:** 1, 5, 11 (recovery, fulfillment of desire to heal)
-**Negative:** 6 (continued disease), 8 (chronic), 12 (hospitalization, loss)
-**Notes:** 1st CSL signifying 1, 5, 11 = recovery. Signifying 6, 8, 12 = continued illness.
+**Primary:** 12 · **Positive:** 9, 12, 7 · **Negative:** 4, 11
 
-## Education / exam
+## health_cure — disease cure
 
-**Primary:** 4 (formal learning) or 9 (higher learning)
-**Positive:** 4, 9, 11 (success, fulfillment)
-**Negative:** 8 (obstruction), 12 (failure, loss)
-**For competitive exam:** add 6 (winning over competitors) and 10 (status from result).
+**Primary:** 1 · **Positive:** 1, 5, 11 · **Negative:** 6, 8, 12
+- 1st CSL signifying 1, 5, 11 = recovery. Signifying 6, 8, 12 = continued
+  illness. (6 is where the disease itself lives — the question is "will I be
+  freed FROM 6," so 6 sits in the negative set, not the primary house.)
 
-## Lost item — recovery
+## education_exam
 
-**Primary:** 2 (recovery of possession)
-**Positive:** 2, 11 (recovered, gained back)
-**Negative:** 6, 8, 12 (lost, gone, beyond reach)
-**Direction:** Sign of CSL gives direction (fire = SE, earth = S, air = W, water = N, etc.)
+**Primary:** 4, 9 · **Positive:** 4, 9, 11 · **Negative:** 8, 12
+- For competitive exams specifically, also weigh 6 (winning over competitors)
+  and 10 (status from the result) even though they aren't in the base set.
 
-## Election / appointment
+## lost_item_recovery
 
-**Primary:** 10 (status, position)
-**Positive:** 6 (defeat opponent), 10 (position), 11 (fulfillment)
-**Negative:** 5, 8, 12
+**Primary:** 2 · **Positive:** 2, 11 · **Negative:** 6, 8, 12
+- **Direction:** sign of the CSL gives direction (fire = SE, earth = S, air =
+  W, water = N, etc.).
 
-## Project / business venture launch
+## election_appointment
 
-**Primary:** 10 (action) + 11 (gain)
-**Positive:** 2, 6, 10, 11
-**Negative:** 5, 8, 12
+**Primary:** 10 · **Positive:** 6, 10, 11 · **Negative:** 5, 8, 12
+
+## business_launch — project / venture launch
+
+**Primary:** 10, 11 · **Positive:** 2, 6, 10, 11 · **Negative:** 5, 8, 12
 
 ## When in doubt
-If no clear category fits, ask the user to clarify the question. Don't force-fit a question into a category.
+
+If no clear category fits, ask the user to clarify the question. Don't
+force-fit a question into a category.
+
+## Why 20 keys here vs kp-natal's 18
+
+This file's categories and `kp-natal`'s equivalent reference intentionally
+diverge in count — this is a methodological split, not drift:
+
+- **`job_change` splits into two keys here** (`job_change_leaving` +
+  `job_change_new`) instead of kp-natal's single `job_change`. Horary is
+  single-issue by definition (see SKILL.md Question intake: "one chart, one
+  question") — "will I leave" and "will I get the new job" are two
+  independent CSL chains that must be scored and reported separately even
+  when asked together. A life reading can narrate both under one combined
+  lens; a horary verdict cannot blend two questions into one answer.
+- **`loan_giving` is its own key here**, not folded into `loan_borrowing`'s
+  note the way kp-natal does it — the primary house flips (8 vs 6), so it
+  needs an independent primary/positive/negative set, not a footnote.
+
+Everything else lines up house-for-house with kp-natal's set under matching
+or renamed keys.

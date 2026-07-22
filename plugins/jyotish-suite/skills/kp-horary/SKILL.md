@@ -66,20 +66,48 @@ gate.
 ### Wave 1 — Cuspal sub-lord analysis
 
 Determine the question category and its primary + supporting houses from the
-baseline's house-combination tables. Dispatch `unit-analyzer` agents for the
-relevant cusps only — the primary house plus supporting houses, typically 2-4.
-Each worker gets: the baseline.json path, `references/methodology.md` +
-`references/orchestration-notes.md`, its one cusp, and the question.
+baseline's house-combination tables (`references/house-combinations.md`
+mirrors the script's `HOUSE_COMBINATIONS` exactly). **Cap the fan-out — this is
+the main tuning point of this skill.** A horary reading centers on one primary
+house plus 2-5 supporting houses feeding one verdict; do not fan a worker per
+cusp beyond the category's own positive/negative house sets:
+
+- Dispatch `unit-analyzer` (effort **medium**, per cusp) for each cusp in the
+  question category's primary + positive + negative sets — typically 2-5
+  cusps total, never all 12.
+- If the category's relevant house set is **3 cusps or fewer**, skip the fan-out
+  entirely and run a **single `unit-analyzer`** covering all of them together
+  — spinning up 2-3 parallel workers for one small set adds latency without
+  adding independent work.
+- Each worker gets: the baseline.json path, `references/house-combinations.md`
+  + `references/ruling-planets.md` + `references/orchestration-notes.md`
+  (which now also carries significator-strength rules, the degree-sensitive
+  special rules, and common failure modes), its cusp(s), and the question.
 
 The CSL-verdict → RP-cross-check → timing chain is **sequential** — only the
-per-cusp CSL examination fans out. Do not over-parallelize; resolve the primary
-CSL verdict first, then RP cross-check, then timing.
+per-cusp CSL examination fans out. **Barrier: do not begin the RP cross-check
+until every dispatched cusp unit-analyzer has returned its verdict block** —
+the cross-check compares the RP set against the full significator picture, so
+partial results corrupt it. Resolve the primary CSL verdict first, then RP
+cross-check, then timing.
+
+After the RP cross-check, run the **transit-confirmation step**: dispatch
+`baseline-runner` (school `kp_horary`) again, this time against
+`${CLAUDE_PLUGIN_ROOT}/scripts/compute_transits.py`, passing the current
+Mahadasha/Bhukti/Antara/Sookshma window and the positive-set significator
+planets/stars from the baseline JSON. It returns the actual forward dates
+Jupiter, Sun, and Moon transit those significator stars — real computed dates,
+not the prose guess the skill used to rely on. Feed those dates into the
+timing window before Wave 2.
 
 ### Wave 2 — Synthesis
 
-Dispatch one `synthesizer` with the baseline, the Wave-1 cusp blocks, the
-question, and `references/orchestration-notes.md` for the Phase-8 verdict
-(outcome, confidence, timing window, caveats, recommended action).
+Dispatch one `synthesizer` (model **sonnet**, effort **high** — this is a
+single sequential verdict chain, not cross-domain reconciliation, so opus
+would be waste here) with the baseline, the Wave-1 cusp blocks, the
+transit-confirmation dates, the question, and `references/orchestration-notes.md`
+for the Phase-8 verdict (outcome, confidence, timing window, caveats,
+recommended action).
 
 ## Question intake
 
@@ -96,12 +124,15 @@ question, and `references/orchestration-notes.md` for the Phase-8 verdict
 ## Methodology
 
 Full interpretive methodology lives in `references/`. Workers load these; the
-orchestrator does not.
+orchestrator does not. There is no standalone `methodology.md` — its eight-step
+narrative was a near-duplicate of this SKILL.md's wave structure; its unique
+content (significator strength, signification-through-stars, the
+retrograde/combust/sandhi special rules, and common failure modes) now lives in
+`orchestration-notes.md` alongside the rest of the interpretive material.
 
 | File | Contents |
 |------|----------|
-| `references/methodology.md` | Eight-step horary read, sub-lord primacy, signification-through-stars, special rules (retrograde, combust, sandhi), failure modes |
-| `references/house-combinations.md` | Question categories with primary / positive / negative house sets |
-| `references/ruling-planets.md` | RP factors, strength order, computation, exclusions, RP-in-verdict use |
-| `references/249-table.md` | How the 1-249 number maps to the horary Lagna degree |
-| `references/orchestration-notes.md` | Two-Lagna rule, per-cusp CSL output block, RP-cross-check criteria, timing chain, verdict template, critical rules, output style, verification display format |
+| `references/house-combinations.md` | Question categories with primary / positive / negative house sets — mirrors the script's `HOUSE_COMBINATIONS` exactly |
+| `references/ruling-planets.md` | RP factors, strength order, verdict-usage guidance (computation itself is the script's job) |
+| `references/249-table.md` | 249-number → horary Lagna concept + the sandhi edge-case warning (the mapping itself is computed in `ephemeris.horary_number_to_lagna()`) |
+| `references/orchestration-notes.md` | Two-Lagna rule, significator strength & signification-through-stars, degree-sensitive special rules, per-cusp CSL output block, RP-cross-check criteria, timing chain (incl. transit-confirmation wiring), verdict template, critical rules, common failure modes, output style, verification display format |

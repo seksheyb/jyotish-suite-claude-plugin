@@ -19,8 +19,9 @@ or per-unit analysis inline.
 
 ## Orchestration
 
-WAVE ORCHESTRATOR. Deterministic computation -> Python sidecar; per-Karaka and
-per-Arudha interpretation -> parallel subagents. Paths use `${CLAUDE_PLUGIN_ROOT}`.
+WAVE ORCHESTRATOR. Deterministic computation -> Python sidecar; D1/D9/reverse/
+Chara-Dasha-timeline interpretation -> parallel subagents (or inline for
+narrow single-Karaka questions). Paths use `${CLAUDE_PLUGIN_ROOT}`.
 
 ### Phase A — Chart intake (with the user)
 
@@ -69,21 +70,47 @@ Dasha, Arudha-specific, full reading) per the classification table there, and
 state the classification in one line — primary Karaka, primary Arudha, and
 whether reverse analysis applies. Do not begin Wave 1 until the user answers.
 
-### Wave 1 — Parallel per-unit analysis
+### Wave 1 — Parallel per-layer analysis
 
-Dispatch parallel `unit-analyzer` agents — one per relevant Karaka and per
-relevant Arudha, each covering D1 and D9. A full reading groups ~12-16 units
-(7 Karakas + 8 Arudhas); a domain question narrows to 2-4 per the topic map in
-`references/orchestration-notes.md`. Each worker receives the baseline.json
-path, the methodology references, its assigned unit, and the question. Workers
-read the baseline as ground truth — no recomputation.
+**Conditional dispatch first.** A narrow single-Karaka question (e.g. "what
+does my Swamsha say about my dharma") does not need a wave at all — answer it
+inline from the baseline.json and `methodology.md` Section 3 Step D/E, zero
+agents dispatched. Everything else (domain, full reading, Dasha, Arudha-specific,
+yes/no) fans out below.
+
+Dispatch up to four `unit-analyzer` agents, **all effort medium, all launched
+in the same wave**:
+
+| Analyst | Covers | When dispatched |
+|---|---|---|
+| D1 analyst | Methodology Section 3 Steps A-F against D1 data, for the question's primary + secondary Karakas/Arudhas | Always (domain, Dasha, Arudha-specific, full, yes/no) |
+| D9 analyst | Section 3 Steps A-F against D9 data for the same Karakas/Arudhas, plus Swamsha/Karakamsha and D9 Karaka confirmation | Always |
+| Reverse-question analyst | Section 5 Step 5 — reverses the question, repeats Steps A-F for D1 and D9, compares signature strength | Yes/No (binary) questions only |
+| Chara-Dasha-timeline analyst | Section 4A/4B + Step 7 — Mahadasha/Antardasha activation, Karaka/Arudha activation, next 2-3 shifts | Always when timing/Dasha/activation is in scope (Dasha questions, full readings, any question with a timeframe); optional for a pure Swamsha/UL question with no timing component |
+
+**Dasha-lord rule:** if the question involves timing or activation and the
+running Chara Dasha Rasi's lord is not one of the Karakas already covered by
+the D1/D9 analysts, the Chara-Dasha-timeline analyst must explicitly also
+cover that lord's placement, dignity, and Jaimini Drishti — it is never left
+uncovered.
+
+Each dispatched worker receives the baseline.json path (full file, not a
+slice), the relevant methodology references, its assigned scope, and the
+question. Workers read the baseline as ground truth — no recomputation.
 
 ### Wave 2 — Synthesis
 
-Dispatch one `synthesizer` — execution order D1 -> D9 -> reverse check (yes/no
-questions only) -> composite reading -> Chara Dasha timing. It applies the
-composite priority order and Dasha-timing output rules from methodology
-Section 5.
+**Explicit barrier:** do not dispatch the synthesizer until every Wave 1
+worker that was launched has returned.
+
+Dispatch one `synthesizer-deep` (opus, effort medium) — jaimini is one of the
+two schools that keeps opus, because the composite step is genuinely
+contradiction-prone cross-domain reconciliation: D1 vs D9 Karaka confirmation,
+Bhava vs Arudha divergence, and Chara Dasha activation all have to be weighed
+against each other, not just concatenated. Execution order: D1 -> D9 ->
+reverse check (yes/no questions only) -> composite reading -> Chara Dasha
+timing. It applies the composite priority order and Dasha-timing output rules
+from methodology Section 5.
 
 ## Methodology
 

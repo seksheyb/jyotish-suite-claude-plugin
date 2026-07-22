@@ -42,6 +42,46 @@ signifies the negative set, the matter is denied. If it signifies both, the
 sub-sub-lord breaks the tie. If it signifies neither, the matter does not
 fructify in the current dasha.
 
+## Significator strength & signification through stars
+
+A planet primarily signifies the houses owned/occupied by the planet in whose
+**star** it sits, and only secondarily the houses it itself owns/occupies —
+star-lord effects outrank own-placement effects. For any house, list its
+significators in strength order:
+
+- **Level 1** (strongest) — planets in the star of the planet occupying that
+  house
+- **Level 2** — planets occupying that house
+- **Level 3** — planets in the star of the lord of that house
+- **Level 4** (weakest) — the lord of the house itself
+
+Conjunction with Rahu/Ketu in a house adds those nodes to that house's
+significators. When a house is empty (no planet occupies it), read from
+Level 3/4 — the lord of the house and planets in its star. If multiple
+planets share one star, all are significators; the one closest in degree to
+the star's mid-point is the strongest of that group.
+
+## Special rules — degree-sensitive flags
+
+These affect how much weight a CSL or significator carries. Some are emitted
+by the baseline JSON already; where the audit found a gap, apply the rule by
+eye against the baseline's raw degrees rather than skipping it:
+
+- **Retrograde planets** give the result of the planet in whose star they
+  sit, not their own placement's result. Exception: Rahu/Ketu always give the
+  effects of their dispositor and any planet they're conjunct, retrograde or
+  not (nodes have no independent "own" result).
+- **Combust planets** (within 8.5° of the Sun — KP's own orb, not the wider
+  Parashari combustion orbs used elsewhere in the suite) lose strength as
+  significators unless they are themselves a Ruling Planet.
+- **Sandhi** (within 0°30' of a sign edge) — a planet or the chart Lagna this
+  close to a sign boundary cannot give a clear result. CSL at sandhi is
+  unreliable; say so and suggest re-asking the question later rather than
+  forcing a verdict.
+- **Mrityu Bhaga, Pushkara, Gandanta degrees** — note as flags when present,
+  but in horary they are secondary to the CSL verdict; don't let them
+  override a clear CSL/RP/dasha chain.
+
 ## RP cross-check criteria (sequential, after CSL verdict)
 
 - **Strong YES** — RP planets are also significators of the positive house
@@ -59,9 +99,29 @@ and Antara lords are all significators of the positive set (or in the star of
 one that is); Sookshma narrows to days. If current DBA all signify the positive
 combo and the CSL is favourable, fructification is near-term (within the current
 Antara). If only MD-Bhukti align, fructification waits for the next favourable
-Antara. Transit of Jupiter/Sun through significator stars confirms. Always give
-a specific window: "Between [start] and [end], during the [MD]-[BD]-[AD]-[SD]
-period."
+Antara. Always give a specific window: "Between [start] and [end], during the
+[MD]-[BD]-[AD]-[SD] period."
+
+**Transit confirmation is computed, not prose.** SKILL.md Wave 1 runs
+`scripts/compute_transits.py` (forward transit of Jupiter/Sun/Moon through the
+significator stars, scanned across the current dasha window) right after the
+RP cross-check. Cite its actual confirming/denying dates in the verdict — do
+not eyeball transit timing from the baseline's static planet positions.
+
+## Common failure modes to avoid
+
+- Reading the chart before framing the question precisely.
+- Overweighting Jupiter or benefics — KP doesn't care about benefic/malefic,
+  only signification.
+- Ignoring the CSL when it contradicts visual planet placement (an exalted
+  planet in the 7th doesn't override a 7th CSL that denies marriage).
+- Skipping the RP cross-check.
+- Forgetting to check the sub-sub-lord when the CSL signifies both the
+  positive and negative sets.
+- Mixing horary with natal data — keep them separate (Critical Rule 4).
+- Treating the baseline's approximated Rahu/Ketu "conjunct" (same-sign, not a
+  tight orb) as a precise conjunction when weighing a node's RP-agent
+  eligibility.
 
 ## Phase-8 verdict — output template (synthesizer)
 
@@ -111,7 +171,7 @@ Recommended action: [specific, actionable]
    a 9-graha system. Do not use them in core analysis.
 7. **Retrograde planets** — a retrograde planet gives the result of the planet
    in whose star it sits, not its own. Apply when retrograde significators
-   appear (see `methodology.md` special rules).
+   appear (see "Special rules — degree-sensitive flags" above).
 
 ## Output style
 

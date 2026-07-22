@@ -1,83 +1,63 @@
-# Degree Flags Reference
+# Degree Flags Reference — Interpretive Meaning
+
+The numeric tables that used to live in this file (Mrityu Bhaga degrees,
+Pushkara Navamsa/Bhaga zones, Gandanta junctions, Sandhi bands, Planetary War
+threshold) now live in `${CLAUDE_PLUGIN_ROOT}/lib/jyotish_primitives.py` and
+are computed once into `baseline.json`'s per-planet `degree_flags` block by
+`compute_vedic_baseline.py`. Workers **never** recompute a degree flag from
+scratch — read it off the baseline and use this file only for what the flag
+*means*. (This also retires the stale Pushkara Navamsa table that used to
+live here and disagreed with `chart-tables.md` — there is now exactly one
+source of truth for the zones, and no reference-file conflict to resolve.)
 
 ---
 
 ## Mrityu Bhaga (Death Degrees)
 
-A planet at its Mrityu Bhaga degree in a sign struggles to deliver its significations. It is considered weakened or "dying" in that placement. The degree listed is the exact degree (0-indexed, so "15" means 15°00'–15°59').
-
-| Planet | Ari | Tau | Gem | Can | Leo | Vir | Lib | Sco | Sag | Cap | Aqu | Pis |
-|--------|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
-| Sun | 20 | 9 | 12 | 6 | 3 | 24 | 21 | 18 | 15 | 12 | 9 | 27 |
-| Moon | 26 | 12 | 13 | 25 | 24 | 11 | 26 | 14 | 13 | 25 | 25 | 12 |
-| Mars | 2 | 28 | 14 | 11 | 10 | 27 | 4 | 11 | 13 | 19 | 28 | 14 |
-| Mercury | 15 | 14 | 13 | 12 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 |
-| Jupiter | 11 | 29 | 14 | 20 | 18 | 15 | 14 | 21 | 29 | 10 | 13 | 28 |
-| Venus | 9 | 23 | 24 | 23 | 24 | 23 | 9 | 15 | 22 | 24 | 23 | 15 |
-| Saturn | 21 | 20 | 16 | 18 | 17 | 16 | 21 | 22 | 19 | 20 | 23 | 24 |
-| Lagna | 18 | 16 | 14 | 12 | 10 | 8 | 6 | 4 | 2 | 28 | 26 | 24 |
-
-> Use ±1° orb around the Mrityu Bhaga degree to flag the zone.
+A planet at its Mrityu Bhaga degree in a sign struggles to deliver its
+significations. It is considered weakened or "dying" in that placement —
+present but unable to fully express its promise. Read it as suppressed
+delivery, not absence: the planet's themes still exist in the chart, they
+just come through diminished, delayed, or via difficulty.
 
 ---
 
 ## Pushkara Navamsa
 
-Pushkara Navamsas are specific 3°20' zones within signs that are considered highly auspicious. A planet placed here is empowered to give its best results.
-
-| Sign | Pushkara Navamsa Zones (degrees within the sign) |
-|------|--------------------------------------------------|
-| Aries | 6°40'–10°00' and 23°20'–26°40' |
-| Taurus | 3°20'–6°40' and 16°40'–20°00' |
-| Gemini | 6°40'–10°00' and 20°00'–23°20' |
-| Cancer | 0°00'–3°20' and 16°40'–20°00' |
-| Leo | 3°20'–6°40' and 20°00'–23°20' |
-| Virgo | 6°40'–10°00' and 23°20'–26°40' |
-| Libra | 0°00'–3°20' and 16°40'–20°00' |
-| Scorpio | 3°20'–6°40' and 20°00'–23°20' |
-| Sagittarius | 6°40'–10°00' and 23°20'–26°40' |
-| Capricorn | 0°00'–3°20' and 16°40'–20°00' |
-| Aquarius | 3°20'–6°40' and 20°00'–23°20' |
-| Pisces | 6°40'–10°00' and 23°20'–26°40' |
+Pushkara Navamsas are specific zones within signs considered highly
+auspicious. A planet placed here is empowered to give its best results —
+treat it as an amplifier on top of whatever the planet's dignity and house
+placement already indicate. It does not rescue a badly afflicted planet on
+its own, but it meaningfully raises the ceiling of what the planet can
+deliver.
 
 ---
 
 ## Pushkara Bhaga (Single Auspicious Degrees)
 
-Pushkara Bhagas are single degrees (even more precise than Pushkara Navamsa) within signs considered extraordinarily powerful.
-
-| Sign | Pushkara Bhaga Degree |
-|------|-----------------------|
-| Aries | 21° |
-| Taurus | 14° |
-| Gemini | 7° and 21° |
-| Cancer | 12° |
-| Leo | 17° and 22° |
-| Virgo | 11° |
-| Libra | 20° |
-| Scorpio | 5° and 19° |
-| Sagittarius | 11° and 23° |
-| Capricorn | 10° and 22° |
-| Aquarius | 14° and 20° |
-| Pisces | 9° and 27° |
-
-> Planets exactly on a Pushkara Bhaga (within ±1°) are considered especially fortunate in giving their results.
+A more precise version of Pushkara Navamsa — a single degree per sign,
+considered extraordinarily powerful. A planet sitting exactly on (within the
+baseline's orb) a Pushkara Bhaga is read as especially fortunate in
+delivering its significations, stronger than a planet merely in the wider
+Pushkara Navamsa zone.
 
 ---
 
 ## Gandanta Zones
 
-Water→Fire sign junctions. Karmically charged, unstable. Planets here carry unresolved soul-level knots.
-
-| Junction | Degrees |
-|----------|---------|
-| Cancer → Leo | 26°40' Cancer – 3°20' Leo |
-| Scorpio → Sagittarius | 26°40' Scorpio – 3°20' Sagittarius |
-| Pisces → Aries | 26°40' Pisces – 3°20' Aries |
+Water→Fire sign junctions. Karmically charged and unstable. Planets here
+carry unresolved soul-level knots — the theme isn't fully processed yet, and
+outcomes tied to that planet tend to feel effortful, entangled, or
+recurring rather than clean.
 
 **Interpretation by Pada:**
-- Last Pada of water sign (e.g., Ashlesha 4, Jyeshtha 4, Revati 4): The water themes are unresolved — emotional, relational, or spiritual karmas
-- First Pada of fire sign (e.g., Magha 1, Mula 1, Ashwini 1): The fire initiation is raw — the soul is just beginning to process the new theme
+- Last Pada of a water sign (e.g., Ashlesha 4, Jyeshtha 4, Revati 4): the
+  water themes are unresolved — emotional, relational, or spiritual karmas
+  still being worked through.
+- First Pada of the following fire sign (e.g., Magha 1, Mula 1, Ashwini 1):
+  the fire initiation is raw — the soul is just beginning to process the new
+  theme, so early results can be unsteady even when the underlying promise
+  is good.
 
 ---
 
@@ -85,24 +65,27 @@ Water→Fire sign junctions. Karmically charged, unstable. Planets here carry un
 
 | Zone | Interpretation |
 |------|---------------|
-| 0°00'–0°59' | Planet is immature in this sign — inexperienced, just arriving, not fully expressing sign qualities |
-| 29°00'–29°59' | Planet is finishing its tenure — unstable, wrapping up, transitioning, unreliable delivery |
-
-> Planets at 0° are sometimes read as having qualities of the previous sign bleeding through.
-> Planets at 29° are sometimes read as being exhausted or extreme in their sign expression.
+| Start-of-sign (0°) | Planet is immature in this sign — inexperienced, just arriving, not fully expressing sign qualities. Sometimes read as having qualities of the previous sign bleeding through. |
+| End-of-sign (29°) | Planet is finishing its tenure — unstable, wrapping up, transitioning, unreliable delivery. Sometimes read as exhausted or extreme in its sign expression. |
 
 ---
 
 ## Planetary War (Graha Yuddha)
 
-Occurs when two visible planets (not Rahu/Ketu, not Sun/Moon — they don't war) are within 1° of each other in longitude.
+Occurs when two visible planets (Mars, Mercury, Jupiter, Venus, Saturn — not
+Sun, Moon, Rahu, or Ketu, which don't war) are close enough in longitude for
+the baseline to flag it.
 
 **Rules:**
-- The planet with the **lower longitude degree wins** the war
-- The planet with the **higher longitude degree is defeated** — its significations are weakened
-- The defeated planet's themes and the houses it rules suffer even if it is otherwise well-placed
-- Both planets' significations are somewhat disturbed during the war
+- The planet with the **lower longitude degree wins** the war; the one with
+  the **higher longitude degree is defeated** — its significations are
+  weakened.
+- The defeated planet's themes and the houses it rules suffer even if it is
+  otherwise well-placed.
+- Both planets' significations are somewhat disturbed during the war — the
+  winner is not unaffected, just dominant.
 
-**Planets that can war:** Mars, Mercury, Jupiter, Venus, Saturn (not Sun, Moon, Rahu, Ketu)
-
-> In a planetary war, read the winner's significations as dominant but note both are under stress.
+> In a planetary war, read the winner's significations as dominant but note
+> both are under stress. The baseline surfaces `planetary_war` per planet
+> (winner/loser/separation) — cite it directly rather than re-deriving it
+> from raw longitudes.

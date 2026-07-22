@@ -81,15 +81,15 @@ For dual-lord signs: use the lord that is stronger (by sign placement, exaltatio
 
 ### Step 2 — Assign Dasha Years to Each Sign
 
-Count zodiacally forward from the sign to its lord's sign.
-Number of signs counted = Dasha years for that sign.
+Count zodiacal signs forward from the sign to its lord's sign, *exclusive* of
+the starting sign — the lord's own sign counts as 1 step, the next as 2, and
+so on. That count = Dasha years for that sign.
 
-**Special rules:**
-- Lord in same sign → 12 years
-- Count > 12 → subtract from 12 (e.g., count of 15 → 12 − 15 is invalid; use: if count ≥ 13, years = 13 − (count − 12) = 25 − count... simplest: if count > 12, years = 12 − (count − 12) = 24 − count)
-- More precisely: if count > 12, years = count − 12; if still > 12, subtract 12 again
+**Special rule:** Lord in same sign → 12 years (there is no zero-step case).
 
-**Simpler restatement:** Years = count if ≤ 12. If count > 12 → years = count − 12.
+Because the count is always between 1 and 11 signs away (a 12-sign zodiac,
+exclusive count, lord never being "13 signs away" from its own sign), it can
+never exceed 12 years — there is no ">12, subtract 12" case to handle.
 
 **Dasha years by sign — example for Virgo Lagna:**
 This must be computed fresh for each chart. Do not assume fixed values.
@@ -156,6 +156,6 @@ When computing Chara Karakas manually:
 | Saturn | Capricorn | 09°35' | 09°35' | Retrograde |
 | Rahu | Sagittarius | 24°20' | 30°−24°20' = 5°40' | Excluded from ranking |
 
-Ranked by degree (descending): Jupiter 26°44' → Moon 21°23' → Mars 15°26' → Venus 13°34' → Sun 12°54' → Mercury 09°10' → Saturn 09°35'
+Ranked by degree (descending): Jupiter 26°44' → Moon 21°23' → Mars 15°26' → Venus 13°34' → Sun 12°54' → Saturn 09°35' → Mercury 09°10'
 
 Note: Mercury (09°10') and Saturn (09°35') are within 0°25' of each other → close-degree flag applies. Both share GK and DK qualities.

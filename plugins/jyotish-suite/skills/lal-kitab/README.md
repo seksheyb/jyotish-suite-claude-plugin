@@ -11,7 +11,7 @@ Also triggered by phrases like "Lal Kitab reading", "rin diagnosis", "Pitri Rin"
 ## What It Does
 
 1. Captures user intent up front (specific question vs. full read) to tilt narration and pre-route the reading mode — baseline always runs in full
-2. Accepts a pre-computed Vedic D1 chart
+2. Accepts a pre-computed Vedic D1 chart, or raw birth data from which one is computed
 3. Re-maps to Lal Kitab fixed-house frame (Aries always 1st)
 4. Computes pakka ghar / dignity / friendship status by **house number, not sign**
 5. Identifies sleeping planets via Lal Kitab aspect rules

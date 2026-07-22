@@ -9,24 +9,37 @@ this alongside `methodology.md`.
 ## Question Classification → Reading Mode
 
 Classify the user's question before dispatching Wave 1. The classification
-decides which houses to fan out and which synthesis path the `synthesizer` runs.
+decides which houses to fan out (or whether to skip Wave 1 entirely) and
+which synthesis path the `synthesizer` runs.
 
-| Question Type | How to Handle |
-|--------------|---------------|
-| Yes/No (binary) | Full methodology + reverse question analysis (methodology Step 5) |
-| Domain-specific | Map to primary + secondary houses per methodology Step 1 table |
-| House/Planet specific | Focus on that house/planet across D1 and D9 |
-| Dasha question | Lead with Dasha timing (Step 4), support with house analysis |
-| Full reading | Step 0 baseline + cover 1st, 2nd, 5th, 7th, 9th, 10th, 11th houses |
-| Timing ("when will X happen") | Lead with Dasha analysis (Step 4) |
+| Question Type | How to Handle | Wave 1 dispatch |
+|--------------|---------------|------------------|
+| Yes/No (binary) | Full methodology + reverse question analysis (methodology Step 5) | D1 + D9 house analysts, dasha-timing analyst, **and** reverse-question analyst — all in the same wave |
+| Domain-specific | Map to primary + secondary houses per methodology Step 1 table | D1 + D9 house analysts (scoped to those houses) + dasha-timing analyst |
+| House/Planet specific | Focus on that house/planet across D1 and D9 | **Zero dispatch** — a single house/planet is trivially narrow; analyze inline in the orchestrator from `baseline.json` (see SKILL.md's conditional-dispatch rule) |
+| Dasha question | Lead with Dasha timing (Step 4), support with house analysis | D1 + D9 house analysts (question-relevant houses) + dasha-timing analyst |
+| Full reading | Step 0 baseline + cover 1st, 2nd, 5th, 7th, 9th, 10th, 11th houses | One D1 + one D9 analyst per life-domain cluster (see SKILL.md Wave 1) + dasha-timing analyst |
+| Timing ("when will X happen") | Lead with Dasha analysis (Step 4) | Dasha-timing analyst leads; D1 + D9 analysts scoped to the question's houses support it |
 
-State the classification in one line before Wave 1 begins:
-> *"Reading this as a [yes/no / domain / full] question. Primary houses:
-> [X, Y]. Applying [reverse analysis / full methodology]."*
+State the classification in one line before Wave 1 begins (or before the
+inline analysis, for the House/Planet-specific case):
+> *"Reading this as a [yes/no / domain / full / house-specific] question.
+> Primary houses: [X, Y]. Applying [reverse analysis / full methodology /
+> inline single-house analysis]."*
 
-For a **full life reading**, the ~7 core houses to fan out are 1, 2, 5, 7, 9,
-10, 11. A **domain question** narrows to the primary + secondary houses from
-the Quick House Reference in `methodology.md` Step 1.
+For a **full life reading**, the ~7 core houses (1, 2, 5, 7, 9, 10, 11) are
+grouped into the four life-domain clusters in SKILL.md's Wave 1 section
+(Career + Wealth, Relationships + Children, Health + Obstacles, Dharma) — one
+D1-house analyst and one D9-house analyst per cluster, not one worker per
+house. A **domain question** narrows to the primary + secondary houses from
+the Quick House Reference in `methodology.md` Step 1. A **house/planet-specific
+question** dispatches nothing — there is no independent parallel work for a
+single house, so it is cheaper and just as accurate to reason it through
+directly in the orchestrator.
+
+The `dasha-timing` analyst is dispatched for **every** mode above except the
+inline single-house case — dasha activation is the synthesizer's #1 weighting
+factor (methodology Step 6) regardless of what the question is about.
 
 ---
 
@@ -47,6 +60,11 @@ produce the D9 alongside the D1, and `compute_vedic_baseline.py` carries it. So:
   only (no degrees), flag once at the start: *"Planetary degrees not provided
   — Navamsa, Nakshatra/Pada and degree-flag analysis are limited; share
   degrees for a full reading."*
+- **This is the one condition under which Wave 1's D9-house analyst is
+  waived** (SKILL.md Wave 1): with no degrees there is no reliable D9 sign to
+  analyze. Skip that track entirely rather than dispatching it on guessed
+  data; the synthesizer omits Step 3/D9 confirmation and states the caveat
+  above instead.
 
 ---
 

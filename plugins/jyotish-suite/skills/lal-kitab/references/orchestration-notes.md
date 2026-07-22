@@ -20,7 +20,10 @@ routing guidance that used to sit inline in `SKILL.md`.
    exclude it from analysis with an explicit note — Lal Kitab is a single-chart
    system and its logic breaks if mixed with divisional methods.
 4. **No Nakshatras, no Vimshottari Dasha.** Those are Parashari. Lal Kitab uses
-   the age-based Varshphal table only. Mention this only if the user asks why.
+   the age-based Varshphal table only — a different mechanism from, and not to
+   be confused with, the Tajaka/solar-return Varshphal used elsewhere in Vedic
+   practice (see `varshphal.md`). Mention the Parashari exclusion only if the
+   user asks why.
 5. **Lal Kitab aspects only** (see `aspects.md`). Never import Parashari 7th-house
    or special Mars/Jupiter/Saturn aspects.
 6. **Every upaay must cite a Farman.** No invented remedies. Modern adaptations
@@ -64,7 +67,9 @@ prompt (see SKILL.md Phase 0). Then:
    gives unclear input, present the full mode menu.
 5. **Honesty rule.** If intent suggests something the chart can't cleanly answer
    (e.g. "tell me my exact death date"), state the boundary in Phase 0 itself
-   and offer the closest legitimate read.
+   and offer the closest legitimate read. (This rule is also hoisted verbatim
+   into SKILL.md Phase 0 and into the synthesizer's dispatch payload — it must
+   survive even if this file isn't loaded.)
 
 ### Intent-driven narration tilting
 
@@ -135,37 +140,64 @@ The baseline JSON already contains: the re-mapped fixed-house chart, pakka ghar
 citations, the teva classification, the age-based Varshphal table, and the
 four-signal timing-engine output. Workers treat all of it as ground truth.
 
-- **Mode A — natal.** 12 `unit-analyzer` agents, one per house. Each worker:
-  loads `pakka_ghar.md` + `aspects.md` + `rin_diagnosis.md` + `teva_types.md`,
-  reads its house's significance, resident planets' sleeping/dignity status, and
-  Farman-driven dynamics. The synthesizer produces strongest/weakest houses and
-  the rin→upaay links.
+**Conditional dispatch.** A single-house or single-rin question does not reach
+Wave 1 at all — the orchestrator answers inline from the baseline JSON, zero
+workers. Only genuinely multi-unit questions (a full mode, several houses,
+several rins, a relative, a year window, timing, upaay) dispatch below.
+
+- **Mode A — natal.** **4** `unit-analyzer` agents, one per 3-house cluster
+  (1–3, 4–6, 7–9, 10–12) — not 12 per-house workers. Each per-house write-up is
+  short/templated and the cross-house synthesis needs all of them regardless,
+  so 12 micro-workers only added dispatch overhead without independent depth.
+  Each worker loads `pakka_ghar.md` + `aspects.md` + `rin_diagnosis.md` +
+  `teva_types.md`, reads its 3 houses' significance, resident planets'
+  sleeping/dignity status, and Farman-driven dynamics. Effort: high. The
+  synthesizer produces strongest/weakest houses and the rin→upaay links.
 - **Mode B — family.** One `unit-analyzer` per relative requested (father,
   mother, spouse, sons, daughters, siblings — ~6). Each loads `family_chart.md`
   + `pakka_ghar.md` + `aspects.md`, examines the relative's house(s) and karaka,
   determines Enhancer / Neutral / Drainer role, applies the relative-specific
-  Farman rule tables, flags cross-family compounding patterns.
+  Farman rule tables, flags cross-family compounding patterns. Effort: medium.
 - **Mode C — varshphal.** One `unit-analyzer` per year window: current age,
   next-5-years (brief), next major year, plus any 42/48/63 in the next 25 years.
   Each loads `varshphal.md` + `upaay_catalog.md`, applies the per-year reading
-  procedure to the baseline's year-ruler table, prescribes year-upaay.
-- **Mode D — full.** Run Modes A + B + C as one wide parallel wave.
-- **Mode E — upaay.** Reuse `unit-analyzer` to tier the remedy catalog: one
-  worker per tier (Critical / Strengthening / Maintenance), each loading
-  `upaay_catalog.md`, mapping the baseline's active rins, sleeping planets, and
-  teva-driven upaay priority to ranked remedies with Farman citations and
-  contraindications.
-- **Mode F — timing.** ~3 `unit-analyzer` agents interpreting the convergence
-  engine's top candidate years from the baseline JSON. Each loads `timing.md` +
-  `upaay_catalog.md`, explains why a window scored (which of the four signals
-  fired), applies the sleeping/rin/danger-year filters, pairs each window with
-  activation upaay. Always 2–3 ranked windows, never a single date.
+  procedure to the baseline's year-ruler table, prescribes year-upaay. Effort:
+  low.
+- **Mode D — full.** Run Modes A + B + C as one wide parallel wave, plus the
+  Mode E upaay worker below. **Join barrier:** Wave 2 (synthesis, and any
+  upaay tiering) does not start until every dispatched Wave-1 worker across
+  A + B + C + the upaay worker has returned — no partial synthesis.
+- **Mode E — upaay.** **One** `unit-analyzer` — not one worker per tier. Tier
+  fragmentation broke the single cross-tier consistency judgment a upaay
+  prescription needs (conflict pairs span tiers; the same remedy must never
+  land in two tiers). The worker reads the output of
+  `${CLAUDE_PLUGIN_ROOT}/scripts/lk_upaay_check.py` (`upaay_check.json`:
+  candidate upaay generated from active rins/teva/sleeping planets, plus
+  conflict-pair and pregnancy/health contraindication flags — script facts,
+  not recall) and `upaay_catalog.md`, and returns a flat candidate analysis
+  per remedy (driver, Farman citation, any flag). It does **not** tier the
+  candidates — tiering (Critical / Strengthening / Maintenance) is a
+  synthesis-time judgment made in Wave 2, where the full candidate set and
+  every flag are visible at once. Effort: medium.
+- **Mode F — timing.** ~3 `unit-analyzer` agents interpreting the raw
+  four-signal output from the baseline JSON, one per candidate year. Each loads
+  `timing.md` + `upaay_catalog.md`, explains why a window scored (which of the
+  four signals fired), applies the sleeping/rin/danger-year filters, pairs each
+  window with activation upaay. Effort: high. Always 2–3 ranked windows, never
+  a single date (no-specific-dates rule — see Hard methodological line 11 and
+  the synthesizer dispatch payload).
 
 ---
 
 ## Synthesis weighting (Wave 2)
 
-The `synthesizer` produces the Phase-10 one-page summary. Lal Kitab weighting:
+The `synthesizer` (model sonnet, effort high — single-domain school throughout,
+opus would be overkill) produces the Phase-10 one-page summary. It runs once,
+last, after every Wave-1 worker has returned (see Mode D join barrier above) —
+never on a partial set. Its dispatch payload must carry, verbatim, the school's
+honesty/boundary rules: the Phase 0 boundary rule (state what the chart can't
+cleanly answer, don't guess past it) and the Mode F / Phase 8D no-specific-dates
+rule (year-windows with probability tiers only). Lal Kitab weighting:
 
 - **Rin overlay dominates.** Active rins take precedence over isolated house
   strengths — a strong house under an active lineage rin still reads as blocked
@@ -204,16 +236,26 @@ Watch-year upaay:              [name]
 
 ## Upaay output rules (Phase 9 / Mode E)
 
-Output remedies in three priority tiers — Tier 1 Critical (rin-related),
-Tier 2 Strengthening (sleeping benefics, weak houses), Tier 3 Maintenance
-(lifestyle / dietary / behavioral). For each upaay state: for whom, action,
-frequency, duration, timing, Farman citation, caution.
+Candidate generation and conflict/contraindication flagging are now produced by
+`${CLAUDE_PLUGIN_ROOT}/scripts/lk_upaay_check.py` (`upaay_check.json`) — the
+Mode E `unit-analyzer` cites these as script facts. **Final tiering into the
+three priority tiers is a Wave-2 (synthesizer) judgment, not a Wave-1 one** —
+Tier 1 Critical (rin-related), Tier 2 Strengthening (sleeping benefics, weak
+houses), Tier 3 Maintenance (lifestyle / dietary / behavioral). For each upaay
+state: for whom, action, frequency, duration, timing, Farman citation, caution.
 
 - Every upaay cites a Farman; modern adaptations flagged and ranked lower.
-- Conflicting upaay must be flagged (some remedies cancel each other).
+- Conflicting upaay must be flagged (some remedies cancel each other) — sourced
+  from `lk_upaay_check.py`'s conflict-pair flags, cross-checked against
+  `upaay_catalog.md` §11.
 - Age-bound upaay must state the age window.
-- Pregnancy / health contraindications must appear if relevant.
+- Pregnancy / health contraindications must appear if relevant — sourced from
+  `lk_upaay_check.py`'s contraindication flags, cross-checked against
+  `upaay_catalog.md` §11.
 - No mantras, no pujas as primary upaay — Lal Kitab is action-based.
+- The same upaay must never appear in two tiers — this is exactly the
+  cross-tier consistency check that Mode E's single-worker design (rather than
+  one worker per tier) exists to protect.
 
 Full remedy catalog with all Farman citations is in `upaay_catalog.md`.
 

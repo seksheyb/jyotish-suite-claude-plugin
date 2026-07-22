@@ -76,15 +76,20 @@ Wave 1. State the classification in one line to the user:
 > Primary Karaka: [X]. Primary Arudha: [Y]. Applying [reverse analysis / full
 > Jaimini methodology]."*
 
-| Question Type | How to Handle | Wave 1 units |
+| Question Type | How to Handle | Wave 1 dispatch |
 |--------------|---------------|--------------|
-| Yes/No (binary) | Full methodology + reverse question analysis | Primary + secondary Karakas/Arudhas; reverse-check handled by synthesizer |
-| Domain-specific | Map to primary Karaka + Arudha per Section 2 of methodology | 2-4 units — the topic's Karaka, Arudha, and secondaries |
-| Swamsha / Karakamsha | Lead with Step D + Step E of methodology | Swamsha unit, Karakamsha unit, AK |
-| Dasha question | Lead with Chara Dasha interpretation (Section 4B) | Dasha Rasi unit + activated Karakas/Arudhas |
-| Arudha specific | Lead with Step B of methodology for that Arudha | That Arudha + its lord + DK if marriage |
-| Full reading | Full baseline + all Karakas + all Arudhas | ~12-16 units — 7 Karakas + 8 Arudhas across D1/D9 |
-| UL / marriage | Run Step C in full | UL, A7, DK, 7th Bhava |
+| Yes/No (binary) | Full methodology + reverse question analysis | D1 + D9 + reverse-question analyst (all medium); Chara-Dasha-timeline analyst if a timeframe is in play |
+| Domain-specific | Map to primary Karaka + Arudha per Section 2 of methodology | D1 + D9 analyst, each scoped to the topic's Karaka/Arudha/secondaries |
+| Swamsha / Karakamsha (narrow, single-Karaka) | Lead with Step D + Step E of methodology | **Inline, zero agents** — answer directly from the baseline |
+| Dasha question | Lead with Chara Dasha interpretation (Section 4B) | Chara-Dasha-timeline analyst + D1/D9 analysts scoped to the activated Karakas/Arudhas |
+| Arudha specific | Lead with Step B of methodology for that Arudha | D1 + D9 analyst scoped to that Arudha + its lord (+ DK if marriage) |
+| Full reading | Full baseline + all Karakas + all Arudhas | All four: D1 analyst (all 7 Karakas + 8 Arudhas) + D9 analyst (same) + reverse-question analyst (if yes/no) + Chara-Dasha-timeline analyst |
+| UL / marriage | Run Step C in full | D1 + D9 analyst scoped to UL, A7, DK, 7th Bhava |
+
+D1 and D9 analysts always run together (never D9 alone); the
+Chara-Dasha-timeline and reverse-question analysts are conditional per the
+table above. See SKILL.md Wave 1 for the dispatch table and the dasha-lord
+coverage rule.
 
 Topic-to-unit mapping (from methodology Section 2):
 
@@ -101,8 +106,8 @@ Topic-to-unit mapping (from methodology Section 2):
 | Social Status | — | AL | 1st Bhava |
 | Enemies | GK | A6 | 6th Bhava |
 
-A full reading groups ~12-16 units; a domain question narrows to 2-4. Each
-unit-analyzer worker covers its unit across both D1 and D9.
+A full reading scopes the D1/D9 analysts to all 7 Karakas + 8 Arudhas; a
+domain question narrows each to the 2-4 Karakas/Arudhas in the table above.
 
 ---
 
@@ -236,9 +241,13 @@ Do not proceed to Wave 1 until the user explicitly confirms.
 | Wave | Methodology section | Owner |
 |------|--------------------|-------|
 | Wave 0 baseline | Step 0 (0A–0F) — Karakas, Swamsha, Karakamsha, Arudhas, Argala pre-map, Chara Dasha | `baseline-runner` (sidecar) |
-| Wave 1 per-unit | Section 1 (core mechanics), Section 2 (mapping), Section 3 Steps A–F | parallel `unit-analyzer` workers |
-| Wave 2 synthesis | Section 4B (Dasha interpretation), Section 5 (execution sequence, composite priority, Dasha timing output) | single `synthesizer` |
+| Wave 1 — D1 analyst | Section 1 (core mechanics), Section 2 (mapping), Section 3 Steps A–F on D1 data | `unit-analyzer` (medium) |
+| Wave 1 — D9 analyst | Section 3 Steps A–F on D9 data, Step D (Swamsha), Step E (Karakamsha) | `unit-analyzer` (medium) |
+| Wave 1 — reverse-question analyst | Section 5 Step 5 (yes/no questions only) | `unit-analyzer` (medium) |
+| Wave 1 — Chara-Dasha-timeline analyst | Section 4A/4B, Step 7 | `unit-analyzer` (medium) |
+| Wave 2 synthesis | Section 4B (Dasha interpretation), Section 5 (execution sequence, composite priority, Dasha timing output) | single `synthesizer-deep` (opus, medium) |
 
-The synthesizer executes the mandatory sequence: D1 → D9 → reverse check
+The synthesizer-deep executes the mandatory sequence: D1 → D9 → reverse check
 (yes/no only) → composite reading (priority order in methodology Section 5) →
-Chara Dasha timing output.
+Chara Dasha timing output. It only runs after the explicit Wave 1 barrier —
+every dispatched unit-analyzer must have returned first.

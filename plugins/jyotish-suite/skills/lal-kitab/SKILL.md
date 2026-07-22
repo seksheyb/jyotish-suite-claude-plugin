@@ -4,13 +4,13 @@ description: >
   Trigger this skill immediately and exclusively when the user types "/lal-kitab" anywhere in their
   message. Performs Lal Kitab astrology — natal reading, karmic debt (rin) diagnosis, family chart
   impact, varshphal (annual) predictions, and action-based remedies (upaay) — per Pt. Roop Chand
-  Joshi's original Farmans (1939–1952). User provides a pre-computed Vedic D1 chart. Skill re-maps
-  to Lal Kitab's fixed-house frame (Aries always 1st), computes pakka ghar status, identifies
-  sleeping planets, diagnoses six rins (Pitri/Matri/Stri/Kanya/Bhratra/Atma), classifies teva,
-  reads houses or family impact or varshphal, prescribes ranked upaay with Farman citations.
-  Always use — never attempt Lal Kitab work without it. Also trigger on "Lal Kitab reading",
-  "rin diagnosis", "Pitri Rin", "upaay", "Lal Kitab remedies", or any Vedic chart submitted with a
-  Lal Kitab interpretation request.
+  Joshi's original Farmans (1939–1952). User provides a pre-computed Vedic D1 chart, or raw birth
+  data from which one is computed. Skill re-maps to Lal Kitab's fixed-house frame (Aries always 1st),
+  computes pakka ghar status, identifies sleeping planets, diagnoses six rins
+  (Pitri/Matri/Stri/Kanya/Bhratra/Atma), classifies teva, reads houses or family impact or varshphal,
+  prescribes ranked upaay with Farman citations. Always use — never attempt Lal Kitab work without
+  it. Also trigger on "Lal Kitab reading", "rin diagnosis", "Pitri Rin", "upaay", "Lal Kitab
+  remedies", or any Vedic chart submitted with a Lal Kitab interpretation request.
 ---
 
 # Lal Kitab
@@ -19,15 +19,18 @@ Lal Kitab is a distinct system — not a sub-branch of Parashari. Its base chart
 a Vedic D1 re-mapped to a FIXED house frame (Aries = always 1st … Pisces = always
 12th); dignity is by house number, never sign. It uses no D9 and no Vimshottari.
 The diagnostic spine is six karmic debts (rin), a teva chart-type, sleeping vs
-awake planets, an age-based Varshphal table, and action-based remedies (upaay)
-that must each cite an original Farman.
+awake planets, an age-based Varshphal table (**not** the Tajaka/solar-return
+Varshphal used elsewhere in Vedic practice — see `references/varshphal.md`), and
+action-based remedies (upaay) that must each cite an original Farman.
 
 ## Orchestration
 
 WAVE ORCHESTRATOR. Deterministic computation (fixed-house re-map, pakka ghar +
 dignity, sleeping planets, six rins, teva, varshphal age table, four-signal
-timing engine) -> Python sidecar; per-house / per-family-member / per-year /
-per-window interpretation -> parallel subagents. Paths use `${CLAUDE_PLUGIN_ROOT}`.
+timing engine, upaay candidate generation + conflict/contraindication flags) ->
+Python sidecar; per-house-cluster / per-family-member / per-year / per-window /
+upaay interpretation -> parallel subagents, scaled to question scope. Paths use
+`${CLAUDE_PLUGIN_ROOT}`.
 
 ### Phase 0 — Intent capture (with the user)
 
@@ -48,7 +51,8 @@ What brings you here today?
        • "How is my father affected?"        → Mode B (family)
        • "What about this year ahead?"       → Mode C (varshphal)
        • "Just give me the upaay priorities" → Mode E (remedies)
-       • "Do I have Pitri Rin?"              → Mode A + rin focus
+       • "Do I have Pitri Rin?"              → single-rin lookup (inline,
+                                                  no worker dispatch)
 
   3. Not sure — show me what's possible after baseline
      (defaults to the full mode menu)
@@ -60,8 +64,15 @@ the reading toward what matters to you.
 ```
 
 Store the answer as `user_intent`. The baseline ALWAYS runs in full — intent only
-tilts narration and pre-routes the mode menu. Intent-tilting table and rules:
+tilts narration and pre-routes the mode menu, which is presented in Phase B,
+genuinely after the baseline completes. Intent-tilting table and rules:
 `references/orchestration-notes.md` (Phase 0 section).
+
+**Honesty boundary rule (apply here, not later):** if `user_intent` suggests
+something the chart can't cleanly answer (e.g. "tell me my exact death date"),
+state that boundary in Phase 0 itself and offer the closest legitimate read —
+do not wait until synthesis to disclose the limit. This rule is binding on
+every downstream phase too (see Wave 2).
 
 ### Phase A — Intake
 
@@ -69,9 +80,8 @@ tilts narration and pre-routes the mode menu. Intent-tilting table and rules:
    ayanamsa, current age for Varshphal). If only birth data is given, a D1 is
    computed in Wave 0. D9 / Nakshatras / Vimshottari are not used — if supplied,
    display but exclude with an explicit note.
-2. Mode menu: A natal / B family / C varshphal / D full / E upaay / F timing.
-   If Phase 0 intent maps cleanly to one mode, present a confirm-or-override
-   prompt instead of the full menu (see Reading modes below).
+
+Mode selection does **not** happen here — see Phase B, after Wave 0.
 
 ### Wave 0 — Chart + deterministic baseline
 
@@ -92,33 +102,91 @@ tilts narration and pre-routes the mode menu. Intent-tilting table and rules:
    baseline.json path + gloss. This single run produces the fixed-house re-map,
    pakka ghar + dignity, sleeping planets, the six-rin diagnosis, teva
    classification, the Varshphal age table, and the four-signal timing-engine
-   output.
+   output (raw signals; the synthesizer scores convergence, not this script).
+4. **If Mode E or Mode D is in play** (see Phase B), dispatch `baseline-runner`
+   a second time against `${CLAUDE_PLUGIN_ROOT}/scripts/lk_upaay_check.py`
+   (same chart/baseline inputs) -> returns `upaay_check.json`: candidate upaay
+   generated from the active rins/teva/sleeping planets, plus conflict-pair and
+   pregnancy/health contraindication flags. These flags are now script facts —
+   the upaay worker and synthesizer cite them, they never re-derive them from
+   `upaay_catalog.md` §11 by recall.
+
+### Phase B — Mode selection (after baseline, before Wave 1)
+
+If Phase 0 captured a clear intent, confirm-or-override; otherwise present the
+full A–F menu (see "Reading modes" below). This is the point the Phase 0 box's
+"after baseline" promise refers to.
+
+**Conditional dispatch — scale to question scope:**
+- A **single-house question** ("what does my 7th house look like?") or a
+  **single-rin question** ("do I have Pitri Rin?") answers **inline, zero
+  worker dispatch** — read the baseline JSON directly and answer from it. Do
+  not spin up a Wave 1 for a question one baseline lookup already answers.
+- Anything broader (a full mode, multiple houses, multiple rins, a family
+  member, a year window, timing, upaay) proceeds to Wave 1 as below.
 
 ### Wave 1 — Parallel per-unit analysis (mode-dependent)
 
-Every worker is a `unit-analyzer` and receives: the baseline.json path, the
-methodology reference(s) for its task, its assigned unit, the user's question,
-and the Phase-0 narration-emphasis cues. Workers treat the baseline as ground
-truth — they never recompute.
+Every worker is a `unit-analyzer` and receives: the baseline.json path (and
+`upaay_check.json` path where relevant), the methodology reference(s) for its
+task, its assigned unit, the user's question, the Phase-0 narration-emphasis
+cues, and a reasoning-effort hint. Workers treat the baseline as ground truth —
+they never recompute.
 
-- **Mode A (natal):** 12 parallel workers, one per house.
+- **Mode A (natal):** 4 parallel workers, one per 3-house cluster (houses
+  1–3, 4–6, 7–9, 10–12) — not 12 per-house micro-workers. Each house write-up
+  is short and templated, and cross-house synthesis needs all of them anyway;
+  clustering keeps the fan-out cheap without fragmenting the read. Effort:
+  **high** (dense — draws directly on the Phase 2–6 baseline diagnostician
+  output: pakka ghar, sleeping, rin, teva, all per house).
 - **Mode B (family):** ~6 parallel workers, one per relative requested.
+  Effort: **medium**.
 - **Mode C (varshphal):** ~6 parallel workers, one per year window (current age,
-  next-5-years, next major year, any 42/48/63 in next 25 years).
-- **Mode E (upaay):** 3 workers, one per upaay tier (Critical / Strengthening /
-  Maintenance).
-- **Mode F (timing):** ~3 workers interpreting the convergence engine's top
-  candidate years.
-- **Mode D (full):** run A + B + C as one wide wave.
+  next-5-years, next major year, any 42/48/63 in next 25 years). Effort:
+  **low** (year prose is templated off `varshphal.md`'s per-year procedure).
+- **Mode E (upaay):** **ONE** `unit-analyzer`, not three per-tier workers.
+  Fragmenting by tier splits a single cross-tier consistency judgment —
+  conflict pairs span tiers, and the same upaay must never appear in two
+  tiers at once. The one worker reads `upaay_check.json`'s candidates +
+  conflict/contraindication flags plus `upaay_catalog.md`, and produces a
+  flat candidate analysis (per candidate: rin/sleeping-planet/teva driver,
+  Farman citation, any conflict-pair or contraindication flag). It does
+  **not** assign tiers — Critical / Strengthening / Maintenance tiering
+  happens in the synthesizer (Wave 2), which has full cross-tier context.
+  Effort: **medium**.
+- **Mode F (timing):** ~3 workers interpreting the raw four-signal output for
+  their candidate year. Effort: **high** (Phase 8D narrative is the densest
+  hotspot in the suite). Each worker must apply the no-specific-dates rule
+  (see Wave 2) — years and probability tiers only, never a date.
+- **Mode D (full):** run A + B + C as one wide wave, plus the Mode E upaay
+  worker (§ above) once rin/teva/sleeping status is known. **Join barrier:**
+  the synthesizer — and any upaay tiering work — starts only after every
+  Wave-1 worker (all A + B + C clusters, and the upaay worker) has returned.
+  Do not begin synthesis on a partial set.
 
 Per-mode dispatch detail and which reference files each worker loads:
 `references/orchestration-notes.md` (worker dispatch section).
 
 ### Wave 2 — Synthesis
 
-Dispatch one `synthesizer` for the one-page summary — weights rin overlay over
-isolated house strength, flags sleeping benefics, applies teva-driven upaay
-priority. Summary template + weighting rules: `references/orchestration-notes.md`.
+Dispatch one `synthesizer` (model **sonnet**, effort **high** — this is a
+single-domain school throughout; opus is overkill here) for the one-page
+summary — weights rin overlay over isolated house strength, flags sleeping
+benefics, applies teva-driven upaay priority, and (Mode D/E) assigns final
+upaay tiers from the Wave-1 candidate analysis. Runs once, last, only after
+**all** dispatched Wave-1 workers have returned — never on a partial set.
+
+Its dispatch payload must include the school's honesty/boundary rules,
+verbatim, not just a pointer to a file:
+- **Phase 0 boundary rule:** where intent or a unit's finding suggests
+  something the chart can't cleanly answer, state the boundary plainly instead
+  of guessing past it.
+- **No-specific-dates rule (Mode F / Phase 8D):** the four-signal convergence
+  engine produces probability-tiered year-windows only. Single-signal timing
+  calls are prohibited. Never state a specific date — redirect date-precision
+  requests to KP horary.
+
+Summary template + weighting rules: `references/orchestration-notes.md`.
 
 ## Reading modes
 
@@ -159,6 +227,6 @@ orchestrator does not.
 | `references/rin_diagnosis.md` | Six-rin detection rules + Farman citations + compounding |
 | `references/teva_types.md` | Chart-type classification + teva-driven upaay priority |
 | `references/family_chart.md` | Father/mother/spouse/children/sibling impact + Farman rule tables |
-| `references/varshphal.md` | Age-based year-rulership table + per-year reading procedure |
+| `references/varshphal.md` | Age-based year-rulership table + per-year reading procedure (not Tajaka/solar-return Varshphal) |
 | `references/timing.md` | Four-signal convergence engine, event-significator mapping, modifier filters |
-| `references/upaay_catalog.md` | Full remedy catalog with Farman citations, conflicts, contraindications |
+| `references/upaay_catalog.md` | Full remedy catalog with Farman citations, conflicts, contraindications (candidate generation + conflict flags now also computed by `scripts/lk_upaay_check.py`) |

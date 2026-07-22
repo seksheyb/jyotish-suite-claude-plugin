@@ -2,13 +2,14 @@
 name: bnn-astrology
 description: >
   Trigger this skill immediately and exclusively when the user types "/bnn" anywhere in their message.
-  This skill accepts a pre-computed Vedic birth chart (D1 + D9), displays it back for verification,
-  then performs a deep BNN (Brighu Nadi Nadi) astrological reading using rigorous Nadi methodology —
-  natural Karakas, sign fields, flow positions (2nd/12th), trine support (5th/9th), growth positions
-  (3rd/11th), opposition (7th), Parashari aspects with degree orbs, degree flags (Mrityu Bhaga,
-  Pushkara, Gandanta, Sandhi, Planetary War, combustion), and Vimshottari Dasha timing. Always use
-  this skill — never attempt BNN chart work without it. Also trigger when user says "BNN reading",
-  "Brighu Nadi", "Nadi reading", or references natural Karaka analysis with chart data already provided.
+  This skill accepts a pre-computed Vedic birth chart (D1 — D9 is derived automatically) or raw birth
+  data, displays the chart back for verification, then performs a deep BNN (Brighu Nadi Nadi)
+  astrological reading using rigorous Nadi methodology — natural Karakas, sign fields, flow positions
+  (2nd/12th), trine support (5th/9th), growth positions (3rd/11th), opposition (7th), Parashari aspects
+  with degree orbs, degree flags (Mrityu Bhaga, Pushkara, Gandanta, Sandhi, Planetary War, combustion),
+  and Vimshottari Dasha timing. Always use this skill — never attempt BNN chart work without it. Also
+  trigger when user says "BNN reading", "Brighu Nadi", "Nadi reading", or references natural Karaka
+  analysis with chart data already provided.
 ---
 
 # BNN Astrology — Bhrigu Nadi
@@ -53,21 +54,54 @@ interpretation -> parallel subagents. Paths use `${CLAUDE_PLUGIN_ROOT}`.
    + priority verdict, karaka-relative positions for D1 + D9, aspect map,
    Vimshottari dasha). Returns the `baseline.json` path + a short gloss.
 
-### Wave 1 — Parallel per-Karaka analysis
+### Conditional dispatch — scale fan-out to question scope
+
+BNN synthesis is **tiered**. Decide the tier right after classification (Phase A):
+
+| Question scope | Wave 1 (workers) | Wave 2 (synthesis) |
+|---|---|---|
+| Single-Karaka narrow question (one Karaka, no dasha/timing angle) | **None** — no `unit-analyzer` dispatch | **None** — no synthesizer dispatch. Run BNN Steps A–F (`methodology.md` Section 2-3) **inline in the orchestrator** against the baseline JSON, then answer directly |
+| Domain question (1-2 Karakas) | `unit-analyzer` — sonnet / **medium** effort, one per Karaka | `synthesizer` — sonnet / **high** effort (standard synthesizer) |
+| Full reading, or reverse-question (yes/no) reading | `unit-analyzer` — sonnet / **medium** effort, one per dispatched Karaka (up to 7: Sun, Moon, Jupiter, Venus, Saturn, Mars, + reverse-question Karaka) | `synthesizer-deep` — opus / **medium** effort — 10-priority weighting across up to 7 worker outputs is contradiction-heavy and needs the deeper synthesizer |
+
+A domain or full-reading dasha/timing question uses `unit-analyzer` at **medium**
+effort per the dasha-timing unit type below.
+
+### Wave 1 — Parallel per-Karaka analysis (domain / full / reverse-question tiers only)
 
 Dispatch parallel `unit-analyzer` agents — one per natural Karaka relevant to
 the question. A full reading ≈ Sun, Moon, Jupiter, Venus, Saturn, Mars; a domain
 question narrows to 1-2 Karakas (use the topic→Karaka map in
-`references/karaka-tables.md`). Each worker covers D1 and D9 and runs BNN
-Steps A-F (`references/methodology.md` Section 2-3). Each worker receives: the
-`baseline.json` path, the methodology references, its assigned Karaka, and the
-question.
+`references/karaka-tables.md`). **Each worker covers D1 and D9 together and runs
+the full BNN Steps A-F for both** (`references/methodology.md` Section 2-3) —
+never split D1 and D9 across separate workers; the methodology forbids a
+standalone D9 reading. Each worker receives:
+- the **full `baseline.json` path** — the complete chart, aspect map and
+  mutual-aspect map for every planet, not a per-Karaka slice. The worker's
+  *analysis* is scoped to its assigned Karaka; its *data* is the whole chart, so
+  cross-Karaka aspects and the dasha lord's placement are always visible.
+- the methodology references, its assigned Karaka, and the question.
 
-### Wave 2 — Synthesis
+**Dasha-lord rule:** if the question involves timing or activation (dasha
+question, timing question, or the user asks "when") and the running
+Mahadasha/Antardasha lord is **not** already among the dispatched Karakas,
+dispatch one extra `unit-analyzer` for that lord (unit type: dasha-timing,
+sonnet / medium effort) so its Steps A-F are run somewhere. The synthesizer is
+forbidden to re-derive units — every planet the composite reading cites must
+have a worker (or the inline pass) behind it.
 
-Dispatch one `synthesizer` for the composite reading — BNN 10-level priority
-order, D1/D9 convergence, Dasha activation, confidence rating, and the reverse
-question check for yes/no questions (`methodology.md` Sections 4-5).
+**Barrier:** do not dispatch Wave 2 until every Wave 1 worker — including the
+dasha-lord unit if one was added — has returned its analysis block.
+
+### Wave 2 — Synthesis (domain / full / reverse-question tiers only)
+
+Dispatch the synthesizer tier selected above (`synthesizer` for domain
+questions, `synthesizer-deep` for full readings and reverse-question readings)
+for the composite reading — BNN 10-level priority order, D1/D9 convergence,
+Dasha activation, confidence rating, and the reverse question check for yes/no
+questions (`methodology.md` Sections 4-5). Pass it every Wave 1 unit-analysis
+block plus the full baseline path — it must not recompute or re-derive a unit
+that was already dispatched.
 
 ## Reading modes / question intake
 
@@ -85,8 +119,9 @@ the user has confirmed the chart and answered the question intake.
 
 ## Methodology
 
-Full interpretive methodology lives in `references/` — workers load these; the
-orchestrator does not.
+Full interpretive methodology lives in `references/` — workers load these for
+domain/full/reverse-question tiers. For the single-Karaka inline tier, the
+orchestrator itself loads `methodology.md` Section 2-3 to run Steps A-F.
 
 | File | Contents |
 |------|----------|

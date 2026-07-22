@@ -42,7 +42,9 @@ This is why some seemingly favourable dashas don't bring results — the dasha l
 At moment of reading + native's current location. Show calculation per `references/ruling-planets.md`.
 
 ### Step 6 — Find DBA-Sookshma matches
-Walk forward through Vimshottari from current moment. The fructification window is when:
+Run `scripts/find_fruitful_window.py` against baseline.json to scan the
+Vimshottari tree for MD/BD/AD/SD windows whose lords are fruitful
+significators — do not walk the dasha tree by eye. The fructification window is when:
 - MD lord is a fruitful significator
 - BD lord is a fruitful significator
 - AD lord is a fruitful significator
@@ -52,6 +54,8 @@ Walk forward through Vimshottari from current moment. The fructification window 
 The ideal scenario: 3-4 of these layers align AND are RP. That's a high-confidence date prediction.
 
 ### Step 7 — Transit confirmation
+Run `scripts/compute_transits.py` for the candidate window(s) found in Step 6
+to get actual transiting positions rather than reasoning about them in prose.
 At the predicted DBA-Sookshma window:
 - Where is transit Jupiter? (slow-moving — gives the year/month)
 - Where is transit Sun? (gives the month)

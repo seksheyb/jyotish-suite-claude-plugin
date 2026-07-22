@@ -8,17 +8,17 @@ shared across all six skills — there is no per-skill `scripts/` directory.
 plugins/jyotish-suite/
 ├── lib/                        # shared: jyotish_primitives.py, ephemeris.py
 ├── scripts/
-│   └── compute_kp_horary_baseline.py   # horary chart, cusps, CSL, RP, significators
+│   ├── compute_kp_horary_baseline.py   # horary chart, cusps, CSL, RP, significators
+│   └── compute_transits.py             # shared; forward transit confirmation (Wave 1)
 ├── agents/                     # chart-calculator, baseline-runner, chart-verifier,
 │                               # unit-analyzer, synthesizer
 └── skills/kp-horary/
     ├── SKILL.md                # wave orchestrator
     └── references/
-        ├── methodology.md
         ├── house-combinations.md
         ├── 249-table.md
         ├── ruling-planets.md
-        └── orchestration-notes.md
+        └── orchestration-notes.md   # methodology's unique content lives here now
 ```
 
 ## Dependencies

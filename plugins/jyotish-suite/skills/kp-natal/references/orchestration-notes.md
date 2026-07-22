@@ -75,15 +75,25 @@ Wait for the user's choice before Wave 1.
 
 ## Reading-mode parallelism
 
-- **Life Reading** walks all 12 cuspal sub-lords. The 12 cusps are mutually
-  independent units — fan out 12 `unit-analyzer` workers, one per cusp.
+- **Life Reading** walks all 12 cuspal sub-lords, grouped into 4 trine sets so
+  the fan-out is wide without being 12-way: Dharma (1/5/9), Artha (2/6/10),
+  Kama (3/7/11), Moksha (4/8/12). Dispatch exactly 4 `unit-analyzer` workers,
+  effort medium each, one per trine — each covers all 3 houses in its group.
 - **Event Timing** is the 8-step KP read (see `methodology.md`). The steps are
-  largely sequential: each feeds the next (house combination -> primary CSL
-  verdict -> significators -> RP cross-check -> DBA-Sookshma window -> transit
-  -> verdict). Only Step 3 (listing significators of each positive-set house)
-  fans out — 2-4 workers, one per relevant house. The real speed win for timing
-  comes from the baseline sidecar pre-computing CSL chains, significators, RP
-  and Sookshma, not from fan-out.
+  a **hard sequential dependency chain**: house combination -> primary CSL
+  verdict -> significators -> RP cross-check -> fruitful-window scan
+  (`scripts/find_fruitful_window.py`) -> transit confirmation
+  (`scripts/compute_transits.py`) -> verdict. **Do not fan out** — dispatch one
+  dense `unit-analyzer`, effort high, that runs the whole chain. The real speed
+  win for timing comes from the baseline sidecar pre-computing CSL chains,
+  significators, RP and Sookshma plus the two scripts above, not from fan-out.
+- **Conditional dispatch:** a narrow single-house event-timing question with
+  no timing window requested skips Wave 1 entirely — answer inline off
+  baseline.json, zero agents dispatched.
+- **Synthesis barrier:** the synthesizer (sonnet, effort high) never starts
+  until every dispatched Wave-1 worker has returned — 4 for Life Reading, 1 for
+  full-chain Event Timing, 0 to synthesize when the conditional-dispatch inline
+  path was used instead.
 
 ## Output style
 
@@ -137,6 +147,10 @@ Confirm this matches your records before I proceed?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-The baseline extends the supplied MD/BD/AD dasha to the 4th-level Sookshma.
+The baseline does not "extend" a user-supplied MD/BD/AD — it recomputes the
+whole Vimshottari tree (through the 4th-level Sookshma) from the Moon's
+longitude and a birth datetime. A pasted chart with no birth datetime yields
+no Sookshma at all (`dasha.source: "unavailable"`) — if the user paste omits
+birth data, ask for it before promising a Sookshma-level timing window.
 
 Do not proceed until the user explicitly confirms.
