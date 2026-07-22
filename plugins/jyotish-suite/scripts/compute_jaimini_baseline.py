@@ -82,11 +82,13 @@ DRISHTI = build_drishti_map()
 # Chara Karakas (Sapta scheme — 7 planets, Rahu excluded)
 # ====================================================================
 
-def compute_chara_karakas(d1_planets):
+def compute_chara_karakas(d1_planets, planet_block=None):
     """Rank the 7 visible planets by descending degree-within-sign.
 
     Rahu/Ketu are excluded from the Sapta (7-karaka) ranking. Tiebreaker:
-    finer degree wins (already captured by full decimal degree)."""
+    finer degree wins (already captured by full decimal degree). When
+    `planet_block` is supplied, each Karaka row inlines that planet's
+    degree_flags so downstream workers never re-derive them."""
     ranked = sorted(
         SAPTA,
         key=lambda p: d1_planets[p]["deg_in_sign"],
@@ -100,6 +102,8 @@ def compute_chara_karakas(d1_planets):
             "planet": p,
             "degree_in_sign": round(d1_planets[p]["deg_in_sign"], 4),
             "sign": d1_planets[p]["sign"],
+            "degree_flags": (planet_block.get(p, {}).get("degree_flags", [])
+                             if planet_block else []),
         }
     # close-degree flags (adjacent karakas within 1 deg)
     close = []
@@ -235,11 +239,12 @@ def compute_argala(ref_sign_idx, occupancy):
 # Chara Dasha — Parashara variant
 # ====================================================================
 
-def jaimini_sign_lord(sign_idx, d1_planets):
+def jaimini_sign_lord(sign_idx, d1_planets, lagna_sign_idx):
     """Jaimini lord of a sign. For dual-lordship signs (Scorpio: Mars/Ketu,
     Aquarius: Saturn/Rahu) the stronger lord is chosen: the lord placed in its
-    own sign or exalted, else the one in a Kendra/Trikona from itself's
-    occupancy; default to the primary lord."""
+    own sign or exalted, else the one more prominently placed in a
+    Kendra/Trikona **from the Lagna** (computation.md Step 1, line 80);
+    default to the primary lord on a tie."""
     if sign_idx == 7:        # Scorpio
         candidates = [("Mars", d1_planets["Mars"]), ("Ketu", d1_planets["Ketu"])]
     elif sign_idx == 10:     # Aquarius
@@ -256,8 +261,8 @@ def jaimini_sign_lord(sign_idx, d1_planets):
         # exalted
         if name in jp.EXALTATION and jp.EXALTATION[name][0] == psi:
             s += 4
-        # Kendra/Trikona from the sign being lorded
-        house = jp.count_signs(sign_idx, psi)
+        # Kendra/Trikona measured from the Lagna, not the lorded sign
+        house = jp.count_signs(lagna_sign_idx, psi)
         if house in (1, 4, 7, 10):
             s += 2
         elif house in (5, 9):
@@ -268,11 +273,11 @@ def jaimini_sign_lord(sign_idx, d1_planets):
     return best[0]
 
 
-def chara_dasha_years(sign_idx, d1_planets):
+def chara_dasha_years(sign_idx, d1_planets, lagna_sign_idx):
     """Dasha years for a sign = signs counted from the sign to its lord's sign
     (zodiacal, exclusive of start). Lord in same sign -> 12 years.
     Count > 12 -> count - 12."""
-    lord = jaimini_sign_lord(sign_idx, d1_planets)
+    lord = jaimini_sign_lord(sign_idx, d1_planets, lagna_sign_idx)
     lord_sign_idx = jp.SIGNS.index(d1_planets[lord]["sign"])
     if lord_sign_idx == sign_idx:
         return 12, lord
@@ -287,8 +292,55 @@ def chara_dasha_years(sign_idx, d1_planets):
     return years, lord
 
 
+def compute_antardashas(maha_sidx, direction, nominal_maha_years,
+                        nominal_start_dt, nominal_start_age,
+                        d1_planets, lagna_sign_idx):
+    """Antardasha sequence within one Mahadasha rasi (computation.md Step 5).
+
+    The sub-periods start from the Mahadasha rasi itself, proceed in the same
+    direction, and run through all 12 signs. The documented per-Antardasha
+    duration is (Antardasha-Rasi-years / 12) x Mahadasha-years; because the
+    reference also requires the full 12-sign cycle to *complete within the
+    Mahadasha* (line 134), the durations are proportional to each sign's own
+    Chara-Dasha years and normalised so the twelve Antardashas tile the
+    Mahadasha span exactly. (When the 12 sign-years happen to sum to 12 this
+    reduces to the literal /12 formula.) Ages/dates are laid on the same grid
+    the Mahadasha would have if it ran its full length, so for the birth-balance
+    first Mahadasha the pre-birth Antardashas simply carry negative ages.
+    """
+    from datetime import timedelta
+    order = [(maha_sidx + direction * k) % 12 for k in range(12)]
+    rasi_years = []
+    for sidx in order:
+        yrs, lord = chara_dasha_years(sidx, d1_planets, lagna_sign_idx)
+        rasi_years.append((sidx, yrs, lord))
+    total = sum(y for _, y, _ in rasi_years) or 12
+    subs = []
+    cursor_dt = nominal_start_dt
+    age_cursor = nominal_start_age
+    for sidx, yrs, lord in rasi_years:
+        dur = nominal_maha_years * yrs / total
+        end_dt = (cursor_dt + timedelta(days=dur * jp.YEAR_DAYS)
+                  if cursor_dt is not None else None)
+        subs.append({
+            "rasi": jp.SIGNS[sidx],
+            "rasi_idx": sidx,
+            "jaimini_lord": lord,
+            "antardasha_rasi_years": yrs,
+            "years": round(dur, 4),
+            "start": cursor_dt.isoformat() if cursor_dt is not None else None,
+            "end": end_dt.isoformat() if end_dt is not None else None,
+            "start_age": round(age_cursor, 3),
+            "end_age": round(age_cursor + dur, 3),
+        })
+        cursor_dt = end_dt
+        age_cursor += dur
+    return subs
+
+
 def compute_chara_dasha(lagna_sign_idx, lagna_deg, d1_planets, birth_dt):
-    """Full Chara Dasha (Parashara variant) sequence of 12 rasis."""
+    """Full Chara Dasha (Parashara variant) sequence of 12 rasis, each Mahadasha
+    carrying its Antardasha sub-sequence."""
     quality = jp.SIGN_QUALITY[lagna_sign_idx]
     if quality == "Movable":
         start_idx, direction = lagna_sign_idx, 1
@@ -301,7 +353,7 @@ def compute_chara_dasha(lagna_sign_idx, lagna_deg, d1_planets, birth_dt):
     order = [(start_idx + direction * k) % 12 for k in range(12)]
 
     # birth balance for the first sign
-    first_years, _ = chara_dasha_years(order[0], d1_planets)
+    first_years, _ = chara_dasha_years(order[0], d1_planets, lagna_sign_idx)
     elapsed = (lagna_deg / 30.0) * first_years
     balance_first = first_years - elapsed
 
@@ -310,10 +362,25 @@ def compute_chara_dasha(lagna_sign_idx, lagna_deg, d1_planets, birth_dt):
     cursor_dt = birth_dt  # may be None if the chart carries no birth datetime
     age_cursor = 0.0
     for k, sidx in enumerate(order):
-        full_years, lord = chara_dasha_years(sidx, d1_planets)
+        full_years, lord = chara_dasha_years(sidx, d1_planets, lagna_sign_idx)
         years = balance_first if k == 0 else float(full_years)
         end_dt = (cursor_dt + timedelta(days=years * jp.YEAR_DAYS)
                   if cursor_dt is not None else None)
+        # Antardashas are laid on the Mahadasha's *full-length* grid so the
+        # first (birth-balance) Mahadasha keeps its Antardashas correctly
+        # aligned — the elapsed portion sits at negative age / before birth.
+        if k == 0:
+            nominal_years = float(first_years)
+            nominal_start_age = -elapsed
+            nominal_start_dt = (cursor_dt - timedelta(days=elapsed * jp.YEAR_DAYS)
+                                if cursor_dt is not None else None)
+        else:
+            nominal_years = float(full_years)
+            nominal_start_age = age_cursor
+            nominal_start_dt = cursor_dt
+        antardashas = compute_antardashas(
+            sidx, direction, nominal_years, nominal_start_dt,
+            nominal_start_age, d1_planets, lagna_sign_idx)
         sequence.append({
             "rasi": jp.SIGNS[sidx],
             "rasi_idx": sidx,
@@ -324,6 +391,7 @@ def compute_chara_dasha(lagna_sign_idx, lagna_deg, d1_planets, birth_dt):
             "end": end_dt.isoformat() if end_dt is not None else None,
             "start_age": round(age_cursor, 3),
             "end_age": round(age_cursor + years, 3),
+            "antardasha": antardashas,
         })
         cursor_dt = end_dt
         age_cursor += years
@@ -337,26 +405,49 @@ def compute_chara_dasha(lagna_sign_idx, lagna_deg, d1_planets, birth_dt):
     }
 
 
+def _find_running_antardasha(antardashas, target_dt=None, age=None):
+    """Running Antardasha within a Mahadasha's sub-sequence, or None."""
+    if target_dt is not None and antardashas and antardashas[0]["start"] is not None:
+        for a in antardashas:
+            if datetime.fromisoformat(a["start"]) <= target_dt < datetime.fromisoformat(a["end"]):
+                return a
+    if age is not None:
+        for a in antardashas:
+            if a["start_age"] <= age < a["end_age"]:
+                return a
+    return None
+
+
 def find_running_dasha(chara_dasha, target_dt=None, age=None):
-    """Return the running rasi dasha at a target date or age, or None."""
+    """Return the running rasi Mahadasha (with its running Antardasha attached)
+    at a target date or age, or None."""
     seq = chara_dasha["sequence"]
+    running = None
     if target_dt is not None and seq and seq[0]["start"] is not None:
         for d in seq:
             if datetime.fromisoformat(d["start"]) <= target_dt < datetime.fromisoformat(d["end"]):
-                return d
-    if age is not None:
+                running = d
+                break
+    if running is None and age is not None:
         for d in seq:
             if d["start_age"] <= age < d["end_age"]:
-                return d
-    return None
+                running = d
+                break
+    if running is None:
+        return None
+    running = dict(running)  # shallow copy so we can attach the running AD
+    running["running_antardasha"] = _find_running_antardasha(
+        running.get("antardasha", []), target_dt=target_dt, age=age)
+    return running
 
 
 # ====================================================================
 # Planet detail block (degree flags, dignity, war)
 # ====================================================================
 
-def build_planet_block(d1_planets):
-    """Per-planet sign / deg / navamsa / dignity / degree flags / war."""
+def build_planet_block(d1_planets, lagna_sign_idx):
+    """Per-planet sign / deg / navamsa / dignity / nakshatra / pada / house /
+    degree flags / war."""
     positions = {p: d1_planets[p]["longitude"] for p in d1_planets}
     wars = jp.planetary_war(positions)
     sun_lon = d1_planets["Sun"]["longitude"]
@@ -367,12 +458,17 @@ def build_planet_block(d1_planets):
                                 retrograde=info.get("retrograde", False))
         in_war = next((w for w in wars
                        if w["winner"] == p or w["loser"] == p), None)
+        _ni, nak_name, _sl, _ns = jp.get_nakshatra(lon)
+        sign_idx = jp.SIGNS.index(info["sign"])
         out[p] = {
             "sign": info["sign"],
             "deg_in_sign": round(info["deg_in_sign"], 4),
             "navamsa_sign": info["navamsa_sign"],
             "dignity": info["dignity"],
             "retrograde": info.get("retrograde", False),
+            "nakshatra": nak_name,
+            "pada": jp.get_pada(lon),
+            "house": jp.house_of(sign_idx, lagna_sign_idx),
             "degree_flags": flags,
             "planetary_war": in_war,
         }
@@ -422,8 +518,11 @@ def main():
     for p in d1_planets:
         occupancy.setdefault(planet_sign_lookup[p], []).append(p)
 
+    # --- Planets detail (built first so Karaka rows can inline degree_flags) ---
+    planets, wars = build_planet_block(d1_planets, lagna_sign_idx)
+
     # --- Chara Karakas ---
-    karakas = compute_chara_karakas(d1_planets)
+    karakas = compute_chara_karakas(d1_planets, planet_block=planets)
     ak_planet = karakas["AK"]["planet"]
 
     # --- Arudha Padas ---
@@ -432,15 +531,17 @@ def main():
     # --- Swamsha / Karakamsha ---
     swamsha = compute_swamsha(ak_planet, d1_planets, d9)
 
-    # --- Argala on AL, UL, Swamsha, A10 ---
+    # --- Argala pre-map on every named Arudha (AL, UL, A2-A11) + Swamsha +
+    #     Lagna, so unit-analyzers never recompute it for any domain. ---
     argala = {}
-    for key, sidx in [
-        ("AL", arudhas["AL"]["sign_idx"]),
-        ("UL", arudhas["UL"]["sign_idx"]),
-        ("A10", arudhas["A10"]["sign_idx"]),
+    argala_refs = [(label, arudhas[label]["sign_idx"])
+                   for label in ("AL", "A2", "A3", "A4", "A5", "A6", "A7",
+                                 "A8", "A9", "A10", "A11", "UL")]
+    argala_refs += [
         ("Swamsha", swamsha["swamsha_sign_idx"]),
         ("Lagna", lagna_sign_idx),
-    ]:
+    ]
+    for key, sidx in argala_refs:
         argala[key] = {"reference_sign": jp.SIGNS[sidx],
                        "positions": compute_argala(sidx, occupancy)}
 
@@ -457,9 +558,6 @@ def main():
     target_dt = datetime.fromisoformat(args.target_date) if args.target_date else None
     running = find_running_dasha(chara_dasha, target_dt=target_dt, age=args.age)
     chara_dasha["running"] = running
-
-    # --- Planets detail ---
-    planets, wars = build_planet_block(d1_planets)
 
     out = {
         "chart_meta": {

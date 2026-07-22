@@ -36,7 +36,11 @@ Vedic software. Any format is fine.
 ```
 
 `chart-verifier` parses a pasted chart (via `chart_io.py`) or renders a computed
-one, then produces the verification display below.
+one, then produces the **Chart Verification Display** below — the D1/D9 tables
+and flag legend only. It does **not** render the Jaimini baseline block: the
+Karakas, Swamsha, Arudhas, Argala and Chara Dasha do not exist until
+`baseline-runner` computes them (Wave 0 step 3), so they are rendered separately
+at Wave 0 step 4 from the baseline JSON — see **Jaimini Baseline Display** below.
 
 ---
 
@@ -131,11 +135,13 @@ the D9 is what Swamsha and Karakamsha are read from. So:
 
 ---
 
-## Verification Display Format
+## Chart Verification Display *(Wave 0 step 2 — `chart-verifier`)*
 
-`chart-verifier` renders the confirmed chart into exactly this layout — D1
-table, the Jaimini baseline display, then the D9 table. The orchestrator shows
-it and waits for the user to reply "Confirmed".
+`chart-verifier` renders the confirmed chart into exactly this layout — the D1
+table, the flag legend, then the D9 table. **No Jaimini baseline block appears
+here** (Karakas, Swamsha, Arudhas, Argala and Chara Dasha are not yet computed
+at this step). The orchestrator shows this, waits for the user to reply
+"Confirmed", and only then runs `baseline-runner`.
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -155,7 +161,37 @@ D1 PLANET POSITIONS:
 Flags: [Ex]=Exalted [Db]=Debilitated [Own]=Own Sign [Vo]=Vargottama
        [MB]=Mrityu Bhaga [PK]=Pushkara [Sd]=Sandhi [Gd]=Gandanta [PW]=Planetary War
 
-JAIMINI BASELINE:
+D9 (NAVAMSA):
+┌─────────┬──────────────────┬───────┬────────────┐
+│ Planet  │ Sign             │ House │ Notes      │
+├─────────┼──────────────────┼───────┼────────────┤
+│ Lagna   │                  │  1st  │            │
+│ Sun … Ketu — one row per planet                  │
+└─────────┴──────────────────┴───────┴────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠ Does this match your chart?
+  Reply "Confirmed" — or — tell me what needs correction.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+Do not run `baseline-runner` until the user explicitly confirms this chart.
+
+---
+
+## Jaimini Baseline Display *(Wave 0 step 4 — from `baseline-runner` JSON)*
+
+**After** the chart is confirmed and `baseline-runner` has produced the baseline
+JSON (step 3), the orchestrator renders this block directly from that JSON — it
+is never computed inline and never shown before step 3. Every value below reads
+straight out of `baseline.json`; degree flags on each Karaka come from
+`chara_karakas[*].degree_flags`, the running Antardasha from
+`chara_dasha.running.running_antardasha`.
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+              JAIMINI BASELINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 CHARA KARAKAS (Sapta Karaka — 7-planet system):
 ┌──────────────────┬──────┬──────────┬──────────┬──────────────────────┐
@@ -187,22 +223,11 @@ CHARA DASHA (Current):
   Mahadasha  : [Rasi] — [start] to [end]
   Antardasha : [Rasi] — [start] to [end]
   Next shift : [Rasi] begins [date]
-
-D9 (NAVAMSA):
-┌─────────┬──────────────────┬───────┬────────────┐
-│ Planet  │ Sign             │ House │ Notes      │
-├─────────┼──────────────────┼───────┼────────────┤
-│ Lagna   │                  │  1st  │            │
-│ Sun … Ketu — one row per planet                  │
-└─────────┴──────────────────┴───────┴────────────┘
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠ Does this match your chart?
-  Reply "Confirmed" — or — tell me what needs correction.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-Do not proceed to Wave 1 until the user explicitly confirms.
+Show this baseline, then proceed to Phase B (question intake). Do not proceed to
+Wave 1 until the user has been shown the baseline and has answered the question.
 
 ---
 

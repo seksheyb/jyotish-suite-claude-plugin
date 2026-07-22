@@ -48,18 +48,20 @@ framing what to explore.
      derived deterministically from the D1 degrees — the user need not supply
      it.
 2. Dispatch `chart-verifier` (school `jaimini`) to render the chart — pass it
-   the **Verification Display Format** in `references/orchestration-notes.md`
-   so the display, the Jaimini baseline block and the flag legend are exact.
-   Show the output to the user and get explicit confirmation before proceeding
-   — never skip this gate.
+   the **Chart Verification Display** in `references/orchestration-notes.md`
+   (D1 table, flag legend, D9 table only — **not** the Jaimini baseline block,
+   which does not exist until step 3). Show the output to the user and get
+   explicit confirmation before proceeding — never skip this gate.
 3. Dispatch `baseline-runner` (school `jaimini`) -> runs
    `${CLAUDE_PLUGIN_ROOT}/scripts/compute_jaimini_baseline.py`, returns the
-   baseline.json path + gloss. The baseline holds Chara Karakas, Arudha Padas,
-   Swamsha/Karakamsha, Argala pre-map, Chara Dasha, the 12×12 Jaimini drishti
-   map, and planets.
-4. Show the user the displayed Jaimini baseline (Chara Karakas, Arudhas,
-   Swamsha, Chara Dasha) — the analytical foundation they can see and
-   reference. Then proceed to Phase B.
+   baseline.json path + gloss. The baseline holds Chara Karakas (with per-Karaka
+   degree flags), Arudha Padas, Swamsha/Karakamsha, Argala pre-map (every named
+   Arudha), Chara Dasha (Mahadasha + Antardasha), the 12×12 Jaimini drishti map,
+   and planets.
+4. Render the **Jaimini Baseline Display** in `references/orchestration-notes.md`
+   directly from the baseline JSON (Chara Karakas, Arudhas, Swamsha, Argala,
+   Chara Dasha Mahadasha/Antardasha) — the analytical foundation the user can
+   see and reference. Then proceed to Phase B.
 
 ### Phase B — Question intake (with the user)
 
@@ -123,4 +125,4 @@ orchestrator does not.
 | `references/jaimini-drishti.md` | Complete 12-sign Jaimini sign-aspect tables |
 | `references/degree-flags.md` | Gandanta, Mrityu Bhaga, Pushkara, Sandhi, Planetary War |
 | `references/argala.md` | Argala and Virodha Argala rules |
-| `references/orchestration-notes.md` | Chart-intake + question-intake prompts, question classification, topic-to-unit map, D9-derivation note, verification display format, conduct rules, wave-to-methodology map |
+| `references/orchestration-notes.md` | Chart-intake + question-intake prompts, question classification, topic-to-unit map, D9-derivation note, chart-verification + Jaimini-baseline display formats, conduct rules, wave-to-methodology map |

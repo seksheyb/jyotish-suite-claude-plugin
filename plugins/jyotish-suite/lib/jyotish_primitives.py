@@ -391,6 +391,30 @@ def planetary_war(positions):
     return wars
 
 
+def close_contention(positions, lo=2.0, hi=5.0):
+    """Detect close-contention pairs — two planets in the SAME sign separated by
+    MORE than planetary_war's decisive 1deg but still within `lo`..`hi` degrees
+    (default 2deg-5deg). Distinct from planetary_war() (<1deg Graha Yuddha):
+    these planets crowd the same sign and contend for its expression without a
+    clean winner. `positions` maps planet -> sidereal longitude. Returns a list
+    of {planet_a, planet_b, separation}, planet_a being the lower degree-in-sign.
+    Shared primitive; consumed read-only by per-school tracks."""
+    pairs = []
+    names = list(positions.keys())
+    for i in range(len(names)):
+        for j in range(i + 1, len(names)):
+            a, b = names[i], names[j]
+            la, lb = norm360(positions[a]), norm360(positions[b])
+            if int(la // 30) != int(lb // 30):
+                continue
+            sep = abs(la - lb)
+            if lo <= sep <= hi:
+                first, second = (a, b) if la <= lb else (b, a)
+                pairs.append({"planet_a": first, "planet_b": second,
+                              "separation": round(sep, 4)})
+    return pairs
+
+
 def degree_flags(planet, lon, sun_lon=None, retrograde=False):
     """Bundle every degree flag for one planet into a dict."""
     flags = {
