@@ -26,6 +26,8 @@ verbatim per Critical Rule 2 in `references/orchestration-notes.md`.
 2. **CSL of primary house must be in RP set OR in the star/sub of an RP planet.** If yes, strong yes. If no, weak yes or no.
 3. **Repeat RP at fructification:** Krishnamurti's principle — the same planets ruling at the moment of question will rule again at the moment of fructification. Use this to forecast: scan upcoming dates for when transit Moon passes through a star whose lord is in the RP set + a sub whose lord is RP.
 
+**Strongest RP convention.** The baseline reports `strongest_rp` as the **Lagna Sub Lord** (RP factor #1), always. A qualifying Rahu/Ketu is *added* to the RP set (via its sign-lord, star-lord, or a conjunction with an RP), and it acts as the agent for the matters it signifies — but it does **not** displace the Lagna Sub Lord as the single strongest ruling planet in this implementation. Treat a qualifying node as a strong co-ruler, not as the top of the strength order.
+
 ## Common errors
 
 - Forgetting to subtract KP New ayanamsa (different from Lahiri by ~6 arc-minutes)

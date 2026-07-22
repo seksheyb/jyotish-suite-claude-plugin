@@ -45,10 +45,18 @@ a pre-computed chart). You must convert it before it can be used:
 
 ## Then, in both cases — render the verification display
 Read the full chart JSON and reformat it into the school's standard display:
-- **Parashari / BNN / Jaimini / Lal Kitab** — a D1 table (planet, sign, degree,
-  nakshatra, pada, retrograde), a D9 table, the Lagna, the dasha balance.
+- **Parashari / BNN / Jaimini** — a D1 table (planet, sign, degree, nakshatra,
+  pada, retrograde), a D9 table, the Lagna, the dasha balance.
+- **Lal Kitab** — the fixed-house frame (Aries=1 … Pisces=12, planet per house,
+  birth Lagna as flavour). **No D9 and no dasha** — Lal Kitab is a single-chart,
+  dasha-free system; do not render them even if present in the JSON. Use the
+  skill's Verification Display Format from its `references/`.
 - **KP natal** — a cusps table (cusp, sign, sign/star/sub/sub-sub lord) and a
   planets table (same lord chain + retrograde), the dasha.
+- **KP horary** — there is no user/birth chart to verify: the chart is derived
+  from the 1–249 number by `baseline-runner`. Render the horary chart directly
+  from the baseline JSON (chart Lagna, cusps, planets, RP), per the skill's
+  display format.
 If the orchestrator passed a specific display template (e.g. from the skill's
 `references/`), use that exact format.
 

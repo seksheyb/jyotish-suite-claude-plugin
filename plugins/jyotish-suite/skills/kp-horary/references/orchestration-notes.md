@@ -167,8 +167,9 @@ Recommended action: [specific, actionable]
    data.
 5. **Question framing matters.** If the question is mis-asked, redirect before
    reading.
-6. **Outer planets (Uranus/Neptune/Pluto)** — display for reference only; KP is
-   a 9-graha system. Do not use them in core analysis.
+6. **Nine grahas only.** KP horary is a 9-graha system (Sun…Ketu). The
+   ephemeris does not compute the outer planets (Uranus/Neptune/Pluto) and they
+   play no role in the analysis.
 7. **Retrograde planets** — a retrograde planet gives the result of the planet
    in whose star it sits, not its own. Apply when retrograde significators
    appear (see "Special rules — degree-sensitive flags" above).
@@ -218,7 +219,7 @@ CHART LAGNA (from horary number [N]): [Sign] [Deg]°[Min]'[Sec]"
 │ Sun      │ [sign]   │ [d]°[m]'[s]"  │ [#]   │ [planet]  │ [planet]  │ [planet]  │ [planet]     │ [Y/N]│
 │ … Sun through Ketu — one row per planet                                                                │
 └──────────┴──────────┴───────────────┴───────┴───────────┴───────────┴───────────┴──────────────┴──────┘
-(Uranus/Neptune/Pluto shown for reference only — not used in KP analysis.)
+(Nine grahas only — Sun through Ketu. KP horary does not use the outer planets.)
 
 RULING PLANETS — Calculation
   1. Day Lord (weekday at sunrise) : [Day name] → [Planet]

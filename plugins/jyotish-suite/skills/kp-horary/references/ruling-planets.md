@@ -24,12 +24,17 @@ See "Two Lagnas" in `orchestration-notes.md`.
 ## How RP is computed (script owns this — nothing below to hand-derive)
 
 Day Lord, Moon's sign/star/sub, the RP Lagna's sign/star/sub, deduplication,
-retrograde exclusion (with the depositor-is-RP exception), combustion
-weakening, and the Rahu/Ketu agent rule are all computed by
-`scripts/compute_kp_horary_baseline.py` and returned in the baseline JSON's
-`ruling_planets` block. Workers read and cite that block directly — nothing
-here is recomputed by hand. `orchestration-notes.md`'s Verification Display
-Format is the exact layout the RP calculation is rendered in for the user.
+retrograde exclusion (with the depositor-is-RP exception), and the Rahu/Ketu
+agent rule are all computed by `scripts/compute_kp_horary_baseline.py` and
+returned in the baseline JSON's `ruling_planets` block. Workers read and cite
+that block directly — nothing here is recomputed by hand.
+`orchestration-notes.md`'s Verification Display Format is the exact layout the
+RP calculation is rendered in for the user.
+
+Combustion is computed separately as a **per-planet flag** (`combust: true`,
+uniform KP 8.5° orb from the Sun) on each entry of the baseline JSON's
+`planets` block — not as an RP-set weighting. Treat a combust significator as
+weakened when reasoning, but the RP set itself is not re-ranked for combustion.
 
 ## Using RP in the verdict
 

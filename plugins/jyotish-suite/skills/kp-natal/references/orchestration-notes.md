@@ -18,6 +18,8 @@ Option 1 — paste a pre-computed KP chart:
     sub-sub-lord
   • All 9 planets (Sun–Ketu) — longitude, sign, star-lord, sub-lord,
     sub-sub-lord, retrograde
+  • Outer planets (Uranus/Neptune/Pluto) — optional; displayed but not
+    used in core KP analysis (KP is a 9-graha system)
   • Vimshottari dasha sequence (MD-BD-AD with start dates)
   • Significator table if you have it — if not, it is derived from the
     planet positions
@@ -138,14 +140,20 @@ SIGNIFICATORS OF HOUSES
 |   1   | XX, XX                           |
 | ...   |                                  |   (one row per house, 1..12)
 
-CURRENT DASHA (as per chart):
+CURRENT DASHA (running at the reading moment):
 [MD] Mahadasha — running [start] to [end]
   [BD] Bhukti — running [start] to [end]
     [AD] Antara — running [start] to [end]
+      [SD] Sookshma — running [start] to [end]
 
 Confirm this matches your records before I proceed?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
+
+The CURRENT DASHA rows come from `dasha.running_at_target` — the quartet
+running at the **reading moment** (the baseline defaults this to `--rp-datetime`
+when `--target-datetime` is not passed). Never render `dasha.running`, which is
+the AT-BIRTH quartet and would mislabel the current period.
 
 The baseline does not "extend" a user-supplied MD/BD/AD — it recomputes the
 whole Vimshottari tree (through the 4th-level Sookshma) from the Moon's

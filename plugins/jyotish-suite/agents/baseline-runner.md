@@ -24,8 +24,9 @@ You do **not** interpret the chart.
 1. Run the target script:
    `python3 <plugin>/scripts/<script> <args>`
    - baseline scripts: `--chart <path>` if a verified chart was supplied,
-     otherwise `--datetime --tz --lat --lon` (and `--number` for kp_horary,
-     `--age` for lalkitab).
+     otherwise `--datetime --tz --lat --lon` (and `--age` for lalkitab).
+     **kp_horary is always number-derived** — it takes `--number` +
+     `--datetime --tz --lat --lon` and has no `--chart` path.
    - other scripts: pass the dispatch prompt's args through unchanged.
 2. If it errors, report the exact stderr and stop. Do not invent output.
 3. Write the script's JSON stdout verbatim to the given output path.
@@ -33,8 +34,9 @@ You do **not** interpret the chart.
    - the output path
    - the top-level keys present
    - a one-paragraph plain-language gloss of the headline facts (lagna, running
-     dasha, and 2-3 standout deterministic findings — e.g. "Atmakaraka Jupiter,
-     running Jupiter-Saturn dasha, Moon combust"). Keep the gloss under 120
+     dasha *where the school has one* — Lal Kitab does not — and 2-3 standout
+     deterministic findings — e.g. "Atmakaraka Jupiter, running Jupiter-Saturn
+     dasha, Moon combust"). Keep the gloss under 120
      words. This is a factual summary, not a reading.
 
 Never edit the JSON values.

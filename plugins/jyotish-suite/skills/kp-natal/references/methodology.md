@@ -22,6 +22,8 @@ Use `references/house-combinations.md`. Define positive set, negative set, and p
 ### Step 2 — Examine primary CSL
 The single most important step. CSL signifies positive → fructifies. CSL signifies negative → denied. CSL signifies both → check sub-sub-lord. CSL signifies neither → unlikely in current life.
 
+**STOP HERE if the CSL signifies the negative set only.** Deliver the verdict "will not fructify in this life" and do **not** proceed to significator or dasha analysis for this house — the cuspal sub-lord is final (see Critical Rule 4 in `orchestration-notes.md`). No favourable dasha, exaltation, or dignity argument overrides a CSL that denies the matter. Only continue to Step 3 when the CSL signifies the positive set (or both, after the sub-sub-lord tiebreak resolves positive).
+
 ### Step 3 — List significators (4 levels)
 For each relevant house:
 - **L1 (strongest):** Planets in the star of the occupant of the house
@@ -65,25 +67,56 @@ At the predicted DBA-Sookshma window:
 Transit Moon passing through the star of an active significator on a day already in the dasha window = the precise day.
 
 ### Step 8 — Verdict
-- Outcome
-- Confidence
-- Primary window (DBA-Sookshma + dates)
-- Secondary windows (if multiple periods qualify)
-- Caveats
-- Action
+Render the event-timing conclusion in the **VERDICT box** exactly:
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VERDICT — [event]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Outcome        : [YES / NO / QUALIFIED YES]
+Confidence     : [High / Medium / Low]
+Primary window : [MD-BD-AD-SD lords] — [start date] to [end date]
+Secondary      : [other qualifying DBA-SD windows, or "—"]
+Why            : CSL of [house] signifies [houses]; fruitful significators
+                 [planets]; RP cross-check [pass/fail]; transit [confirmation]
+Caveats        : [combust/sandhi/retro/barren-sub-lord notes, or "—"]
+Action         : [what the native should do / watch for]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
 
 ## Life reading methodology
 
 For a comprehensive life reading without a specific question:
 
 ### Walk through all 12 CSLs
-For each cusp, declare:
-- What this house's matters are
-- Whether they will fructify (CSL → positive combo)
-- Whether they will be denied (CSL → negative combo)
-- The dasha periods most likely to activate them
+For each cusp, render a **per-cusp HOUSE box** exactly:
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+HOUSE [N] — [matters of this house]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CSL          : [planet] — signifies [houses]  →  [FRUITFUL / DENIED / MIXED]
+Significators : L1 [..]  L2 [..]  L3 [..]  L4 [..]
+Flags        : [combust/sandhi/gandanta/mrityu_bhaga, or "—"]
+Verdict      : [will fructify / denied / conditional] — [one line]
+Timing       : [dasha periods most likely to activate, or "—"]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
 
 ### Identify dominant life themes
+Close the reading with the **LIFE THEMES box**:
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LIFE THEMES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Succeeds     : [houses with strong positive CSL + strong significators]
+Blocked      : [houses with negative CSL — karmic / requires conscious work]
+Unstable     : [CSLs at sandhi/gandanta, or in star of 6/8/12 lord]
+Soul's theme : [one-line synthesis of the chart's curriculum]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
 - Houses with strong positive CSL + strong significators = recurring themes that succeed
 - Houses with negative CSL = blocked / karmic / requires conscious work
 

@@ -107,15 +107,30 @@ def sunrise_jd(jd_ref, lat, lon):
     return sr
 
 
-def day_lord(jd_ref, lat, lon):
-    """Vedic day-lord (weekday planet at the opening sunrise)."""
+def day_lord(jd_ref, lat, lon, tz_name=None):
+    """KP/Vedic day-lord — the weekday planet of the day that opens at the
+    governing sunrise (the KP day runs sunrise-to-sunrise, not midnight-to-
+    midnight; sunrise_jd() already returns that opening sunrise).
+
+    The ruling weekday MUST be read from the LOCAL civil calendar date at the
+    place, never the UTC calendar date: for far-eastern or far-western
+    longitudes the sunrise instant can fall on a different UTC date than the
+    local one, which would hand the reading the wrong weekday lord. When a
+    tz_name is supplied the exact local civil date is used; otherwise the
+    longitude-based mean offset (~lon/15 h) is applied — sunrise is a mid-
+    morning event, far from midnight, so that reliably lands the correct date.
+
+    Returns (lord, sunrise_local_dt) where sunrise_local_dt is the sunrise
+    expressed in local civil time, so its weekday matches the returned lord."""
     sr = sunrise_jd(jd_ref, lat, lon)
     y, m, d, ut = swe.revjul(sr)
-    hr = int(ut)
-    mn = int((ut - hr) * 60)
-    sc = int((((ut - hr) * 60) - mn) * 60)
-    sr_dt = datetime(y, m, d, hr, mn, sc)
-    return jp.WEEKDAY_LORDS[sr_dt.weekday()], sr_dt
+    sr_utc = datetime(y, m, d) + timedelta(hours=ut)
+    if tz_name is not None:
+        sr_local = (pytz.UTC.localize(sr_utc)
+                    .astimezone(pytz.timezone(tz_name)).replace(tzinfo=None))
+    else:
+        sr_local = sr_utc + timedelta(hours=lon / 15.0)
+    return jp.WEEKDAY_LORDS[sr_local.weekday()], sr_local
 
 
 # ====================================================================
@@ -139,6 +154,7 @@ def horary_number_to_lagna(number):
             if count == number:
                 mid = nak_start + cum + arc / 2
                 return mid, {"number": number, "nakshatra": nak_name,
+                             "sign": jp.get_sign(mid)[1],
                              "star_lord": star_lord, "sub_lord": lord,
                              "segment_start": round(nak_start + cum, 4),
                              "segment_end": round(nak_start + cum + arc, 4),
@@ -313,12 +329,16 @@ def kp_horary_chart(number, dt_iso, tz_name, lat, lon):
         chain["cusp"] = i + 1
         cusps.append(chain)
 
+    # House numbers are whole-sign relative to the CHART Lagna (the number-
+    # derived horary Lagna == cusp 1), NOT the real rising RP Lagna.
+    lagna_si = jp.get_sign(horary_lagna)[0]
     planets = {}
     raw = _planet_block(jd, ayan)
     for p, info in raw.items():
         chain = jp.full_lord_chain(info["longitude"])
         chain["planet"] = p
         chain["retrograde"] = info["retrograde"]
+        chain["house"] = jp.house_of(jp.get_sign(info["longitude"])[0], lagna_si)
         planets[p] = chain
 
     return {

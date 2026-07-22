@@ -77,15 +77,13 @@ def compute_significators(cusps, planets):
       L3 — planets in the star of the house-lord
       L4 — the house-lord
     Plus node-conjunction additions per significators-rules.md.
+
+    Returns (significators, amplifications) where `amplifications` records the
+    reverse nodal rule (significators-rules.md:37-38): a planet conjunct a node
+    inherits the houses that node signifies.
     """
     # occupancy of every planet
     occ = {p: house_of_longitude(planets[p]["longitude"], cusps) for p in planets}
-    # houses owned by each planet (cusp sign-lord)
-    owned = {p: [] for p in planets}
-    for c in cusps:
-        owned.setdefault(c["sign_lord"], [])
-        if c["sign_lord"] in owned:
-            owned[c["sign_lord"]].append(c["cusp"])
 
     # node depositor + conjunctions (within ~3deg, same sign)
     node_extra = {}
@@ -124,7 +122,50 @@ def compute_significators(cusps, planets):
             if ne["depositor"] in base or any(c in base for c in ne["conjunct"]):
                 l2.append(node)  # nodal agent acts at occupant strength
         out[str(h)] = {"L1": l1, "L2": sorted(set(l2)), "L3": l3, "L4": l4}
-    return out
+
+    # reverse nodal rule: a planet conjunct a node inherits the houses that
+    # node signifies (significators-rules.md:37-38, methodology.md:34). Emit as
+    # a per-planet annotation rather than mutating the house lists, so the
+    # interpretive layer applies the amplification without re-deriving it.
+    sig_houses = invert_significators(out)
+    amplifications = {}
+    for node in NODES:
+        node_houses = sig_houses.get(node, set())
+        for p in node_extra[node]["conjunct"]:
+            extra = sorted(node_houses - sig_houses.get(p, set()))
+            if extra:
+                amplifications.setdefault(p, []).append(
+                    {"via_node": node, "extra_houses": extra})
+    return out, amplifications
+
+
+def invert_significators(significators):
+    """Reverse map: planet -> set of house numbers it signifies (any level)."""
+    sig_houses = {}
+    for hs, levels in significators.items():
+        for key in ("L1", "L2", "L3", "L4"):
+            for p in levels[key]:
+                sig_houses.setdefault(p, set()).add(int(hs))
+    return sig_houses
+
+
+def compute_fruitful_barren(significators, planets):
+    """Reverse index for the fruitful/barren sub-lord gate
+    (significators-rules.md:40-51). For every planet emit its sub-lord and the
+    houses that sub-lord signifies (all 4 levels), so a downstream worker can
+    test a candidate significator's sub-lord against a question's positive /
+    negative house set without inverting the table by hand."""
+    sig_houses = invert_significators(significators)
+    sub_lord_signifies = {p: sorted(hs) for p, hs in sig_houses.items()}
+    planet_sub_lord = {}
+    for p in planets:
+        sl = planets[p]["sub_lord"]
+        planet_sub_lord[p] = {
+            "sub_lord": sl,
+            "sub_lord_signifies": sorted(sig_houses.get(sl, set())),
+        }
+    return {"sub_lord_signifies": sub_lord_signifies,
+            "planet_sub_lord": planet_sub_lord}
 
 
 # ====================================================================
@@ -163,34 +204,67 @@ def compute_ruling_planets(rp_dt_iso, tz, lat, lon):
             dedup.append(planet)
             seen.add(planet)
 
-    # retrograde check + depositor-keep exception
+    # positions of all nine grahas at the reading moment
+    positions = {}
+    for p in PLANETS:
+        plon, pretro, _spd = eph.planet_position(jd, p, ayan)
+        positions[p] = {"lon": jp.norm360(plon), "retro": pretro}
+
+    # retrograde check + depositor-keep exception. A retrograde RP whose
+    # depositor (sign-lord) is NOT itself an RP is excluded from the final set
+    # (ruling-planets.md "Including retrograde planets without depositor-check").
     retro_check = {}
+    excluded = set()
     for planet in dedup:
         if planet in NODES:
             retro_check[planet] = "node — retrograde rule N/A"
             continue
-        plon, retro, _spd = eph.planet_position(jd, planet, ayan)
+        plon = positions[planet]["lon"]
+        retro = positions[planet]["retro"]
         if retro:
             depositor = jp.get_sign(plon)[2]
             keep = depositor in dedup
             retro_check[planet] = (
                 f"RETROGRADE — depositor {depositor} "
-                + ("is RP, retained" if keep else "not RP, weakened/excluded"))
+                + ("is RP, retained" if keep else "not RP, excluded"))
+            if not keep:
+                excluded.add(planet)
         else:
             retro_check[planet] = "Direct"
 
-    # Rahu/Ketu agent rule: node is added if its sign-lord is already an RP
-    rahu_lon, _r, _s = eph.planet_position(jd, "Rahu", ayan)
-    ketu_lon, _r2, _s2 = eph.planet_position(jd, "Ketu", ayan)
-    rahu_sl = jp.get_sign(rahu_lon)[2]
-    ketu_sl = jp.get_sign(ketu_lon)[2]
-    rahu_added = rahu_sl in dedup
-    ketu_added = ketu_sl in dedup
+    # confirmed RP core = deduped factors minus retrograde-excluded planets
+    rp_core = [p for p in dedup if p not in excluded]
 
-    final_rp = list(dedup)
-    if rahu_added and "Rahu" not in final_rp:
+    # Rahu/Ketu agent rule (ruling-planets.md / significators-rules.md): a node
+    # joins the RP set if ANY of — its sign-lord is an RP, its star-lord is an
+    # RP, or it is conjunct (within ~3deg, same sign) a planet already in the
+    # RP core. Previously only the sign-lord condition was tested.
+    def node_qualification(node):
+        nlon = positions[node]["lon"]
+        sign_lord = jp.get_sign(nlon)[2]
+        star_lord = jp.get_nakshatra(nlon)[2]
+        reasons = []
+        if sign_lord in rp_core:
+            reasons.append(f"sign-lord {sign_lord} is RP")
+        if star_lord in rp_core:
+            reasons.append(f"star-lord {star_lord} is RP")
+        nsi = int(nlon // 30)
+        conj = [p for p in PLANETS if p not in NODES and p in rp_core
+                and int(positions[p]["lon"] // 30) == nsi
+                and abs(positions[p]["lon"] - nlon) <= 3.0]
+        if conj:
+            reasons.append("conjunct RP " + ", ".join(conj))
+        return {"sign_lord": sign_lord, "star_lord": star_lord,
+                "conjunct_rp": conj, "reasons": reasons,
+                "added_to_rp": bool(reasons)}
+
+    rahu_check = node_qualification("Rahu")
+    ketu_check = node_qualification("Ketu")
+
+    final_rp = list(rp_core)
+    if rahu_check["added_to_rp"] and "Rahu" not in final_rp:
         final_rp.append("Rahu")
-    if ketu_added and "Ketu" not in final_rp:
+    if ketu_check["added_to_rp"] and "Ketu" not in final_rp:
         final_rp.append("Ketu")
 
     return {
@@ -199,7 +273,7 @@ def compute_ruling_planets(rp_dt_iso, tz, lat, lon):
         "ayanamsa_dms": jp.deg_to_dms(ayan),
         "day_lord": {"lord": dlord,
                      "weekday_at_sunrise": sunrise_dt.strftime("%A"),
-                     "sunrise_utc": sunrise_dt.isoformat()},
+                     "sunrise_local": sunrise_dt.isoformat()},
         "moon": {"longitude_dms": moon_chain["longitude_dms"],
                  "sign": moon_chain["sign"], "sign_lord": moon_chain["sign_lord"],
                  "nakshatra": moon_chain["nakshatra"],
@@ -213,9 +287,13 @@ def compute_ruling_planets(rp_dt_iso, tz, lat, lon):
         "factors_in_strength_order": [{"role": r, "planet": p} for r, p in factors],
         "deduplicated": dedup,
         "retrograde_check": retro_check,
-        "rahu_check": {"rahu_sign_lord": rahu_sl, "added_to_rp": rahu_added},
-        "ketu_check": {"ketu_sign_lord": ketu_sl, "added_to_rp": ketu_added},
+        "retrograde_excluded": sorted(excluded),
+        "rahu_check": rahu_check,
+        "ketu_check": ketu_check,
         "final_rp": final_rp,
+        # By convention the Lagna Sub Lord is the strongest RP (factor #1). A
+        # qualifying node is added to the set but does not outrank it here —
+        # see references/ruling-planets.md "Using RP in the verdict".
         "strongest_rp": asc_chain["sub_lord"],
     }
 
@@ -265,6 +343,34 @@ HOUSE_COMBINATIONS = {
 
 
 # ====================================================================
+# KP degree flags (KP flat orbs — NOT the Parashari orbs in lib)
+# ====================================================================
+
+def kp_degree_flags(name, lon, sun_lon=None, retrograde=False, is_planet=True):
+    """KP-specific degree flags for one body.
+
+    combust : |body - Sun| <= 8.5deg (KP flat orb; methodology.md:102), never
+              for the Sun or the nodes.
+    sandhi  : first/last 0deg30' of a sign (KP window, not lib's 1deg window).
+    gandanta / mrityu_bhaga : reuse the shared primitives (already KP-correct
+              3deg20' zones and the table-driven death-degrees respectively).
+    """
+    lon = jp.norm360(lon)
+    d = jp.deg_in_sign(lon)
+    flags = {
+        "gandanta": jp.gandanta(lon),
+        "sandhi": (d < 0.5 or d >= 29.5),
+    }
+    if is_planet:
+        flags["mrityu_bhaga"] = jp.mrityu_bhaga(name, lon)
+        if sun_lon is not None and name != "Sun" and name not in NODES:
+            sep = abs(lon - jp.norm360(sun_lon))
+            sep = min(sep, 360 - sep)
+            flags["combust"] = sep <= 8.5
+    return flags
+
+
+# ====================================================================
 # Chart load / assembly
 # ====================================================================
 
@@ -299,14 +405,26 @@ def main():
     cusps = chart["cusps"]
     planets = chart["planets"]
 
-    # CSL = the cuspal sub-lord, already in each cusp's full_lord_chain
+    sun_lon = planets.get("Sun", {}).get("longitude")
+
+    # CSL = the cuspal sub-lord, already in each cusp's full_lord_chain.
+    # Attach KP degree flags to every cusp (gandanta/sandhi of the cusp point).
     cusps_out = []
     for c in cusps:
         entry = dict(c)
         entry["CSL"] = c["sub_lord"]
+        entry["degree_flags"] = kp_degree_flags(
+            "cusp", c["longitude"], is_planet=False)
         cusps_out.append(entry)
 
-    significators = compute_significators(cusps, planets)
+    # Attach KP degree flags to every planet (combust/sandhi/gandanta/MB).
+    for p in planets:
+        planets[p]["degree_flags"] = kp_degree_flags(
+            p, planets[p]["longitude"], sun_lon=sun_lon,
+            retrograde=planets[p].get("retrograde", False))
+
+    significators, amplifications = compute_significators(cusps, planets)
+    fruitful_barren = compute_fruitful_barren(significators, planets)
 
     # Ruling Planets — needs a location; require birth coords or --chart location
     loc = chart.get("location") or {}
@@ -321,14 +439,17 @@ def main():
         ruling_planets = {"error": "RP needs lat/lon/tz — supply --lat/--lon/--tz "
                                    "or a --chart with a 'location' block."}
 
-    # Dasha — running quartet now; at target if asked. Reuse the chart's tree.
+    # Dasha — the chart's `running` field is the AT-BIRTH quartet (birth-anchored
+    # in lib/ephemeris). For a reading we need the quartet running at the reading
+    # moment, so `running_at_target` is always populated: it defaults to the RP
+    # moment (the reading datetime) when --target-datetime is not supplied.
     dasha_block = dict(chart.get("dasha", {}))
-    if args.target_datetime and rp_tz:
-        tree = chart.get("dasha", {}).get("tree")
-        if tree:
-            _local, tgt_utc = eph.to_utc(args.target_datetime, rp_tz)
-            dasha_block["target_datetime"] = args.target_datetime
-            dasha_block["running_at_target"] = jp.find_running(tree, tgt_utc)
+    tree = chart.get("dasha", {}).get("tree")
+    target_dt = args.target_datetime or rp_dt
+    if tree and rp_tz and target_dt:
+        _local, tgt_utc = eph.to_utc(target_dt, rp_tz)
+        dasha_block["target_datetime"] = target_dt
+        dasha_block["running_at_target"] = jp.find_running(tree, tgt_utc)
 
     baseline = {
         "school": "kp-natal",
@@ -341,6 +462,8 @@ def main():
         "cusps": cusps_out,
         "planets": planets,
         "significators": significators,
+        "significator_amplifications": amplifications,
+        "fruitful_barren": fruitful_barren,
         "ruling_planets": ruling_planets,
         "dasha": dasha_block,
         "house_combinations": HOUSE_COMBINATIONS,

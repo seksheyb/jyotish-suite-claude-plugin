@@ -52,9 +52,16 @@ interpretation -> parallel subagents. Paths use `${CLAUDE_PLUGIN_ROOT}`.
    dispatch that does both expansion and rendering — do not call
    `chart-verifier` twice for the same chart.
 3. Dispatch `baseline-runner` (school `kp_natal`, **haiku, effort low**) -> runs
-   `${CLAUDE_PLUGIN_ROOT}/scripts/compute_kp_natal_baseline.py`. This returns
-   one baseline.json: 12 cusps with full lord chains + CSL, 9 planets, 4-level
-   significators, current Ruling Planets (full derivation), Sookshma dasha, and
+   `${CLAUDE_PLUGIN_ROOT}/scripts/compute_kp_natal_baseline.py`. **Pass the
+   reading moment explicitly** as `--rp-datetime "<now, ISO local>"` (the
+   Ruling Planets and the `dasha.running_at_target` quartet are both anchored
+   to this moment; without it the script defaults to the machine clock). The
+   `dasha.running` field is the AT-BIRTH quartet — for "current dasha" always
+   read `dasha.running_at_target`, never `dasha.running`. This returns one
+   baseline.json: 12 cusps with full lord chains + CSL + degree flags, 9
+   planets (with combust/sandhi/gandanta/mrityu_bhaga flags), 4-level
+   significators + node amplifications + the fruitful/barren sub-lord index,
+   current Ruling Planets (full derivation), Sookshma dasha, and
    house-combination tables. Keep the JSON out of orchestrator context — pass
    the path forward.
 
@@ -116,13 +123,15 @@ Never let the synthesizer begin on partial results.
 
 ### Wave 2 — Synthesis
 Dispatch one `synthesizer` (school `kp-natal`, model **opus**, effort
-**high**):
-- **Life Reading:** weave the 4 trine-group blocks (12 house verdicts total)
-  into life themes — strong areas, blocked areas, conditional areas, dominant
-  themes, work areas.
-- **Event Timing:** the Step-8 verdict — outcome, confidence, primary
-  DBA-Sookshma window with dates, reasoning chain (CSL, significators, RP
-  alignment, dasha, transit), caveats, action recommendation.
+**high**). It must fill the **KP output box templates verbatim** — do not
+substitute a generic strength/weakness/verdict shape:
+- **Life Reading:** one **HOUSE box** per cusp (all 12,
+  `references/methodology.md` "Walk through all 12 CSLs") then the closing
+  **LIFE THEMES box** — succeeds / blocked / unstable / soul's theme.
+- **Event Timing:** the Step-8 **VERDICT box** (`references/methodology.md`
+  Step 8) — outcome, confidence, primary DBA-Sookshma window with dates,
+  reasoning chain (CSL, significators, RP alignment, dasha, transit), caveats,
+  action.
 
 ## Reading modes
 

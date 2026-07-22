@@ -76,6 +76,11 @@ HOUSE_COMBINATIONS = {
 FRUITFUL_HOUSES = [2, 5, 9, 11]   # generically supportive
 BARREN_HOUSES = [6, 8, 12]        # generically obstructive (dusthana)
 
+# KP-specific degree orbs. These are LOCAL to horary and deliberately NOT the
+# Parashari orbs in jp.COMBUSTION_ORBS (10-17°): KP uses a single uniform orb.
+KP_COMBUSTION_ORB = 8.5     # uniform Sun orb for KP combustion (all planets)
+NODE_CONJUNCTION_ORB = 8.0  # orb for Rahu/Ketu "conjunct" an RP planet
+
 
 # ====================================================================
 # Helpers
@@ -83,6 +88,21 @@ BARREN_HOUSES = [6, 8, 12]        # generically obstructive (dusthana)
 
 def _sign_idx(name):
     return jp.SIGNS.index(name)
+
+
+def _ang_sep(a, b):
+    """Smallest angular separation (0-180°) between two sidereal longitudes."""
+    d = abs(jp.norm360(a) - jp.norm360(b))
+    return min(d, 360.0 - d)
+
+
+def _is_combust(planet, planet_lon, sun_lon):
+    """KP combustion: any planet (not the Sun, not a node) within the uniform
+    8.5° orb of the Sun. Deliberately does NOT use jp.COMBUSTION_ORBS, which
+    holds Parashari 10-17° orbs used by the other schools."""
+    if planet in ("Sun", "Rahu", "Ketu"):
+        return False
+    return _ang_sep(planet_lon, sun_lon) <= KP_COMBUSTION_ORB
 
 
 def _planet_house(planet_chain, lagna_si):
@@ -106,7 +126,7 @@ def _occupied_houses(planet, planets, lagna_si):
     return []
 
 
-def _csl_verdict(csl_signifies, primary, positive, negative):
+def _csl_verdict(csl_signifies, positive, negative):
     """Deterministic CSL gate verdict for one cusp's sub-lord signification."""
     sig = set(csl_signifies)
     hits_pos = sorted(sig & set(positive))
@@ -157,10 +177,8 @@ def compute_significators(planets, cusps, lagna_si):
         # L4 — the house lord.
         l4 = [house_lord]
 
-        # Node conjunction: Rahu/Ketu sharing a house with an occupant join it.
-        for node in ("Rahu", "Ketu"):
-            if node in occupants and node not in l2:
-                l2.append(node)
+        # (A Rahu/Ketu occupying a house is already captured in `occupants`
+        # above, so no separate node-conjunction pass is needed here.)
 
         significators[str(h)] = {
             "house_lord": house_lord,
@@ -215,24 +233,40 @@ def compute_ruling_planets(rp_lagna_chain, moon_chain, day_lord_planet,
             dedup.append(planet)
 
     # Retrograde check. A retrograde planet (not a node) is excluded UNLESS
-    # its sign-lord (depositor) is itself in the RP set.
+    # its sign-lord (depositor) is itself a SURVIVING member of the RP set.
+    # Because a depositor can itself be a retrograde planet that gets excluded,
+    # we iterate the exclusion to a fixed point rather than testing against the
+    # pre-exclusion dedup list.
     retrograde_check = {}
-    retained = []
+    retained = []                # nodes + direct planets are always retained
+    retro_depositors = {}        # retrograde planet -> its depositor
     for planet in dedup:
         if planet in ("Rahu", "Ketu"):
             retrograde_check[planet] = "node — retrograde rule N/A"
             retained.append(planet)
             continue
-        retro = planets.get(planet, {}).get("retrograde", False)
-        if not retro:
+        if not planets.get(planet, {}).get("retrograde", False):
             retrograde_check[planet] = "direct — retained"
             retained.append(planet)
             continue
-        depositor = planets[planet]["sign_lord"]
-        if depositor in dedup:
+        retro_depositors[planet] = planets[planet]["sign_lord"]
+
+    # Fixed point: keep admitting retrograde planets whose depositor is (now)
+    # retained, until a full pass admits nobody new.
+    changed = True
+    while changed:
+        changed = False
+        for planet, depositor in retro_depositors.items():
+            if planet not in retained and depositor in retained:
+                retained.append(planet)
+                changed = True
+    # Restore strongest-first (dedup) order.
+    retained = [p for p in dedup if p in retained]
+
+    for planet, depositor in retro_depositors.items():
+        if planet in retained:
             retrograde_check[planet] = (
                 f"retrograde — RETAINED (depositor {depositor} is RP)")
-            retained.append(planet)
         else:
             retrograde_check[planet] = (
                 f"retrograde — EXCLUDED (depositor {depositor} not RP)")
@@ -248,9 +282,11 @@ def compute_ruling_planets(rp_lagna_chain, moon_chain, day_lord_planet,
         nchain = planets[node]
         node_house_sign = nchain["sign_lord"]
         node_star = nchain["star_lord"]
-        node_si = _sign_idx(nchain["sign"])
+        node_lon = nchain["longitude"]
+        # "Conjunct" = within an actual degree orb (KP), NOT merely same-sign.
         conjunct = [p for p, c in planets.items()
-                    if p != node and _sign_idx(c["sign"]) == node_si]
+                    if p != node
+                    and _ang_sep(c["longitude"], node_lon) <= NODE_CONJUNCTION_ORB]
         reasons = []
         if node_house_sign in retained:
             reasons.append(f"in sign of RP {node_house_sign}")
@@ -277,7 +313,9 @@ def compute_ruling_planets(rp_lagna_chain, moon_chain, day_lord_planet,
         "retrograde_check": retrograde_check,
         "node_agent_check": node_check,
         "final_rp_set": final_rp,
-        "strongest_rp": factors[0][1],
+        # Strongest RP = the first SURVIVING factor in strength order, so a
+        # retrograde-excluded Lagna Sub Lord is never reported as strongest.
+        "strongest_rp": final_rp[0] if final_rp else factors[0][1],
     }
 
 
@@ -294,6 +332,29 @@ def build_baseline(number, dt_iso, tz, lat, lon, question):
     rp_lagna_chain = chart["ruling_planets_lagna"]
 
     lagna_si = _sign_idx(cusps[0]["sign"])
+
+    # KP combustion (uniform 8.5° from the Sun) + degree-sensitive flags, added
+    # per planet so the significator-weighting agent can see them directly.
+    sun_lon = planets["Sun"]["longitude"]
+    for p, chain in planets.items():
+        lon = chain["longitude"]
+        chain["combust"] = _is_combust(p, lon, sun_lon)
+        chain["gandanta"] = jp.gandanta(lon)
+        chain["mrityu_bhaga"] = jp.mrityu_bhaga(p, lon)
+        chain["pushkara_bhaga"] = jp.pushkara_bhaga(lon)
+
+    # Chart-Lagna sandhi: warn when the horary Lagna sits within 0°30' (0.5°)
+    # of a sign edge — a KP-horary-specific band (jp.sandhi() uses 1.0° and is
+    # shared with other schools, so it is deliberately NOT reused here).
+    _lagna_dis = jp.deg_in_sign(horary_lagna["lagna_deg"])
+    if _lagna_dis < 0.5:
+        _sandhi = "early (within 0°30' of sign start)"
+    elif _lagna_dis > 29.5:
+        _sandhi = "late (within 0°30' of sign end)"
+    else:
+        _sandhi = None
+    horary_lagna["sandhi"] = _sandhi
+    horary_lagna["sandhi_warning"] = _sandhi is not None
 
     # CSL per cusp — the sub-lord IS the CSL; surface it explicitly.
     cusps_out = []
@@ -312,7 +373,7 @@ def build_baseline(number, dt_iso, tz, lat, lon, question):
         rp_lagna_chain, planets["Moon"], day_lord_planet, planets)
     ruling_planets["day_lord"] = {
         "planet": day_lord_planet,
-        "sunrise_utc": sunrise_dt.isoformat(),
+        "sunrise_local": sunrise_dt.isoformat(),
         "weekday_at_sunrise": sunrise_dt.strftime("%A"),
     }
 
@@ -333,7 +394,7 @@ def build_baseline(number, dt_iso, tz, lat, lon, question):
         csl = cusps[h - 1]["sub_lord"]
         csl_generic_gate[str(h)] = _csl_verdict(
             planet_significations.get(csl, []),
-            [h], FRUITFUL_HOUSES, BARREN_HOUSES)
+            FRUITFUL_HOUSES, BARREN_HOUSES)
 
     return {
         "chart_type": "kp_horary_baseline",
