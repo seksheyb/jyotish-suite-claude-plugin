@@ -1,0 +1,13 @@
+{
+  "school": "kp_horary",
+  "script": "compute_kp_horary_baseline.py",
+  "description": "kp-horary baseline — number-derived Lagna. --datetime here IS the moment-of-reading (the moment the question is asked); --number is the pinned horary number.",
+  "args": {
+    "--number": "108",
+    "--datetime": "2026-01-01T09:00:00",
+    "--tz": "Asia/Kolkata",
+    "--lat": "28.6139",
+    "--lon": "77.2090",
+    "--question": "Golden regression fixture — will the querent's pending matter resolve favourably?"
+  }
+}

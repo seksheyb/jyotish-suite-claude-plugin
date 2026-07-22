@@ -1,0 +1,1806 @@
+{
+  "school": "bnn",
+  "chart_meta": {
+    "datetime_local": "1990-05-15T10:30:00+05:30",
+    "datetime_utc": "1990-05-15T05:00:00",
+    "location": {
+      "lat": 28.6139,
+      "lon": 77.209,
+      "tz": "Asia/Kolkata"
+    },
+    "ayanamsa": {
+      "mode": "lahiri",
+      "value_dms": "023-43-21"
+    },
+    "d1_lagna": "Cancer",
+    "d9_lagna": "Virgo"
+  },
+  "natural_karakas": {
+    "Sun": {
+      "primary_signification": "Soul, self, father, authority, government, vitality",
+      "secondary_signification": "King, employer, leadership, heart",
+      "current_sign": "Taurus",
+      "current_sign_field": "Wealth, food, stability, accumulated resources, beauty"
+    },
+    "Moon": {
+      "primary_signification": "Mother, mind, emotions, public, masses, travel",
+      "secondary_signification": "Comfort, popularity, home, food",
+      "current_sign": "Sagittarius",
+      "current_sign_field": "Dharma, higher learning, fortune, philosophy, long travel"
+    },
+    "Mars": {
+      "primary_signification": "Siblings (younger), property, land, energy, courage, disputes",
+      "secondary_signification": "Brothers, debt, enemies, blood, engineering",
+      "current_sign": "Aquarius",
+      "current_sign_field": "Gains, networks, elder siblings, innovation, social causes"
+    },
+    "Mercury": {
+      "primary_signification": "Intellect, communication, business, friends, skin",
+      "secondary_signification": "Writing, speech, trade, nervous system",
+      "current_sign": "Aries",
+      "current_sign_field": "Self, initiative, beginnings, courage, independence"
+    },
+    "Jupiter": {
+      "primary_signification": "Wisdom, children, wealth, husband (female charts), teacher, dharma",
+      "secondary_signification": "Fortune, expansion, religion, higher learning",
+      "current_sign": "Gemini",
+      "current_sign_field": "Communication, siblings, short journeys, intellect, trade"
+    },
+    "Venus": {
+      "primary_signification": "Wife/partner (male charts), vehicles, comforts, arts, relationships",
+      "secondary_signification": "Reproductive system, pleasures, luxury, marriage",
+      "current_sign": "Pisces",
+      "current_sign_field": "Liberation, foreign, spirituality, expenses, dissolution"
+    },
+    "Saturn": {
+      "primary_signification": "Longevity, discipline, service, career (labour-based), delays",
+      "secondary_signification": "Servants, iron, chronic illness, old age, death",
+      "current_sign": "Capricorn",
+      "current_sign_field": "Career, discipline, structure, public duty, ambition"
+    },
+    "Rahu": {
+      "primary_signification": "Foreign, unconventional, obsession, technology",
+      "secondary_signification": "Deception, amplification, sudden events",
+      "current_sign": "Capricorn",
+      "current_sign_field": "Career, discipline, structure, public duty, ambition"
+    },
+    "Ketu": {
+      "primary_signification": "Liberation, past life, spirituality, detachment",
+      "secondary_signification": "Accidents, wounds, moksha, occult, hidden matters",
+      "current_sign": "Cancer",
+      "current_sign_field": "Home, mother, emotions, water, comfort, nurturing"
+    }
+  },
+  "planets": {
+    "Sun": {
+      "sign": "Taurus",
+      "sign_idx": 1,
+      "deg_in_sign": 0.3923,
+      "longitude": 30.3923,
+      "dignity": "enemy",
+      "retrograde": false,
+      "navamsa_sign": "Capricorn",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": "early",
+        "mrityu_bhaga": false,
+        "pushkara_bhaga": false,
+        "pushkara_navamsa": false,
+        "vargottama": false
+      },
+      "planetary_war": null,
+      "degree_flag_verdict": {
+        "dominant": "sandhi",
+        "code": "Sd",
+        "color": "yellow",
+        "note": "Sandhi — immature or unstable expression of themes."
+      }
+    },
+    "Moon": {
+      "sign": "Sagittarius",
+      "sign_idx": 8,
+      "deg_in_sign": 29.8455,
+      "longitude": 269.8455,
+      "dignity": "neutral",
+      "retrograde": false,
+      "navamsa_sign": "Sagittarius",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": "late",
+        "mrityu_bhaga": false,
+        "pushkara_bhaga": false,
+        "pushkara_navamsa": false,
+        "vargottama": true,
+        "combust": false
+      },
+      "planetary_war": null,
+      "degree_flag_verdict": {
+        "dominant": "sandhi",
+        "code": "Sd",
+        "color": "yellow",
+        "note": "Sandhi — immature or unstable expression of themes."
+      }
+    },
+    "Mars": {
+      "sign": "Aquarius",
+      "sign_idx": 10,
+      "deg_in_sign": 24.3947,
+      "longitude": 324.3947,
+      "dignity": "neutral",
+      "retrograde": false,
+      "navamsa_sign": "Taurus",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": null,
+        "mrityu_bhaga": false,
+        "pushkara_bhaga": false,
+        "pushkara_navamsa": false,
+        "vargottama": false,
+        "combust": false
+      },
+      "planetary_war": null,
+      "degree_flag_verdict": {
+        "dominant": "none",
+        "code": "-",
+        "color": "neutral",
+        "note": "No dominating degree flag."
+      }
+    },
+    "Mercury": {
+      "sign": "Aries",
+      "sign_idx": 0,
+      "deg_in_sign": 14.3282,
+      "longitude": 14.3282,
+      "dignity": "neutral",
+      "retrograde": true,
+      "navamsa_sign": "Leo",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": null,
+        "mrityu_bhaga": true,
+        "pushkara_bhaga": false,
+        "pushkara_navamsa": false,
+        "vargottama": false,
+        "combust": false
+      },
+      "planetary_war": null,
+      "degree_flag_verdict": {
+        "dominant": "mrityu_bhaga",
+        "code": "MB",
+        "color": "red",
+        "note": "Mrityu Bhaga + retrograde — double suppression; weakened and non-linear."
+      }
+    },
+    "Jupiter": {
+      "sign": "Gemini",
+      "sign_idx": 2,
+      "deg_in_sign": 15.764,
+      "longitude": 75.764,
+      "dignity": "enemy",
+      "retrograde": false,
+      "navamsa_sign": "Aquarius",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": null,
+        "mrityu_bhaga": false,
+        "pushkara_bhaga": false,
+        "pushkara_navamsa": false,
+        "vargottama": false,
+        "combust": false
+      },
+      "planetary_war": null,
+      "degree_flag_verdict": {
+        "dominant": "none",
+        "code": "-",
+        "color": "neutral",
+        "note": "No dominating degree flag."
+      }
+    },
+    "Venus": {
+      "sign": "Pisces",
+      "sign_idx": 11,
+      "deg_in_sign": 18.7632,
+      "longitude": 348.7632,
+      "dignity": "exalted",
+      "retrograde": false,
+      "navamsa_sign": "Sagittarius",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": null,
+        "mrityu_bhaga": false,
+        "pushkara_bhaga": false,
+        "pushkara_navamsa": false,
+        "vargottama": false,
+        "combust": false
+      },
+      "planetary_war": null,
+      "degree_flag_verdict": {
+        "dominant": "none",
+        "code": "-",
+        "color": "neutral",
+        "note": "No dominating degree flag."
+      }
+    },
+    "Saturn": {
+      "sign": "Capricorn",
+      "sign_idx": 9,
+      "deg_in_sign": 1.5318,
+      "longitude": 271.5318,
+      "dignity": "own",
+      "retrograde": true,
+      "navamsa_sign": "Capricorn",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": null,
+        "mrityu_bhaga": false,
+        "pushkara_bhaga": false,
+        "pushkara_navamsa": true,
+        "vargottama": true,
+        "combust": false
+      },
+      "planetary_war": null,
+      "degree_flag_verdict": {
+        "dominant": "vargottama_pushkara",
+        "code": "Vo+PK",
+        "color": "green",
+        "note": "Vargottama + Pushkara — exceptional, soul-endorsed delivery."
+      }
+    },
+    "Rahu": {
+      "sign": "Capricorn",
+      "sign_idx": 9,
+      "deg_in_sign": 17.632,
+      "longitude": 287.632,
+      "dignity": "neutral",
+      "retrograde": false,
+      "navamsa_sign": "Gemini",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": null,
+        "mrityu_bhaga": false,
+        "pushkara_bhaga": false,
+        "pushkara_navamsa": true,
+        "vargottama": false,
+        "combust": false
+      },
+      "planetary_war": null,
+      "degree_flag_verdict": {
+        "dominant": "pushkara",
+        "code": "PK",
+        "color": "green",
+        "note": "Pushkara — empowered; delivers with ease."
+      }
+    },
+    "Ketu": {
+      "sign": "Cancer",
+      "sign_idx": 3,
+      "deg_in_sign": 17.632,
+      "longitude": 107.632,
+      "dignity": "neutral",
+      "retrograde": false,
+      "navamsa_sign": "Sagittarius",
+      "degree_flags": {
+        "gandanta": false,
+        "sandhi": null,
+        "mrityu_bhaga": false,
+        "pushkara_bhaga": false,
+        "pushkara_navamsa": true,
+        "vargottama": false,
+        "combust": false
+      },
+      "planetary_war": null,
+      "degree_flag_verdict": {
+        "dominant": "pushkara",
+        "code": "PK",
+        "color": "green",
+        "note": "Pushkara — empowered; delivers with ease."
+      }
+    }
+  },
+  "karaka_positions": {
+    "Sun": {
+      "karaka_signification": "Soul, self, father, authority, government, vitality",
+      "d1_sign": "Taurus",
+      "d1_sign_field": "Wealth, food, stability, accumulated resources, beauty",
+      "d1_conjunctions": [],
+      "d9_sign": "Capricorn",
+      "d9_sign_field": "Career, discipline, structure, public duty, ambition",
+      "d9_conjunctions": [
+        "Saturn"
+      ],
+      "vargottama": false,
+      "d1_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "field": "Communication, siblings, short journeys, intellect, trade",
+          "occupants": [
+            "Jupiter"
+          ]
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Aries",
+          "sign_idx": 0,
+          "field": "Self, initiative, beginnings, courage, independence",
+          "occupants": [
+            "Mercury"
+          ]
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Virgo",
+          "sign_idx": 5,
+          "field": "Service, health, enemies, debts, analysis, daily work",
+          "occupants": []
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Capricorn",
+          "sign_idx": 9,
+          "field": "Career, discipline, structure, public duty, ambition",
+          "occupants": [
+            "Rahu",
+            "Saturn"
+          ]
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Cancer",
+          "sign_idx": 3,
+          "field": "Home, mother, emotions, water, comfort, nurturing",
+          "occupants": [
+            "Ketu"
+          ]
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "field": "Liberation, foreign, spirituality, expenses, dissolution",
+          "occupants": [
+            "Venus"
+          ]
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Scorpio",
+          "sign_idx": 7,
+          "field": "Transformation, secrets, inheritance, occult, hidden matters",
+          "occupants": []
+        }
+      },
+      "d9_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "field": "Gains, networks, elder siblings, innovation, social causes",
+          "occupants": [
+            "Jupiter"
+          ]
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Sagittarius",
+          "sign_idx": 8,
+          "field": "Dharma, higher learning, fortune, philosophy, long travel",
+          "occupants": [
+            "Ketu",
+            "Moon",
+            "Venus"
+          ]
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Taurus",
+          "sign_idx": 1,
+          "field": "Wealth, food, stability, accumulated resources, beauty",
+          "occupants": [
+            "Mars"
+          ]
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Virgo",
+          "sign_idx": 5,
+          "field": "Service, health, enemies, debts, analysis, daily work",
+          "occupants": []
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "field": "Liberation, foreign, spirituality, expenses, dissolution",
+          "occupants": []
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Scorpio",
+          "sign_idx": 7,
+          "field": "Transformation, secrets, inheritance, occult, hidden matters",
+          "occupants": []
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Cancer",
+          "sign_idx": 3,
+          "field": "Home, mother, emotions, water, comfort, nurturing",
+          "occupants": []
+        }
+      }
+    },
+    "Moon": {
+      "karaka_signification": "Mother, mind, emotions, public, masses, travel",
+      "d1_sign": "Sagittarius",
+      "d1_sign_field": "Dharma, higher learning, fortune, philosophy, long travel",
+      "d1_conjunctions": [],
+      "d9_sign": "Sagittarius",
+      "d9_sign_field": "Dharma, higher learning, fortune, philosophy, long travel",
+      "d9_conjunctions": [
+        "Ketu",
+        "Venus"
+      ],
+      "vargottama": true,
+      "d1_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Capricorn",
+          "sign_idx": 9,
+          "field": "Career, discipline, structure, public duty, ambition",
+          "occupants": [
+            "Rahu",
+            "Saturn"
+          ]
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Scorpio",
+          "sign_idx": 7,
+          "field": "Transformation, secrets, inheritance, occult, hidden matters",
+          "occupants": []
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Aries",
+          "sign_idx": 0,
+          "field": "Self, initiative, beginnings, courage, independence",
+          "occupants": [
+            "Mercury"
+          ]
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "field": "Authority, father, government, confidence, leadership",
+          "occupants": []
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "field": "Gains, networks, elder siblings, innovation, social causes",
+          "occupants": [
+            "Mars"
+          ]
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Libra",
+          "sign_idx": 6,
+          "field": "Partnerships, trade, legal matters, relationships, balance",
+          "occupants": []
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "field": "Communication, siblings, short journeys, intellect, trade",
+          "occupants": [
+            "Jupiter"
+          ]
+        }
+      },
+      "d9_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Capricorn",
+          "sign_idx": 9,
+          "field": "Career, discipline, structure, public duty, ambition",
+          "occupants": [
+            "Saturn",
+            "Sun"
+          ]
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Scorpio",
+          "sign_idx": 7,
+          "field": "Transformation, secrets, inheritance, occult, hidden matters",
+          "occupants": []
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Aries",
+          "sign_idx": 0,
+          "field": "Self, initiative, beginnings, courage, independence",
+          "occupants": []
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "field": "Authority, father, government, confidence, leadership",
+          "occupants": [
+            "Mercury"
+          ]
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "field": "Gains, networks, elder siblings, innovation, social causes",
+          "occupants": [
+            "Jupiter"
+          ]
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Libra",
+          "sign_idx": 6,
+          "field": "Partnerships, trade, legal matters, relationships, balance",
+          "occupants": []
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "field": "Communication, siblings, short journeys, intellect, trade",
+          "occupants": [
+            "Rahu"
+          ]
+        }
+      }
+    },
+    "Mars": {
+      "karaka_signification": "Siblings (younger), property, land, energy, courage, disputes",
+      "d1_sign": "Aquarius",
+      "d1_sign_field": "Gains, networks, elder siblings, innovation, social causes",
+      "d1_conjunctions": [],
+      "d9_sign": "Taurus",
+      "d9_sign_field": "Wealth, food, stability, accumulated resources, beauty",
+      "d9_conjunctions": [],
+      "vargottama": false,
+      "d1_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "field": "Liberation, foreign, spirituality, expenses, dissolution",
+          "occupants": [
+            "Venus"
+          ]
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Capricorn",
+          "sign_idx": 9,
+          "field": "Career, discipline, structure, public duty, ambition",
+          "occupants": [
+            "Rahu",
+            "Saturn"
+          ]
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "field": "Communication, siblings, short journeys, intellect, trade",
+          "occupants": [
+            "Jupiter"
+          ]
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Libra",
+          "sign_idx": 6,
+          "field": "Partnerships, trade, legal matters, relationships, balance",
+          "occupants": []
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Aries",
+          "sign_idx": 0,
+          "field": "Self, initiative, beginnings, courage, independence",
+          "occupants": [
+            "Mercury"
+          ]
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Sagittarius",
+          "sign_idx": 8,
+          "field": "Dharma, higher learning, fortune, philosophy, long travel",
+          "occupants": [
+            "Moon"
+          ]
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "field": "Authority, father, government, confidence, leadership",
+          "occupants": []
+        }
+      },
+      "d9_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "field": "Communication, siblings, short journeys, intellect, trade",
+          "occupants": [
+            "Rahu"
+          ]
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Aries",
+          "sign_idx": 0,
+          "field": "Self, initiative, beginnings, courage, independence",
+          "occupants": []
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Virgo",
+          "sign_idx": 5,
+          "field": "Service, health, enemies, debts, analysis, daily work",
+          "occupants": []
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Capricorn",
+          "sign_idx": 9,
+          "field": "Career, discipline, structure, public duty, ambition",
+          "occupants": [
+            "Saturn",
+            "Sun"
+          ]
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Cancer",
+          "sign_idx": 3,
+          "field": "Home, mother, emotions, water, comfort, nurturing",
+          "occupants": []
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "field": "Liberation, foreign, spirituality, expenses, dissolution",
+          "occupants": []
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Scorpio",
+          "sign_idx": 7,
+          "field": "Transformation, secrets, inheritance, occult, hidden matters",
+          "occupants": []
+        }
+      }
+    },
+    "Mercury": {
+      "karaka_signification": "Intellect, communication, business, friends, skin",
+      "d1_sign": "Aries",
+      "d1_sign_field": "Self, initiative, beginnings, courage, independence",
+      "d1_conjunctions": [],
+      "d9_sign": "Leo",
+      "d9_sign_field": "Authority, father, government, confidence, leadership",
+      "d9_conjunctions": [],
+      "vargottama": false,
+      "d1_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Taurus",
+          "sign_idx": 1,
+          "field": "Wealth, food, stability, accumulated resources, beauty",
+          "occupants": [
+            "Sun"
+          ]
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "field": "Liberation, foreign, spirituality, expenses, dissolution",
+          "occupants": [
+            "Venus"
+          ]
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "field": "Authority, father, government, confidence, leadership",
+          "occupants": []
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Sagittarius",
+          "sign_idx": 8,
+          "field": "Dharma, higher learning, fortune, philosophy, long travel",
+          "occupants": [
+            "Moon"
+          ]
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "field": "Communication, siblings, short journeys, intellect, trade",
+          "occupants": [
+            "Jupiter"
+          ]
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "field": "Gains, networks, elder siblings, innovation, social causes",
+          "occupants": [
+            "Mars"
+          ]
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Libra",
+          "sign_idx": 6,
+          "field": "Partnerships, trade, legal matters, relationships, balance",
+          "occupants": []
+        }
+      },
+      "d9_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Virgo",
+          "sign_idx": 5,
+          "field": "Service, health, enemies, debts, analysis, daily work",
+          "occupants": []
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Cancer",
+          "sign_idx": 3,
+          "field": "Home, mother, emotions, water, comfort, nurturing",
+          "occupants": []
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Sagittarius",
+          "sign_idx": 8,
+          "field": "Dharma, higher learning, fortune, philosophy, long travel",
+          "occupants": [
+            "Ketu",
+            "Moon",
+            "Venus"
+          ]
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Aries",
+          "sign_idx": 0,
+          "field": "Self, initiative, beginnings, courage, independence",
+          "occupants": []
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Libra",
+          "sign_idx": 6,
+          "field": "Partnerships, trade, legal matters, relationships, balance",
+          "occupants": []
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "field": "Communication, siblings, short journeys, intellect, trade",
+          "occupants": [
+            "Rahu"
+          ]
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "field": "Gains, networks, elder siblings, innovation, social causes",
+          "occupants": [
+            "Jupiter"
+          ]
+        }
+      }
+    },
+    "Jupiter": {
+      "karaka_signification": "Wisdom, children, wealth, husband (female charts), teacher, dharma",
+      "d1_sign": "Gemini",
+      "d1_sign_field": "Communication, siblings, short journeys, intellect, trade",
+      "d1_conjunctions": [],
+      "d9_sign": "Aquarius",
+      "d9_sign_field": "Gains, networks, elder siblings, innovation, social causes",
+      "d9_conjunctions": [],
+      "vargottama": false,
+      "d1_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Cancer",
+          "sign_idx": 3,
+          "field": "Home, mother, emotions, water, comfort, nurturing",
+          "occupants": [
+            "Ketu"
+          ]
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Taurus",
+          "sign_idx": 1,
+          "field": "Wealth, food, stability, accumulated resources, beauty",
+          "occupants": [
+            "Sun"
+          ]
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Libra",
+          "sign_idx": 6,
+          "field": "Partnerships, trade, legal matters, relationships, balance",
+          "occupants": []
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "field": "Gains, networks, elder siblings, innovation, social causes",
+          "occupants": [
+            "Mars"
+          ]
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "field": "Authority, father, government, confidence, leadership",
+          "occupants": []
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Aries",
+          "sign_idx": 0,
+          "field": "Self, initiative, beginnings, courage, independence",
+          "occupants": [
+            "Mercury"
+          ]
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Sagittarius",
+          "sign_idx": 8,
+          "field": "Dharma, higher learning, fortune, philosophy, long travel",
+          "occupants": [
+            "Moon"
+          ]
+        }
+      },
+      "d9_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "field": "Liberation, foreign, spirituality, expenses, dissolution",
+          "occupants": []
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Capricorn",
+          "sign_idx": 9,
+          "field": "Career, discipline, structure, public duty, ambition",
+          "occupants": [
+            "Saturn",
+            "Sun"
+          ]
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "field": "Communication, siblings, short journeys, intellect, trade",
+          "occupants": [
+            "Rahu"
+          ]
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Libra",
+          "sign_idx": 6,
+          "field": "Partnerships, trade, legal matters, relationships, balance",
+          "occupants": []
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Aries",
+          "sign_idx": 0,
+          "field": "Self, initiative, beginnings, courage, independence",
+          "occupants": []
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Sagittarius",
+          "sign_idx": 8,
+          "field": "Dharma, higher learning, fortune, philosophy, long travel",
+          "occupants": [
+            "Ketu",
+            "Moon",
+            "Venus"
+          ]
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "field": "Authority, father, government, confidence, leadership",
+          "occupants": [
+            "Mercury"
+          ]
+        }
+      }
+    },
+    "Venus": {
+      "karaka_signification": "Wife/partner (male charts), vehicles, comforts, arts, relationships",
+      "d1_sign": "Pisces",
+      "d1_sign_field": "Liberation, foreign, spirituality, expenses, dissolution",
+      "d1_conjunctions": [],
+      "d9_sign": "Sagittarius",
+      "d9_sign_field": "Dharma, higher learning, fortune, philosophy, long travel",
+      "d9_conjunctions": [
+        "Ketu",
+        "Moon"
+      ],
+      "vargottama": false,
+      "d1_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Aries",
+          "sign_idx": 0,
+          "field": "Self, initiative, beginnings, courage, independence",
+          "occupants": [
+            "Mercury"
+          ]
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "field": "Gains, networks, elder siblings, innovation, social causes",
+          "occupants": [
+            "Mars"
+          ]
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Cancer",
+          "sign_idx": 3,
+          "field": "Home, mother, emotions, water, comfort, nurturing",
+          "occupants": [
+            "Ketu"
+          ]
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Scorpio",
+          "sign_idx": 7,
+          "field": "Transformation, secrets, inheritance, occult, hidden matters",
+          "occupants": []
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Taurus",
+          "sign_idx": 1,
+          "field": "Wealth, food, stability, accumulated resources, beauty",
+          "occupants": [
+            "Sun"
+          ]
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Capricorn",
+          "sign_idx": 9,
+          "field": "Career, discipline, structure, public duty, ambition",
+          "occupants": [
+            "Rahu",
+            "Saturn"
+          ]
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Virgo",
+          "sign_idx": 5,
+          "field": "Service, health, enemies, debts, analysis, daily work",
+          "occupants": []
+        }
+      },
+      "d9_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Capricorn",
+          "sign_idx": 9,
+          "field": "Career, discipline, structure, public duty, ambition",
+          "occupants": [
+            "Saturn",
+            "Sun"
+          ]
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Scorpio",
+          "sign_idx": 7,
+          "field": "Transformation, secrets, inheritance, occult, hidden matters",
+          "occupants": []
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Aries",
+          "sign_idx": 0,
+          "field": "Self, initiative, beginnings, courage, independence",
+          "occupants": []
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "field": "Authority, father, government, confidence, leadership",
+          "occupants": [
+            "Mercury"
+          ]
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "field": "Gains, networks, elder siblings, innovation, social causes",
+          "occupants": [
+            "Jupiter"
+          ]
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Libra",
+          "sign_idx": 6,
+          "field": "Partnerships, trade, legal matters, relationships, balance",
+          "occupants": []
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "field": "Communication, siblings, short journeys, intellect, trade",
+          "occupants": [
+            "Rahu"
+          ]
+        }
+      }
+    },
+    "Saturn": {
+      "karaka_signification": "Longevity, discipline, service, career (labour-based), delays",
+      "d1_sign": "Capricorn",
+      "d1_sign_field": "Career, discipline, structure, public duty, ambition",
+      "d1_conjunctions": [
+        "Rahu"
+      ],
+      "d9_sign": "Capricorn",
+      "d9_sign_field": "Career, discipline, structure, public duty, ambition",
+      "d9_conjunctions": [
+        "Sun"
+      ],
+      "vargottama": true,
+      "d1_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "field": "Gains, networks, elder siblings, innovation, social causes",
+          "occupants": [
+            "Mars"
+          ]
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Sagittarius",
+          "sign_idx": 8,
+          "field": "Dharma, higher learning, fortune, philosophy, long travel",
+          "occupants": [
+            "Moon"
+          ]
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Taurus",
+          "sign_idx": 1,
+          "field": "Wealth, food, stability, accumulated resources, beauty",
+          "occupants": [
+            "Sun"
+          ]
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Virgo",
+          "sign_idx": 5,
+          "field": "Service, health, enemies, debts, analysis, daily work",
+          "occupants": []
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "field": "Liberation, foreign, spirituality, expenses, dissolution",
+          "occupants": [
+            "Venus"
+          ]
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Scorpio",
+          "sign_idx": 7,
+          "field": "Transformation, secrets, inheritance, occult, hidden matters",
+          "occupants": []
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Cancer",
+          "sign_idx": 3,
+          "field": "Home, mother, emotions, water, comfort, nurturing",
+          "occupants": [
+            "Ketu"
+          ]
+        }
+      },
+      "d9_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "field": "Gains, networks, elder siblings, innovation, social causes",
+          "occupants": [
+            "Jupiter"
+          ]
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Sagittarius",
+          "sign_idx": 8,
+          "field": "Dharma, higher learning, fortune, philosophy, long travel",
+          "occupants": [
+            "Ketu",
+            "Moon",
+            "Venus"
+          ]
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Taurus",
+          "sign_idx": 1,
+          "field": "Wealth, food, stability, accumulated resources, beauty",
+          "occupants": [
+            "Mars"
+          ]
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Virgo",
+          "sign_idx": 5,
+          "field": "Service, health, enemies, debts, analysis, daily work",
+          "occupants": []
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "field": "Liberation, foreign, spirituality, expenses, dissolution",
+          "occupants": []
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Scorpio",
+          "sign_idx": 7,
+          "field": "Transformation, secrets, inheritance, occult, hidden matters",
+          "occupants": []
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Cancer",
+          "sign_idx": 3,
+          "field": "Home, mother, emotions, water, comfort, nurturing",
+          "occupants": []
+        }
+      }
+    },
+    "Rahu": {
+      "karaka_signification": "Foreign, unconventional, obsession, technology",
+      "d1_sign": "Capricorn",
+      "d1_sign_field": "Career, discipline, structure, public duty, ambition",
+      "d1_conjunctions": [
+        "Saturn"
+      ],
+      "d9_sign": "Gemini",
+      "d9_sign_field": "Communication, siblings, short journeys, intellect, trade",
+      "d9_conjunctions": [],
+      "vargottama": false,
+      "d1_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "field": "Gains, networks, elder siblings, innovation, social causes",
+          "occupants": [
+            "Mars"
+          ]
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Sagittarius",
+          "sign_idx": 8,
+          "field": "Dharma, higher learning, fortune, philosophy, long travel",
+          "occupants": [
+            "Moon"
+          ]
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Taurus",
+          "sign_idx": 1,
+          "field": "Wealth, food, stability, accumulated resources, beauty",
+          "occupants": [
+            "Sun"
+          ]
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Virgo",
+          "sign_idx": 5,
+          "field": "Service, health, enemies, debts, analysis, daily work",
+          "occupants": []
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "field": "Liberation, foreign, spirituality, expenses, dissolution",
+          "occupants": [
+            "Venus"
+          ]
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Scorpio",
+          "sign_idx": 7,
+          "field": "Transformation, secrets, inheritance, occult, hidden matters",
+          "occupants": []
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Cancer",
+          "sign_idx": 3,
+          "field": "Home, mother, emotions, water, comfort, nurturing",
+          "occupants": [
+            "Ketu"
+          ]
+        }
+      },
+      "d9_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Cancer",
+          "sign_idx": 3,
+          "field": "Home, mother, emotions, water, comfort, nurturing",
+          "occupants": []
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Taurus",
+          "sign_idx": 1,
+          "field": "Wealth, food, stability, accumulated resources, beauty",
+          "occupants": [
+            "Mars"
+          ]
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Libra",
+          "sign_idx": 6,
+          "field": "Partnerships, trade, legal matters, relationships, balance",
+          "occupants": []
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "field": "Gains, networks, elder siblings, innovation, social causes",
+          "occupants": [
+            "Jupiter"
+          ]
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "field": "Authority, father, government, confidence, leadership",
+          "occupants": [
+            "Mercury"
+          ]
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Aries",
+          "sign_idx": 0,
+          "field": "Self, initiative, beginnings, courage, independence",
+          "occupants": []
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Sagittarius",
+          "sign_idx": 8,
+          "field": "Dharma, higher learning, fortune, philosophy, long travel",
+          "occupants": [
+            "Ketu",
+            "Moon",
+            "Venus"
+          ]
+        }
+      }
+    },
+    "Ketu": {
+      "karaka_signification": "Liberation, past life, spirituality, detachment",
+      "d1_sign": "Cancer",
+      "d1_sign_field": "Home, mother, emotions, water, comfort, nurturing",
+      "d1_conjunctions": [],
+      "d9_sign": "Sagittarius",
+      "d9_sign_field": "Dharma, higher learning, fortune, philosophy, long travel",
+      "d9_conjunctions": [
+        "Moon",
+        "Venus"
+      ],
+      "vargottama": false,
+      "d1_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "field": "Authority, father, government, confidence, leadership",
+          "occupants": []
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "field": "Communication, siblings, short journeys, intellect, trade",
+          "occupants": [
+            "Jupiter"
+          ]
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Scorpio",
+          "sign_idx": 7,
+          "field": "Transformation, secrets, inheritance, occult, hidden matters",
+          "occupants": []
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "field": "Liberation, foreign, spirituality, expenses, dissolution",
+          "occupants": [
+            "Venus"
+          ]
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Virgo",
+          "sign_idx": 5,
+          "field": "Service, health, enemies, debts, analysis, daily work",
+          "occupants": []
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Taurus",
+          "sign_idx": 1,
+          "field": "Wealth, food, stability, accumulated resources, beauty",
+          "occupants": [
+            "Sun"
+          ]
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Capricorn",
+          "sign_idx": 9,
+          "field": "Career, discipline, structure, public duty, ambition",
+          "occupants": [
+            "Rahu",
+            "Saturn"
+          ]
+        }
+      },
+      "d9_positions": {
+        "flow_2nd": {
+          "step": 2,
+          "sign": "Capricorn",
+          "sign_idx": 9,
+          "field": "Career, discipline, structure, public duty, ambition",
+          "occupants": [
+            "Saturn",
+            "Sun"
+          ]
+        },
+        "flow_12th": {
+          "step": 12,
+          "sign": "Scorpio",
+          "sign_idx": 7,
+          "field": "Transformation, secrets, inheritance, occult, hidden matters",
+          "occupants": []
+        },
+        "trine_5th": {
+          "step": 5,
+          "sign": "Aries",
+          "sign_idx": 0,
+          "field": "Self, initiative, beginnings, courage, independence",
+          "occupants": []
+        },
+        "trine_9th": {
+          "step": 9,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "field": "Authority, father, government, confidence, leadership",
+          "occupants": [
+            "Mercury"
+          ]
+        },
+        "growth_3rd": {
+          "step": 3,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "field": "Gains, networks, elder siblings, innovation, social causes",
+          "occupants": [
+            "Jupiter"
+          ]
+        },
+        "growth_11th": {
+          "step": 11,
+          "sign": "Libra",
+          "sign_idx": 6,
+          "field": "Partnerships, trade, legal matters, relationships, balance",
+          "occupants": []
+        },
+        "opposition_7th": {
+          "step": 7,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "field": "Communication, siblings, short journeys, intellect, trade",
+          "occupants": [
+            "Rahu"
+          ]
+        }
+      }
+    }
+  },
+  "aspects": {
+    "pre_map": {
+      "Sun": {
+        "from_sign": "Taurus",
+        "deg_in_sign": 0.3923,
+        "casts": [
+          {
+            "aspect": 7,
+            "target_sign": "Scorpio",
+            "target_sign_idx": 7,
+            "occupants": [],
+            "tightest_orb": null,
+            "tightest_orb_class": "n/a"
+          }
+        ]
+      },
+      "Moon": {
+        "from_sign": "Sagittarius",
+        "deg_in_sign": 29.8455,
+        "casts": [
+          {
+            "aspect": 7,
+            "target_sign": "Gemini",
+            "target_sign_idx": 2,
+            "occupants": [
+              {
+                "planet": "Jupiter",
+                "orb": 14.0815,
+                "orb_class": "loose"
+              }
+            ],
+            "tightest_orb": 14.0815,
+            "tightest_orb_class": "loose"
+          }
+        ]
+      },
+      "Mars": {
+        "from_sign": "Aquarius",
+        "deg_in_sign": 24.3947,
+        "casts": [
+          {
+            "aspect": 4,
+            "target_sign": "Taurus",
+            "target_sign_idx": 1,
+            "occupants": [
+              {
+                "planet": "Sun",
+                "orb": 24.0024,
+                "orb_class": "loose"
+              }
+            ],
+            "tightest_orb": 24.0024,
+            "tightest_orb_class": "loose"
+          },
+          {
+            "aspect": 7,
+            "target_sign": "Leo",
+            "target_sign_idx": 4,
+            "occupants": [],
+            "tightest_orb": null,
+            "tightest_orb_class": "n/a"
+          },
+          {
+            "aspect": 8,
+            "target_sign": "Virgo",
+            "target_sign_idx": 5,
+            "occupants": [],
+            "tightest_orb": null,
+            "tightest_orb_class": "n/a"
+          }
+        ]
+      },
+      "Mercury": {
+        "from_sign": "Aries",
+        "deg_in_sign": 14.3282,
+        "casts": [
+          {
+            "aspect": 7,
+            "target_sign": "Libra",
+            "target_sign_idx": 6,
+            "occupants": [],
+            "tightest_orb": null,
+            "tightest_orb_class": "n/a"
+          }
+        ]
+      },
+      "Jupiter": {
+        "from_sign": "Gemini",
+        "deg_in_sign": 15.764,
+        "casts": [
+          {
+            "aspect": 5,
+            "target_sign": "Libra",
+            "target_sign_idx": 6,
+            "occupants": [],
+            "tightest_orb": null,
+            "tightest_orb_class": "n/a"
+          },
+          {
+            "aspect": 7,
+            "target_sign": "Sagittarius",
+            "target_sign_idx": 8,
+            "occupants": [
+              {
+                "planet": "Moon",
+                "orb": 14.0815,
+                "orb_class": "loose"
+              }
+            ],
+            "tightest_orb": 14.0815,
+            "tightest_orb_class": "loose"
+          },
+          {
+            "aspect": 9,
+            "target_sign": "Aquarius",
+            "target_sign_idx": 10,
+            "occupants": [
+              {
+                "planet": "Mars",
+                "orb": 8.6307,
+                "orb_class": "loose"
+              }
+            ],
+            "tightest_orb": 8.6307,
+            "tightest_orb_class": "loose"
+          }
+        ]
+      },
+      "Venus": {
+        "from_sign": "Pisces",
+        "deg_in_sign": 18.7632,
+        "casts": [
+          {
+            "aspect": 7,
+            "target_sign": "Virgo",
+            "target_sign_idx": 5,
+            "occupants": [],
+            "tightest_orb": null,
+            "tightest_orb_class": "n/a"
+          }
+        ]
+      },
+      "Saturn": {
+        "from_sign": "Capricorn",
+        "deg_in_sign": 1.5318,
+        "casts": [
+          {
+            "aspect": 3,
+            "target_sign": "Pisces",
+            "target_sign_idx": 11,
+            "occupants": [
+              {
+                "planet": "Venus",
+                "orb": 17.2314,
+                "orb_class": "loose"
+              }
+            ],
+            "tightest_orb": 17.2314,
+            "tightest_orb_class": "loose"
+          },
+          {
+            "aspect": 7,
+            "target_sign": "Cancer",
+            "target_sign_idx": 3,
+            "occupants": [
+              {
+                "planet": "Ketu",
+                "orb": 16.1002,
+                "orb_class": "loose"
+              }
+            ],
+            "tightest_orb": 16.1002,
+            "tightest_orb_class": "loose"
+          },
+          {
+            "aspect": 10,
+            "target_sign": "Libra",
+            "target_sign_idx": 6,
+            "occupants": [],
+            "tightest_orb": null,
+            "tightest_orb_class": "n/a"
+          }
+        ]
+      },
+      "Rahu": {
+        "from_sign": "Capricorn",
+        "deg_in_sign": 17.632,
+        "casts": [
+          {
+            "aspect": 5,
+            "target_sign": "Taurus",
+            "target_sign_idx": 1,
+            "occupants": [
+              {
+                "planet": "Sun",
+                "orb": 17.2397,
+                "orb_class": "loose"
+              }
+            ],
+            "tightest_orb": 17.2397,
+            "tightest_orb_class": "loose"
+          },
+          {
+            "aspect": 7,
+            "target_sign": "Cancer",
+            "target_sign_idx": 3,
+            "occupants": [
+              {
+                "planet": "Ketu",
+                "orb": 0.0,
+                "orb_class": "tight"
+              }
+            ],
+            "tightest_orb": 0.0,
+            "tightest_orb_class": "tight"
+          },
+          {
+            "aspect": 9,
+            "target_sign": "Virgo",
+            "target_sign_idx": 5,
+            "occupants": [],
+            "tightest_orb": null,
+            "tightest_orb_class": "n/a"
+          }
+        ]
+      },
+      "Ketu": {
+        "from_sign": "Cancer",
+        "deg_in_sign": 17.632,
+        "casts": [
+          {
+            "aspect": 5,
+            "target_sign": "Scorpio",
+            "target_sign_idx": 7,
+            "occupants": [],
+            "tightest_orb": null,
+            "tightest_orb_class": "n/a"
+          },
+          {
+            "aspect": 7,
+            "target_sign": "Capricorn",
+            "target_sign_idx": 9,
+            "occupants": [
+              {
+                "planet": "Saturn",
+                "orb": 16.1002,
+                "orb_class": "loose"
+              },
+              {
+                "planet": "Rahu",
+                "orb": 0.0,
+                "orb_class": "tight"
+              }
+            ],
+            "tightest_orb": 0.0,
+            "tightest_orb_class": "tight"
+          },
+          {
+            "aspect": 9,
+            "target_sign": "Pisces",
+            "target_sign_idx": 11,
+            "occupants": [
+              {
+                "planet": "Venus",
+                "orb": 1.1312,
+                "orb_class": "tight"
+              }
+            ],
+            "tightest_orb": 1.1312,
+            "tightest_orb_class": "tight"
+          }
+        ]
+      }
+    },
+    "mutual_aspects": [
+      {
+        "planets": [
+          "Rahu",
+          "Ketu"
+        ],
+        "orb": 0.0,
+        "relationship": "enemy"
+      }
+    ]
+  },
+  "dasha": {
+    "starting_mahadasha": "Sun",
+    "balance_years": 4.57,
+    "running": {
+      "md_lord": "Sun",
+      "md_period": [
+        "1988-12-08T17:27:22.140000",
+        "1994-12-09T05:27:22.140000"
+      ],
+      "bd_lord": "Rahu",
+      "bd_period": [
+        "1990-02-01T18:21:22.140000",
+        "1990-12-27T11:45:22.140000"
+      ],
+      "ad_lord": "Saturn",
+      "ad_period": [
+        "1990-05-05T21:41:10.140000",
+        "1990-06-26T22:50:28.140000"
+      ],
+      "sd_lord": "Mercury",
+      "sd_period": [
+        "1990-05-14T03:28:08.490000",
+        "1990-05-21T12:25:57.540000"
+      ]
+    }
+  }
+}

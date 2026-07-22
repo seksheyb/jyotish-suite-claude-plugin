@@ -1,0 +1,11 @@
+{
+  "school": "bnn",
+  "script": "compute_bnn_baseline.py",
+  "description": "bnn-astrology baseline — natal chart only, no moment-of-reading parameter (script has no clock dependency at all).",
+  "args": {
+    "--datetime": "1990-05-15T10:30:00",
+    "--tz": "Asia/Kolkata",
+    "--lat": "28.6139",
+    "--lon": "77.2090"
+  }
+}

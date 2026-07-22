@@ -1,0 +1,12 @@
+{
+  "school": "lalkitab",
+  "script": "compute_lalkitab_baseline.py",
+  "description": "lal-kitab baseline — fixed-house chart + rin/teva/varshphal/timing. --age is pinned to the querent's age as of the same 2026-01-01 reading moment used elsewhere (birth 1990-05-15 -> age 35 on 2026-01-01), so Varshphal/timing windows are fixed.",
+  "args": {
+    "--datetime": "1990-05-15T10:30:00",
+    "--tz": "Asia/Kolkata",
+    "--lat": "28.6139",
+    "--lon": "77.2090",
+    "--age": "35"
+  }
+}

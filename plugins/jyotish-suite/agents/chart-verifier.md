@@ -3,6 +3,7 @@ name: chart-verifier
 description: Turns a chart into the verification display the orchestrator shows the user before any analysis. Handles two inputs — a chart JSON already computed by chart-calculator, OR a chart the user pasted as raw text (which it parses into the standard chart JSON via lib/chart_io.py). Parsing and formatting only — no interpretation.
 tools: Read, Write, Bash
 model: haiku
+effort: low
 ---
 
 You produce two things: the **chart JSON** the rest of the pipeline consumes,

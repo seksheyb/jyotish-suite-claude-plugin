@@ -1,0 +1,12 @@
+{
+  "school": "vedic",
+  "script": "compute_vedic_baseline.py",
+  "description": "vedic-astro Parashari Step-0 baseline — natal chart only, asof pinned so the Vimshottari dasha resolves to a fixed running period.",
+  "args": {
+    "--datetime": "1990-05-15T10:30:00",
+    "--tz": "Asia/Kolkata",
+    "--lat": "28.6139",
+    "--lon": "77.2090",
+    "--asof": "2026-01-01T09:00:00"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "school": "kp_natal",
+  "script": "compute_kp_natal_baseline.py",
+  "description": "kp-natal baseline — KP-New/Placidus natal chart. --rp-datetime pins the Ruling Planets moment (this script calls datetime.now() when that flag is omitted, so it MUST be pinned for byte-stable output).",
+  "args": {
+    "--datetime": "1990-05-15T10:30:00",
+    "--tz": "Asia/Kolkata",
+    "--lat": "28.6139",
+    "--lon": "77.2090",
+    "--rp-datetime": "2026-01-01T09:00:00"
+  }
+}
