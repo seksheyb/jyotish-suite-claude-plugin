@@ -1063,8 +1063,8 @@
           {
             "rasi": "Pisces",
             "rasi_idx": 11,
-            "jaimini_lord": "Jupiter",
-            "antardasha_rasi_years": 3,
+            "jaimini_lord": "Venus",
+            "antardasha_rasi_years": 12,
             "years": 0.4167,
             "start": "1992-01-21T00:27:24",
             "end": "1992-06-21T04:57:24",
@@ -1197,8 +1197,8 @@
           {
             "rasi": "Pisces",
             "rasi_idx": 11,
-            "jaimini_lord": "Jupiter",
-            "antardasha_rasi_years": 3,
+            "jaimini_lord": "Venus",
+            "antardasha_rasi_years": 12,
             "years": 0.75,
             "start": "1998-12-21T07:57:24",
             "end": "1999-09-21T06:27:24",
@@ -1331,8 +1331,8 @@
           {
             "rasi": "Pisces",
             "rasi_idx": 11,
-            "jaimini_lord": "Jupiter",
-            "antardasha_rasi_years": 3,
+            "jaimini_lord": "Venus",
+            "antardasha_rasi_years": 12,
             "years": 0.5833,
             "start": "2006-03-22T09:27:24",
             "end": "2006-10-21T10:57:24",
@@ -1465,8 +1465,8 @@
           {
             "rasi": "Pisces",
             "rasi_idx": 11,
-            "jaimini_lord": "Jupiter",
-            "antardasha_rasi_years": 3,
+            "jaimini_lord": "Venus",
+            "antardasha_rasi_years": 12,
             "years": 0.4167,
             "start": "2011-10-21T16:57:24",
             "end": "2012-03-21T21:27:24",
@@ -1599,8 +1599,8 @@
           {
             "rasi": "Pisces",
             "rasi_idx": 11,
-            "jaimini_lord": "Jupiter",
-            "antardasha_rasi_years": 3,
+            "jaimini_lord": "Venus",
+            "antardasha_rasi_years": 12,
             "years": 0.6667,
             "start": "2017-05-22T00:27:24",
             "end": "2018-01-20T12:27:24",
@@ -1733,8 +1733,8 @@
           {
             "rasi": "Pisces",
             "rasi_idx": 11,
-            "jaimini_lord": "Jupiter",
-            "antardasha_rasi_years": 3,
+            "jaimini_lord": "Venus",
+            "antardasha_rasi_years": 12,
             "years": 0.5,
             "start": "2024-03-21T21:27:24",
             "end": "2024-09-20T12:27:24",
@@ -1867,8 +1867,8 @@
           {
             "rasi": "Pisces",
             "rasi_idx": 11,
-            "jaimini_lord": "Jupiter",
-            "antardasha_rasi_years": 3,
+            "jaimini_lord": "Venus",
+            "antardasha_rasi_years": 12,
             "years": 1.0,
             "start": "2030-09-21T00:27:24",
             "end": "2031-09-21T06:27:24",
@@ -2001,8 +2001,8 @@
           {
             "rasi": "Pisces",
             "rasi_idx": 11,
-            "jaimini_lord": "Jupiter",
-            "antardasha_rasi_years": 3,
+            "jaimini_lord": "Venus",
+            "antardasha_rasi_years": 12,
             "years": 0.9167,
             "start": "2041-08-21T07:57:24",
             "end": "2042-07-22T03:27:24",
@@ -2124,145 +2124,145 @@
       {
         "rasi": "Pisces",
         "rasi_idx": 11,
-        "jaimini_lord": "Jupiter",
-        "full_years": 3,
-        "years": 3.0,
+        "jaimini_lord": "Venus",
+        "full_years": 12,
+        "years": 12.0,
         "start": "2051-09-21T06:27:24",
-        "end": "2054-09-21T00:27:24",
+        "end": "2063-09-21T06:27:24",
         "start_age": 61.352,
-        "end_age": 64.352,
+        "end_age": 73.352,
         "antardasha": [
           {
             "rasi": "Pisces",
             "rasi_idx": 11,
-            "jaimini_lord": "Jupiter",
-            "antardasha_rasi_years": 3,
-            "years": 0.25,
+            "jaimini_lord": "Venus",
+            "antardasha_rasi_years": 12,
+            "years": 1.0,
             "start": "2051-09-21T06:27:24",
-            "end": "2051-12-21T13:57:24",
+            "end": "2052-09-20T12:27:24",
             "start_age": 61.352,
-            "end_age": 61.602
+            "end_age": 62.352
           },
           {
             "rasi": "Aries",
             "rasi_idx": 0,
             "jaimini_lord": "Mars",
             "antardasha_rasi_years": 10,
-            "years": 0.25,
-            "start": "2051-12-21T13:57:24",
-            "end": "2052-03-21T21:27:24",
-            "start_age": 61.602,
-            "end_age": 61.852
+            "years": 1.0,
+            "start": "2052-09-20T12:27:24",
+            "end": "2053-09-20T18:27:24",
+            "start_age": 62.352,
+            "end_age": 63.352
           },
           {
             "rasi": "Taurus",
             "rasi_idx": 1,
             "jaimini_lord": "Venus",
             "antardasha_rasi_years": 10,
-            "years": 0.25,
-            "start": "2052-03-21T21:27:24",
-            "end": "2052-06-21T04:57:24",
-            "start_age": 61.852,
-            "end_age": 62.102
+            "years": 1.0,
+            "start": "2053-09-20T18:27:24",
+            "end": "2054-09-21T00:27:24",
+            "start_age": 63.352,
+            "end_age": 64.352
           },
           {
             "rasi": "Gemini",
             "rasi_idx": 2,
             "jaimini_lord": "Mercury",
             "antardasha_rasi_years": 10,
-            "years": 0.25,
-            "start": "2052-06-21T04:57:24",
-            "end": "2052-09-20T12:27:24",
-            "start_age": 62.102,
-            "end_age": 62.352
+            "years": 1.0,
+            "start": "2054-09-21T00:27:24",
+            "end": "2055-09-21T06:27:24",
+            "start_age": 64.352,
+            "end_age": 65.352
           },
           {
             "rasi": "Cancer",
             "rasi_idx": 3,
             "jaimini_lord": "Moon",
             "antardasha_rasi_years": 5,
-            "years": 0.25,
-            "start": "2052-09-20T12:27:24",
-            "end": "2052-12-20T19:57:24",
-            "start_age": 62.352,
-            "end_age": 62.602
+            "years": 1.0,
+            "start": "2055-09-21T06:27:24",
+            "end": "2056-09-20T12:27:24",
+            "start_age": 65.352,
+            "end_age": 66.352
           },
           {
             "rasi": "Leo",
             "rasi_idx": 4,
             "jaimini_lord": "Sun",
             "antardasha_rasi_years": 9,
-            "years": 0.25,
-            "start": "2052-12-20T19:57:24",
-            "end": "2053-03-22T03:27:24",
-            "start_age": 62.602,
-            "end_age": 62.852
+            "years": 1.0,
+            "start": "2056-09-20T12:27:24",
+            "end": "2057-09-20T18:27:24",
+            "start_age": 66.352,
+            "end_age": 67.352
           },
           {
             "rasi": "Virgo",
             "rasi_idx": 5,
             "jaimini_lord": "Mercury",
             "antardasha_rasi_years": 7,
-            "years": 0.25,
-            "start": "2053-03-22T03:27:24",
-            "end": "2053-06-21T10:57:24",
-            "start_age": 62.852,
-            "end_age": 63.102
+            "years": 1.0,
+            "start": "2057-09-20T18:27:24",
+            "end": "2058-09-21T00:27:24",
+            "start_age": 67.352,
+            "end_age": 68.352
           },
           {
             "rasi": "Libra",
             "rasi_idx": 6,
             "jaimini_lord": "Venus",
             "antardasha_rasi_years": 5,
-            "years": 0.25,
-            "start": "2053-06-21T10:57:24",
-            "end": "2053-09-20T18:27:24",
-            "start_age": 63.102,
-            "end_age": 63.352
+            "years": 1.0,
+            "start": "2058-09-21T00:27:24",
+            "end": "2059-09-21T06:27:24",
+            "start_age": 68.352,
+            "end_age": 69.352
           },
           {
             "rasi": "Scorpio",
             "rasi_idx": 7,
             "jaimini_lord": "Ketu",
             "antardasha_rasi_years": 8,
-            "years": 0.25,
-            "start": "2053-09-20T18:27:24",
-            "end": "2053-12-21T01:57:24",
-            "start_age": 63.352,
-            "end_age": 63.602
+            "years": 1.0,
+            "start": "2059-09-21T06:27:24",
+            "end": "2060-09-20T12:27:24",
+            "start_age": 69.352,
+            "end_age": 70.352
           },
           {
             "rasi": "Sagittarius",
             "rasi_idx": 8,
             "jaimini_lord": "Jupiter",
             "antardasha_rasi_years": 6,
-            "years": 0.25,
-            "start": "2053-12-21T01:57:24",
-            "end": "2054-03-22T09:27:24",
-            "start_age": 63.602,
-            "end_age": 63.852
+            "years": 1.0,
+            "start": "2060-09-20T12:27:24",
+            "end": "2061-09-20T18:27:24",
+            "start_age": 70.352,
+            "end_age": 71.352
           },
           {
             "rasi": "Capricorn",
             "rasi_idx": 9,
             "jaimini_lord": "Saturn",
             "antardasha_rasi_years": 12,
-            "years": 0.25,
-            "start": "2054-03-22T09:27:24",
-            "end": "2054-06-21T16:57:24",
-            "start_age": 63.852,
-            "end_age": 64.102
+            "years": 1.0,
+            "start": "2061-09-20T18:27:24",
+            "end": "2062-09-21T00:27:24",
+            "start_age": 71.352,
+            "end_age": 72.352
           },
           {
             "rasi": "Aquarius",
             "rasi_idx": 10,
             "jaimini_lord": "Saturn",
             "antardasha_rasi_years": 11,
-            "years": 0.25,
-            "start": "2054-06-21T16:57:24",
-            "end": "2054-09-21T00:27:24",
-            "start_age": 64.102,
-            "end_age": 64.352
+            "years": 1.0,
+            "start": "2062-09-21T00:27:24",
+            "end": "2063-09-21T06:27:24",
+            "start_age": 72.352,
+            "end_age": 73.352
           }
         ]
       },
@@ -2272,10 +2272,10 @@
         "jaimini_lord": "Mars",
         "full_years": 10,
         "years": 10.0,
-        "start": "2054-09-21T00:27:24",
-        "end": "2064-09-20T12:27:24",
-        "start_age": 64.352,
-        "end_age": 74.352,
+        "start": "2063-09-21T06:27:24",
+        "end": "2073-09-20T18:27:24",
+        "start_age": 73.352,
+        "end_age": 83.352,
         "antardasha": [
           {
             "rasi": "Aries",
@@ -2283,10 +2283,10 @@
             "jaimini_lord": "Mars",
             "antardasha_rasi_years": 10,
             "years": 0.8333,
-            "start": "2054-09-21T00:27:24",
-            "end": "2055-07-22T09:27:24",
-            "start_age": 64.352,
-            "end_age": 65.185
+            "start": "2063-09-21T06:27:24",
+            "end": "2064-07-21T15:27:24",
+            "start_age": 73.352,
+            "end_age": 74.185
           },
           {
             "rasi": "Taurus",
@@ -2294,10 +2294,10 @@
             "jaimini_lord": "Venus",
             "antardasha_rasi_years": 10,
             "years": 0.8333,
-            "start": "2055-07-22T09:27:24",
-            "end": "2056-05-21T18:27:24",
-            "start_age": 65.185,
-            "end_age": 66.019
+            "start": "2064-07-21T15:27:24",
+            "end": "2065-05-22T00:27:24",
+            "start_age": 74.185,
+            "end_age": 75.019
           },
           {
             "rasi": "Gemini",
@@ -2305,10 +2305,10 @@
             "jaimini_lord": "Mercury",
             "antardasha_rasi_years": 10,
             "years": 0.8333,
-            "start": "2056-05-21T18:27:24",
-            "end": "2057-03-22T03:27:24",
-            "start_age": 66.019,
-            "end_age": 66.852
+            "start": "2065-05-22T00:27:24",
+            "end": "2066-03-22T09:27:24",
+            "start_age": 75.019,
+            "end_age": 75.852
           },
           {
             "rasi": "Cancer",
@@ -2316,10 +2316,10 @@
             "jaimini_lord": "Moon",
             "antardasha_rasi_years": 5,
             "years": 0.8333,
-            "start": "2057-03-22T03:27:24",
-            "end": "2058-01-20T12:27:24",
-            "start_age": 66.852,
-            "end_age": 67.685
+            "start": "2066-03-22T09:27:24",
+            "end": "2067-01-20T18:27:24",
+            "start_age": 75.852,
+            "end_age": 76.685
           },
           {
             "rasi": "Leo",
@@ -2327,10 +2327,10 @@
             "jaimini_lord": "Sun",
             "antardasha_rasi_years": 9,
             "years": 0.8333,
-            "start": "2058-01-20T12:27:24",
-            "end": "2058-11-20T21:27:24",
-            "start_age": 67.685,
-            "end_age": 68.519
+            "start": "2067-01-20T18:27:24",
+            "end": "2067-11-21T03:27:24",
+            "start_age": 76.685,
+            "end_age": 77.519
           },
           {
             "rasi": "Virgo",
@@ -2338,10 +2338,10 @@
             "jaimini_lord": "Mercury",
             "antardasha_rasi_years": 7,
             "years": 0.8333,
-            "start": "2058-11-20T21:27:24",
-            "end": "2059-09-21T06:27:24",
-            "start_age": 68.519,
-            "end_age": 69.352
+            "start": "2067-11-21T03:27:24",
+            "end": "2068-09-20T12:27:24",
+            "start_age": 77.519,
+            "end_age": 78.352
           },
           {
             "rasi": "Libra",
@@ -2349,10 +2349,10 @@
             "jaimini_lord": "Venus",
             "antardasha_rasi_years": 5,
             "years": 0.8333,
-            "start": "2059-09-21T06:27:24",
-            "end": "2060-07-21T15:27:24",
-            "start_age": 69.352,
-            "end_age": 70.185
+            "start": "2068-09-20T12:27:24",
+            "end": "2069-07-21T21:27:24",
+            "start_age": 78.352,
+            "end_age": 79.185
           },
           {
             "rasi": "Scorpio",
@@ -2360,10 +2360,10 @@
             "jaimini_lord": "Ketu",
             "antardasha_rasi_years": 8,
             "years": 0.8333,
-            "start": "2060-07-21T15:27:24",
-            "end": "2061-05-22T00:27:24",
-            "start_age": 70.185,
-            "end_age": 71.019
+            "start": "2069-07-21T21:27:24",
+            "end": "2070-05-22T06:27:24",
+            "start_age": 79.185,
+            "end_age": 80.019
           },
           {
             "rasi": "Sagittarius",
@@ -2371,10 +2371,10 @@
             "jaimini_lord": "Jupiter",
             "antardasha_rasi_years": 6,
             "years": 0.8333,
-            "start": "2061-05-22T00:27:24",
-            "end": "2062-03-22T09:27:24",
-            "start_age": 71.019,
-            "end_age": 71.852
+            "start": "2070-05-22T06:27:24",
+            "end": "2071-03-22T15:27:24",
+            "start_age": 80.019,
+            "end_age": 80.852
           },
           {
             "rasi": "Capricorn",
@@ -2382,10 +2382,10 @@
             "jaimini_lord": "Saturn",
             "antardasha_rasi_years": 12,
             "years": 0.8333,
-            "start": "2062-03-22T09:27:24",
-            "end": "2063-01-20T18:27:24",
-            "start_age": 71.852,
-            "end_age": 72.685
+            "start": "2071-03-22T15:27:24",
+            "end": "2072-01-21T00:27:24",
+            "start_age": 80.852,
+            "end_age": 81.685
           },
           {
             "rasi": "Aquarius",
@@ -2393,21 +2393,21 @@
             "jaimini_lord": "Saturn",
             "antardasha_rasi_years": 11,
             "years": 0.8333,
-            "start": "2063-01-20T18:27:24",
-            "end": "2063-11-21T03:27:24",
-            "start_age": 72.685,
-            "end_age": 73.519
+            "start": "2072-01-21T00:27:24",
+            "end": "2072-11-20T09:27:24",
+            "start_age": 81.685,
+            "end_age": 82.519
           },
           {
             "rasi": "Pisces",
             "rasi_idx": 11,
-            "jaimini_lord": "Jupiter",
-            "antardasha_rasi_years": 3,
+            "jaimini_lord": "Venus",
+            "antardasha_rasi_years": 12,
             "years": 0.8333,
-            "start": "2063-11-21T03:27:24",
-            "end": "2064-09-20T12:27:24",
-            "start_age": 73.519,
-            "end_age": 74.352
+            "start": "2072-11-20T09:27:24",
+            "end": "2073-09-20T18:27:24",
+            "start_age": 82.519,
+            "end_age": 83.352
           }
         ]
       },
@@ -2417,10 +2417,10 @@
         "jaimini_lord": "Venus",
         "full_years": 10,
         "years": 10.0,
-        "start": "2064-09-20T12:27:24",
-        "end": "2074-09-21T00:27:24",
-        "start_age": 74.352,
-        "end_age": 84.352,
+        "start": "2073-09-20T18:27:24",
+        "end": "2083-09-21T06:27:24",
+        "start_age": 83.352,
+        "end_age": 93.352,
         "antardasha": [
           {
             "rasi": "Taurus",
@@ -2428,10 +2428,10 @@
             "jaimini_lord": "Venus",
             "antardasha_rasi_years": 10,
             "years": 0.8333,
-            "start": "2064-09-20T12:27:24",
-            "end": "2065-07-21T21:27:24",
-            "start_age": 74.352,
-            "end_age": 75.185
+            "start": "2073-09-20T18:27:24",
+            "end": "2074-07-22T03:27:24",
+            "start_age": 83.352,
+            "end_age": 84.185
           },
           {
             "rasi": "Gemini",
@@ -2439,10 +2439,10 @@
             "jaimini_lord": "Mercury",
             "antardasha_rasi_years": 10,
             "years": 0.8333,
-            "start": "2065-07-21T21:27:24",
-            "end": "2066-05-22T06:27:24",
-            "start_age": 75.185,
-            "end_age": 76.019
+            "start": "2074-07-22T03:27:24",
+            "end": "2075-05-22T12:27:24",
+            "start_age": 84.185,
+            "end_age": 85.019
           },
           {
             "rasi": "Cancer",
@@ -2450,10 +2450,10 @@
             "jaimini_lord": "Moon",
             "antardasha_rasi_years": 5,
             "years": 0.8333,
-            "start": "2066-05-22T06:27:24",
-            "end": "2067-03-22T15:27:24",
-            "start_age": 76.019,
-            "end_age": 76.852
+            "start": "2075-05-22T12:27:24",
+            "end": "2076-03-21T21:27:24",
+            "start_age": 85.019,
+            "end_age": 85.852
           },
           {
             "rasi": "Leo",
@@ -2461,10 +2461,10 @@
             "jaimini_lord": "Sun",
             "antardasha_rasi_years": 9,
             "years": 0.8333,
-            "start": "2067-03-22T15:27:24",
-            "end": "2068-01-21T00:27:24",
-            "start_age": 76.852,
-            "end_age": 77.685
+            "start": "2076-03-21T21:27:24",
+            "end": "2077-01-20T06:27:24",
+            "start_age": 85.852,
+            "end_age": 86.685
           },
           {
             "rasi": "Virgo",
@@ -2472,10 +2472,10 @@
             "jaimini_lord": "Mercury",
             "antardasha_rasi_years": 7,
             "years": 0.8333,
-            "start": "2068-01-21T00:27:24",
-            "end": "2068-11-20T09:27:24",
-            "start_age": 77.685,
-            "end_age": 78.519
+            "start": "2077-01-20T06:27:24",
+            "end": "2077-11-20T15:27:24",
+            "start_age": 86.685,
+            "end_age": 87.519
           },
           {
             "rasi": "Libra",
@@ -2483,10 +2483,10 @@
             "jaimini_lord": "Venus",
             "antardasha_rasi_years": 5,
             "years": 0.8333,
-            "start": "2068-11-20T09:27:24",
-            "end": "2069-09-20T18:27:24",
-            "start_age": 78.519,
-            "end_age": 79.352
+            "start": "2077-11-20T15:27:24",
+            "end": "2078-09-21T00:27:24",
+            "start_age": 87.519,
+            "end_age": 88.352
           },
           {
             "rasi": "Scorpio",
@@ -2494,10 +2494,10 @@
             "jaimini_lord": "Ketu",
             "antardasha_rasi_years": 8,
             "years": 0.8333,
-            "start": "2069-09-20T18:27:24",
-            "end": "2070-07-22T03:27:24",
-            "start_age": 79.352,
-            "end_age": 80.185
+            "start": "2078-09-21T00:27:24",
+            "end": "2079-07-22T09:27:24",
+            "start_age": 88.352,
+            "end_age": 89.185
           },
           {
             "rasi": "Sagittarius",
@@ -2505,10 +2505,10 @@
             "jaimini_lord": "Jupiter",
             "antardasha_rasi_years": 6,
             "years": 0.8333,
-            "start": "2070-07-22T03:27:24",
-            "end": "2071-05-22T12:27:24",
-            "start_age": 80.185,
-            "end_age": 81.019
+            "start": "2079-07-22T09:27:24",
+            "end": "2080-05-21T18:27:24",
+            "start_age": 89.185,
+            "end_age": 90.019
           },
           {
             "rasi": "Capricorn",
@@ -2516,10 +2516,10 @@
             "jaimini_lord": "Saturn",
             "antardasha_rasi_years": 12,
             "years": 0.8333,
-            "start": "2071-05-22T12:27:24",
-            "end": "2072-03-21T21:27:24",
-            "start_age": 81.019,
-            "end_age": 81.852
+            "start": "2080-05-21T18:27:24",
+            "end": "2081-03-22T03:27:24",
+            "start_age": 90.019,
+            "end_age": 90.852
           },
           {
             "rasi": "Aquarius",
@@ -2527,21 +2527,21 @@
             "jaimini_lord": "Saturn",
             "antardasha_rasi_years": 11,
             "years": 0.8333,
-            "start": "2072-03-21T21:27:24",
-            "end": "2073-01-20T06:27:24",
-            "start_age": 81.852,
-            "end_age": 82.685
+            "start": "2081-03-22T03:27:24",
+            "end": "2082-01-20T12:27:24",
+            "start_age": 90.852,
+            "end_age": 91.685
           },
           {
             "rasi": "Pisces",
             "rasi_idx": 11,
-            "jaimini_lord": "Jupiter",
-            "antardasha_rasi_years": 3,
+            "jaimini_lord": "Venus",
+            "antardasha_rasi_years": 12,
             "years": 0.8333,
-            "start": "2073-01-20T06:27:24",
-            "end": "2073-11-20T15:27:24",
-            "start_age": 82.685,
-            "end_age": 83.519
+            "start": "2082-01-20T12:27:24",
+            "end": "2082-11-20T21:27:24",
+            "start_age": 91.685,
+            "end_age": 92.519
           },
           {
             "rasi": "Aries",
@@ -2549,10 +2549,10 @@
             "jaimini_lord": "Mars",
             "antardasha_rasi_years": 10,
             "years": 0.8333,
-            "start": "2073-11-20T15:27:24",
-            "end": "2074-09-21T00:27:24",
-            "start_age": 83.519,
-            "end_age": 84.352
+            "start": "2082-11-20T21:27:24",
+            "end": "2083-09-21T06:27:24",
+            "start_age": 92.519,
+            "end_age": 93.352
           }
         ]
       },
@@ -2562,10 +2562,10 @@
         "jaimini_lord": "Mercury",
         "full_years": 10,
         "years": 10.0,
-        "start": "2074-09-21T00:27:24",
-        "end": "2084-09-20T12:27:24",
-        "start_age": 84.352,
-        "end_age": 94.352,
+        "start": "2083-09-21T06:27:24",
+        "end": "2093-09-20T18:27:24",
+        "start_age": 93.352,
+        "end_age": 103.352,
         "antardasha": [
           {
             "rasi": "Gemini",
@@ -2573,10 +2573,10 @@
             "jaimini_lord": "Mercury",
             "antardasha_rasi_years": 10,
             "years": 0.8333,
-            "start": "2074-09-21T00:27:24",
-            "end": "2075-07-22T09:27:24",
-            "start_age": 84.352,
-            "end_age": 85.185
+            "start": "2083-09-21T06:27:24",
+            "end": "2084-07-21T15:27:24",
+            "start_age": 93.352,
+            "end_age": 94.185
           },
           {
             "rasi": "Cancer",
@@ -2584,10 +2584,10 @@
             "jaimini_lord": "Moon",
             "antardasha_rasi_years": 5,
             "years": 0.8333,
-            "start": "2075-07-22T09:27:24",
-            "end": "2076-05-21T18:27:24",
-            "start_age": 85.185,
-            "end_age": 86.019
+            "start": "2084-07-21T15:27:24",
+            "end": "2085-05-22T00:27:24",
+            "start_age": 94.185,
+            "end_age": 95.019
           },
           {
             "rasi": "Leo",
@@ -2595,10 +2595,10 @@
             "jaimini_lord": "Sun",
             "antardasha_rasi_years": 9,
             "years": 0.8333,
-            "start": "2076-05-21T18:27:24",
-            "end": "2077-03-22T03:27:24",
-            "start_age": 86.019,
-            "end_age": 86.852
+            "start": "2085-05-22T00:27:24",
+            "end": "2086-03-22T09:27:24",
+            "start_age": 95.019,
+            "end_age": 95.852
           },
           {
             "rasi": "Virgo",
@@ -2606,10 +2606,10 @@
             "jaimini_lord": "Mercury",
             "antardasha_rasi_years": 7,
             "years": 0.8333,
-            "start": "2077-03-22T03:27:24",
-            "end": "2078-01-20T12:27:24",
-            "start_age": 86.852,
-            "end_age": 87.685
+            "start": "2086-03-22T09:27:24",
+            "end": "2087-01-20T18:27:24",
+            "start_age": 95.852,
+            "end_age": 96.685
           },
           {
             "rasi": "Libra",
@@ -2617,10 +2617,10 @@
             "jaimini_lord": "Venus",
             "antardasha_rasi_years": 5,
             "years": 0.8333,
-            "start": "2078-01-20T12:27:24",
-            "end": "2078-11-20T21:27:24",
-            "start_age": 87.685,
-            "end_age": 88.519
+            "start": "2087-01-20T18:27:24",
+            "end": "2087-11-21T03:27:24",
+            "start_age": 96.685,
+            "end_age": 97.519
           },
           {
             "rasi": "Scorpio",
@@ -2628,10 +2628,10 @@
             "jaimini_lord": "Ketu",
             "antardasha_rasi_years": 8,
             "years": 0.8333,
-            "start": "2078-11-20T21:27:24",
-            "end": "2079-09-21T06:27:24",
-            "start_age": 88.519,
-            "end_age": 89.352
+            "start": "2087-11-21T03:27:24",
+            "end": "2088-09-20T12:27:24",
+            "start_age": 97.519,
+            "end_age": 98.352
           },
           {
             "rasi": "Sagittarius",
@@ -2639,10 +2639,10 @@
             "jaimini_lord": "Jupiter",
             "antardasha_rasi_years": 6,
             "years": 0.8333,
-            "start": "2079-09-21T06:27:24",
-            "end": "2080-07-21T15:27:24",
-            "start_age": 89.352,
-            "end_age": 90.185
+            "start": "2088-09-20T12:27:24",
+            "end": "2089-07-21T21:27:24",
+            "start_age": 98.352,
+            "end_age": 99.185
           },
           {
             "rasi": "Capricorn",
@@ -2650,10 +2650,10 @@
             "jaimini_lord": "Saturn",
             "antardasha_rasi_years": 12,
             "years": 0.8333,
-            "start": "2080-07-21T15:27:24",
-            "end": "2081-05-22T00:27:24",
-            "start_age": 90.185,
-            "end_age": 91.019
+            "start": "2089-07-21T21:27:24",
+            "end": "2090-05-22T06:27:24",
+            "start_age": 99.185,
+            "end_age": 100.019
           },
           {
             "rasi": "Aquarius",
@@ -2661,21 +2661,21 @@
             "jaimini_lord": "Saturn",
             "antardasha_rasi_years": 11,
             "years": 0.8333,
-            "start": "2081-05-22T00:27:24",
-            "end": "2082-03-22T09:27:24",
-            "start_age": 91.019,
-            "end_age": 91.852
+            "start": "2090-05-22T06:27:24",
+            "end": "2091-03-22T15:27:24",
+            "start_age": 100.019,
+            "end_age": 100.852
           },
           {
             "rasi": "Pisces",
             "rasi_idx": 11,
-            "jaimini_lord": "Jupiter",
-            "antardasha_rasi_years": 3,
+            "jaimini_lord": "Venus",
+            "antardasha_rasi_years": 12,
             "years": 0.8333,
-            "start": "2082-03-22T09:27:24",
-            "end": "2083-01-20T18:27:24",
-            "start_age": 91.852,
-            "end_age": 92.685
+            "start": "2091-03-22T15:27:24",
+            "end": "2092-01-21T00:27:24",
+            "start_age": 100.852,
+            "end_age": 101.685
           },
           {
             "rasi": "Aries",
@@ -2683,10 +2683,10 @@
             "jaimini_lord": "Mars",
             "antardasha_rasi_years": 10,
             "years": 0.8333,
-            "start": "2083-01-20T18:27:24",
-            "end": "2083-11-21T03:27:24",
-            "start_age": 92.685,
-            "end_age": 93.519
+            "start": "2092-01-21T00:27:24",
+            "end": "2092-11-20T09:27:24",
+            "start_age": 101.685,
+            "end_age": 102.519
           },
           {
             "rasi": "Taurus",
@@ -2694,10 +2694,10 @@
             "jaimini_lord": "Venus",
             "antardasha_rasi_years": 10,
             "years": 0.8333,
-            "start": "2083-11-21T03:27:24",
-            "end": "2084-09-20T12:27:24",
-            "start_age": 93.519,
-            "end_age": 94.352
+            "start": "2092-11-20T09:27:24",
+            "end": "2093-09-20T18:27:24",
+            "start_age": 102.519,
+            "end_age": 103.352
           }
         ]
       }
@@ -2749,8 +2749,8 @@
         {
           "rasi": "Pisces",
           "rasi_idx": 11,
-          "jaimini_lord": "Jupiter",
-          "antardasha_rasi_years": 3,
+          "jaimini_lord": "Venus",
+          "antardasha_rasi_years": 12,
           "years": 0.5,
           "start": "2024-03-21T21:27:24",
           "end": "2024-09-20T12:27:24",

@@ -180,6 +180,35 @@ _war_not_cc = jp.close_contention(
 check("close_contention correctly ignores sub-1deg (planetary-war) pairs",
       len(_war_not_cc) == 0, f"expected no CC pairs, got {_war_not_cc}")
 
+# ---- 7. Chara Dasha secondary sign lords (computation.md Step 1 table) --------
+# All 7 dual-lord signs must be handled, not just the two nodal ones.
+check("JAIMINI_DUAL_LORDS covers the 7 documented dual-lord signs",
+      set(cjb.JAIMINI_DUAL_LORDS) == {2, 5, 7, 8, 9, 10, 11},
+      f"got {sorted(cjb.JAIMINI_DUAL_LORDS)}")
+check("dual-lord pairs match the original table",
+      cjb.JAIMINI_DUAL_LORDS[2] == ("Mercury", "Jupiter")
+      and cjb.JAIMINI_DUAL_LORDS[8] == ("Jupiter", "Mars")
+      and cjb.JAIMINI_DUAL_LORDS[9] == ("Saturn", "Mars")
+      and cjb.JAIMINI_DUAL_LORDS[11] == ("Jupiter", "Venus"),
+      "a conditional dual-lord pair does not match computation.md Step 1")
+# Functional: Gemini's secondary (Jupiter) wins when it is exalted and the
+# primary (Mercury) is weak -> the conditional rule actually fires.
+_synth = {p: {"sign": s} for p, s in {
+    "Sun": "Aries", "Moon": "Aries", "Mars": "Aries", "Mercury": "Scorpio",
+    "Jupiter": "Cancer", "Venus": "Aries", "Saturn": "Aries",
+    "Rahu": "Aries", "Ketu": "Libra"}.items()}
+check("Gemini takes secondary lord Jupiter when Mercury is weak",
+      cjb.jaimini_sign_lord(2, _synth, 0) == "Jupiter",
+      f"got {cjb.jaimini_sign_lord(2, _synth, 0)}")
+# ...and the primary still wins by default (Mercury strong / Jupiter not).
+_synth2 = {p: {"sign": s} for p, s in {
+    "Sun": "Aries", "Moon": "Aries", "Mars": "Aries", "Mercury": "Virgo",
+    "Jupiter": "Capricorn", "Venus": "Aries", "Saturn": "Aries",
+    "Rahu": "Aries", "Ketu": "Libra"}.items()}
+check("Gemini keeps primary lord Mercury when it is the stronger",
+      cjb.jaimini_sign_lord(2, _synth2, 5) == "Mercury",
+      f"got {cjb.jaimini_sign_lord(2, _synth2, 5)}")
+
 
 if failures:
     print(f"\n{len(failures)} FAILED: {failures}")

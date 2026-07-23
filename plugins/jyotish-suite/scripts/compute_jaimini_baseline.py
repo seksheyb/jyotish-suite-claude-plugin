@@ -239,18 +239,34 @@ def compute_argala(ref_sign_idx, occupancy):
 # Chara Dasha — Parashara variant
 # ====================================================================
 
+# Jaimini dual-lord signs (computation.md Step 1 table): sign_idx -> (primary,
+# secondary). Scorpio/Aquarius carry the classical nodal co-lords; the other
+# five carry the "use the secondary if the primary is weak" alternates the
+# original methodology documents. Primary is listed first so a strength tie
+# defaults to the primary lord.
+JAIMINI_DUAL_LORDS = {
+    2: ("Mercury", "Jupiter"),   # Gemini  — Jupiter if Mercury weak
+    5: ("Mercury", "Jupiter"),   # Virgo   — Jupiter if Mercury weak
+    7: ("Mars", "Ketu"),         # Scorpio — nodal co-lord (Jaimini tradition)
+    8: ("Jupiter", "Mars"),      # Sagittarius — Mars if Jupiter weak
+    9: ("Saturn", "Mars"),       # Capricorn   — Mars if Saturn weak
+    10: ("Saturn", "Rahu"),      # Aquarius — nodal co-lord (Jaimini tradition)
+    11: ("Jupiter", "Venus"),    # Pisces   — Venus if Jupiter weak
+}
+
+
 def jaimini_sign_lord(sign_idx, d1_planets, lagna_sign_idx):
-    """Jaimini lord of a sign. For dual-lordship signs (Scorpio: Mars/Ketu,
-    Aquarius: Saturn/Rahu) the stronger lord is chosen: the lord placed in its
-    own sign or exalted, else the one more prominently placed in a
-    Kendra/Trikona **from the Lagna** (computation.md Step 1, line 80);
-    default to the primary lord on a tie."""
-    if sign_idx == 7:        # Scorpio
-        candidates = [("Mars", d1_planets["Mars"]), ("Ketu", d1_planets["Ketu"])]
-    elif sign_idx == 10:     # Aquarius
-        candidates = [("Saturn", d1_planets["Saturn"]), ("Rahu", d1_planets["Rahu"])]
-    else:
+    """Jaimini lord of a sign. For the dual-lordship signs in JAIMINI_DUAL_LORDS
+    the stronger lord is chosen: the lord placed in its own sign or exalted,
+    else the one more prominently placed in a Kendra/Trikona **from the Lagna**
+    (computation.md Step 1, line 80); the primary lord wins a tie, so a
+    conditional secondary (Gemini/Virgo/Sagittarius/Capricorn/Pisces) only
+    displaces the primary when it is genuinely stronger — i.e. "use the
+    secondary if the primary is weak"."""
+    pair = JAIMINI_DUAL_LORDS.get(sign_idx)
+    if pair is None:
         return jp.SIGN_LORDS[sign_idx]
+    candidates = [(pair[0], d1_planets[pair[0]]), (pair[1], d1_planets[pair[1]])]
 
     def strength(name, info):
         s = 0
