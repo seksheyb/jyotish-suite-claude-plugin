@@ -1,7 +1,7 @@
 ---
 name: jaimini-astrology
 description: >
-  Trigger this skill immediately and exclusively when the user types "/jaimini-astrology" anywhere
+  Trigger this skill immediately and exclusively when the user types "/jaimini" anywhere
   in their message. This skill accepts a pre-computed Vedic birth chart (D1 + D9), displays it for
   verification, computes the Jaimini baseline (Chara Karakas, Arudha Padas, Swamsha, Argala, Chara
   Dasha), then performs a deep Jaimini reading using rigorous methodology. Always use this skill —
