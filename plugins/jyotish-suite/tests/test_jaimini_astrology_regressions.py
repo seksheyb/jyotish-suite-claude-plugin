@@ -164,6 +164,22 @@ check("SKILL.md chart-verifier step no longer requests the baseline block",
       "not** the Jaimini baseline block" in skill,
       "chart-verifier still told to render the Jaimini baseline block at step 2")
 
+# ---- 6. [P2] close_contention wired into the baseline output ------------------
+check("top-level close_contentions key present",
+      "close_contentions" in B, "close_contentions missing from baseline JSON")
+check("every planet block carries a close_contention field",
+      all("close_contention" in p for p in B["planets"].values()),
+      "a planet block is missing close_contention")
+_cc_pairs = jp.close_contention(
+    {"Mars": 45.0, "Saturn": 48.0, "Sun": 200.0})  # 3deg apart, same sign
+check("close_contention flags a synthetic 3deg same-sign pair",
+      len(_cc_pairs) == 1 and _cc_pairs[0]["planet_a"] == "Mars",
+      f"expected one Mars/Saturn pair, got {_cc_pairs}")
+_war_not_cc = jp.close_contention(
+    {"Mars": 45.0, "Saturn": 45.4, "Sun": 200.0})  # 0.4deg = war territory, not CC
+check("close_contention correctly ignores sub-1deg (planetary-war) pairs",
+      len(_war_not_cc) == 0, f"expected no CC pairs, got {_war_not_cc}")
+
 
 if failures:
     print(f"\n{len(failures)} FAILED: {failures}")

@@ -3145,7 +3145,8 @@
         "pushkara_navamsa": false,
         "vargottama": false
       },
-      "planetary_war": null
+      "planetary_war": null,
+      "close_contention": null
     },
     "Moon": {
       "sign": "Sagittarius",
@@ -3165,7 +3166,8 @@
         "vargottama": true,
         "combust": false
       },
-      "planetary_war": null
+      "planetary_war": null,
+      "close_contention": null
     },
     "Mars": {
       "sign": "Aquarius",
@@ -3185,7 +3187,8 @@
         "vargottama": false,
         "combust": false
       },
-      "planetary_war": null
+      "planetary_war": null,
+      "close_contention": null
     },
     "Mercury": {
       "sign": "Aries",
@@ -3205,7 +3208,8 @@
         "vargottama": false,
         "combust": false
       },
-      "planetary_war": null
+      "planetary_war": null,
+      "close_contention": null
     },
     "Jupiter": {
       "sign": "Gemini",
@@ -3225,7 +3229,8 @@
         "vargottama": false,
         "combust": false
       },
-      "planetary_war": null
+      "planetary_war": null,
+      "close_contention": null
     },
     "Venus": {
       "sign": "Pisces",
@@ -3245,7 +3250,8 @@
         "vargottama": false,
         "combust": false
       },
-      "planetary_war": null
+      "planetary_war": null,
+      "close_contention": null
     },
     "Saturn": {
       "sign": "Capricorn",
@@ -3265,7 +3271,8 @@
         "vargottama": true,
         "combust": false
       },
-      "planetary_war": null
+      "planetary_war": null,
+      "close_contention": null
     },
     "Rahu": {
       "sign": "Capricorn",
@@ -3285,7 +3292,8 @@
         "vargottama": false,
         "combust": false
       },
-      "planetary_war": null
+      "planetary_war": null,
+      "close_contention": null
     },
     "Ketu": {
       "sign": "Cancer",
@@ -3305,10 +3313,12 @@
         "vargottama": false,
         "combust": false
       },
-      "planetary_war": null
+      "planetary_war": null,
+      "close_contention": null
     }
   },
   "planetary_wars": [],
+  "close_contentions": [],
   "vimshottari_dasha": {
     "md_lord": "Sun",
     "md_period": [

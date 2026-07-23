@@ -453,9 +453,10 @@ def find_running_dasha(chara_dasha, target_dt=None, age=None):
 
 def build_planet_block(d1_planets, lagna_sign_idx):
     """Per-planet sign / deg / navamsa / dignity / nakshatra / pada / house /
-    degree flags / war."""
+    degree flags / war / close-contention."""
     positions = {p: d1_planets[p]["longitude"] for p in d1_planets}
     wars = jp.planetary_war(positions)
+    contentions = jp.close_contention(positions)
     sun_lon = d1_planets["Sun"]["longitude"]
     out = {}
     for p, info in d1_planets.items():
@@ -464,6 +465,8 @@ def build_planet_block(d1_planets, lagna_sign_idx):
                                 retrograde=info.get("retrograde", False))
         in_war = next((w for w in wars
                        if w["winner"] == p or w["loser"] == p), None)
+        in_contention = next((c for c in contentions
+                              if c["planet_a"] == p or c["planet_b"] == p), None)
         _ni, nak_name, _sl, _ns = jp.get_nakshatra(lon)
         sign_idx = jp.SIGNS.index(info["sign"])
         out[p] = {
@@ -477,8 +480,9 @@ def build_planet_block(d1_planets, lagna_sign_idx):
             "house": jp.house_of(sign_idx, lagna_sign_idx),
             "degree_flags": flags,
             "planetary_war": in_war,
+            "close_contention": in_contention,
         }
-    return out, wars
+    return out, wars, contentions
 
 
 # ====================================================================
@@ -525,7 +529,7 @@ def main():
         occupancy.setdefault(planet_sign_lookup[p], []).append(p)
 
     # --- Planets detail (built first so Karaka rows can inline degree_flags) ---
-    planets, wars = build_planet_block(d1_planets, lagna_sign_idx)
+    planets, wars, contentions = build_planet_block(d1_planets, lagna_sign_idx)
 
     # --- Chara Karakas ---
     karakas = compute_chara_karakas(d1_planets, planet_block=planets)
@@ -587,6 +591,7 @@ def main():
         "jaimini_drishti_map": DRISHTI,
         "planets": planets,
         "planetary_wars": wars,
+        "close_contentions": contentions,
         "vimshottari_dasha": chart.get("dasha", {}).get("running"),
     }
     print(json.dumps(out, indent=2))
