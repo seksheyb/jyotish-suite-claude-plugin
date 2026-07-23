@@ -93,7 +93,7 @@ def _meta_for(simple):
 
 def parashari_from_positions(simple):
     """Expand a simple positions chart into a parashari_natal_chart dict
-    (vedic-astro, bnn-astrology, jaimini-astrology, lal-kitab)."""
+    (vedic-astro, bnn, jaimini, lal-kitab)."""
     asc_lon = _abs_longitude(simple["lagna"])
     raw = _planets_raw(simple)
     dasha = _dasha_for(simple, raw["Moon"]["longitude"])

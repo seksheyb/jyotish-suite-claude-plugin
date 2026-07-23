@@ -1,7 +1,7 @@
 {
   "school": "bnn",
   "script": "compute_bnn_baseline.py",
-  "description": "bnn-astrology baseline — natal chart only, no moment-of-reading parameter (script has no clock dependency at all).",
+  "description": "bnn baseline — natal chart only, no moment-of-reading parameter (script has no clock dependency at all).",
   "args": {
     "--datetime": "1990-05-15T10:30:00",
     "--tz": "Asia/Kolkata",

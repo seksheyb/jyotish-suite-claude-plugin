@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Jaimini baseline — deterministic computation for the jaimini-astrology skill.
+Jaimini baseline — deterministic computation for the jaimini skill.
 
 Offloads pure calculation out of the skill prompt: Chara Karakas (Sapta scheme),
 Arudha Padas (with the same-sign / 7th-from exception), Swamsha / Karakamsha,

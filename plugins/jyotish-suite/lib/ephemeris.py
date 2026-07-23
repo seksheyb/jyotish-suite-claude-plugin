@@ -276,7 +276,7 @@ def assemble_kp(cusp_lons, planets_raw, dasha, meta):
 
 def parashari_natal_chart(dt_iso, tz_name, lat, lon, ayanamsa_mode="lahiri"):
     """D1 + D9 natal chart — Lahiri, Whole-Sign houses.
-    Used by vedic-astro, bnn-astrology, jaimini-astrology, and lal-kitab (D1)."""
+    Used by vedic-astro, bnn, jaimini, and lal-kitab (D1)."""
     local, utc = to_utc(dt_iso, tz_name)
     jd = julian_day(utc)
     ayan = ayanamsa(jd, ayanamsa_mode)

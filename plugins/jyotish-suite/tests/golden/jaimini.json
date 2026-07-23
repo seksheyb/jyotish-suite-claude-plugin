@@ -1,7 +1,7 @@
 {
   "school": "jaimini",
   "script": "compute_jaimini_baseline.py",
-  "description": "jaimini-astrology baseline — Chara Karakas/Arudhas/Argala/Chara Dasha off the natal chart. --target-date pins the running Chara Dasha window (otherwise no running period is resolved at all, since neither --age nor --target-date defaults to now()).",
+  "description": "jaimini baseline — Chara Karakas/Arudhas/Argala/Chara Dasha off the natal chart. --target-date pins the running Chara Dasha window (otherwise no running period is resolved at all, since neither --age nor --target-date defaults to now()).",
   "args": {
     "--datetime": "1990-05-15T10:30:00",
     "--tz": "Asia/Kolkata",

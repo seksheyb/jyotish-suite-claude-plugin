@@ -176,7 +176,7 @@ treat that as a P0, not a snapshot problem. `kp_horary`'s chart row is always
 
 Blueprint §3 downgrades the synthesizer from opus to sonnet/high for 4 of 6
 schools (vedic-astro, kp-natal, kp-horary, lal-kitab), keeping opus/medium
-only for jaimini-astrology and bnn-astrology full/reverse readings (§7.1,
+only for jaimini and bnn full/reverse readings (§7.1,
 "Guard status" table, row 1 — flagged as a gap this blueprint creates).
 Blueprint §8 Phase 5 makes that downgrade **contingent on a quality gate**,
 not just this numeric harness passing.

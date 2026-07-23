@@ -1,6 +1,6 @@
 # Lal Kitab Astrology Skill
 
-Performs full Lal Kitab readings strictly per Pt. Roop Chand Joshi's original Farmans (1939–1952). Companion to `vedic-astro`, `kp-natal`, `bnn-astrology`, and `jaimini-astrology`.
+Performs full Lal Kitab readings strictly per Pt. Roop Chand Joshi's original Farmans (1939–1952). Companion to `vedic-astro`, `kp-natal`, `bnn`, and `jaimini`.
 
 ## Trigger
 

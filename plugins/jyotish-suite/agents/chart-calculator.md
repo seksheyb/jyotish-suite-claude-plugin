@@ -13,7 +13,7 @@ interpret anything.
 
 | Mode | For skills | Ayanamsa | Houses | Ascendant from | Reference time |
 |---|---|---|---|---|---|
-| `parashari` | vedic-astro, bnn-astrology, jaimini-astrology, lal-kitab | Lahiri | Whole-Sign | real rising point | birth |
+| `parashari` | vedic-astro, bnn, jaimini, lal-kitab | Lahiri | Whole-Sign | real rising point | birth |
 | `kp-natal` | kp-natal | KP-New | Placidus | real rising point | birth |
 | `kp-horary` | kp-horary | KP-New | Placidus (rotated) | the 1-249 number | question moment |
 

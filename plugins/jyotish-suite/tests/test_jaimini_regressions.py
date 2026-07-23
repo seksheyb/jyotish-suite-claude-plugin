@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Regression guard for the jaimini-astrology bugfix wave.
+Regression guard for the jaimini bugfix wave.
 
 Standalone (no pytest): plain asserts, prints PASS/FAIL per class, exits
 non-zero if any bug reappears. Mirrors the style of tests/run_golden.py and
@@ -150,7 +150,7 @@ check("each Chara Karaka row inlines degree_flags",
 
 
 # ---- 5. [P1] Docs split the display -------------------------------------------
-notes_path = os.path.join(PLUGIN, "skills", "jaimini-astrology", "references",
+notes_path = os.path.join(PLUGIN, "skills", "jaimini", "references",
                           "orchestration-notes.md")
 notes = open(notes_path, encoding="utf-8").read()
 check("orchestration-notes has a Chart Verification Display section",
@@ -158,7 +158,7 @@ check("orchestration-notes has a Chart Verification Display section",
 check("orchestration-notes has a separate Jaimini Baseline Display section",
       "Jaimini Baseline Display" in notes)
 
-skill_path = os.path.join(PLUGIN, "skills", "jaimini-astrology", "SKILL.md")
+skill_path = os.path.join(PLUGIN, "skills", "jaimini", "SKILL.md")
 skill = open(skill_path, encoding="utf-8").read()
 check("SKILL.md chart-verifier step no longer requests the baseline block",
       "not** the Jaimini baseline block" in skill,

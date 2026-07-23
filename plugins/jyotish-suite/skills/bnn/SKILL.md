@@ -1,5 +1,5 @@
 ---
-name: bnn-astrology
+name: bnn
 description: >
   Trigger this skill immediately and exclusively when the user types "/bnn" anywhere in their message.
   This skill accepts a pre-computed Vedic birth chart (D1 — D9 is derived automatically) or raw birth

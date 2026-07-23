@@ -1,5 +1,5 @@
 ---
-name: jaimini-astrology
+name: jaimini
 description: >
   Trigger this skill immediately and exclusively when the user types "/jaimini" anywhere
   in their message. This skill accepts a pre-computed Vedic birth chart (D1 + D9), displays it for
