@@ -130,8 +130,13 @@ Show at least 6–8 periods into the future.
 Within each Mahadasha Rasi, the Antardasha sequence:
 - Starts from the same Rasi as the Mahadasha
 - Proceeds in the same direction as the Mahadasha
-- Each Antardasha duration = (Antardasha Rasi years ÷ 12) × Mahadasha years
-- Full cycle of all 12 signs completes within the Mahadasha
+- **Each Antardasha duration = Mahadasha years ÷ 12** — an EQUAL twelfth for
+  every sign, regardless of that sign's own individual Chara-Dasha years.
+  Example: a 6-year Mahadasha gives twelve 6-month Antardashas. (Verified
+  against multiple sources; a sign's own chara-dasha-years value is recorded
+  for reference/display only and does not affect its Antardasha duration.)
+- The full cycle of all 12 signs completes within the Mahadasha exactly,
+  since 12 × (Mahadasha years ÷ 12) = Mahadasha years by construction.
 
 ---
 

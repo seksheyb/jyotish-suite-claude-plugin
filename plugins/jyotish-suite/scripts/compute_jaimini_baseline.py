@@ -298,15 +298,22 @@ def compute_antardashas(maha_sidx, direction, nominal_maha_years,
     """Antardasha sequence within one Mahadasha rasi (computation.md Step 5).
 
     The sub-periods start from the Mahadasha rasi itself, proceed in the same
-    direction, and run through all 12 signs. The documented per-Antardasha
-    duration is (Antardasha-Rasi-years / 12) x Mahadasha-years; because the
-    reference also requires the full 12-sign cycle to *complete within the
-    Mahadasha* (line 134), the durations are proportional to each sign's own
-    Chara-Dasha years and normalised so the twelve Antardashas tile the
-    Mahadasha span exactly. (When the 12 sign-years happen to sum to 12 this
-    reduces to the literal /12 formula.) Ages/dates are laid on the same grid
-    the Mahadasha would have if it ran its full length, so for the birth-balance
-    first Mahadasha the pre-birth Antardashas simply carry negative ages.
+    direction, and run through all 12 signs. Classical rule (verified against
+    multiple sources, e.g. astrobix.com/learn/141-calculation-of-char-dasha.html
+    and paramarsh.app/patrika/jaimini-astrology/jaimini-chara-dasha): each of
+    the 12 Antardashas is an EQUAL twelfth of the Mahadasha's own length --
+    "if Mahadasha is of one year, the Antardasha of all 12 signs will be of
+    one month" -- NOT weighted by each Antardasha sign's own individual
+    Chara-Dasha years. (A prior version of this function weighted by each
+    sign's own years, normalised to fill the Mahadasha; that was wrong --
+    equal division is the documented and sourced rule, and it trivially
+    satisfies "the full cycle completes within the Mahadasha" since 12 x
+    Maha/12 = Maha exactly, with no need to normalise anything.) Each sign's
+    own chara_dasha_years is still recorded per antardasha for reference/
+    display, but it plays no role in the duration. Ages/dates are laid on the
+    same grid the Mahadasha would have if it ran its full length, so for the
+    birth-balance first Mahadasha the pre-birth Antardashas simply carry
+    negative ages.
     """
     from datetime import timedelta
     order = [(maha_sidx + direction * k) % 12 for k in range(12)]
@@ -314,12 +321,11 @@ def compute_antardashas(maha_sidx, direction, nominal_maha_years,
     for sidx in order:
         yrs, lord = chara_dasha_years(sidx, d1_planets, lagna_sign_idx)
         rasi_years.append((sidx, yrs, lord))
-    total = sum(y for _, y, _ in rasi_years) or 12
+    dur = nominal_maha_years / 12.0
     subs = []
     cursor_dt = nominal_start_dt
     age_cursor = nominal_start_age
     for sidx, yrs, lord in rasi_years:
-        dur = nominal_maha_years * yrs / total
         end_dt = (cursor_dt + timedelta(days=dur * jp.YEAR_DAYS)
                   if cursor_dt is not None else None)
         subs.append({
