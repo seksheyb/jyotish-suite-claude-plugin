@@ -82,9 +82,9 @@ Classify the question before any analysis. State the classification in one line:
 | Yes/No (binary) | Full methodology + reverse question analysis (opposite Karaka) |
 | Domain-specific | Identify primary + secondary Karakas from `karaka-tables.md` 1A |
 | Specific Karaka | Lead with that Karaka through all Steps A–F |
-| Dasha question | Lead with Section 4 Dasha analysis, then BNN position of Dasha lord |
+| Dasha question | Lead with Section 4 Dasha analysis, then BNN position of Dasha lord; + `compute_bnn_transits.py` transits.json (Section 4B transit activation) |
 | Full reading | Run all major Karakas: Sun, Moon, Jupiter/Venus (per gender), Saturn, Mars |
-| Timing ("when will X") | Lead with Dasha activation; identify which period activates the Karaka |
+| Timing ("when will X") | Lead with Dasha activation; identify which period activates the Karaka; + `compute_bnn_transits.py` transits.json — slow transit over the Karaka / dasha lord narrows the window (Section 4B) |
 
 For a full reading the Karaka set is gender-sensitive: marriage Karaka is Venus
 for male charts and Jupiter for female charts (see `karaka-tables.md` 1A).
@@ -186,6 +186,11 @@ Do **not** proceed to Wave 1 until the user explicitly confirms.
    on first use; no fatalism, no sensationalism.
 8. **Cross-check recommendation** — Jagannatha Hora (free, Lahiri ayanamsha) or
    Astro-Seek Vedic for chart verification.
+9. **Transit facts come from transits.json** (`compute_bnn_transits.py`) —
+   sign stays, conjunction/aspect annotations, exact-degree passes and the
+   Jupiter cycle are read from that file by field name and are never
+   recomputed or estimated from an ephemeris in-prompt. Transits narrow a
+   dasha-activated period; they never override an un-activated dasha.
 
 ---
 

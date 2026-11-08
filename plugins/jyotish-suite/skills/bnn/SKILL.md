@@ -53,6 +53,16 @@ interpretation -> parallel subagents. Paths use `${CLAUDE_PLUGIN_ROOT}`.
    deterministic BNN facts (natural karakas, planets with dignity + degree flags
    + priority verdict, karaka-relative positions for D1 + D9, aspect map,
    Vimshottari dasha). Returns the `baseline.json` path + a short gloss.
+3b. **Transit layer (timing questions only).** For a dasha/timing question, a
+   yes/no question with a timeframe, or any "when" question, dispatch
+   `baseline-runner` (haiku, low effort) with
+   `script: compute_bnn_transits.py` (`${CLAUDE_PLUGIN_ROOT}/scripts/compute_bnn_transits.py`)
+   and args `--baseline <baseline.json path> --datetime <window start, default
+   today> --window-days <horizon, default 365> --tz <chart tz>`. It returns a
+   `transits.json` path: Jupiter/Saturn/Rahu/Ketu sign stays over or aspecting
+   (BNN aspects) natal planets, degree-exact conjunction passes with
+   karakatwas activated, and Jupiter's 12-year cycle / natal-sign return
+   (`methodology.md` Section 4B). Skip it for untimed questions.
 
 ### Conditional dispatch — scale fan-out to question scope
 
@@ -62,7 +72,7 @@ BNN synthesis is **tiered**. Decide the tier right after classification (Phase A
 |---|---|---|
 | Single-Karaka narrow question (one Karaka, no dasha/timing angle) | **None** — no `unit-analyzer` dispatch | **None** — no synthesizer dispatch. Run BNN Steps A–F (`methodology.md` Section 2-3) **inline in the orchestrator** against the baseline JSON, then answer directly |
 | Domain question (1-2 Karakas) | `unit-analyzer` — sonnet / **medium** effort, one per Karaka | `synthesizer` — opus / **high** effort |
-| Full reading, or reverse-question (yes/no) reading | `unit-analyzer` — sonnet / **medium** effort, one per dispatched Karaka (up to 7: Sun, Moon, Jupiter, Venus, Saturn, Mars, + reverse-question Karaka) | `synthesizer` — opus / **high** effort — 10-priority weighting across up to 7 worker outputs is contradiction-heavy; opus is warranted |
+| Full reading, or reverse-question (yes/no) reading | `unit-analyzer` — sonnet / **medium** effort, one per dispatched Karaka (up to 7: Sun, Moon, Jupiter, Venus, Saturn, Mars, + reverse-question Karaka) | `synthesizer` — opus / **high** effort — 11-priority weighting (dasha, transit, then structure) across up to 7 worker outputs is contradiction-heavy; opus is warranted |
 
 A domain or full-reading dasha/timing question uses `unit-analyzer` at **medium**
 effort per the dasha-timing unit type below.
@@ -81,6 +91,12 @@ standalone D9 reading. Each worker receives:
   *analysis* is scoped to its assigned Karaka; its *data* is the whole chart, so
   cross-Karaka aspects and the dasha lord's placement are always visible.
 - the methodology references, its assigned Karaka, and the question.
+- for timing questions: the baseline.json path **plus transits.json when
+  produced** (step 3b) — given to the dasha-timing `unit-analyzer` and to any
+  Karaka analyst whose Karaka the transits touch (a natal planet appearing in
+  `natal_planets_conjoined`, `natal_planets_aspected` or `exact_conjunctions`
+  of a slow-body stay in the window). Transit facts are read from
+  transits.json, never recomputed.
 
 **Dasha-lord rule:** if the question involves timing or activation (dasha
 question, timing question, or the user asks "when") and the running
@@ -90,6 +106,11 @@ sonnet / medium effort) so its Steps A-F are run somewhere. The synthesizer is
 forbidden to re-derive units — every planet the composite reading cites must
 have a worker (or the inline pass) behind it.
 
+**Transit rule:** Dasha activation sets the period; a slow transit over the
+Karaka (or its dasha lord) narrows it; transits never override an
+un-activated dasha. A transit window with no supporting dasha is reported as
+"transit only — not activated", never as a timing verdict.
+
 **Barrier:** do not dispatch Wave 2 until every Wave 1 worker — including the
 dasha-lord unit if one was added — has returned its analysis block.
 
@@ -97,11 +118,13 @@ dasha-lord unit if one was added — has returned its analysis block.
 
 Dispatch one `synthesizer` (opus, effort high — for both domain and
 full/reverse-question readings)
-for the composite reading — BNN 10-level priority order, D1/D9 convergence,
+for the composite reading — BNN 11-level priority order, D1/D9 convergence,
 Dasha activation, confidence rating, and the reverse question check for yes/no
 questions (`methodology.md` Sections 4-5). Pass it every Wave 1 unit-analysis
-block plus the full baseline path — it must not recompute or re-derive a unit
-that was already dispatched.
+block plus the full baseline path, plus transits.json when produced (step
+3b) — it must not recompute or re-derive a unit that was already dispatched,
+and it applies the transit rule above (`methodology.md` Section 4B and the
+Section 5 priority list) when it names a transit window.
 
 ## Reading modes / question intake
 
@@ -125,7 +148,7 @@ orchestrator itself loads `methodology.md` Section 2-3 to run Steps A-F.
 
 | File | Contents |
 |------|----------|
-| `references/methodology.md` | BNN Steps A–F, D9 analysis, Dasha timing, execution sequence, 10-level priority |
+| `references/methodology.md` | BNN Steps A–F, D9 analysis, Dasha timing, execution sequence, 11-level priority; Section 4B transit activation |
 | `references/karaka-tables.md` | Natural Karakas (1A), sign fields (1B), planet relationships (1C), topic→Karaka map |
 | `references/degree-flags.md` | Combustion, Gandanta, Mrityu Bhaga, Pushkara, Sandhi, Planetary War, priority table |
 | `references/aspects.md` | Graha Drishti rules, orb framework, mutual aspects, empty-sign rule, aspect pre-map |
