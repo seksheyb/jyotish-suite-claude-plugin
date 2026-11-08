@@ -201,7 +201,7 @@ tooling exists yet. When it's built, the gate should look like:
      cost
 2. **Judge each reading on:**
    - **Weighting fidelity** — did the synthesis apply the school's stated
-     priority order (e.g. BNN's 10-priority weighting, KP's CSL >
+     priority order (e.g. BNN's 11-priority weighting, KP's CSL >
      significator > RP hierarchy) rather than an even blend of unit blocks?
    - **Contradiction handling** — when unit-analyzer outputs disagree (D1 vs
      D9, Bhava vs Arudha, opposing significators), does the synthesis

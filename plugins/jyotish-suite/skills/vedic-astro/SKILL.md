@@ -67,8 +67,10 @@ parallel work) — everything else routes through Wave 1. Paths use
    sign/nakshatra/kakshya/pada stays, each annotated with house from Moon and
    Lagna, the classical favourable verdict and vedha, SAV/BAV bindus, kakshya
    fruitfulness, Tara Bala, Sade Sati/Kantaka/Ashtama Shani, double transit,
-   and a D9 overlay labelled modern. This replaces prose-only transit
-   reasoning; skip it for questions with no time component.
+   and a D9 overlay labelled modern (slow bodies + Sun by default; add
+   `--d9-overlay-bodies Saturn,Jupiter,Rahu,Ketu,Mars,Sun,Moon` only for a
+   window of a few days — the Moon crosses ~4 padas a day). This replaces
+   prose-only transit reasoning; skip it for questions with no time component.
 
 ### Conditional dispatch — skip Wave 1 for trivially narrow questions
 

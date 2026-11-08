@@ -248,7 +248,10 @@ equals one navamsha, so a transit's pada places it in a D9 sign
 (`navamsa_sign`, `house_from_d9_lagna`, `natal_d9_planets_in_sign`). Classical
 gochara is read in D1 only; use the overlay as a finer-timing hint and label it
 as modern whenever it is cited. The pada flips near boundaries under a
-different ayanamsa (Lahiri vs KP differ by ~6').
+different ayanamsa (Lahiri vs KP differ by ~6'). By default the overlay covers
+Saturn, Jupiter, Rahu, Ketu, Mars and the Sun; the Moon's `d9_overlay` is
+`null` unless the script was run with `--d9-overlay-bodies ...,Moon` (useful
+only for a window of a few days — the Moon changes pada every ~6 hours).
 
 **How to read `transits.json`:**
 1. Start from `reference` — Moon sign/nakshatra, Lagna, running MD/AD/PD

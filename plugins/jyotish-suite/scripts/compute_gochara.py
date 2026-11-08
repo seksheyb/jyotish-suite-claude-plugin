@@ -76,6 +76,11 @@ import jyotish_primitives as jp  # noqa: E402
 import transit_engine as te  # noqa: E402
 
 DEFAULT_BODIES = ["Saturn", "Jupiter", "Rahu", "Ketu", "Mars", "Sun", "Moon"]
+# Bodies that get the pada->D9 overlay by default. The Moon is left out: it
+# crosses a 3d20' pada every ~6 hours, so a 180-day window would carry ~700
+# Moon pada hits (~360 KB) and swamp the slow-body signal a reader needs
+# first. Opt in with --d9-overlay-bodies ...,Moon for a window of a few days.
+DEFAULT_D9_BODIES = ["Saturn", "Jupiter", "Rahu", "Ketu", "Mars", "Sun"]
 ALL_BODIES = list(jp.PLANETS)  # 9 grahas — every one can cause vedha
 NODES = ("Rahu", "Ketu")
 KAKSHYA_BODIES = ("Saturn", "Jupiter", "Rahu", "Ketu", "Mars")
@@ -385,6 +390,12 @@ def main():
                     default=True, help="emit the modern pada->D9 overlay "
                                        "(default on)")
     ap.add_argument("--no-d9-overlay", dest="d9", action="store_false")
+    ap.add_argument("--d9-overlay-bodies", default=",".join(DEFAULT_D9_BODIES),
+                    help="comma list of bodies that get the pada->D9 overlay "
+                         "(default " + ",".join(DEFAULT_D9_BODIES) + "; the "
+                         "Moon is excluded by default because it crosses ~4 "
+                         "padas a day and would dominate the file — add "
+                         "'Moon' for a window of a few days)")
     ap.add_argument("--step-days", type=float,
                     help="override the sampling step (days) for ALL bodies")
     ap.add_argument("--out", help="write JSON here instead of stdout")
@@ -424,10 +435,12 @@ def main():
     kak_sp = te.kakshya_spans()
     pada_sp = te.pada_spans() if args.d9 else None
 
+    d9_bodies = [b.strip() for b in args.d9_overlay_bodies.split(",") if b.strip()]
     out_bodies = {}
     for body in bodies:
         kakshya_on = body in KAKSHYA_BODIES
-        step = step_for(body, kakshya_on, args.d9, args.step_days)
+        d9_on = args.d9 and body in d9_bodies
+        step = step_for(body, kakshya_on, d9_on, args.step_days)
         series = te.sample_series(body, start_utc, end_utc, step, lon_fn)
 
         positions = {}
@@ -453,7 +466,7 @@ def main():
                                              h["kakshya_lord"])
 
         d9 = None
-        if args.d9:
+        if d9_on:
             d9 = scan(body, series, pada_sp, lon_fn)
             for h in d9:
                 h.update(ann.d9_fields(h["navamsa_idx"]))

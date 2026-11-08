@@ -16,7 +16,8 @@ Checks:
      every hit list sorted by entry_date; no vedha obstructor forms an exempt
      pair with the body; Rahu/Ketu carry kakshya.fruitful / bav_bindus None;
      Saturn's saturn_phase == saturn_moon_phase(); kakshya_stays None for
-     Sun/Moon; --no-d9-overlay yields d9_overlay null.
+     Sun/Moon; the Moon is excluded from d9_overlay by default
+     (--d9-overlay-bodies); --no-d9-overlay yields d9_overlay null.
   3. Docs — the vedic-astro skill, its methodology and orchestration notes,
      and commands/vedic-astro.md all reference compute_gochara.py;
      methodology carries a Step 4b.
@@ -225,6 +226,13 @@ if out is not None:
           and "modern" in out["d9_overlay_note"])
 
 if off is not None:
+    check("default run: Moon has no d9_overlay (excluded by default), Sun does",
+          out["bodies"]["Moon"]["d9_overlay"] is None
+          and isinstance(out["bodies"]["Sun"]["d9_overlay"], list)
+          and len(out["bodies"]["Sun"]["d9_overlay"]) > 0)
+    check("default run: Moon keeps the engine's 0.25-day step (no pada tightening)",
+          out["bodies"]["Moon"]["sampling_step_days"] == 0.25,
+          str(out["bodies"]["Moon"]["sampling_step_days"]))
     check("--no-d9-overlay yields d9_overlay null for every body",
           all(v["d9_overlay"] is None for v in off["bodies"].values()))
     check("--no-d9-overlay yields d9_overlay_note null",
