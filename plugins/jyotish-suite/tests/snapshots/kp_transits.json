@@ -1,0 +1,490 @@
+{
+  "script": "compute_transits.py",
+  "ayanamsa": {
+    "mode": "kp",
+    "value_dms_window_start": "024-07-24",
+    "value_dms_window_end": "024-07-36"
+  },
+  "window": {
+    "start_local": "2026-01-01T00:00:00+05:30",
+    "start_utc": "2025-12-31T18:30:00",
+    "end_local": "2026-04-01T00:00:00+05:30",
+    "end_utc": "2026-03-31T18:30:00",
+    "tz": "Asia/Kolkata"
+  },
+  "location": null,
+  "significators_resolved": {
+    "Jupiter": [
+      {
+        "nakshatra": "Punarvasu",
+        "start_deg": 80.0,
+        "end_deg": 93.3333
+      },
+      {
+        "nakshatra": "Vishakha",
+        "start_deg": 200.0,
+        "end_deg": 213.3333
+      },
+      {
+        "nakshatra": "Purva Bhadrapada",
+        "start_deg": 320.0,
+        "end_deg": 333.3333
+      }
+    ],
+    "Venus": [
+      {
+        "nakshatra": "Bharani",
+        "start_deg": 13.3333,
+        "end_deg": 26.6667
+      },
+      {
+        "nakshatra": "Purva Phalguni",
+        "start_deg": 133.3333,
+        "end_deg": 146.6667
+      },
+      {
+        "nakshatra": "Purva Ashadha",
+        "start_deg": 253.3333,
+        "end_deg": 266.6667
+      }
+    ],
+    "Saturn": [
+      {
+        "nakshatra": "Pushya",
+        "start_deg": 93.3333,
+        "end_deg": 106.6667
+      },
+      {
+        "nakshatra": "Anuradha",
+        "start_deg": 213.3333,
+        "end_deg": 226.6667
+      },
+      {
+        "nakshatra": "Uttara Bhadrapada",
+        "start_deg": 333.3333,
+        "end_deg": 346.6667
+      }
+    ]
+  },
+  "transits": {
+    "Jupiter": {
+      "sampling_step_days": 2.0,
+      "positions": {
+        "window_start": {
+          "longitude": 87.2641,
+          "longitude_dms": "087-15-50",
+          "sign": "Gemini",
+          "sign_lord": "Mercury",
+          "deg_in_sign": 27.2641,
+          "nakshatra": "Punarvasu",
+          "pada": 3,
+          "star_lord": "Jupiter",
+          "sub_lord": "Venus",
+          "sub_sub_lord": "Mars",
+          "label": "window_start",
+          "datetime_utc": "2025-12-31T18:30:00"
+        },
+        "window_mid": {
+          "longitude": 81.9221,
+          "longitude_dms": "081-55-19",
+          "sign": "Gemini",
+          "sign_lord": "Mercury",
+          "deg_in_sign": 21.9221,
+          "nakshatra": "Punarvasu",
+          "pada": 1,
+          "star_lord": "Jupiter",
+          "sub_lord": "Saturn",
+          "sub_sub_lord": "Saturn",
+          "label": "window_mid",
+          "datetime_utc": "2026-02-14T18:30:00"
+        },
+        "window_end": {
+          "longitude": 81.6391,
+          "longitude_dms": "081-38-20",
+          "sign": "Gemini",
+          "sign_lord": "Mercury",
+          "deg_in_sign": 21.6391,
+          "nakshatra": "Punarvasu",
+          "pada": 1,
+          "star_lord": "Jupiter",
+          "sub_lord": "Jupiter",
+          "sub_sub_lord": "Rahu",
+          "label": "window_end",
+          "datetime_utc": "2026-03-31T18:30:00"
+        }
+      },
+      "hits": [
+        {
+          "nakshatra": "Punarvasu",
+          "entry_date": "2025-12-31T18:30:00",
+          "entry_before_window": true,
+          "exit_date": "2026-03-31T18:30:00",
+          "exit_after_window": true,
+          "significator": "Jupiter"
+        }
+      ]
+    },
+    "Sun": {
+      "sampling_step_days": 1.0,
+      "positions": {
+        "window_start": {
+          "longitude": 256.2117,
+          "longitude_dms": "256-12-41",
+          "sign": "Sagittarius",
+          "sign_lord": "Jupiter",
+          "deg_in_sign": 16.2117,
+          "nakshatra": "Purva Ashadha",
+          "pada": 1,
+          "star_lord": "Venus",
+          "sub_lord": "Sun",
+          "sub_sub_lord": "Venus",
+          "label": "window_start",
+          "datetime_utc": "2025-12-31T18:30:00"
+        },
+        "window_mid": {
+          "longitude": 301.946,
+          "longitude_dms": "301-56-45",
+          "sign": "Aquarius",
+          "sign_lord": "Saturn",
+          "deg_in_sign": 1.946,
+          "nakshatra": "Dhanishtha",
+          "pada": 3,
+          "star_lord": "Mars",
+          "sub_lord": "Ketu",
+          "sub_sub_lord": "Venus",
+          "label": "window_mid",
+          "datetime_utc": "2026-02-14T18:30:00"
+        },
+        "window_end": {
+          "longitude": 346.9229,
+          "longitude_dms": "346-55-22",
+          "sign": "Pisces",
+          "sign_lord": "Jupiter",
+          "deg_in_sign": 16.9229,
+          "nakshatra": "Revati",
+          "pada": 1,
+          "star_lord": "Mercury",
+          "sub_lord": "Mercury",
+          "sub_sub_lord": "Mercury",
+          "label": "window_end",
+          "datetime_utc": "2026-03-31T18:30:00"
+        }
+      },
+      "hits": [
+        {
+          "nakshatra": "Purva Ashadha",
+          "entry_date": "2025-12-31T18:30:00",
+          "entry_before_window": true,
+          "exit_date": "2026-01-11T00:47:00.080567",
+          "exit_after_window": false,
+          "significator": "Venus"
+        },
+        {
+          "nakshatra": "Purva Bhadrapada",
+          "entry_date": "2026-03-04T17:02:11.011964",
+          "entry_before_window": false,
+          "exit_date": "2026-03-18T01:28:27.000733",
+          "exit_after_window": false,
+          "significator": "Jupiter"
+        },
+        {
+          "nakshatra": "Uttara Bhadrapada",
+          "entry_date": "2026-03-18T01:28:27.000733",
+          "entry_before_window": false,
+          "exit_date": "2026-03-31T12:16:17.014161",
+          "exit_after_window": false,
+          "significator": "Saturn"
+        }
+      ]
+    },
+    "Moon": {
+      "sampling_step_days": 0.25,
+      "positions": {
+        "window_start": {
+          "longitude": 39.1619,
+          "longitude_dms": "039-09-42",
+          "sign": "Taurus",
+          "sign_lord": "Venus",
+          "deg_in_sign": 9.1619,
+          "nakshatra": "Krittika",
+          "pada": 4,
+          "star_lord": "Sun",
+          "sub_lord": "Venus",
+          "sub_sub_lord": "Jupiter",
+          "label": "window_start",
+          "datetime_utc": "2025-12-31T18:30:00"
+        },
+        "window_mid": {
+          "longitude": 269.7314,
+          "longitude_dms": "269-43-53",
+          "sign": "Sagittarius",
+          "sign_lord": "Jupiter",
+          "deg_in_sign": 29.7314,
+          "nakshatra": "Uttara Ashadha",
+          "pada": 1,
+          "star_lord": "Sun",
+          "sub_lord": "Rahu",
+          "sub_sub_lord": "Jupiter",
+          "label": "window_mid",
+          "datetime_utc": "2026-02-14T18:30:00"
+        },
+        "window_end": {
+          "longitude": 151.4128,
+          "longitude_dms": "151-24-46",
+          "sign": "Virgo",
+          "sign_lord": "Mercury",
+          "deg_in_sign": 1.4128,
+          "nakshatra": "Uttara Phalguni",
+          "pada": 2,
+          "star_lord": "Sun",
+          "sub_lord": "Jupiter",
+          "sub_sub_lord": "Jupiter",
+          "label": "window_end",
+          "datetime_utc": "2026-03-31T18:30:00"
+        }
+      },
+      "hits": [
+        {
+          "nakshatra": "Punarvasu",
+          "entry_date": "2026-01-03T11:48:31.019898",
+          "entry_before_window": false,
+          "exit_date": "2026-01-04T09:31:46.004334",
+          "exit_after_window": false,
+          "significator": "Jupiter"
+        },
+        {
+          "nakshatra": "Pushya",
+          "entry_date": "2026-01-04T09:31:46.004334",
+          "entry_before_window": false,
+          "exit_date": "2026-01-05T07:45:05.019380",
+          "exit_after_window": false,
+          "significator": "Saturn"
+        },
+        {
+          "nakshatra": "Purva Phalguni",
+          "entry_date": "2026-01-07T06:16:02.017823",
+          "entry_before_window": false,
+          "exit_date": "2026-01-08T06:43:40.019531",
+          "exit_after_window": false,
+          "significator": "Venus"
+        },
+        {
+          "nakshatra": "Vishakha",
+          "entry_date": "2026-01-12T15:23:36.007234",
+          "entry_before_window": false,
+          "exit_date": "2026-01-13T18:24:45.015107",
+          "exit_after_window": false,
+          "significator": "Jupiter"
+        },
+        {
+          "nakshatra": "Anuradha",
+          "entry_date": "2026-01-13T18:24:45.015107",
+          "entry_before_window": false,
+          "exit_date": "2026-01-14T21:22:03.001099",
+          "exit_after_window": false,
+          "significator": "Saturn"
+        },
+        {
+          "nakshatra": "Purva Ashadha",
+          "entry_date": "2026-01-17T02:30:52.006531",
+          "entry_before_window": false,
+          "exit_date": "2026-01-18T04:32:57.017213",
+          "exit_after_window": false,
+          "significator": "Venus"
+        },
+        {
+          "nakshatra": "Purva Bhadrapada",
+          "entry_date": "2026-01-22T08:46:23.015442",
+          "entry_before_window": false,
+          "exit_date": "2026-01-23T08:52:33.000642",
+          "exit_after_window": false,
+          "significator": "Jupiter"
+        },
+        {
+          "nakshatra": "Uttara Bhadrapada",
+          "entry_date": "2026-01-23T08:52:33.000642",
+          "entry_before_window": false,
+          "exit_date": "2026-01-24T08:35:42.004395",
+          "exit_after_window": false,
+          "significator": "Saturn"
+        },
+        {
+          "nakshatra": "Bharani",
+          "entry_date": "2026-01-26T06:52:56.017000",
+          "entry_before_window": false,
+          "exit_date": "2026-01-27T05:29:08.000336",
+          "exit_after_window": false,
+          "significator": "Venus"
+        },
+        {
+          "nakshatra": "Punarvasu",
+          "entry_date": "2026-01-30T21:47:49.004060",
+          "entry_before_window": false,
+          "exit_date": "2026-01-31T19:54:22.005616",
+          "exit_after_window": false,
+          "significator": "Jupiter"
+        },
+        {
+          "nakshatra": "Pushya",
+          "entry_date": "2026-01-31T19:54:22.005616",
+          "entry_before_window": false,
+          "exit_date": "2026-02-01T18:18:09.012910",
+          "exit_after_window": false,
+          "significator": "Saturn"
+        },
+        {
+          "nakshatra": "Purva Phalguni",
+          "entry_date": "2026-02-03T16:30:20.008850",
+          "entry_before_window": false,
+          "exit_date": "2026-02-04T16:32:08.011323",
+          "exit_after_window": false,
+          "significator": "Venus"
+        },
+        {
+          "nakshatra": "Vishakha",
+          "entry_date": "2026-02-08T23:21:03.008881",
+          "entry_before_window": false,
+          "exit_date": "2026-02-10T02:13:29.019471",
+          "exit_after_window": false,
+          "significator": "Jupiter"
+        },
+        {
+          "nakshatra": "Anuradha",
+          "entry_date": "2026-02-10T02:13:29.019471",
+          "entry_before_window": false,
+          "exit_date": "2026-02-11T05:11:02.001801",
+          "exit_after_window": false,
+          "significator": "Saturn"
+        },
+        {
+          "nakshatra": "Purva Ashadha",
+          "entry_date": "2026-02-13T10:31:15.009157",
+          "entry_before_window": false,
+          "exit_date": "2026-02-14T12:34:56.012879",
+          "exit_after_window": false,
+          "significator": "Venus"
+        },
+        {
+          "nakshatra": "Purva Bhadrapada",
+          "entry_date": "2026-02-18T15:35:46.007538",
+          "entry_before_window": false,
+          "exit_date": "2026-02-19T15:11:39.005127",
+          "exit_after_window": false,
+          "significator": "Jupiter"
+        },
+        {
+          "nakshatra": "Uttara Bhadrapada",
+          "entry_date": "2026-02-19T15:11:39.005127",
+          "entry_before_window": false,
+          "exit_date": "2026-02-20T14:27:23.005371",
+          "exit_after_window": false,
+          "significator": "Saturn"
+        },
+        {
+          "nakshatra": "Bharani",
+          "entry_date": "2026-02-22T12:14:42.009889",
+          "entry_before_window": false,
+          "exit_date": "2026-02-23T10:53:42.001649",
+          "exit_after_window": false,
+          "significator": "Venus"
+        },
+        {
+          "nakshatra": "Punarvasu",
+          "entry_date": "2026-02-27T05:08:58.014221",
+          "entry_before_window": false,
+          "exit_date": "2026-02-28T03:55:02.002718",
+          "exit_after_window": false,
+          "significator": "Jupiter"
+        },
+        {
+          "nakshatra": "Pushya",
+          "entry_date": "2026-02-28T03:55:02.002718",
+          "entry_before_window": false,
+          "exit_date": "2026-03-01T02:54:13.010560",
+          "exit_after_window": false,
+          "significator": "Saturn"
+        },
+        {
+          "nakshatra": "Purva Phalguni",
+          "entry_date": "2026-03-03T01:51:07.012025",
+          "entry_before_window": false,
+          "exit_date": "2026-03-04T01:58:21.020051",
+          "exit_after_window": false,
+          "significator": "Venus"
+        },
+        {
+          "nakshatra": "Vishakha",
+          "entry_date": "2026-03-08T07:50:05.007936",
+          "entry_before_window": false,
+          "exit_date": "2026-03-09T10:29:46.019898",
+          "exit_after_window": false,
+          "significator": "Jupiter"
+        },
+        {
+          "nakshatra": "Anuradha",
+          "entry_date": "2026-03-09T10:29:46.019898",
+          "entry_before_window": false,
+          "exit_date": "2026-03-10T13:23:22.006531",
+          "exit_after_window": false,
+          "significator": "Saturn"
+        },
+        {
+          "nakshatra": "Purva Ashadha",
+          "entry_date": "2026-03-12T19:02:02.003174",
+          "entry_before_window": false,
+          "exit_date": "2026-03-13T21:21:44.008484",
+          "exit_after_window": false,
+          "significator": "Venus"
+        },
+        {
+          "nakshatra": "Purva Bhadrapada",
+          "entry_date": "2026-03-18T00:28:50.003358",
+          "entry_before_window": false,
+          "exit_date": "2026-03-18T23:41:10.008089",
+          "exit_after_window": false,
+          "significator": "Jupiter"
+        },
+        {
+          "nakshatra": "Uttara Bhadrapada",
+          "entry_date": "2026-03-18T23:41:10.008089",
+          "entry_before_window": false,
+          "exit_date": "2026-03-19T22:25:05.003358",
+          "exit_after_window": false,
+          "significator": "Saturn"
+        },
+        {
+          "nakshatra": "Bharani",
+          "entry_date": "2026-03-21T18:58:09.003755",
+          "entry_before_window": false,
+          "exit_date": "2026-03-22T17:03:03.004762",
+          "exit_after_window": false,
+          "significator": "Venus"
+        },
+        {
+          "nakshatra": "Punarvasu",
+          "entry_date": "2026-03-26T10:39:06.013642",
+          "entry_before_window": false,
+          "exit_date": "2026-03-27T09:44:02.019654",
+          "exit_after_window": false,
+          "significator": "Jupiter"
+        },
+        {
+          "nakshatra": "Pushya",
+          "entry_date": "2026-03-27T09:44:02.019654",
+          "entry_before_window": false,
+          "exit_date": "2026-03-28T09:09:53.000794",
+          "exit_after_window": false,
+          "significator": "Saturn"
+        },
+        {
+          "nakshatra": "Purva Phalguni",
+          "entry_date": "2026-03-30T09:07:19.020540",
+          "entry_before_window": false,
+          "exit_date": "2026-03-31T09:40:05.003358",
+          "exit_after_window": false,
+          "significator": "Venus"
+        }
+      ]
+    }
+  }
+}
