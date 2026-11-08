@@ -9,6 +9,6 @@ Workflow:
 1. Read `skills/bnn/SKILL.md` and follow it exactly.
 2. If the user has not yet given their chart or birth data, ask for either a pasted D1 chart with degrees (D9 is derived automatically) or their birth date, exact time, and place.
 3. Echo the parsed chart back for verification.
-4. Run the full Nadi methodology: natural Karakas, sign fields, flow positions (2nd/12th), trine support (5th/9th), growth positions (3rd/11th), opposition (7th), Parashari aspects with degree orbs, degree flags (Mrityu Bhaga / Pushkara / Gandanta / Sandhi / Planetary War / combustion), and Vimshottari Dasha timing.
+4. Run the full Nadi methodology: natural Karakas, sign fields, flow positions (2nd/12th), trine support (5th/9th), growth positions (3rd/11th), opposition (7th), Parashari aspects with degree orbs, degree flags (Mrityu Bhaga / Pushkara / Gandanta / Sandhi / Planetary War / combustion), Vimshottari Dasha timing, and — for timing / "when" questions — transit activation (Jupiter/Saturn/Rahu/Ketu over or aspecting natal planets, exact-degree passes, Jupiter's 12-year cycle) from `scripts/compute_bnn_transits.py`, which narrows a dasha-activated period but never overrides it.
 
 Any extra context the user passed: $ARGUMENTS

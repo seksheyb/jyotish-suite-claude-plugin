@@ -172,6 +172,77 @@ BNN structural readings activate through Vimshottari Dasha.
 
 ---
 
+## SECTION 4B — Transit activation (BNN)
+
+BNN has no Lagna and no Moon-chart, so transits are read **planet over
+planet**: a slow body moving through the sign of a natal planet. Source of
+truth: `transits.json` from `scripts/compute_bnn_transits.py` (Lahiri
+ayanamsa; bodies Jupiter, Saturn, Rahu, Ketu by default). Never recompute
+transit positions in-prompt.
+
+**Rule:** Dasha activation sets the period; a slow transit over the Karaka (or
+its dasha lord) narrows it; transits never override an un-activated dasha.
+
+**1. Conjunction by sign activates karakatwas.** A slow body in the same sign
+as a natal planet activates that natal planet's karakatwas (karaka-tables.md
+1A): Jupiter expands/blesses them, Saturn delays/disciplines/makes them
+concrete, Rahu amplifies/obsesses/foreignises, Ketu detaches/spiritualises/
+cuts. Field: `sign_stays[].natal_planets_conjoined`.
+
+**2. BNN aspects.** Every transit body aspects the 7th sign from itself; plus
+Mars 4th/8th, Jupiter 5th/9th, Saturn 3rd/10th, Rahu/Ketu 5th/9th (aspects.md;
+`BNN_SPECIAL_ASPECTS`). An aspect activates more weakly than a conjunction.
+Field: `natal_planets_aspected` = `{natal planet: aspect number}`.
+
+**3. Planet-to-planet relationship.** Count signs from the natal planet to the
+transit sign (1–12 inclusive): `relation_to_natal[P] = {count, label}`.
+
+| count | label | reading |
+|---|---|---|
+| 1 | conjunction | direct activation of P's karakatwas |
+| 5, 9 | trine | supportive — the transit body feeds P |
+| 6, 8 | dusthana | obstructive — friction, illness, loss in P's domain |
+| 2, 12 | adjacent | flow — P's matters move in (2nd) or out (12th) |
+| 7 | opposition | P is confronted/partnered; also the universal 7th aspect |
+| 3, 4, 10, 11 | neutral | no BNN relational weight on its own |
+
+**4. Jupiter's 12-year cycle.** Jupiter returns to its natal sign about every
+12 years (ages ~12, 24, 36, 48…) and passes over every natal planet's sign in
+the same cycle — the backbone of BNN life-event timing. Field:
+`bodies.Jupiter.jupiter_cycle` — `natal_jupiter_sign`,
+`in_natal_sign_at_window_start`, `returns_in_window` (entry dates),
+`return_ages_in_window`, `age_at_window_start`, and when no return falls in the
+window, `next_return_estimate_utc` + `age_at_next_return` (forward scan up to
+13 years).
+
+**5. Exact-degree passes.** The finest trigger is the slow body within the orb
+(default 1°) of the natal planet's longitude. A retrograde body can cross the
+same point three times (direct, retrograde, direct) — each pass is a separate
+hit; the event commonly manifests on pass 1 or 3. Field:
+`exact_conjunctions[]` — `natal_planet`, `pass_number`, `entry_date`,
+`exit_date`, `entry_before_window` / `exit_after_window`, `natal_longitude`,
+`orb`, `natal_planet_is_dasha_lord`, `karakatwas_activated`.
+
+**6. Dasha linkage.** `positions.*.is_dasha_lord` says whether the transit
+body itself is the running MD/AD/PD lord; `dasha_lords_touched` lists natal
+dasha lords it conjoins or aspects; `reference.running_dasha` is the dasha at
+`reference.dasha_asof` (not at each transit date — re-check the bhukti table
+for later windows).
+
+**Reading `transits.json`:**
+- `bodies.<body>.positions.window_start|window_mid|window_end` — snapshot
+  (sign, degree, nakshatra, retrograde, speed) + the annotations above.
+- `bodies.<body>.sign_stays[]` — each sign stay in the window (`sign`,
+  `entry_date`, `exit_date`, edge flags) + the annotations above.
+- `bodies.<body>.exact_conjunctions[]` — degree-exact passes, sorted by date.
+- `bodies.Jupiter.jupiter_cycle` — Jupiter only; `null` for other bodies.
+
+**Timing output:** "Transit window: <dates> (<body> over/aspecting <natal
+planet>, pass n)" — only inside a period the dasha already activates;
+otherwise label it "transit only — not activated".
+
+---
+
 ## SECTION 5 — Mandatory Execution Sequence
 
 Every reading in this exact order. Do not skip or reorder.
@@ -195,19 +266,21 @@ Priority order:
 | Priority | Factor |
 |----------|--------|
 | 1 | Dasha activation — Karaka or ally running? Degree flags on Dasha lord? |
-| 2 | Karaka's sign, dignity, degree flags in D1 — foundational strength |
-| 3 | Aspects received by Karaka's sign — tight friendly/enemy aspects |
-| 4 | Conjunctions in Karaka's sign — signification blend, degree flags |
-| 5 | 2nd and 12th flow — occupants and aspects, degree flags, net reading |
-| 6 | 5th and 9th trine — occupants and aspects, degree flags, convergence flag |
-| 7 | D9 confirmation — Vargottama, soul-level endorsement or caveat |
-| 8 | 3rd and 11th growth — occupants and aspects, effort and gain quality |
-| 9 | 7th opposition — occupants and aspects, external response |
-| 10 | Mutual aspects within 3° — quasi-conjunctions; fused Karaka significations |
+| 2 | Transit activation (Section 4B) — slow transit over the Karaka or dasha lord inside the active dasha = the window |
+| 3 | Karaka's sign, dignity, degree flags in D1 — foundational strength |
+| 4 | Aspects received by Karaka's sign — tight friendly/enemy aspects |
+| 5 | Conjunctions in Karaka's sign — signification blend, degree flags |
+| 6 | 2nd and 12th flow — occupants and aspects, degree flags, net reading |
+| 7 | 5th and 9th trine — occupants and aspects, degree flags, convergence flag |
+| 8 | D9 confirmation — Vargottama, soul-level endorsement or caveat |
+| 9 | 3rd and 11th growth — occupants and aspects, effort and gain quality |
+| 10 | 7th opposition — occupants and aspects, external response |
+| 11 | Mutual aspects within 3° — quasi-conjunctions; fused Karaka significations |
 
 **Composite output must state:**
 - What D1 BNN structurally indicates (Karaka sign field + flow + trine)
 - What D9 confirms or modifies
 - Whether D1 and D9 converge or diverge — practical meaning of any divergence
 - Which Dasha period activates or blocks the outcome
+- Transit window: <dates> (<body> over/aspecting <natal planet>, pass n) — from `transits.json` (`compute_bnn_transits.py`) when produced; omit for untimed questions
 - **Confidence: Strong / Moderate / Unclear** — based on convergence across D1, D9, trine, Dasha, and aspect quality
