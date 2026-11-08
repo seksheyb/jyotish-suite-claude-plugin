@@ -1,0 +1,1251 @@
+{
+  "script": "compute_bnn_transits.py",
+  "school": "bnn",
+  "ayanamsa": {
+    "mode": "lahiri"
+  },
+  "window": {
+    "start_local": "2026-01-01T00:00:00+05:30",
+    "start_utc": "2025-12-31T18:30:00",
+    "end_local": "2026-07-01T00:00:00+05:30",
+    "end_utc": "2026-06-30T18:30:00",
+    "tz": "Asia/Kolkata"
+  },
+  "reference": {
+    "natal_planets": {
+      "Sun": {
+        "sign": "Taurus",
+        "sign_idx": 1,
+        "longitude": 30.3923
+      },
+      "Moon": {
+        "sign": "Sagittarius",
+        "sign_idx": 8,
+        "longitude": 269.8455
+      },
+      "Mars": {
+        "sign": "Aquarius",
+        "sign_idx": 10,
+        "longitude": 324.3947
+      },
+      "Mercury": {
+        "sign": "Aries",
+        "sign_idx": 0,
+        "longitude": 14.3282
+      },
+      "Jupiter": {
+        "sign": "Gemini",
+        "sign_idx": 2,
+        "longitude": 75.764
+      },
+      "Venus": {
+        "sign": "Pisces",
+        "sign_idx": 11,
+        "longitude": 348.7632
+      },
+      "Saturn": {
+        "sign": "Capricorn",
+        "sign_idx": 9,
+        "longitude": 271.5318
+      },
+      "Rahu": {
+        "sign": "Capricorn",
+        "sign_idx": 9,
+        "longitude": 287.632
+      },
+      "Ketu": {
+        "sign": "Cancer",
+        "sign_idx": 3,
+        "longitude": 107.632
+      }
+    },
+    "birth_utc": "1990-05-15T05:00:00",
+    "running_dasha": {
+      "mahadasha": "Rahu",
+      "antardasha": "Venus",
+      "pratyantardasha": "Mercury"
+    },
+    "dasha_asof": "2026-01-01T09:00:00"
+  },
+  "bodies": {
+    "Jupiter": {
+      "sampling_step_days": 2.0,
+      "positions": {
+        "window_start": {
+          "longitude": 87.1673,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "deg_in_sign": 27.1673,
+          "nakshatra": "Punarvasu",
+          "nak_idx": 6,
+          "pada": 3,
+          "star_lord": "Jupiter",
+          "navamsa_sign": "Gemini",
+          "navamsa_idx": 2,
+          "retrograde": true,
+          "speed": -0.1303,
+          "datetime_utc": "2025-12-31T18:30:00",
+          "natal_planets_conjoined": [
+            "Jupiter"
+          ],
+          "natal_planets_aspected": {
+            "Moon": 7,
+            "Mars": 9
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Moon": {
+              "count": 7,
+              "label": "opposition"
+            },
+            "Mars": {
+              "count": 5,
+              "label": "trine"
+            },
+            "Mercury": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Jupiter": {
+              "count": 1,
+              "label": "conjunction"
+            },
+            "Venus": {
+              "count": 4,
+              "label": "neutral"
+            },
+            "Saturn": {
+              "count": 6,
+              "label": "dusthana"
+            },
+            "Rahu": {
+              "count": 6,
+              "label": "dusthana"
+            },
+            "Ketu": {
+              "count": 12,
+              "label": "adjacent"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": false,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": []
+        },
+        "window_mid": {
+          "longitude": 81.5748,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "deg_in_sign": 21.5748,
+          "nakshatra": "Punarvasu",
+          "nak_idx": 6,
+          "pada": 1,
+          "star_lord": "Jupiter",
+          "navamsa_sign": "Aries",
+          "navamsa_idx": 0,
+          "retrograde": false,
+          "speed": 0.0659,
+          "datetime_utc": "2026-04-01T06:30:00",
+          "natal_planets_conjoined": [
+            "Jupiter"
+          ],
+          "natal_planets_aspected": {
+            "Moon": 7,
+            "Mars": 9
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Moon": {
+              "count": 7,
+              "label": "opposition"
+            },
+            "Mars": {
+              "count": 5,
+              "label": "trine"
+            },
+            "Mercury": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Jupiter": {
+              "count": 1,
+              "label": "conjunction"
+            },
+            "Venus": {
+              "count": 4,
+              "label": "neutral"
+            },
+            "Saturn": {
+              "count": 6,
+              "label": "dusthana"
+            },
+            "Rahu": {
+              "count": 6,
+              "label": "dusthana"
+            },
+            "Ketu": {
+              "count": 12,
+              "label": "adjacent"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": false,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": []
+        },
+        "window_end": {
+          "longitude": 95.8854,
+          "sign": "Cancer",
+          "sign_idx": 3,
+          "deg_in_sign": 5.8854,
+          "nakshatra": "Pushya",
+          "nak_idx": 7,
+          "pada": 1,
+          "star_lord": "Saturn",
+          "navamsa_sign": "Leo",
+          "navamsa_idx": 4,
+          "retrograde": false,
+          "speed": 0.2141,
+          "datetime_utc": "2026-06-30T18:30:00",
+          "natal_planets_conjoined": [
+            "Ketu"
+          ],
+          "natal_planets_aspected": {
+            "Venus": 9,
+            "Saturn": 7,
+            "Rahu": 7
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Moon": {
+              "count": 8,
+              "label": "dusthana"
+            },
+            "Mars": {
+              "count": 6,
+              "label": "dusthana"
+            },
+            "Mercury": {
+              "count": 4,
+              "label": "neutral"
+            },
+            "Jupiter": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Venus": {
+              "count": 5,
+              "label": "trine"
+            },
+            "Saturn": {
+              "count": 7,
+              "label": "opposition"
+            },
+            "Rahu": {
+              "count": 7,
+              "label": "opposition"
+            },
+            "Ketu": {
+              "count": 1,
+              "label": "conjunction"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": false,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": [
+            "Venus",
+            "Rahu"
+          ]
+        }
+      },
+      "sign_stays": [
+        {
+          "label": "Gemini",
+          "entry_date": "2025-12-31T18:30:00",
+          "entry_before_window": true,
+          "exit_date": "2026-06-01T20:06:05.020752",
+          "exit_after_window": false,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "natal_planets_conjoined": [
+            "Jupiter"
+          ],
+          "natal_planets_aspected": {
+            "Moon": 7,
+            "Mars": 9
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Moon": {
+              "count": 7,
+              "label": "opposition"
+            },
+            "Mars": {
+              "count": 5,
+              "label": "trine"
+            },
+            "Mercury": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Jupiter": {
+              "count": 1,
+              "label": "conjunction"
+            },
+            "Venus": {
+              "count": 4,
+              "label": "neutral"
+            },
+            "Saturn": {
+              "count": 6,
+              "label": "dusthana"
+            },
+            "Rahu": {
+              "count": 6,
+              "label": "dusthana"
+            },
+            "Ketu": {
+              "count": 12,
+              "label": "adjacent"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": false,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": []
+        },
+        {
+          "label": "Cancer",
+          "entry_date": "2026-06-01T20:06:05.020752",
+          "entry_before_window": false,
+          "exit_date": "2026-06-30T18:30:00",
+          "exit_after_window": true,
+          "sign": "Cancer",
+          "sign_idx": 3,
+          "natal_planets_conjoined": [
+            "Ketu"
+          ],
+          "natal_planets_aspected": {
+            "Venus": 9,
+            "Saturn": 7,
+            "Rahu": 7
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Moon": {
+              "count": 8,
+              "label": "dusthana"
+            },
+            "Mars": {
+              "count": 6,
+              "label": "dusthana"
+            },
+            "Mercury": {
+              "count": 4,
+              "label": "neutral"
+            },
+            "Jupiter": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Venus": {
+              "count": 5,
+              "label": "trine"
+            },
+            "Saturn": {
+              "count": 7,
+              "label": "opposition"
+            },
+            "Rahu": {
+              "count": 7,
+              "label": "opposition"
+            },
+            "Ketu": {
+              "count": 1,
+              "label": "conjunction"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": false,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": [
+            "Venus",
+            "Rahu"
+          ]
+        }
+      ],
+      "exact_conjunctions": [],
+      "jupiter_cycle": {
+        "natal_jupiter_sign": "Gemini",
+        "natal_jupiter_sign_idx": 2,
+        "in_natal_sign_at_window_start": true,
+        "returns_in_window": [],
+        "return_ages_in_window": [],
+        "age_at_window_start": 35.63,
+        "next_return_estimate_utc": "2036-09-09T19:10:19.024659",
+        "age_at_next_return": 46.32,
+        "next_return_scan": {
+          "step_days": 2.0,
+          "max_years": 13
+        }
+      }
+    },
+    "Saturn": {
+      "sampling_step_days": 5.0,
+      "positions": {
+        "window_start": {
+          "longitude": 331.9336,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "deg_in_sign": 1.9336,
+          "nakshatra": "Purva Bhadrapada",
+          "nak_idx": 24,
+          "pada": 4,
+          "star_lord": "Jupiter",
+          "navamsa_sign": "Cancer",
+          "navamsa_idx": 3,
+          "retrograde": false,
+          "speed": 0.058,
+          "datetime_utc": "2025-12-31T18:30:00",
+          "natal_planets_conjoined": [
+            "Venus"
+          ],
+          "natal_planets_aspected": {
+            "Sun": 3,
+            "Moon": 10
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 11,
+              "label": "neutral"
+            },
+            "Moon": {
+              "count": 4,
+              "label": "neutral"
+            },
+            "Mars": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Mercury": {
+              "count": 12,
+              "label": "adjacent"
+            },
+            "Jupiter": {
+              "count": 10,
+              "label": "neutral"
+            },
+            "Venus": {
+              "count": 1,
+              "label": "conjunction"
+            },
+            "Saturn": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Rahu": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Ketu": {
+              "count": 9,
+              "label": "trine"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": false,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": [
+            "Venus"
+          ]
+        },
+        "window_mid": {
+          "longitude": 341.3576,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "deg_in_sign": 11.3576,
+          "nakshatra": "Uttara Bhadrapada",
+          "nak_idx": 25,
+          "pada": 3,
+          "star_lord": "Saturn",
+          "navamsa_sign": "Libra",
+          "navamsa_idx": 6,
+          "retrograde": false,
+          "speed": 0.1244,
+          "datetime_utc": "2026-04-01T06:30:00",
+          "natal_planets_conjoined": [
+            "Venus"
+          ],
+          "natal_planets_aspected": {
+            "Sun": 3,
+            "Moon": 10
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 11,
+              "label": "neutral"
+            },
+            "Moon": {
+              "count": 4,
+              "label": "neutral"
+            },
+            "Mars": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Mercury": {
+              "count": 12,
+              "label": "adjacent"
+            },
+            "Jupiter": {
+              "count": 10,
+              "label": "neutral"
+            },
+            "Venus": {
+              "count": 1,
+              "label": "conjunction"
+            },
+            "Saturn": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Rahu": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Ketu": {
+              "count": 9,
+              "label": "trine"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": false,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": [
+            "Venus"
+          ]
+        },
+        "window_end": {
+          "longitude": 349.9496,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "deg_in_sign": 19.9496,
+          "nakshatra": "Revati",
+          "nak_idx": 26,
+          "pada": 1,
+          "star_lord": "Mercury",
+          "navamsa_sign": "Sagittarius",
+          "navamsa_idx": 8,
+          "retrograde": false,
+          "speed": 0.0434,
+          "datetime_utc": "2026-06-30T18:30:00",
+          "natal_planets_conjoined": [
+            "Venus"
+          ],
+          "natal_planets_aspected": {
+            "Sun": 3,
+            "Moon": 10
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 11,
+              "label": "neutral"
+            },
+            "Moon": {
+              "count": 4,
+              "label": "neutral"
+            },
+            "Mars": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Mercury": {
+              "count": 12,
+              "label": "adjacent"
+            },
+            "Jupiter": {
+              "count": 10,
+              "label": "neutral"
+            },
+            "Venus": {
+              "count": 1,
+              "label": "conjunction"
+            },
+            "Saturn": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Rahu": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Ketu": {
+              "count": 9,
+              "label": "trine"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": false,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": [
+            "Venus"
+          ]
+        }
+      },
+      "sign_stays": [
+        {
+          "label": "Pisces",
+          "entry_date": "2025-12-31T18:30:00",
+          "entry_before_window": true,
+          "exit_date": "2026-06-30T18:30:00",
+          "exit_after_window": true,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "natal_planets_conjoined": [
+            "Venus"
+          ],
+          "natal_planets_aspected": {
+            "Sun": 3,
+            "Moon": 10
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 11,
+              "label": "neutral"
+            },
+            "Moon": {
+              "count": 4,
+              "label": "neutral"
+            },
+            "Mars": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Mercury": {
+              "count": 12,
+              "label": "adjacent"
+            },
+            "Jupiter": {
+              "count": 10,
+              "label": "neutral"
+            },
+            "Venus": {
+              "count": 1,
+              "label": "conjunction"
+            },
+            "Saturn": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Rahu": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Ketu": {
+              "count": 9,
+              "label": "trine"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": false,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": [
+            "Venus"
+          ]
+        }
+      ],
+      "exact_conjunctions": [
+        {
+          "label": "conj Venus",
+          "entry_date": "2026-05-29T00:50:50.216675",
+          "entry_before_window": false,
+          "exit_date": "2026-06-26T18:10:08.367920",
+          "exit_after_window": false,
+          "natal_planet": "Venus",
+          "pass_number": 1,
+          "natal_longitude": 348.7632,
+          "orb": 1.0,
+          "natal_planet_is_dasha_lord": {
+            "mahadasha": false,
+            "antardasha": true,
+            "pratyantardasha": false
+          },
+          "karakatwas_activated": {
+            "primary_signification": "Wife/partner (male charts), vehicles, comforts, arts, relationships",
+            "secondary_signification": "Reproductive system, pleasures, luxury, marriage"
+          }
+        }
+      ],
+      "jupiter_cycle": null
+    },
+    "Rahu": {
+      "sampling_step_days": 5.0,
+      "positions": {
+        "window_start": {
+          "longitude": 317.9625,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "deg_in_sign": 17.9625,
+          "nakshatra": "Shatabhisha",
+          "nak_idx": 23,
+          "pada": 4,
+          "star_lord": "Rahu",
+          "navamsa_sign": "Pisces",
+          "navamsa_idx": 11,
+          "retrograde": false,
+          "speed": -0.0529,
+          "datetime_utc": "2025-12-31T18:30:00",
+          "natal_planets_conjoined": [
+            "Mars"
+          ],
+          "natal_planets_aspected": {
+            "Jupiter": 5
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 10,
+              "label": "neutral"
+            },
+            "Moon": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Mars": {
+              "count": 1,
+              "label": "conjunction"
+            },
+            "Mercury": {
+              "count": 11,
+              "label": "neutral"
+            },
+            "Jupiter": {
+              "count": 9,
+              "label": "trine"
+            },
+            "Venus": {
+              "count": 12,
+              "label": "adjacent"
+            },
+            "Saturn": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Rahu": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Ketu": {
+              "count": 8,
+              "label": "dusthana"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": true,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": []
+        },
+        "window_mid": {
+          "longitude": 313.167,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "deg_in_sign": 13.167,
+          "nakshatra": "Shatabhisha",
+          "nak_idx": 23,
+          "pada": 2,
+          "star_lord": "Rahu",
+          "navamsa_sign": "Capricorn",
+          "navamsa_idx": 9,
+          "retrograde": false,
+          "speed": -0.053,
+          "datetime_utc": "2026-04-01T06:30:00",
+          "natal_planets_conjoined": [
+            "Mars"
+          ],
+          "natal_planets_aspected": {
+            "Jupiter": 5
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 10,
+              "label": "neutral"
+            },
+            "Moon": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Mars": {
+              "count": 1,
+              "label": "conjunction"
+            },
+            "Mercury": {
+              "count": 11,
+              "label": "neutral"
+            },
+            "Jupiter": {
+              "count": 9,
+              "label": "trine"
+            },
+            "Venus": {
+              "count": 12,
+              "label": "adjacent"
+            },
+            "Saturn": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Rahu": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Ketu": {
+              "count": 8,
+              "label": "dusthana"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": true,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": []
+        },
+        "window_end": {
+          "longitude": 308.3718,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "deg_in_sign": 8.3718,
+          "nakshatra": "Shatabhisha",
+          "nak_idx": 23,
+          "pada": 1,
+          "star_lord": "Rahu",
+          "navamsa_sign": "Sagittarius",
+          "navamsa_idx": 8,
+          "retrograde": false,
+          "speed": -0.0529,
+          "datetime_utc": "2026-06-30T18:30:00",
+          "natal_planets_conjoined": [
+            "Mars"
+          ],
+          "natal_planets_aspected": {
+            "Jupiter": 5
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 10,
+              "label": "neutral"
+            },
+            "Moon": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Mars": {
+              "count": 1,
+              "label": "conjunction"
+            },
+            "Mercury": {
+              "count": 11,
+              "label": "neutral"
+            },
+            "Jupiter": {
+              "count": 9,
+              "label": "trine"
+            },
+            "Venus": {
+              "count": 12,
+              "label": "adjacent"
+            },
+            "Saturn": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Rahu": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Ketu": {
+              "count": 8,
+              "label": "dusthana"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": true,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": []
+        }
+      },
+      "sign_stays": [
+        {
+          "label": "Aquarius",
+          "entry_date": "2025-12-31T18:30:00",
+          "entry_before_window": true,
+          "exit_date": "2026-06-30T18:30:00",
+          "exit_after_window": true,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "natal_planets_conjoined": [
+            "Mars"
+          ],
+          "natal_planets_aspected": {
+            "Jupiter": 5
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 10,
+              "label": "neutral"
+            },
+            "Moon": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Mars": {
+              "count": 1,
+              "label": "conjunction"
+            },
+            "Mercury": {
+              "count": 11,
+              "label": "neutral"
+            },
+            "Jupiter": {
+              "count": 9,
+              "label": "trine"
+            },
+            "Venus": {
+              "count": 12,
+              "label": "adjacent"
+            },
+            "Saturn": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Rahu": {
+              "count": 2,
+              "label": "adjacent"
+            },
+            "Ketu": {
+              "count": 8,
+              "label": "dusthana"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": true,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": []
+        }
+      ],
+      "exact_conjunctions": [],
+      "jupiter_cycle": null
+    },
+    "Ketu": {
+      "sampling_step_days": 5.0,
+      "positions": {
+        "window_start": {
+          "longitude": 137.9625,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "deg_in_sign": 17.9625,
+          "nakshatra": "Purva Phalguni",
+          "nak_idx": 10,
+          "pada": 2,
+          "star_lord": "Venus",
+          "navamsa_sign": "Virgo",
+          "navamsa_idx": 5,
+          "retrograde": false,
+          "speed": 0.0529,
+          "datetime_utc": "2025-12-31T18:30:00",
+          "natal_planets_conjoined": [],
+          "natal_planets_aspected": {
+            "Moon": 5,
+            "Mars": 7,
+            "Mercury": 9
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 4,
+              "label": "neutral"
+            },
+            "Moon": {
+              "count": 9,
+              "label": "trine"
+            },
+            "Mars": {
+              "count": 7,
+              "label": "opposition"
+            },
+            "Mercury": {
+              "count": 5,
+              "label": "trine"
+            },
+            "Jupiter": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Venus": {
+              "count": 6,
+              "label": "dusthana"
+            },
+            "Saturn": {
+              "count": 8,
+              "label": "dusthana"
+            },
+            "Rahu": {
+              "count": 8,
+              "label": "dusthana"
+            },
+            "Ketu": {
+              "count": 2,
+              "label": "adjacent"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": false,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": [
+            "Mercury"
+          ]
+        },
+        "window_mid": {
+          "longitude": 133.167,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "deg_in_sign": 13.167,
+          "nakshatra": "Magha",
+          "nak_idx": 9,
+          "pada": 4,
+          "star_lord": "Ketu",
+          "navamsa_sign": "Cancer",
+          "navamsa_idx": 3,
+          "retrograde": false,
+          "speed": 0.053,
+          "datetime_utc": "2026-04-01T06:30:00",
+          "natal_planets_conjoined": [],
+          "natal_planets_aspected": {
+            "Moon": 5,
+            "Mars": 7,
+            "Mercury": 9
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 4,
+              "label": "neutral"
+            },
+            "Moon": {
+              "count": 9,
+              "label": "trine"
+            },
+            "Mars": {
+              "count": 7,
+              "label": "opposition"
+            },
+            "Mercury": {
+              "count": 5,
+              "label": "trine"
+            },
+            "Jupiter": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Venus": {
+              "count": 6,
+              "label": "dusthana"
+            },
+            "Saturn": {
+              "count": 8,
+              "label": "dusthana"
+            },
+            "Rahu": {
+              "count": 8,
+              "label": "dusthana"
+            },
+            "Ketu": {
+              "count": 2,
+              "label": "adjacent"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": false,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": [
+            "Mercury"
+          ]
+        },
+        "window_end": {
+          "longitude": 128.3718,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "deg_in_sign": 8.3718,
+          "nakshatra": "Magha",
+          "nak_idx": 9,
+          "pada": 3,
+          "star_lord": "Ketu",
+          "navamsa_sign": "Gemini",
+          "navamsa_idx": 2,
+          "retrograde": false,
+          "speed": 0.0529,
+          "datetime_utc": "2026-06-30T18:30:00",
+          "natal_planets_conjoined": [],
+          "natal_planets_aspected": {
+            "Moon": 5,
+            "Mars": 7,
+            "Mercury": 9
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 4,
+              "label": "neutral"
+            },
+            "Moon": {
+              "count": 9,
+              "label": "trine"
+            },
+            "Mars": {
+              "count": 7,
+              "label": "opposition"
+            },
+            "Mercury": {
+              "count": 5,
+              "label": "trine"
+            },
+            "Jupiter": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Venus": {
+              "count": 6,
+              "label": "dusthana"
+            },
+            "Saturn": {
+              "count": 8,
+              "label": "dusthana"
+            },
+            "Rahu": {
+              "count": 8,
+              "label": "dusthana"
+            },
+            "Ketu": {
+              "count": 2,
+              "label": "adjacent"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": false,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": [
+            "Mercury"
+          ]
+        }
+      },
+      "sign_stays": [
+        {
+          "label": "Leo",
+          "entry_date": "2025-12-31T18:30:00",
+          "entry_before_window": true,
+          "exit_date": "2026-06-30T18:30:00",
+          "exit_after_window": true,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "natal_planets_conjoined": [],
+          "natal_planets_aspected": {
+            "Moon": 5,
+            "Mars": 7,
+            "Mercury": 9
+          },
+          "relation_to_natal": {
+            "Sun": {
+              "count": 4,
+              "label": "neutral"
+            },
+            "Moon": {
+              "count": 9,
+              "label": "trine"
+            },
+            "Mars": {
+              "count": 7,
+              "label": "opposition"
+            },
+            "Mercury": {
+              "count": 5,
+              "label": "trine"
+            },
+            "Jupiter": {
+              "count": 3,
+              "label": "neutral"
+            },
+            "Venus": {
+              "count": 6,
+              "label": "dusthana"
+            },
+            "Saturn": {
+              "count": 8,
+              "label": "dusthana"
+            },
+            "Rahu": {
+              "count": 8,
+              "label": "dusthana"
+            },
+            "Ketu": {
+              "count": 2,
+              "label": "adjacent"
+            }
+          },
+          "is_dasha_lord": {
+            "mahadasha": false,
+            "antardasha": false,
+            "pratyantardasha": false
+          },
+          "dasha_lords_touched": [
+            "Mercury"
+          ]
+        }
+      ],
+      "exact_conjunctions": [],
+      "jupiter_cycle": null
+    }
+  },
+  "note": "Positional facts only. relation_to_natal.count = signs from the natal planet's sign to the transit sign (1..12, inclusive). natal_planets_aspected uses BNN aspects (7th always; Mars 4/8, Jupiter 5/9, Saturn 3/10, Rahu/Ketu 5/9). is_dasha_lord / natal_planet_is_dasha_lord refer to the dasha running at reference.dasha_asof, not at each transit date. Dasha activation sets the period; a slow transit over the Karaka (or its dasha lord) narrows it; transits never override an un-activated dasha."
+}
