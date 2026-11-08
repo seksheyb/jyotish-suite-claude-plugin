@@ -1,0 +1,1172 @@
+{
+  "script": "compute_jaimini_transits.py",
+  "school": "jaimini",
+  "ayanamsa": {
+    "mode": "lahiri"
+  },
+  "window": {
+    "start_local": "2026-01-01T00:00:00+05:30",
+    "start_utc": "2025-12-31T18:30:00",
+    "mid_utc": "2026-04-01T06:30:00",
+    "end_local": "2026-07-01T00:00:00+05:30",
+    "end_utc": "2026-06-30T18:30:00",
+    "tz": "Asia/Kolkata"
+  },
+  "reference": {
+    "AL": {
+      "sign": "Taurus",
+      "sign_idx": 1
+    },
+    "UL": {
+      "sign": "Aquarius",
+      "sign_idx": 10
+    },
+    "dasha_rasi": {
+      "sign": "Sagittarius",
+      "sign_idx": 8,
+      "lord": "Jupiter",
+      "start": "2022-09-21T00:27:24",
+      "end": "2028-09-20T12:27:24",
+      "contains_window_start": true,
+      "contains_window_end": true
+    },
+    "antardasha_rasi": {
+      "sign": "Gemini",
+      "sign_idx": 2,
+      "lord": "Mercury",
+      "start": "2025-09-20T18:27:24",
+      "end": "2026-03-22T09:27:24"
+    },
+    "antardashas_in_window": [
+      {
+        "sign": "Gemini",
+        "sign_idx": 2,
+        "lord": "Mercury",
+        "start": "2025-09-20T18:27:24",
+        "end": "2026-03-22T09:27:24"
+      },
+      {
+        "sign": "Cancer",
+        "sign_idx": 3,
+        "lord": "Moon",
+        "start": "2026-03-22T09:27:24",
+        "end": "2026-09-21T00:27:24"
+      }
+    ],
+    "karakamsha": {
+      "sign": "Sagittarius",
+      "sign_idx": 8
+    },
+    "atmakaraka": {
+      "planet": "Moon",
+      "sign": "Sagittarius",
+      "sign_idx": 8
+    },
+    "natal_planets_by_sign": {
+      "Aries": [
+        "Mercury"
+      ],
+      "Taurus": [
+        "Sun"
+      ],
+      "Gemini": [
+        "Jupiter"
+      ],
+      "Cancer": [
+        "Ketu"
+      ],
+      "Sagittarius": [
+        "Moon"
+      ],
+      "Capricorn": [
+        "Saturn",
+        "Rahu"
+      ],
+      "Aquarius": [
+        "Mars"
+      ],
+      "Pisces": [
+        "Venus"
+      ]
+    }
+  },
+  "bodies": {
+    "Jupiter": {
+      "sampling_step_days": 2.0,
+      "positions": {
+        "window_start": {
+          "longitude": 87.1673,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "deg_in_sign": 27.1673,
+          "nakshatra": "Punarvasu",
+          "nak_idx": 6,
+          "pada": 3,
+          "star_lord": "Jupiter",
+          "navamsa_sign": "Gemini",
+          "navamsa_idx": 2,
+          "retrograde": true,
+          "speed": -0.1303,
+          "datetime_utc": "2025-12-31T18:30:00",
+          "house_from_AL": 2,
+          "house_from_UL": 5,
+          "house_from_dasha_rasi": 7,
+          "house_from_antardasha_rasi": 1,
+          "antardasha_rasi_used": "Gemini",
+          "conjoins": [
+            "antardasha_rasi"
+          ],
+          "aspects": [
+            "dasha_rasi",
+            "karakamsha",
+            "atmakaraka"
+          ],
+          "argala": {
+            "AL": {
+              "type": "primary",
+              "house": 2,
+              "virodha_house": 12,
+              "virodha_sign": "Aries",
+              "obstructed_by": [
+                "Mercury"
+              ]
+            },
+            "dasha_rasi": {
+              "type": null,
+              "house": 7,
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": true,
+          "natal_planets_in_sign": [
+            "Jupiter"
+          ]
+        },
+        "window_mid": {
+          "longitude": 81.5748,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "deg_in_sign": 21.5748,
+          "nakshatra": "Punarvasu",
+          "nak_idx": 6,
+          "pada": 1,
+          "star_lord": "Jupiter",
+          "navamsa_sign": "Aries",
+          "navamsa_idx": 0,
+          "retrograde": false,
+          "speed": 0.0659,
+          "datetime_utc": "2026-04-01T06:30:00",
+          "house_from_AL": 2,
+          "house_from_UL": 5,
+          "house_from_dasha_rasi": 7,
+          "house_from_antardasha_rasi": 12,
+          "antardasha_rasi_used": "Cancer",
+          "conjoins": [],
+          "aspects": [
+            "dasha_rasi",
+            "karakamsha",
+            "atmakaraka"
+          ],
+          "argala": {
+            "AL": {
+              "type": "primary",
+              "house": 2,
+              "virodha_house": 12,
+              "virodha_sign": "Aries",
+              "obstructed_by": [
+                "Mercury"
+              ]
+            },
+            "dasha_rasi": {
+              "type": null,
+              "house": 7,
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": true,
+          "natal_planets_in_sign": [
+            "Jupiter"
+          ]
+        },
+        "window_end": {
+          "longitude": 95.8854,
+          "sign": "Cancer",
+          "sign_idx": 3,
+          "deg_in_sign": 5.8854,
+          "nakshatra": "Pushya",
+          "nak_idx": 7,
+          "pada": 1,
+          "star_lord": "Saturn",
+          "navamsa_sign": "Leo",
+          "navamsa_idx": 4,
+          "retrograde": false,
+          "speed": 0.2141,
+          "datetime_utc": "2026-06-30T18:30:00",
+          "house_from_AL": 3,
+          "house_from_UL": 6,
+          "house_from_dasha_rasi": 8,
+          "house_from_antardasha_rasi": 1,
+          "antardasha_rasi_used": "Cancer",
+          "conjoins": [
+            "antardasha_rasi"
+          ],
+          "aspects": [
+            "AL",
+            "UL"
+          ],
+          "argala": {
+            "AL": {
+              "type": null,
+              "house": 3,
+              "obstructed_by": []
+            },
+            "dasha_rasi": {
+              "type": null,
+              "house": 8,
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": true,
+          "natal_planets_in_sign": [
+            "Ketu"
+          ]
+        }
+      },
+      "sign_stays": [
+        {
+          "label": "Gemini",
+          "entry_date": "2025-12-31T18:30:00",
+          "entry_before_window": true,
+          "exit_date": "2026-06-01T20:06:05.020752",
+          "exit_after_window": false,
+          "sign": "Gemini",
+          "sign_idx": 2,
+          "house_from_AL": 2,
+          "house_from_UL": 5,
+          "house_from_dasha_rasi": 7,
+          "house_from_antardasha_rasi": 1,
+          "antardasha_rasi_used": "Gemini",
+          "conjoins": [
+            "antardasha_rasi"
+          ],
+          "aspects": [
+            "dasha_rasi",
+            "karakamsha",
+            "atmakaraka"
+          ],
+          "argala": {
+            "AL": {
+              "type": "primary",
+              "house": 2,
+              "virodha_house": 12,
+              "virodha_sign": "Aries",
+              "obstructed_by": [
+                "Mercury"
+              ]
+            },
+            "dasha_rasi": {
+              "type": null,
+              "house": 7,
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": true,
+          "natal_planets_in_sign": [
+            "Jupiter"
+          ]
+        },
+        {
+          "label": "Cancer",
+          "entry_date": "2026-06-01T20:06:05.020752",
+          "entry_before_window": false,
+          "exit_date": "2026-06-30T18:30:00",
+          "exit_after_window": true,
+          "sign": "Cancer",
+          "sign_idx": 3,
+          "house_from_AL": 3,
+          "house_from_UL": 6,
+          "house_from_dasha_rasi": 8,
+          "house_from_antardasha_rasi": 1,
+          "antardasha_rasi_used": "Cancer",
+          "conjoins": [
+            "antardasha_rasi"
+          ],
+          "aspects": [
+            "AL",
+            "UL"
+          ],
+          "argala": {
+            "AL": {
+              "type": null,
+              "house": 3,
+              "obstructed_by": []
+            },
+            "dasha_rasi": {
+              "type": null,
+              "house": 8,
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": true,
+          "natal_planets_in_sign": [
+            "Ketu"
+          ]
+        }
+      ],
+      "karakamsha_overlay": [
+        {
+          "label": "Punarvasu pada 3",
+          "entry_date": "2025-12-31T18:30:00",
+          "entry_before_window": true,
+          "exit_date": "2026-01-04T13:34:06.148682",
+          "exit_after_window": false,
+          "nakshatra": "Punarvasu",
+          "nak_idx": 6,
+          "pada": 3,
+          "navamsa_sign": "Gemini",
+          "navamsa_idx": 2,
+          "relation_to_karakamsha": "aspects",
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Punarvasu pada 2",
+          "entry_date": "2026-01-04T13:34:06.148682",
+          "entry_before_window": false,
+          "exit_date": "2026-01-30T06:49:32.021485",
+          "exit_after_window": false,
+          "nakshatra": "Punarvasu",
+          "nak_idx": 6,
+          "pada": 2,
+          "navamsa_sign": "Taurus",
+          "navamsa_idx": 1,
+          "relation_to_karakamsha": null,
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Punarvasu pada 1",
+          "entry_date": "2026-01-30T06:49:32.021485",
+          "entry_before_window": false,
+          "exit_date": "2026-04-20T09:50:29.040528",
+          "exit_after_window": false,
+          "nakshatra": "Punarvasu",
+          "nak_idx": 6,
+          "pada": 1,
+          "navamsa_sign": "Aries",
+          "navamsa_idx": 0,
+          "relation_to_karakamsha": null,
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Punarvasu pada 2",
+          "entry_date": "2026-04-20T09:50:29.040528",
+          "entry_before_window": false,
+          "exit_date": "2026-05-14T00:51:29.025880",
+          "exit_after_window": false,
+          "nakshatra": "Punarvasu",
+          "nak_idx": 6,
+          "pada": 2,
+          "navamsa_sign": "Taurus",
+          "navamsa_idx": 1,
+          "relation_to_karakamsha": null,
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Punarvasu pada 3",
+          "entry_date": "2026-05-14T00:51:29.025880",
+          "entry_before_window": false,
+          "exit_date": "2026-06-01T20:06:05.020752",
+          "exit_after_window": false,
+          "nakshatra": "Punarvasu",
+          "nak_idx": 6,
+          "pada": 3,
+          "navamsa_sign": "Gemini",
+          "navamsa_idx": 2,
+          "relation_to_karakamsha": "aspects",
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Punarvasu pada 4",
+          "entry_date": "2026-06-01T20:06:05.020752",
+          "entry_before_window": false,
+          "exit_date": "2026-06-18T15:16:43.051759",
+          "exit_after_window": false,
+          "nakshatra": "Punarvasu",
+          "nak_idx": 6,
+          "pada": 4,
+          "navamsa_sign": "Cancer",
+          "navamsa_idx": 3,
+          "relation_to_karakamsha": null,
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Pushya pada 1",
+          "entry_date": "2026-06-18T15:16:43.051759",
+          "entry_before_window": false,
+          "exit_date": "2026-06-30T18:30:00",
+          "exit_after_window": true,
+          "nakshatra": "Pushya",
+          "nak_idx": 7,
+          "pada": 1,
+          "navamsa_sign": "Leo",
+          "navamsa_idx": 4,
+          "relation_to_karakamsha": null,
+          "layer": "lineage_specific"
+        }
+      ]
+    },
+    "Saturn": {
+      "sampling_step_days": 5.0,
+      "positions": {
+        "window_start": {
+          "longitude": 331.9336,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "deg_in_sign": 1.9336,
+          "nakshatra": "Purva Bhadrapada",
+          "nak_idx": 24,
+          "pada": 4,
+          "star_lord": "Jupiter",
+          "navamsa_sign": "Cancer",
+          "navamsa_idx": 3,
+          "retrograde": false,
+          "speed": 0.058,
+          "datetime_utc": "2025-12-31T18:30:00",
+          "house_from_AL": 11,
+          "house_from_UL": 2,
+          "house_from_dasha_rasi": 4,
+          "house_from_antardasha_rasi": 10,
+          "antardasha_rasi_used": "Gemini",
+          "conjoins": [],
+          "aspects": [
+            "dasha_rasi",
+            "antardasha_rasi",
+            "karakamsha",
+            "atmakaraka"
+          ],
+          "argala": {
+            "AL": {
+              "type": "primary",
+              "house": 11,
+              "virodha_house": 3,
+              "virodha_sign": "Cancer",
+              "obstructed_by": [
+                "Ketu"
+              ]
+            },
+            "dasha_rasi": {
+              "type": "primary",
+              "house": 4,
+              "virodha_house": 10,
+              "virodha_sign": "Virgo",
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": false,
+          "natal_planets_in_sign": [
+            "Venus"
+          ]
+        },
+        "window_mid": {
+          "longitude": 341.3576,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "deg_in_sign": 11.3576,
+          "nakshatra": "Uttara Bhadrapada",
+          "nak_idx": 25,
+          "pada": 3,
+          "star_lord": "Saturn",
+          "navamsa_sign": "Libra",
+          "navamsa_idx": 6,
+          "retrograde": false,
+          "speed": 0.1244,
+          "datetime_utc": "2026-04-01T06:30:00",
+          "house_from_AL": 11,
+          "house_from_UL": 2,
+          "house_from_dasha_rasi": 4,
+          "house_from_antardasha_rasi": 9,
+          "antardasha_rasi_used": "Cancer",
+          "conjoins": [],
+          "aspects": [
+            "dasha_rasi",
+            "karakamsha",
+            "atmakaraka"
+          ],
+          "argala": {
+            "AL": {
+              "type": "primary",
+              "house": 11,
+              "virodha_house": 3,
+              "virodha_sign": "Cancer",
+              "obstructed_by": [
+                "Ketu"
+              ]
+            },
+            "dasha_rasi": {
+              "type": "primary",
+              "house": 4,
+              "virodha_house": 10,
+              "virodha_sign": "Virgo",
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": false,
+          "natal_planets_in_sign": [
+            "Venus"
+          ]
+        },
+        "window_end": {
+          "longitude": 349.9496,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "deg_in_sign": 19.9496,
+          "nakshatra": "Revati",
+          "nak_idx": 26,
+          "pada": 1,
+          "star_lord": "Mercury",
+          "navamsa_sign": "Sagittarius",
+          "navamsa_idx": 8,
+          "retrograde": false,
+          "speed": 0.0434,
+          "datetime_utc": "2026-06-30T18:30:00",
+          "house_from_AL": 11,
+          "house_from_UL": 2,
+          "house_from_dasha_rasi": 4,
+          "house_from_antardasha_rasi": 9,
+          "antardasha_rasi_used": "Cancer",
+          "conjoins": [],
+          "aspects": [
+            "dasha_rasi",
+            "karakamsha",
+            "atmakaraka"
+          ],
+          "argala": {
+            "AL": {
+              "type": "primary",
+              "house": 11,
+              "virodha_house": 3,
+              "virodha_sign": "Cancer",
+              "obstructed_by": [
+                "Ketu"
+              ]
+            },
+            "dasha_rasi": {
+              "type": "primary",
+              "house": 4,
+              "virodha_house": 10,
+              "virodha_sign": "Virgo",
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": false,
+          "natal_planets_in_sign": [
+            "Venus"
+          ]
+        }
+      },
+      "sign_stays": [
+        {
+          "label": "Pisces",
+          "entry_date": "2025-12-31T18:30:00",
+          "entry_before_window": true,
+          "exit_date": "2026-06-30T18:30:00",
+          "exit_after_window": true,
+          "sign": "Pisces",
+          "sign_idx": 11,
+          "house_from_AL": 11,
+          "house_from_UL": 2,
+          "house_from_dasha_rasi": 4,
+          "house_from_antardasha_rasi": 10,
+          "antardasha_rasi_used": "Gemini",
+          "conjoins": [],
+          "aspects": [
+            "dasha_rasi",
+            "antardasha_rasi",
+            "karakamsha",
+            "atmakaraka"
+          ],
+          "argala": {
+            "AL": {
+              "type": "primary",
+              "house": 11,
+              "virodha_house": 3,
+              "virodha_sign": "Cancer",
+              "obstructed_by": [
+                "Ketu"
+              ]
+            },
+            "dasha_rasi": {
+              "type": "primary",
+              "house": 4,
+              "virodha_house": 10,
+              "virodha_sign": "Virgo",
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": false,
+          "natal_planets_in_sign": [
+            "Venus"
+          ]
+        }
+      ],
+      "karakamsha_overlay": [
+        {
+          "label": "Purva Bhadrapada pada 4",
+          "entry_date": "2025-12-31T18:30:00",
+          "entry_before_window": true,
+          "exit_date": "2026-01-20T04:50:54.034423",
+          "exit_after_window": false,
+          "nakshatra": "Purva Bhadrapada",
+          "nak_idx": 24,
+          "pada": 4,
+          "navamsa_sign": "Cancer",
+          "navamsa_idx": 3,
+          "relation_to_karakamsha": null,
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Uttara Bhadrapada pada 1",
+          "entry_date": "2026-01-20T04:50:54.034423",
+          "entry_before_window": false,
+          "exit_date": "2026-02-21T21:17:19.141845",
+          "exit_after_window": false,
+          "nakshatra": "Uttara Bhadrapada",
+          "nak_idx": 25,
+          "pada": 1,
+          "navamsa_sign": "Leo",
+          "navamsa_idx": 4,
+          "relation_to_karakamsha": null,
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Uttara Bhadrapada pada 2",
+          "entry_date": "2026-02-21T21:17:19.141845",
+          "entry_before_window": false,
+          "exit_date": "2026-03-21T09:14:06.331787",
+          "exit_after_window": false,
+          "nakshatra": "Uttara Bhadrapada",
+          "nak_idx": 25,
+          "pada": 2,
+          "navamsa_sign": "Virgo",
+          "navamsa_idx": 5,
+          "relation_to_karakamsha": "aspects",
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Uttara Bhadrapada pada 3",
+          "entry_date": "2026-03-21T09:14:06.331787",
+          "entry_before_window": false,
+          "exit_date": "2026-04-17T09:16:01.111451",
+          "exit_after_window": false,
+          "nakshatra": "Uttara Bhadrapada",
+          "nak_idx": 25,
+          "pada": 3,
+          "navamsa_sign": "Libra",
+          "navamsa_idx": 6,
+          "relation_to_karakamsha": null,
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Uttara Bhadrapada pada 4",
+          "entry_date": "2026-04-17T09:16:01.111451",
+          "entry_before_window": false,
+          "exit_date": "2026-05-17T08:44:14.022217",
+          "exit_after_window": false,
+          "nakshatra": "Uttara Bhadrapada",
+          "nak_idx": 25,
+          "pada": 4,
+          "navamsa_sign": "Scorpio",
+          "navamsa_idx": 7,
+          "relation_to_karakamsha": null,
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Revati pada 1",
+          "entry_date": "2026-05-17T08:44:14.022217",
+          "entry_before_window": false,
+          "exit_date": "2026-06-30T18:30:00",
+          "exit_after_window": true,
+          "nakshatra": "Revati",
+          "nak_idx": 26,
+          "pada": 1,
+          "navamsa_sign": "Sagittarius",
+          "navamsa_idx": 8,
+          "relation_to_karakamsha": "same",
+          "layer": "lineage_specific"
+        }
+      ]
+    },
+    "Rahu": {
+      "sampling_step_days": 5.0,
+      "positions": {
+        "window_start": {
+          "longitude": 317.9625,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "deg_in_sign": 17.9625,
+          "nakshatra": "Shatabhisha",
+          "nak_idx": 23,
+          "pada": 4,
+          "star_lord": "Rahu",
+          "navamsa_sign": "Pisces",
+          "navamsa_idx": 11,
+          "retrograde": false,
+          "speed": -0.0529,
+          "datetime_utc": "2025-12-31T18:30:00",
+          "house_from_AL": 10,
+          "house_from_UL": 1,
+          "house_from_dasha_rasi": 3,
+          "house_from_antardasha_rasi": 9,
+          "antardasha_rasi_used": "Gemini",
+          "conjoins": [
+            "UL"
+          ],
+          "aspects": [],
+          "argala": {
+            "AL": {
+              "type": null,
+              "house": 10,
+              "obstructed_by": []
+            },
+            "dasha_rasi": {
+              "type": null,
+              "house": 3,
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": false,
+          "natal_planets_in_sign": [
+            "Mars"
+          ]
+        },
+        "window_mid": {
+          "longitude": 313.167,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "deg_in_sign": 13.167,
+          "nakshatra": "Shatabhisha",
+          "nak_idx": 23,
+          "pada": 2,
+          "star_lord": "Rahu",
+          "navamsa_sign": "Capricorn",
+          "navamsa_idx": 9,
+          "retrograde": false,
+          "speed": -0.053,
+          "datetime_utc": "2026-04-01T06:30:00",
+          "house_from_AL": 10,
+          "house_from_UL": 1,
+          "house_from_dasha_rasi": 3,
+          "house_from_antardasha_rasi": 8,
+          "antardasha_rasi_used": "Cancer",
+          "conjoins": [
+            "UL"
+          ],
+          "aspects": [
+            "antardasha_rasi"
+          ],
+          "argala": {
+            "AL": {
+              "type": null,
+              "house": 10,
+              "obstructed_by": []
+            },
+            "dasha_rasi": {
+              "type": null,
+              "house": 3,
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": false,
+          "natal_planets_in_sign": [
+            "Mars"
+          ]
+        },
+        "window_end": {
+          "longitude": 308.3718,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "deg_in_sign": 8.3718,
+          "nakshatra": "Shatabhisha",
+          "nak_idx": 23,
+          "pada": 1,
+          "star_lord": "Rahu",
+          "navamsa_sign": "Sagittarius",
+          "navamsa_idx": 8,
+          "retrograde": false,
+          "speed": -0.0529,
+          "datetime_utc": "2026-06-30T18:30:00",
+          "house_from_AL": 10,
+          "house_from_UL": 1,
+          "house_from_dasha_rasi": 3,
+          "house_from_antardasha_rasi": 8,
+          "antardasha_rasi_used": "Cancer",
+          "conjoins": [
+            "UL"
+          ],
+          "aspects": [
+            "antardasha_rasi"
+          ],
+          "argala": {
+            "AL": {
+              "type": null,
+              "house": 10,
+              "obstructed_by": []
+            },
+            "dasha_rasi": {
+              "type": null,
+              "house": 3,
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": false,
+          "natal_planets_in_sign": [
+            "Mars"
+          ]
+        }
+      },
+      "sign_stays": [
+        {
+          "label": "Aquarius",
+          "entry_date": "2025-12-31T18:30:00",
+          "entry_before_window": true,
+          "exit_date": "2026-06-30T18:30:00",
+          "exit_after_window": true,
+          "sign": "Aquarius",
+          "sign_idx": 10,
+          "house_from_AL": 10,
+          "house_from_UL": 1,
+          "house_from_dasha_rasi": 3,
+          "house_from_antardasha_rasi": 9,
+          "antardasha_rasi_used": "Gemini",
+          "conjoins": [
+            "UL"
+          ],
+          "aspects": [],
+          "argala": {
+            "AL": {
+              "type": null,
+              "house": 10,
+              "obstructed_by": []
+            },
+            "dasha_rasi": {
+              "type": null,
+              "house": 3,
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": false,
+          "natal_planets_in_sign": [
+            "Mars"
+          ]
+        }
+      ],
+      "karakamsha_overlay": [
+        {
+          "label": "Shatabhisha pada 4",
+          "entry_date": "2025-12-31T18:30:00",
+          "entry_before_window": true,
+          "exit_date": "2026-01-25T05:33:03.224487",
+          "exit_after_window": false,
+          "nakshatra": "Shatabhisha",
+          "nak_idx": 23,
+          "pada": 4,
+          "navamsa_sign": "Pisces",
+          "navamsa_idx": 11,
+          "relation_to_karakamsha": "aspects",
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Shatabhisha pada 3",
+          "entry_date": "2026-01-25T05:33:03.224487",
+          "entry_before_window": false,
+          "exit_date": "2026-03-29T03:12:33.305054",
+          "exit_after_window": false,
+          "nakshatra": "Shatabhisha",
+          "nak_idx": 23,
+          "pada": 3,
+          "navamsa_sign": "Aquarius",
+          "navamsa_idx": 10,
+          "relation_to_karakamsha": null,
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Shatabhisha pada 2",
+          "entry_date": "2026-03-29T03:12:33.305054",
+          "entry_before_window": false,
+          "exit_date": "2026-05-31T00:51:17.243042",
+          "exit_after_window": false,
+          "nakshatra": "Shatabhisha",
+          "nak_idx": 23,
+          "pada": 2,
+          "navamsa_sign": "Capricorn",
+          "navamsa_idx": 9,
+          "relation_to_karakamsha": null,
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Shatabhisha pada 1",
+          "entry_date": "2026-05-31T00:51:17.243042",
+          "entry_before_window": false,
+          "exit_date": "2026-06-30T18:30:00",
+          "exit_after_window": true,
+          "nakshatra": "Shatabhisha",
+          "nak_idx": 23,
+          "pada": 1,
+          "navamsa_sign": "Sagittarius",
+          "navamsa_idx": 8,
+          "relation_to_karakamsha": "same",
+          "layer": "lineage_specific"
+        }
+      ]
+    },
+    "Ketu": {
+      "sampling_step_days": 5.0,
+      "positions": {
+        "window_start": {
+          "longitude": 137.9625,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "deg_in_sign": 17.9625,
+          "nakshatra": "Purva Phalguni",
+          "nak_idx": 10,
+          "pada": 2,
+          "star_lord": "Venus",
+          "navamsa_sign": "Virgo",
+          "navamsa_idx": 5,
+          "retrograde": false,
+          "speed": 0.0529,
+          "datetime_utc": "2025-12-31T18:30:00",
+          "house_from_AL": 4,
+          "house_from_UL": 7,
+          "house_from_dasha_rasi": 9,
+          "house_from_antardasha_rasi": 3,
+          "antardasha_rasi_used": "Gemini",
+          "conjoins": [],
+          "aspects": [],
+          "argala": {
+            "AL": {
+              "type": "primary",
+              "house": 4,
+              "virodha_house": 10,
+              "virodha_sign": "Aquarius",
+              "obstructed_by": [
+                "Mars"
+              ]
+            },
+            "dasha_rasi": {
+              "type": null,
+              "house": 9,
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": false,
+          "natal_planets_in_sign": []
+        },
+        "window_mid": {
+          "longitude": 133.167,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "deg_in_sign": 13.167,
+          "nakshatra": "Magha",
+          "nak_idx": 9,
+          "pada": 4,
+          "star_lord": "Ketu",
+          "navamsa_sign": "Cancer",
+          "navamsa_idx": 3,
+          "retrograde": false,
+          "speed": 0.053,
+          "datetime_utc": "2026-04-01T06:30:00",
+          "house_from_AL": 4,
+          "house_from_UL": 7,
+          "house_from_dasha_rasi": 9,
+          "house_from_antardasha_rasi": 2,
+          "antardasha_rasi_used": "Cancer",
+          "conjoins": [],
+          "aspects": [],
+          "argala": {
+            "AL": {
+              "type": "primary",
+              "house": 4,
+              "virodha_house": 10,
+              "virodha_sign": "Aquarius",
+              "obstructed_by": [
+                "Mars"
+              ]
+            },
+            "dasha_rasi": {
+              "type": null,
+              "house": 9,
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": false,
+          "natal_planets_in_sign": []
+        },
+        "window_end": {
+          "longitude": 128.3718,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "deg_in_sign": 8.3718,
+          "nakshatra": "Magha",
+          "nak_idx": 9,
+          "pada": 3,
+          "star_lord": "Ketu",
+          "navamsa_sign": "Gemini",
+          "navamsa_idx": 2,
+          "retrograde": false,
+          "speed": 0.0529,
+          "datetime_utc": "2026-06-30T18:30:00",
+          "house_from_AL": 4,
+          "house_from_UL": 7,
+          "house_from_dasha_rasi": 9,
+          "house_from_antardasha_rasi": 2,
+          "antardasha_rasi_used": "Cancer",
+          "conjoins": [],
+          "aspects": [],
+          "argala": {
+            "AL": {
+              "type": "primary",
+              "house": 4,
+              "virodha_house": 10,
+              "virodha_sign": "Aquarius",
+              "obstructed_by": [
+                "Mars"
+              ]
+            },
+            "dasha_rasi": {
+              "type": null,
+              "house": 9,
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": false,
+          "natal_planets_in_sign": []
+        }
+      },
+      "sign_stays": [
+        {
+          "label": "Leo",
+          "entry_date": "2025-12-31T18:30:00",
+          "entry_before_window": true,
+          "exit_date": "2026-06-30T18:30:00",
+          "exit_after_window": true,
+          "sign": "Leo",
+          "sign_idx": 4,
+          "house_from_AL": 4,
+          "house_from_UL": 7,
+          "house_from_dasha_rasi": 9,
+          "house_from_antardasha_rasi": 3,
+          "antardasha_rasi_used": "Gemini",
+          "conjoins": [],
+          "aspects": [],
+          "argala": {
+            "AL": {
+              "type": "primary",
+              "house": 4,
+              "virodha_house": 10,
+              "virodha_sign": "Aquarius",
+              "obstructed_by": [
+                "Mars"
+              ]
+            },
+            "dasha_rasi": {
+              "type": null,
+              "house": 9,
+              "obstructed_by": []
+            }
+          },
+          "is_dasha_rasi_lord": false,
+          "natal_planets_in_sign": []
+        }
+      ],
+      "karakamsha_overlay": [
+        {
+          "label": "Purva Phalguni pada 2",
+          "entry_date": "2025-12-31T18:30:00",
+          "entry_before_window": true,
+          "exit_date": "2026-01-25T05:33:03.224487",
+          "exit_after_window": false,
+          "nakshatra": "Purva Phalguni",
+          "nak_idx": 10,
+          "pada": 2,
+          "navamsa_sign": "Virgo",
+          "navamsa_idx": 5,
+          "relation_to_karakamsha": "aspects",
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Purva Phalguni pada 1",
+          "entry_date": "2026-01-25T05:33:03.224487",
+          "entry_before_window": false,
+          "exit_date": "2026-03-29T03:12:33.305054",
+          "exit_after_window": false,
+          "nakshatra": "Purva Phalguni",
+          "nak_idx": 10,
+          "pada": 1,
+          "navamsa_sign": "Leo",
+          "navamsa_idx": 4,
+          "relation_to_karakamsha": null,
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Magha pada 4",
+          "entry_date": "2026-03-29T03:12:33.305054",
+          "entry_before_window": false,
+          "exit_date": "2026-05-31T00:51:17.243042",
+          "exit_after_window": false,
+          "nakshatra": "Magha",
+          "nak_idx": 9,
+          "pada": 4,
+          "navamsa_sign": "Cancer",
+          "navamsa_idx": 3,
+          "relation_to_karakamsha": null,
+          "layer": "lineage_specific"
+        },
+        {
+          "label": "Magha pada 3",
+          "entry_date": "2026-05-31T00:51:17.243042",
+          "entry_before_window": false,
+          "exit_date": "2026-06-30T18:30:00",
+          "exit_after_window": true,
+          "nakshatra": "Magha",
+          "nak_idx": 9,
+          "pada": 3,
+          "navamsa_sign": "Gemini",
+          "navamsa_idx": 2,
+          "relation_to_karakamsha": "aspects",
+          "layer": "lineage_specific"
+        }
+      ]
+    }
+  },
+  "double_transit": {
+    "window_start": {
+      "datetime_utc": "2025-12-31T18:30:00",
+      "jupiter_sign": "Gemini",
+      "saturn_sign": "Pisces",
+      "on_AL": false,
+      "on_UL": false,
+      "on_dasha_rasi": true,
+      "on_karakamsha": true
+    },
+    "window_mid": {
+      "datetime_utc": "2026-04-01T06:30:00",
+      "jupiter_sign": "Gemini",
+      "saturn_sign": "Pisces",
+      "on_AL": false,
+      "on_UL": false,
+      "on_dasha_rasi": true,
+      "on_karakamsha": true
+    },
+    "window_end": {
+      "datetime_utc": "2026-06-30T18:30:00",
+      "jupiter_sign": "Cancer",
+      "saturn_sign": "Pisces",
+      "on_AL": false,
+      "on_UL": false,
+      "on_dasha_rasi": false,
+      "on_karakamsha": false
+    }
+  },
+  "note": "Chara Dasha sets the period; a slow transit occupying or aspecting the dasha Rasi / AL narrows it; transits never override an inactive Rasi. Aspects are Jaimini Rasi Drishti (sign to sign, mutual), not Parashari graha drishti. Argala here is a transit in the 2nd/4th/11th (primary) or 5th (secondary) from the reference; obstructed_by lists the natal planets in the Virodha sign (12th/10th/3rd/9th) \u2014 whether they outweigh the Argala is an interpretive call. double_transit is sampled at window start/mid/end only; use the Jupiter and Saturn sign_stays for exact overlap dates. reference.antardasha_rasi is the Antardasha running at window start; each annotation reads house_from_antardasha_rasi from the Antardasha running at that snapshot / stay entry (antardasha_rasi_used).",
+  "karakamsha_overlay_note": "Placing a transit in D9 by its nakshatra pada (one pada = one navamsha) and comparing with Karakamsha is a lineage-specific practice, not Jaimini Sutra text; offered as a secondary signal only."
+}
