@@ -68,8 +68,10 @@ proc = subprocess.run(
     capture_output=True, text=True,
 )
 if proc.returncode != 0:
-    print("FATAL: baseline script failed\n" + proc.stderr)
-    sys.exit(1)
+    # Raise rather than sys.exit(): this runs at import, and a SystemExit here
+    # aborts pytest's whole collection with an INTERNALERROR. A raised
+    # exception fails this file cleanly and leaves the other suites running.
+    raise RuntimeError("FATAL: jaimini baseline script failed\n" + proc.stderr)
 B = json.loads(proc.stdout)
 
 
@@ -210,7 +212,18 @@ check("Gemini keeps primary lord Mercury when it is the stronger",
       f"got {cjb.jaimini_sign_lord(2, _synth2, 5)}")
 
 
-if failures:
-    print(f"\n{len(failures)} FAILED: {failures}")
-    sys.exit(1)
-print("\nALL PASS")
+def test_no_regressions():
+    """pytest entry point. The checks above run at import; this reports them.
+
+    Kept separate from the __main__ block below because a module-level
+    sys.exit() fires during pytest's collection, which aborts the whole run
+    with an INTERNALERROR instead of failing this file cleanly.
+    """
+    assert not failures, f"{len(failures)} jaimini check(s) FAILED: {failures}"
+
+
+if __name__ == "__main__":
+    if failures:
+        print(f"\n{len(failures)} FAILED: {failures}")
+        sys.exit(1)
+    print("\nALL PASS")

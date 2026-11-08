@@ -19,6 +19,9 @@ Each check pins one defect class fixed in the wave:
   6. Dead `primary` param removed from _csl_verdict (arity == 3).
   7. Docs — orchestration-notes.md no longer instructs displaying
      Uranus/Neptune/Pluto "for reference".
+  8. Input echo — build_baseline's `lon` parameter is not shadowed by the
+     per-planet flag loop, so input.longitude reports the QUERENT's longitude
+     and not the last-iterated planet's (Ketu's).
 
 Pinned chart: horary #108, 2026-01-01T09:00:00 Asia/Kolkata, 28.6139N 77.2090E.
 """
@@ -182,8 +185,53 @@ check("7 orchestration-notes.md no longer says outer planets are displayed 'for 
       "U/N/P display instruction still present")
 
 
-print()
-if failures:
-    print(f"RESULT: FAIL ({len(failures)} class(es) regressed): {failures}")
-    sys.exit(1)
-print("RESULT: PASS — all kp-horary regression classes green")
+# 8. Input echo — the provenance block must round-trip the querent's place.
+# Regression: the per-planet flag loop bound its iteration longitude to `lon`,
+# shadowing build_baseline's parameter, so input.longitude silently became the
+# LAST planet's longitude (Ketu's). The chart math was unaffected — the chart is
+# built before the loop — but the provenance record, and therefore the
+# verification display the user confirms, reported a bogus place.
+inp = baseline["input"]
+check("8a input.longitude echoes the querent's longitude, not a planet's",
+      inp["longitude"] == PIN["lon"],
+      f"got {inp['longitude']}, expected {PIN['lon']}; "
+      f"Ketu is at {planets['Ketu']['longitude']}")
+check("8b input.latitude echoes the querent's latitude",
+      inp["latitude"] == PIN["lat"],
+      f"got {inp['latitude']}, expected {PIN['lat']}")
+check("8c input.number / timezone / question round-trip",
+      inp["number"] == PIN["number"] and inp["timezone"] == PIN["tz"]
+      and inp["question"] == PIN["question"])
+# Prove the parameter is no longer rebound anywhere in build_baseline.
+import ast  # noqa: E402
+_src = inspect.getsource(kph.build_baseline)
+_fn = ast.parse(_src.lstrip()).body[0]
+_rebinds = {
+    n.id
+    for node in ast.walk(_fn)
+    if isinstance(node, (ast.Assign, ast.For))
+    for tgt in (node.targets if isinstance(node, ast.Assign) else [node.target])
+    for n in ast.walk(tgt)
+    if isinstance(n, ast.Name) and n.id in {a.arg for a in _fn.args.args}
+}
+check("8d build_baseline rebinds none of its own parameters",
+      not _rebinds, f"rebound params: {sorted(_rebinds)}")
+
+
+def test_no_regressions():
+    """pytest entry point. The checks above run at import; this reports them.
+
+    Kept separate from the __main__ block below because a module-level
+    sys.exit() fires during pytest's collection, which aborts the whole run
+    with an INTERNALERROR instead of failing this file cleanly.
+    """
+    assert not failures, (
+        f"{len(failures)} kp-horary regression class(es) regressed: {failures}")
+
+
+if __name__ == "__main__":
+    print()
+    if failures:
+        print(f"RESULT: FAIL ({len(failures)} class(es) regressed): {failures}")
+        sys.exit(1)
+    print("RESULT: PASS — all kp-horary regression classes green")

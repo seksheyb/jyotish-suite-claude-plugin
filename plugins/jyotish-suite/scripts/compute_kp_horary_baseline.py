@@ -337,11 +337,11 @@ def build_baseline(number, dt_iso, tz, lat, lon, question):
     # per planet so the significator-weighting agent can see them directly.
     sun_lon = planets["Sun"]["longitude"]
     for p, chain in planets.items():
-        lon = chain["longitude"]
-        chain["combust"] = _is_combust(p, lon, sun_lon)
-        chain["gandanta"] = jp.gandanta(lon)
-        chain["mrityu_bhaga"] = jp.mrityu_bhaga(p, lon)
-        chain["pushkara_bhaga"] = jp.pushkara_bhaga(lon)
+        p_lon = chain["longitude"]
+        chain["combust"] = _is_combust(p, p_lon, sun_lon)
+        chain["gandanta"] = jp.gandanta(p_lon)
+        chain["mrityu_bhaga"] = jp.mrityu_bhaga(p, p_lon)
+        chain["pushkara_bhaga"] = jp.pushkara_bhaga(p_lon)
 
     # Chart-Lagna sandhi: warn when the horary Lagna sits within 0°30' (0.5°)
     # of a sign edge — a KP-horary-specific band (jp.sandhi() uses 1.0° and is

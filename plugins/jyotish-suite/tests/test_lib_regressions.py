@@ -134,7 +134,19 @@ check("close_contention IGNORES a cross-sign pair",
 
 
 # --------------------------------------------------------------------
-if failures:
-    print(f"\n{len(failures)} regression check(s) FAILED: {failures}")
-    sys.exit(1)
-print("\nAll lib regression checks PASSED.")
+def test_no_regressions():
+    """pytest entry point. The checks above run at import; this reports them.
+
+    Kept separate from the __main__ block below because a module-level
+    sys.exit() fires during pytest's collection, which aborts the whole run
+    with an INTERNALERROR instead of failing this file cleanly.
+    """
+    assert not failures, (
+        f"{len(failures)} lib regression check(s) FAILED: {failures}")
+
+
+if __name__ == "__main__":
+    if failures:
+        print(f"\n{len(failures)} regression check(s) FAILED: {failures}")
+        sys.exit(1)
+    print("\nAll lib regression checks PASSED.")

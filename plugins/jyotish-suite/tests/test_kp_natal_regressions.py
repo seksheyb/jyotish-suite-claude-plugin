@@ -202,8 +202,19 @@ check("fix11_dead_owned_dict_removed",
 
 
 # ---------------------------------------------------------------------------
-print()
-if failures:
-    print(f"{len(failures)} FAILURE(S): {failures}")
-    sys.exit(1)
-print("ALL KP-NATAL REGRESSION CHECKS PASSED")
+def test_no_regressions():
+    """pytest entry point. The checks above run at import; this reports them.
+
+    Kept separate from the __main__ block below because a module-level
+    sys.exit() fires during pytest's collection, which aborts the whole run
+    with an INTERNALERROR instead of failing this file cleanly.
+    """
+    assert not failures, f"{len(failures)} kp-natal FAILURE(S): {failures}"
+
+
+if __name__ == "__main__":
+    print()
+    if failures:
+        print(f"{len(failures)} FAILURE(S): {failures}")
+        sys.exit(1)
+    print("ALL KP-NATAL REGRESSION CHECKS PASSED")
