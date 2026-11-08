@@ -288,6 +288,75 @@ For operating Mahadasha and Antardasha Rasi:
 5. **Karaka activation** — does Dasha Rasi contain or aspect (via Jaimini Drishti) the question's primary Karaka? If yes → those Karaka themes are activated
 6. **Arudha activation** — does Dasha Rasi coincide with or aspect AL, A10, UL, or relevant Arudha? Material manifestation is likely in this period
 
+### 4C — Transits from the Dasha Rasi and Arudhas
+
+Chara Dasha sets the period; a slow transit occupying or aspecting the dasha
+Rasi / AL narrows it; transits never override an inactive Rasi. If the Dasha
+Rasi does not activate the question's Karaka/Arudha (4B), no transit makes it
+fruitful — a transit only picks the months inside an already-active period.
+
+All transit facts come from `transits.json`, produced in Wave 0 by
+`scripts/compute_jaimini_transits.py` (Lahiri, sampled + bisected sign
+ingresses). Never recompute a transit sign, date or aspect by hand.
+
+**Reference signs** (`reference.*`) — transits are read sign-to-sign from:
+- **AL** (Arudha Lagna) — worldly manifestation, status, what others see
+- **UL** (Upapada) — marriage and committed partnership
+- **dasha_rasi** — the running Chara Dasha (Mahadasha) Rasi; also its Jaimini lord
+- **antardasha_rasi** — the Antardasha Rasi (each annotation uses the one running at its own instant: `antardasha_rasi_used`)
+- **karakamsha** — the AK's navamsha sign, projected onto D1 as a sign
+- **atmakaraka** — the AK's own D1 sign
+
+**Conjunction vs aspect.** A transit *in* a reference sign (`conjoins`) is the
+direct trigger; a transit *aspecting* it by Rasi Drishti (`aspects`) is the
+next strongest. Rasi Drishti is sign-to-sign and always **mutual**: movable ↔
+fixed except the adjacent pair, dual ↔ dual (see `references/jaimini-drishti.md`).
+It is not Parashari graha drishti — Jupiter's 5th/9th and Saturn's 3rd/10th
+special aspects play no role here.
+
+**Argala / Virodha from a transit** (`argala.AL`, `argala.dasha_rasi`). A
+transit in the 2nd, 4th or 11th from the reference gives primary Argala
+(intervention) on it; the 5th gives secondary Argala. Natal planets in the
+12th / 10th / 3rd / 9th from the reference obstruct (Virodha) the 2nd / 4th /
+11th / 5th Argala respectively — listed in `obstructed_by`. Whether the
+obstruction outweighs the Argala (more planets / stronger planets) is the
+analyst's call. Benefic transit Argala supports; malefic Argala intervenes
+through pressure.
+
+**Double transit.** Jupiter AND Saturn both occupying-or-aspecting the same
+reference sign is the strongest transit trigger (`double_transit.<instant>.on_AL`,
+`on_UL`, `on_dasha_rasi`, `on_karakamsha`). It is sampled at window
+start/mid/end; read the Jupiter and Saturn `sign_stays` dates for the exact
+overlap interval.
+
+**Rahu / Ketu** are karmic triggers: their transit over or aspect on the AL,
+UL or dasha Rasi marks sudden, fated, or disruptive turns (Rahu — acquisition,
+obsession, foreign; Ketu — separation, detachment, loss of interest). When
+Rahu or Ketu is the dasha Rasi's Jaimini lord (Aquarius → Rahu/Saturn,
+Scorpio → Ketu/Mars), `is_dasha_rasi_lord` is true and its transit weighs more.
+
+**Karakamsha overlay — lineage-specific.** With `--karakamsha-overlay`, each
+body's nakshatra-pada stays are listed under `karakamsha_overlay` (one pada =
+one navamsha), with `relation_to_karakamsha` = `same` / `aspects` / null.
+Placing a transit in D9 by its pada and comparing it with the Karakamsha is a
+lineage-specific practice, not Jaimini Sutra text; every hit carries
+`"layer": "lineage_specific"`. Use it only as a secondary signal, never to
+override the sign-level reading above.
+
+**Reading `transits.json`:**
+- `bodies.<body>.sign_stays[]` — `sign`, `entry_date`, `exit_date` (naive UTC;
+  `entry_before_window` / `exit_after_window` mark a stay cut by the window),
+  `house_from_AL`, `house_from_UL`, `house_from_dasha_rasi`,
+  `house_from_antardasha_rasi`, `conjoins`, `aspects`, `argala`,
+  `is_dasha_rasi_lord`, `natal_planets_in_sign`
+- `bodies.<body>.positions.{window_start,window_mid,window_end}` — the same
+  annotations plus degree, nakshatra/pada, `retrograde`, `speed`
+- `double_transit.{window_start,window_mid,window_end}` — `jupiter_sign`,
+  `saturn_sign`, `on_AL`, `on_UL`, `on_dasha_rasi`, `on_karakamsha`
+- `reference.dasha_rasi.contains_window_start` / `contains_window_end` — if
+  false, the window runs outside the baseline's running Mahadasha; say so
+- `reference.antardashas_in_window` — Antardasha changes inside the window
+
 ---
 
 ## SECTION 5 — Mandatory Execution Sequence
@@ -304,12 +373,13 @@ Every reading, in this exact order:
 | Priority | Factor |
 |----------|--------|
 | 1 | Chara Dasha activation — is relevant Karaka/Arudha activated? |
-| 2 | AK and Swamsha — soul-level permission for the outcome |
-| 3 | Relevant Arudha Pada strength — material manifestation capacity |
-| 4 | Argala on relevant sign — intervention supporting or blocking? |
-| 5 | Jaimini Drishti on relevant Bhava and Arudha — aspecting sign quality |
-| 6 | D9 Karaka confirmation — soul-contract level support |
-| 7 | Bhava vs Arudha divergence — real outcome vs visible outcome |
+| 2 | Transit trigger on the active Rasi/AL (4C) — slow transit occupying/aspecting the dasha Rasi, AL, UL or Karakamsha (timing questions only; never overrides priority 1) |
+| 3 | AK and Swamsha — soul-level permission for the outcome |
+| 4 | Relevant Arudha Pada strength — material manifestation capacity |
+| 5 | Argala on relevant sign — intervention supporting or blocking? |
+| 6 | Jaimini Drishti on relevant Bhava and Arudha — aspecting sign quality |
+| 7 | D9 Karaka confirmation — soul-contract level support |
+| 8 | Bhava vs Arudha divergence — real outcome vs visible outcome |
 
 **Composite output must include:**
 - Chart promise at Bhava level (actual/real)
@@ -323,3 +393,4 @@ Every reading, in this exact order:
 - Current Antardasha Rasi + how it modifies
 - Next 2–3 Dasha shifts + improvement or reduction of prospects
 - Most favorable upcoming Rasi period for the question's outcome — which Karakas and Arudhas it activates, and why
+- Transit window: <dates> (<body> on/aspecting <reference>) — from `transits.json` `sign_stays` (Section 4C); omit when transits.json was not produced

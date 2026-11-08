@@ -53,11 +53,32 @@ framing what to explore.
    which does not exist until step 3). Show the output to the user and get
    explicit confirmation before proceeding — never skip this gate.
 3. Dispatch `baseline-runner` (school `jaimini`) -> runs
-   `${CLAUDE_PLUGIN_ROOT}/scripts/compute_jaimini_baseline.py`, returns the
-   baseline.json path + gloss. The baseline holds Chara Karakas (with per-Karaka
+   `${CLAUDE_PLUGIN_ROOT}/scripts/compute_jaimini_baseline.py` with
+   `--target-date <today>` (always — it populates `chara_dasha.running`, the
+   running Mahadasha/Antardasha, which the baseline display and step 3b need),
+   returns the baseline.json path + gloss. The baseline holds Chara Karakas (with per-Karaka
    degree flags), Arudha Padas, Swamsha/Karakamsha, Argala pre-map (every named
    Arudha), Chara Dasha (Mahadasha + Antardasha), the 12×12 Jaimini drishti map,
    and planets.
+3b. **Transit triggers** — when timing/activation is in scope (a Dasha
+   question, any question with a timeframe, a yes/no with "when", a full
+   reading), dispatch `baseline-runner` (model **haiku**, effort **low**)
+   with `script: ${CLAUDE_PLUGIN_ROOT}/scripts/compute_jaimini_transits.py
+   --baseline <baseline.json path> --datetime <window start, default today>
+   --window-days <horizon, default 365> --tz <chart tz>` -> returns a
+   `transits.json` path. It reads Jupiter/Saturn/Rahu/Ketu sign stays against
+   the AL, UL, running Chara Dasha Rasi / Antardasha Rasi, Karakamsha and AK
+   by Rasi Drishti, with Argala/Virodha and the Jupiter+Saturn double
+   transit (methodology Section 4C). The baseline must have been built with
+   `--target-date` (step 3) or the script exits 1. The question is only
+   classified in Phase B, so dispatch 3b right after the Phase B
+   classification (before Wave 1) — or right after step 3 when the user's
+   opening message already asks a timing question. Add
+   `--karakamsha-overlay` only when the user asks for the D9/pada layer; it
+   is lineage-specific and must be labelled so.
+   **Rule:** Chara Dasha sets the period; a slow transit occupying or
+   aspecting the dasha Rasi / AL narrows it; transits never override an
+   inactive Rasi.
 4. Render the **Jaimini Baseline Display** in `references/orchestration-notes.md`
    directly from the baseline JSON (Chara Karakas, Arudhas, Swamsha, Argala,
    Chara Dasha Mahadasha/Antardasha) — the analytical foundation the user can
@@ -88,7 +109,7 @@ in the same wave**:
 | D1 analyst | Methodology Section 3 Steps A-F against D1 data, for the question's primary + secondary Karakas/Arudhas | Always (domain, Dasha, Arudha-specific, full, yes/no) |
 | D9 analyst | Section 3 Steps A-F against D9 data for the same Karakas/Arudhas, plus Swamsha/Karakamsha and D9 Karaka confirmation | Always |
 | Reverse-question analyst | Section 5 Step 5 — reverses the question, repeats Steps A-F for D1 and D9, compares signature strength | Yes/No (binary) questions only |
-| Chara-Dasha-timeline analyst | Section 4A/4B + Step 7 — Mahadasha/Antardasha activation, Karaka/Arudha activation, next 2-3 shifts | Always when timing/Dasha/activation is in scope (Dasha questions, full readings, any question with a timeframe); optional for a pure Swamsha/UL question with no timing component |
+| Chara-Dasha-timeline analyst | Section 4A/4B/4C + Step 7 — Mahadasha/Antardasha activation, Karaka/Arudha activation, next 2-3 shifts, transit triggers from transits.json | Always when timing/Dasha/activation is in scope (Dasha questions, full readings, any question with a timeframe); optional for a pure Swamsha/UL question with no timing component |
 
 **Dasha-lord rule:** if the question involves timing or activation and the
 running Chara Dasha Rasi's lord is not one of the Karakas already covered by
@@ -98,14 +119,18 @@ uncovered.
 
 Each dispatched worker receives the baseline.json path (full file, not a
 slice), the relevant methodology references, its assigned scope, and the
-question. Workers read the baseline as ground truth — no recomputation.
+question. The **Chara-Dasha-timeline analyst** receives the baseline.json
+path plus transits.json when produced (step 3b). Workers read the baseline
+and transits.json as ground truth — no recomputation of any transit sign,
+date or aspect.
 
 ### Wave 2 — Synthesis
 
 **Explicit barrier:** do not dispatch the synthesizer until every Wave 1
 worker that was launched has returned.
 
-Dispatch one `synthesizer` (opus, effort high) — the composite step here is
+Dispatch one `synthesizer` (opus, effort high) with the baseline.json path
+plus transits.json when produced — the composite step here is
 genuinely contradiction-prone cross-domain reconciliation: D1 vs D9 Karaka confirmation,
 Bhava vs Arudha divergence, and Chara Dasha activation all have to be weighed
 against each other, not just concatenated. Execution order: D1 -> D9 ->
