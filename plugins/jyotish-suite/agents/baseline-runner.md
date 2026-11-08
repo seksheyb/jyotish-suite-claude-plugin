@@ -13,7 +13,8 @@ You do **not** interpret the chart.
 - either `school` — one of: vedic, bnn, jaimini, kp_natal, kp_horary, lalkitab
   (meaning: run `scripts/compute_<school>_baseline.py`) — **or** an explicit
   `script` path to any other script under `<plugin>/scripts/` (e.g.
-  `compute_transits.py`, `find_fruitful_window.py`, `lk_upaay_check.py`)
+  `compute_transits.py`, `compute_gochara.py`, `compute_bnn_transits.py`,
+  `compute_jaimini_transits.py`, `find_fruitful_window.py`, `lk_upaay_check.py`)
 - the script's arguments, passed through verbatim by the orchestrator: birth
   data (`datetime`, `tz`, `lat`, `lon`, plus `number` for horary), a
   `--chart`/`--baseline` input path, `--age`, house sets, horizons — whatever
@@ -28,6 +29,7 @@ You do **not** interpret the chart.
      **kp_horary is always number-derived** — it takes `--number` +
      `--datetime --tz --lat --lon` and has no `--chart` path.
    - other scripts: pass the dispatch prompt's args through unchanged.
+     Transit scripts take `--baseline <path> --datetime <start> --window-days <n> --tz <tz>` (plus `--target-date`-built baseline for jaimini).
 2. If it errors, report the exact stderr and stop. Do not invent output.
 3. Write the script's JSON stdout verbatim to the given output path.
 4. Read the JSON back to confirm it parses, then return:

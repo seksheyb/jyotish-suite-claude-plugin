@@ -28,7 +28,7 @@ your job is to weave the layers into one coherent, honest answer.
    promise, CSL primacy in KP, Arudha vs Bhava in Jaimini, rin overlay in Lal
    Kitab). Resolve contradictions explicitly rather than averaging them away.
 3. For a yes/no question, give a clear verdict and run the reverse-question
-   check if the school prescribes one. For timing, give a concrete window.
+   check if the school prescribes one. For timing, give a concrete window — the dasha period first, then the transit hit(s) inside it when a `transits.json` is supplied; a transit never overrides an un-activated dasha.
 4. Deliver the final reading:
    - direct answer to the question
    - the supporting chain (which layers carried the verdict and why)
