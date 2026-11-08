@@ -57,6 +57,18 @@ parallel work) — everything else routes through Wave 1. Paths use
    `${CLAUDE_PLUGIN_ROOT}/scripts/compute_vedic_baseline.py` with the confirmed
    chart and returns the path to baseline.json plus a short gloss. The large
    JSON stays out of orchestrator context.
+3b. Transit (gochara) precompute — when the question is a dasha, timing or
+   yes/no question, or carries any timeframe, dispatch `baseline-runner`
+   (haiku, low effort) against
+   `${CLAUDE_PLUGIN_ROOT}/scripts/compute_gochara.py` with
+   `--baseline <baseline.json path> --datetime <window start, default today>
+   --window-days <per the question's horizon, default 180> --tz <chart tz>`.
+   It returns a `transits.json` path: Lahiri sidereal transit positions and
+   sign/nakshatra/kakshya/pada stays, each annotated with house from Moon and
+   Lagna, the classical favourable verdict and vedha, SAV/BAV bindus, kakshya
+   fruitfulness, Tara Bala, Sade Sati/Kantaka/Ashtama Shani, double transit,
+   and a D9 overlay labelled modern. This replaces prose-only transit
+   reasoning; skip it for questions with no time component.
 
 ### Conditional dispatch — skip Wave 1 for trivially narrow questions
 
@@ -82,13 +94,16 @@ has returned:
   waived** (no planetary degrees supplied — see the D9 gate in
   `references/orchestration-notes.md`); the synthesizer then omits D9
   confirmation with an explicit caveat instead of waiting on it.
-- **dasha-timing analyst** (sonnet, **medium** effort) — Step 4. Always
+- **dasha-timing analyst** (sonnet, **medium** effort) — Step 4, plus Step 4b
+  (gochara confirmation) when `transits.json` was produced. Always
   dispatched regardless of question type; dasha activation is the synthesizer's
-  #1 weighting factor.
-- **reverse-question analyst** (sonnet, high effort) — Steps 2–4 repeated for
-  the reversed framing (Step 5). Dispatched **only** for yes/no (binary)
-  questions, in this same wave — never as a follow-up after Wave 2 sees the
-  primary result.
+  #1 weighting factor. Receives the baseline.json path **plus transits.json
+  when produced**.
+- **reverse-question analyst** (sonnet, high effort) — Steps 2–4 (and 4b when
+  `transits.json` exists) repeated for the reversed framing (Step 5).
+  Dispatched **only** for yes/no (binary) questions, in this same wave — never
+  as a follow-up after Wave 2 sees the primary result. Receives the
+  baseline.json path **plus transits.json when produced**.
 
 **Full-life-reading clustering:** group the ~7 core houses into life-domain
 clusters and dispatch one D1-house analyst + one D9-house analyst per
@@ -101,17 +116,19 @@ cluster (not 12+ per-house workers):
 | Health + Obstacles | 1st, 6th, 8th, 12th |
 | Dharma | 9th, 12th |
 
-Each worker receives: the baseline.json path, the methodology references
-(`references/methodology.md` + `references/orchestration-notes.md`), its
-assigned house/cluster, and the user's question. Workers treat the baseline as
-ground truth and never recompute.
+Each worker receives: the baseline.json path (plus transits.json for the
+dasha-timing and reverse-question analysts, when produced), the methodology
+references (`references/methodology.md` + `references/orchestration-notes.md`),
+its assigned house/cluster, and the user's question. Workers treat the
+baseline and transits.json as ground truth and never recompute. Dasha sets the
+period; transits narrow it; a transit never overrides an un-activated dasha.
 
 ### Wave 2 — Synthesis
 
 Once all dispatched Wave-1 tracks have returned (the explicit barrier — never
 start synthesis early, and never skip a track that was dispatched), dispatch
 one `synthesizer` agent (school `vedic`, **opus, high** effort) with the
-baseline path, all Wave-1 analysis blocks, the user's question, and the
+baseline path (plus transits.json when produced), all Wave-1 analysis blocks, the user's question, and the
 reading mode. It applies the Step 6 weighting in `methodology.md` and resolves
 contradictions. For a yes/no question it consumes the reverse-question
 analyst's block from Wave 1 (methodology Step 5) — it must not re-derive the

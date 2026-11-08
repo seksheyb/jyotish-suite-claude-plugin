@@ -14,12 +14,12 @@ which synthesis path the `synthesizer` runs.
 
 | Question Type | How to Handle | Wave 1 dispatch |
 |--------------|---------------|------------------|
-| Yes/No (binary) | Full methodology + reverse question analysis (methodology Step 5) | D1 + D9 house analysts, dasha-timing analyst, **and** reverse-question analyst — all in the same wave |
+| Yes/No (binary) | Full methodology + reverse question analysis (methodology Step 5) | D1 + D9 house analysts, dasha-timing analyst, **and** reverse-question analyst — all in the same wave; + `compute_gochara.py` transits.json (Wave 0 step 3b) |
 | Domain-specific | Map to primary + secondary houses per methodology Step 1 table | D1 + D9 house analysts (scoped to those houses) + dasha-timing analyst |
 | House/Planet specific | Focus on that house/planet across D1 and D9 | **Zero dispatch** — a single house/planet is trivially narrow; analyze inline in the orchestrator from `baseline.json` (see SKILL.md's conditional-dispatch rule) |
-| Dasha question | Lead with Dasha timing (Step 4), support with house analysis | D1 + D9 house analysts (question-relevant houses) + dasha-timing analyst |
+| Dasha question | Lead with Dasha timing (Step 4), support with house analysis | D1 + D9 house analysts (question-relevant houses) + dasha-timing analyst; + `compute_gochara.py` transits.json |
 | Full reading | Step 0 baseline + cover 1st, 2nd, 5th, 7th, 9th, 10th, 11th houses | One D1 + one D9 analyst per life-domain cluster (see SKILL.md Wave 1) + dasha-timing analyst |
-| Timing ("when will X happen") | Lead with Dasha analysis (Step 4) | Dasha-timing analyst leads; D1 + D9 analysts scoped to the question's houses support it |
+| Timing ("when will X happen") | Lead with Dasha analysis (Step 4) | Dasha-timing analyst leads; D1 + D9 analysts scoped to the question's houses support it; + `compute_gochara.py` transits.json |
 
 State the classification in one line before Wave 1 begins (or before the
 inline analysis, for the House/Planet-specific case):
@@ -79,7 +79,11 @@ produce the D9 alongside the D1, and `compute_vedic_baseline.py` carries it. So:
    planetary war, dignity, the as-of Vimshottari dasha, chara karakas,
    Ashtakavarga, the D1 + D9 aspect maps and the full D9 sub-chart) are
    pre-computed by the sidecar. Workers do not recompute them; they
-   interpret them.
+   interpret them. Transit (gochara) facts — positions, sign/nakshatra/
+   kakshya/pada stays, house from Moon/Lagna, vedha, bindus, Tara Bala,
+   Saturn phase, double transit, D9 overlay — are read from `transits.json`
+   (`scripts/compute_gochara.py`) and never recomputed or recalled from an
+   ephemeris memory.
 5. **Distinguish D1 from D9** clearly at all times; never conflate the two.
 6. **Flag missing data** — e.g. absent dasha balance — and proceed with
    caveats rather than guessing.

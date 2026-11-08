@@ -182,6 +182,91 @@ Total cycle = 120 years
 
 ---
 
+## Step 4b — Gochara (transit) confirmation *(timing / dasha / yes-no questions)*
+
+**Dasha sets the period; transits narrow it; a transit never overrides an
+un-activated dasha.** Run this step only after Step 4 has established which
+period is active for the question, and only against `transits.json` from
+`scripts/compute_gochara.py` (SKILL.md Wave 0 step 3b). Every fact below is
+pre-computed there — read it, never recompute it.
+
+**Primary frame — houses counted from the natal Moon (Janma Rashi).** Classical
+favourable houses (`jyotish_primitives.GOCHARA_FAVOURABLE`; the Rahu/Ketu row
+is the common modern convention, treated like Saturn):
+
+| Transiting planet | Favourable houses from Moon |
+|---|---|
+| Sun | 3, 6, 10, 11 |
+| Moon | 1, 3, 6, 7, 10, 11 |
+| Mars | 3, 6, 11 |
+| Mercury | 2, 4, 6, 8, 10, 11 |
+| Jupiter | 2, 5, 7, 9, 11 |
+| Venus | 1, 2, 3, 4, 5, 8, 9, 11, 12 |
+| Saturn | 3, 6, 11 |
+| Rahu / Ketu | 3, 6, 11 |
+
+**Secondary frame — houses from the Lagna** (`house_from_lagna`): use it to
+say *which life area* the transit touches; the Moon frame says *whether* it
+helps.
+
+**Vedha (obstruction).** A favourable transit is cancelled when another
+transiting planet sits in its vedha house from the Moon (`gochara.vedha_house`;
+`vedha.obstructed_by` lists who is there). Sun–Saturn and Moon–Mercury never
+obstruct each other (already excluded by the script). Vedha is evaluated at the
+stay's entry instant (`vedha.evaluated_at`, or window start); across a long
+slow-planet stay, re-check fast obstructors against their own `sign_stays`.
+
+**Saturn from the Moon** (`saturn_phase`): 12th / 1st / 2nd = Sade Sati
+(`sade_sati_rising` / `_peak` / `_setting`), 4th = Kantaka Shani, 8th =
+Ashtama Shani — periods of pressure on the Moon's significations, softened by
+high bindus and by Saturn being a dasha lord well placed for the Lagna.
+
+**Ashtakavarga strength of the transit:**
+- `sav_bindus` (sign total): **≥ 28 strong**, **≤ 25 weak** (26–27 average).
+- `bav_bindus` (the transiting planet's own BAV in that sign): **≥ 4 good**,
+  **≤ 3 poor**. None for Rahu/Ketu (no BAV).
+- **Kakshya** (`kakshya` / `kakshya_stays`): each sign splits into eight 3°45'
+  kakshyas ruled in order by Saturn, Jupiter, Mars, Sun, Venus, Mercury, Moon,
+  Lagna. A transit is **fruitful** in a kakshya when that kakshya's lord
+  contributed a bindu to the planet in that sign (`fruitful: true`, from the
+  baseline prastara). This is the finest classical trigger window.
+
+**Tara Bala** (`tara`): the transit nakshatra counted from the Janma Nakshatra
+in cycles of nine — Janma, Sampat, Vipat, Kshema, Pratyak, Sadhaka, Vadha,
+Mitra, Ati-Mitra. **Unfavourable: Janma, Vipat, Pratyak, Vadha.** Most useful
+for the Moon and fast planets (`nakshatra_stays[].tara`).
+
+**Double transit** (`double_transit.window_start|window_mid|window_end`): a
+house is "double-transited" when Jupiter (occupation or 5/7/9 aspect) and
+Saturn (occupation or 3/7/10 aspect) both touch it. `from_lagna` lists those
+houses from the Lagna, `from_moon` from the Moon. A question house in this list
+during an activated dasha is the classic event signature.
+
+**D9 overlay — MODERN, not classical** (`d9_overlay`, every hit
+`"layer": "modern_overlay"`, see `d9_overlay_note`). One nakshatra pada (3°20')
+equals one navamsha, so a transit's pada places it in a D9 sign
+(`navamsa_sign`, `house_from_d9_lagna`, `natal_d9_planets_in_sign`). Classical
+gochara is read in D1 only; use the overlay as a finer-timing hint and label it
+as modern whenever it is cited. The pada flips near boundaries under a
+different ayanamsa (Lahiri vs KP differ by ~6').
+
+**How to read `transits.json`:**
+1. Start from `reference` — Moon sign/nakshatra, Lagna, running MD/AD/PD
+   (`running_dasha`, as of `dasha_asof`).
+2. For each slow body (Saturn, Jupiter, Rahu, Ketu) read `sign_stays`:
+   `house_from_moon`, `gochara.favourable`, `vedha.obstructed_by`,
+   `sav_bindus` / `bav_bindus`, `natal_planets_in_sign`, `is_dasha_lord`,
+   `saturn_phase`.
+3. Narrow inside a favourable stay with `kakshya_stays` (`fruitful: true`) and
+   `nakshatra_stays` (`tara.favourable`).
+4. Use Mars / Sun / Moon `sign_stays` and `nakshatra_stays` as the day-level
+   trigger inside that window; `positions.window_start|mid|end` give the
+   snapshot state (with `kakshya` and `tara`).
+5. Check `double_transit` for the question houses.
+6. Optionally cite `d9_overlay`, labelled modern.
+
+---
+
 ## Step 5 — Reverse Question Analysis *(Yes/No questions only)*
 
 Frame the opposite of the user's question and repeat Steps 2–4 for that reversed context.
@@ -200,13 +285,14 @@ Synthesize all layers using this priority order:
 | Priority | Factor | Why |
 |----------|--------|-----|
 | 1 | **Dasha activation** | Promise without activation = no result yet |
-| 2 | **D1 house lord dignity + degree status** | Foundational; lord condition = house condition |
-| 3 | **Planets in the house** | Direct influence, modified by degree flags |
-| 4 | **Mutual planetary aspects (quasi-conjunctions)** | Fused significations behave like conjunctions |
-| 5 | **D9 confirmation** | Validates or qualifies D1 promise |
-| 6 | **One-way aspects** | Modifying forces; weight by orb + dignity |
-| 7 | **Ashtakavarga score** | Quantitative strength check |
-| 8 | **Nakshatra nuance + Pada Lord** | Qualitative texture and method of expression |
+| 2 | **Transit confirmation (Step 4b)** | Dasha-active promise + favourable slow transit + fruitful kakshya/trigger = concrete window |
+| 3 | **D1 house lord dignity + degree status** | Foundational; lord condition = house condition |
+| 4 | **Planets in the house** | Direct influence, modified by degree flags |
+| 5 | **Mutual planetary aspects (quasi-conjunctions)** | Fused significations behave like conjunctions |
+| 6 | **D9 confirmation** | Validates or qualifies D1 promise |
+| 7 | **One-way aspects** | Modifying forces; weight by orb + dignity |
+| 8 | **Ashtakavarga score** | Quantitative strength check |
+| 9 | **Nakshatra nuance + Pada Lord** | Qualitative texture and method of expression |
 
 ### Output Structure
 
@@ -215,6 +301,7 @@ What the natal configuration (D1 + D9 + degree flags) structurally promises for 
 
 **Dasha Context**
 Current Mahadasha → Antardasha → Pratyantar. Is the relevant planet activated? What period supports or delays the outcome?
+Transit window: <dates> (<body> in <sign>, <house> from Moon, SAV n, kakshya lord, D9 overlay if used) — from `transits.json` (`scripts/compute_gochara.py`); omit when no transits.json was produced.
 
 **Planetary Aspect Fusions**
 List tight mutual aspects (within 3°) relevant to the question. Explain the fused lordship themes and net effect.
