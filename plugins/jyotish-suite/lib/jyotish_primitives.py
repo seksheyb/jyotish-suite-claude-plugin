@@ -569,3 +569,165 @@ def find_antara(tree, md_lord, bd_lord, ad_lord):
                 if ad["ad_lord"] == ad_lord:
                     return ad
     return None
+
+
+# ====================================================================
+# Gochara / transit primitives
+# ====================================================================
+# Pure tables and functions for Parashari transit (gochara) reading. Every
+# function takes indices or sidereal longitudes; no ephemeris, no I/O.
+
+def pada_to_navamsa(nak_idx, pada):
+    """Return (d9_sign_idx, d9_sign_name) for a nakshatra index (0-26) and pada (1-4).
+
+    One nakshatra pada (3deg20') is exactly one navamsha, and the 108 padas run
+    through the zodiac's navamshas in order, so d9_sign_idx =
+    (nak_idx*4 + pada-1) mod 12. This is the identity with navamsa_sign(lon);
+    it exists so callers holding only a nakshatra/pada table (e.g. a transit
+    listing) can place a body in D9 without a longitude. Raises ValueError on
+    out-of-range input.
+    """
+    if not isinstance(nak_idx, int) or not 0 <= nak_idx < 27:
+        raise ValueError(f"nak_idx must be an int in 0..26, got {nak_idx!r}")
+    if not isinstance(pada, int) or not 1 <= pada <= 4:
+        raise ValueError(f"pada must be an int in 1..4, got {pada!r}")
+    d9 = (nak_idx * 4 + (pada - 1)) % 12
+    return d9, SIGNS[d9]
+
+
+# Ashtakavarga kakshya order: decreasing orbital period, Lagna last. Each sign
+# is split into 8 kakshyas of 3deg45'.
+KAKSHYA_LORDS = ["Saturn", "Jupiter", "Mars", "Sun", "Venus", "Mercury", "Moon", "Lagna"]
+KAKSHYA_ARC = 3.75
+
+
+def kakshya_of(lon):
+    """Return (kakshya_idx 0-7, kakshya_lord) from the degrees-in-sign of lon."""
+    idx = min(int(deg_in_sign(lon) // KAKSHYA_ARC), 7)
+    return idx, KAKSHYA_LORDS[idx]
+
+
+# Classical gochara: favourable houses counted inclusively from the natal Moon.
+# The Rahu/Ketu rows are the common modern convention (treated like Saturn),
+# not Phaladeepika.
+GOCHARA_FAVOURABLE = {
+    "Sun": [3, 6, 10, 11],
+    "Moon": [1, 3, 6, 7, 10, 11],
+    "Mars": [3, 6, 11],
+    "Mercury": [2, 4, 6, 8, 10, 11],
+    "Jupiter": [2, 5, 7, 9, 11],
+    "Venus": [1, 2, 3, 4, 5, 8, 9, 11, 12],
+    "Saturn": [3, 6, 11],
+    "Rahu": [3, 6, 11],
+    "Ketu": [3, 6, 11],
+}
+
+# Vedha: favourable house -> vedha house. Another planet transiting the vedha
+# house (from the natal Moon) obstructs the favourable result.
+GOCHARA_VEDHA = {
+    "Sun": {3: 9, 6: 12, 10: 4, 11: 5},
+    "Moon": {1: 5, 3: 9, 6: 12, 7: 2, 10: 4, 11: 8},
+    "Mars": {3: 12, 6: 9, 11: 5},
+    "Mercury": {2: 5, 4: 3, 6: 9, 8: 1, 10: 8, 11: 12},
+    "Jupiter": {2: 12, 5: 4, 7: 3, 9: 10, 11: 8},
+    "Venus": {1: 8, 2: 7, 3: 1, 4: 10, 5: 9, 8: 5, 9: 11, 11: 6, 12: 3},
+    "Saturn": {3: 12, 6: 9, 11: 5},
+}
+
+# These pairs do not cause vedha to each other.
+VEDHA_EXEMPT_PAIRS = {frozenset({"Sun", "Saturn"}), frozenset({"Moon", "Mercury"})}
+
+
+def gochara_verdict(planet, house_from_moon):
+    """Return {"favourable": bool, "vedha_house": int|None} for a transit.
+
+    house_from_moon is the inclusive count (1-12) from the natal Moon sign.
+    vedha_house is set only when the transit is favourable and the planet has
+    a row in GOCHARA_VEDHA.
+    """
+    favourable = house_from_moon in GOCHARA_FAVOURABLE.get(planet, [])
+    vedha = GOCHARA_VEDHA.get(planet, {}).get(house_from_moon) if favourable else None
+    return {"favourable": favourable, "vedha_house": vedha}
+
+
+def is_vedha_exempt(planet_a, planet_b):
+    """True if planet_a and planet_b do not cause vedha to each other."""
+    return frozenset({planet_a, planet_b}) in VEDHA_EXEMPT_PAIRS
+
+
+# Tara Bala: the 27 nakshatras from the Janma nakshatra in three cycles of 9.
+TARA_NAMES = ["Janma", "Sampat", "Vipat", "Kshema", "Pratyak",
+              "Sadhaka", "Vadha", "Mitra", "Ati-Mitra"]
+TARA_UNFAVOURABLE = {"Janma", "Vipat", "Pratyak", "Vadha"}
+
+
+def tara_bala(janma_nak_idx, transit_nak_idx):
+    """Return (tara_idx 1-9, tara_name, favourable_bool) for a transit nakshatra."""
+    tara_idx = ((transit_nak_idx - janma_nak_idx) % 27) % 9 + 1
+    name = TARA_NAMES[tara_idx - 1]
+    return tara_idx, name, name not in TARA_UNFAVOURABLE
+
+
+_SATURN_MOON_PHASES = {
+    12: "sade_sati_rising",
+    1: "sade_sati_peak",
+    2: "sade_sati_setting",
+    4: "kantaka_shani",
+    8: "ashtama_shani",
+}
+
+
+def saturn_moon_phase(saturn_sign_idx, moon_sign_idx):
+    """Return Saturn's phase relative to the natal Moon sign, or None.
+
+    "sade_sati_rising" (Saturn 12th from Moon), "sade_sati_peak" (1st),
+    "sade_sati_setting" (2nd), "kantaka_shani" (4th), "ashtama_shani" (8th).
+    """
+    return _SATURN_MOON_PHASES.get(count_signs(moon_sign_idx, saturn_sign_idx))
+
+
+# ====================================================================
+# Jaimini rashi drishti
+# ====================================================================
+
+def jaimini_drishti_matrix():
+    """Precompute the full 12x12 Jaimini Rasi Drishti map.
+
+    Movable aspects all Fixed except the next zodiacal Fixed sign (which is the
+    sign immediately after it, n=2); Fixed aspects all Movable except the next
+    zodiacal Movable sign (n=3 from a Fixed sign, since the n=2 sign is Dual);
+    Dual aspects all other Dual signs. The adjacent-sign exception breaks mutual
+    symmetry, leaving one-way aspects. The map records directional aspects.
+
+    Returns {"matrix": 12x12 list (matrix[a][b] == 1 means sign a aspects
+    sign b), "by_sign": {sign_name: [aspected sign names]},
+    "one_way": [{"from": sign_name, "to": sign_name}, ...]}.
+    """
+    aspects = {i: [] for i in range(12)}
+    for a in range(12):
+        qa = SIGN_QUALITY[a]
+        for b in range(12):
+            if a == b:
+                continue
+            qb = SIGN_QUALITY[b]
+            if qa == "Dual":
+                if qb == "Dual":
+                    aspects[a].append(b)
+            elif qa == "Movable" and qb == "Fixed":
+                if sign_n_from(a, 2) != b:        # skip next Fixed (n=2)
+                    aspects[a].append(b)
+            elif qa == "Fixed" and qb == "Movable":
+                if sign_n_from(a, 3) != b:        # skip next Movable (n=3)
+                    aspects[a].append(b)
+    # matrix[a][b] == 1 means sign a aspects sign b
+    matrix = [[1 if b in aspects[a] else 0 for b in range(12)] for a in range(12)]
+    one_way = []
+    for a in range(12):
+        for b in range(12):
+            if matrix[a][b] and not matrix[b][a]:
+                one_way.append({"from": SIGNS[a], "to": SIGNS[b]})
+    return {
+        "matrix": matrix,
+        "by_sign": {SIGNS[a]: [SIGNS[b] for b in aspects[a]] for a in range(12)},
+        "one_way": one_way,
+    }

@@ -35,44 +35,8 @@ KARAKA_NAMES = [
 # Jaimini Rasi Drishti — 12x12 sign-aspect map
 # ====================================================================
 
-def build_drishti_map():
-    """Precompute the full 12x12 Jaimini Rasi Drishti map.
-
-    Movable aspects all Fixed except the next zodiacal Fixed sign (which is the
-    sign immediately after it, n=2); Fixed aspects all Movable except the next
-    zodiacal Movable sign (n=3 from a Fixed sign, since the n=2 sign is Dual);
-    Dual aspects all other Dual signs. The adjacent-sign exception breaks mutual
-    symmetry, leaving four one-way aspects (Taurus->Aries, Leo->Cancer,
-    Scorpio->Libra, Aquarius->Capricorn). The map records directional aspects.
-    """
-    aspects = {i: [] for i in range(12)}
-    for a in range(12):
-        qa = jp.SIGN_QUALITY[a]
-        for b in range(12):
-            if a == b:
-                continue
-            qb = jp.SIGN_QUALITY[b]
-            if qa == "Dual":
-                if qb == "Dual":
-                    aspects[a].append(b)
-            elif qa == "Movable" and qb == "Fixed":
-                if jp.sign_n_from(a, 2) != b:        # skip next Fixed (n=2)
-                    aspects[a].append(b)
-            elif qa == "Fixed" and qb == "Movable":
-                if jp.sign_n_from(a, 3) != b:        # skip next Movable (n=3)
-                    aspects[a].append(b)
-    # matrix[a][b] == 1 means sign a aspects sign b
-    matrix = [[1 if b in aspects[a] else 0 for b in range(12)] for a in range(12)]
-    one_way = []
-    for a in range(12):
-        for b in range(12):
-            if matrix[a][b] and not matrix[b][a]:
-                one_way.append({"from": jp.SIGNS[a], "to": jp.SIGNS[b]})
-    return {
-        "matrix": matrix,
-        "by_sign": {jp.SIGNS[a]: [jp.SIGNS[b] for b in aspects[a]] for a in range(12)},
-        "one_way": one_way,
-    }
+# Moved to lib/jyotish_primitives.jaimini_drishti_matrix (structural fix).
+build_drishti_map = jp.jaimini_drishti_matrix
 
 
 DRISHTI = build_drishti_map()
