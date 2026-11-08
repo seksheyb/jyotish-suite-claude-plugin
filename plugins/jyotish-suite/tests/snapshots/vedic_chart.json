@@ -1037,6 +1037,527 @@
         "Aquarius": 4,
         "Pisces": 3
       }
+    },
+    "prastara": {
+      "Sun": {
+        "Aries": [
+          "Jupiter",
+          "Saturn",
+          "Lagna"
+        ],
+        "Taurus": [
+          "Sun",
+          "Moon",
+          "Mars",
+          "Lagna"
+        ],
+        "Gemini": [
+          "Sun",
+          "Mercury",
+          "Lagna"
+        ],
+        "Cancer": [
+          "Saturn"
+        ],
+        "Leo": [
+          "Sun",
+          "Mars",
+          "Mercury",
+          "Venus",
+          "Saturn"
+        ],
+        "Virgo": [
+          "Moon",
+          "Mars",
+          "Mercury",
+          "Venus",
+          "Saturn",
+          "Lagna"
+        ],
+        "Libra": [
+          "Moon",
+          "Mars",
+          "Jupiter",
+          "Saturn",
+          "Lagna"
+        ],
+        "Scorpio": [
+          "Sun",
+          "Mars",
+          "Jupiter",
+          "Saturn"
+        ],
+        "Sagittarius": [
+          "Sun",
+          "Mars",
+          "Mercury",
+          "Lagna"
+        ],
+        "Capricorn": [
+          "Sun",
+          "Mercury",
+          "Saturn"
+        ],
+        "Aquarius": [
+          "Sun",
+          "Moon",
+          "Mars",
+          "Mercury",
+          "Jupiter",
+          "Venus",
+          "Saturn"
+        ],
+        "Pisces": [
+          "Sun",
+          "Mars",
+          "Mercury"
+        ]
+      },
+      "Moon": {
+        "Aries": [
+          "Mars",
+          "Mercury",
+          "Jupiter",
+          "Lagna"
+        ],
+        "Taurus": [
+          "Moon",
+          "Jupiter",
+          "Venus",
+          "Saturn",
+          "Lagna"
+        ],
+        "Gemini": [
+          "Moon",
+          "Mars",
+          "Mercury",
+          "Jupiter",
+          "Venus",
+          "Saturn"
+        ],
+        "Cancer": [
+          "Sun",
+          "Mars",
+          "Mercury",
+          "Jupiter",
+          "Venus"
+        ],
+        "Leo": [
+          "Mercury"
+        ],
+        "Virgo": [
+          "Moon",
+          "Jupiter",
+          "Venus",
+          "Lagna"
+        ],
+        "Libra": [
+          "Sun",
+          "Moon",
+          "Mars"
+        ],
+        "Scorpio": [
+          "Sun",
+          "Mars",
+          "Mercury",
+          "Venus",
+          "Saturn"
+        ],
+        "Sagittarius": [
+          "Sun",
+          "Moon",
+          "Mars",
+          "Jupiter",
+          "Venus",
+          "Lagna"
+        ],
+        "Capricorn": [
+          "Mercury",
+          "Jupiter",
+          "Venus"
+        ],
+        "Aquarius": [
+          "Sun",
+          "Moon",
+          "Mercury"
+        ],
+        "Pisces": [
+          "Sun",
+          "Mars",
+          "Jupiter",
+          "Saturn"
+        ]
+      },
+      "Mars": {
+        "Aries": [
+          "Jupiter",
+          "Saturn",
+          "Lagna"
+        ],
+        "Taurus": [
+          "Moon",
+          "Mars",
+          "Jupiter",
+          "Lagna"
+        ],
+        "Gemini": [
+          "Mercury"
+        ],
+        "Cancer": [
+          "Sun",
+          "Saturn",
+          "Lagna"
+        ],
+        "Leo": [
+          "Mars",
+          "Mercury",
+          "Venus",
+          "Saturn"
+        ],
+        "Virgo": [
+          "Sun",
+          "Mars",
+          "Mercury",
+          "Saturn",
+          "Lagna"
+        ],
+        "Libra": [
+          "Sun",
+          "Moon",
+          "Venus",
+          "Saturn"
+        ],
+        "Scorpio": [
+          "Mars",
+          "Jupiter",
+          "Saturn"
+        ],
+        "Sagittarius": [
+          "Mars",
+          "Lagna"
+        ],
+        "Capricorn": [
+          "Venus",
+          "Saturn"
+        ],
+        "Aquarius": [
+          "Sun",
+          "Moon",
+          "Mars",
+          "Mercury",
+          "Venus"
+        ],
+        "Pisces": [
+          "Sun",
+          "Mars",
+          "Jupiter"
+        ]
+      },
+      "Mercury": {
+        "Aries": [
+          "Sun",
+          "Mercury",
+          "Jupiter",
+          "Venus",
+          "Saturn",
+          "Lagna"
+        ],
+        "Taurus": [
+          "Moon",
+          "Mars",
+          "Jupiter",
+          "Venus",
+          "Lagna"
+        ],
+        "Gemini": [
+          "Mercury",
+          "Venus"
+        ],
+        "Cancer": [
+          "Moon",
+          "Venus",
+          "Saturn",
+          "Lagna"
+        ],
+        "Leo": [
+          "Mars",
+          "Mercury",
+          "Saturn",
+          "Lagna"
+        ],
+        "Virgo": [
+          "Sun",
+          "Moon",
+          "Mars",
+          "Mercury",
+          "Saturn"
+        ],
+        "Libra": [
+          "Sun",
+          "Moon",
+          "Mars",
+          "Venus",
+          "Saturn",
+          "Lagna"
+        ],
+        "Scorpio": [
+          "Mars",
+          "Jupiter",
+          "Venus",
+          "Saturn"
+        ],
+        "Sagittarius": [
+          "Mars",
+          "Mercury",
+          "Lagna"
+        ],
+        "Capricorn": [
+          "Sun",
+          "Moon",
+          "Mercury",
+          "Jupiter",
+          "Venus",
+          "Saturn"
+        ],
+        "Aquarius": [
+          "Mars",
+          "Mercury",
+          "Saturn",
+          "Lagna"
+        ],
+        "Pisces": [
+          "Sun",
+          "Moon",
+          "Mars",
+          "Mercury",
+          "Venus"
+        ]
+      },
+      "Jupiter": {
+        "Aries": [
+          "Moon",
+          "Mercury",
+          "Jupiter",
+          "Venus",
+          "Lagna"
+        ],
+        "Taurus": [
+          "Sun",
+          "Mars",
+          "Mercury",
+          "Saturn",
+          "Lagna"
+        ],
+        "Gemini": [
+          "Sun",
+          "Moon",
+          "Jupiter",
+          "Saturn"
+        ],
+        "Cancer": [
+          "Sun",
+          "Mercury",
+          "Jupiter",
+          "Venus",
+          "Lagna"
+        ],
+        "Leo": [
+          "Sun",
+          "Moon",
+          "Mars",
+          "Mercury",
+          "Jupiter",
+          "Venus",
+          "Lagna"
+        ],
+        "Virgo": [
+          "Mars",
+          "Mercury",
+          "Jupiter"
+        ],
+        "Libra": [
+          "Moon",
+          "Lagna"
+        ],
+        "Scorpio": [
+          "Sun",
+          "Mars",
+          "Venus",
+          "Lagna"
+        ],
+        "Sagittarius": [
+          "Sun",
+          "Mars",
+          "Mercury",
+          "Jupiter",
+          "Venus",
+          "Saturn",
+          "Lagna"
+        ],
+        "Capricorn": [
+          "Sun",
+          "Moon",
+          "Mercury",
+          "Jupiter",
+          "Venus",
+          "Lagna"
+        ],
+        "Aquarius": [
+          "Sun",
+          "Mars",
+          "Mercury"
+        ],
+        "Pisces": [
+          "Sun",
+          "Mars",
+          "Jupiter",
+          "Saturn",
+          "Lagna"
+        ]
+      },
+      "Venus": {
+        "Aries": [
+          "Sun",
+          "Moon",
+          "Mars",
+          "Jupiter",
+          "Venus",
+          "Saturn"
+        ],
+        "Taurus": [
+          "Venus",
+          "Saturn",
+          "Lagna"
+        ],
+        "Gemini": [
+          "Mars",
+          "Mercury",
+          "Venus"
+        ],
+        "Cancer": [
+          "Moon",
+          "Mars",
+          "Venus",
+          "Lagna"
+        ],
+        "Leo": [
+          "Moon",
+          "Mercury",
+          "Saturn",
+          "Lagna"
+        ],
+        "Virgo": [
+          "Mercury",
+          "Saturn",
+          "Lagna"
+        ],
+        "Libra": [
+          "Moon",
+          "Mars",
+          "Jupiter",
+          "Venus",
+          "Saturn",
+          "Lagna"
+        ],
+        "Scorpio": [
+          "Moon",
+          "Venus",
+          "Saturn",
+          "Lagna"
+        ],
+        "Sagittarius": [
+          "Sun",
+          "Moon",
+          "Mars",
+          "Mercury",
+          "Venus"
+        ],
+        "Capricorn": [
+          "Moon",
+          "Mars",
+          "Jupiter",
+          "Venus"
+        ],
+        "Aquarius": [
+          "Moon",
+          "Mercury",
+          "Jupiter",
+          "Lagna"
+        ],
+        "Pisces": [
+          "Sun",
+          "Moon",
+          "Jupiter",
+          "Venus",
+          "Saturn",
+          "Lagna"
+        ]
+      },
+      "Saturn": {
+        "Aries": [
+          "Mars",
+          "Jupiter",
+          "Lagna"
+        ],
+        "Taurus": [
+          "Sun",
+          "Moon",
+          "Jupiter",
+          "Saturn",
+          "Lagna"
+        ],
+        "Gemini": [
+          "Sun",
+          "Mars",
+          "Saturn"
+        ],
+        "Cancer": [
+          "Mars",
+          "Lagna"
+        ],
+        "Leo": [
+          "Sun",
+          "Venus"
+        ],
+        "Virgo": [
+          "Mercury",
+          "Lagna"
+        ],
+        "Libra": [
+          "Moon",
+          "Jupiter",
+          "Lagna"
+        ],
+        "Scorpio": [
+          "Sun",
+          "Mars",
+          "Mercury",
+          "Jupiter",
+          "Saturn"
+        ],
+        "Sagittarius": [
+          "Sun",
+          "Mars",
+          "Mercury",
+          "Lagna"
+        ],
+        "Capricorn": [
+          "Mars",
+          "Mercury",
+          "Venus"
+        ],
+        "Aquarius": [
+          "Sun",
+          "Moon",
+          "Mercury",
+          "Venus"
+        ],
+        "Pisces": [
+          "Sun",
+          "Mercury",
+          "Saturn"
+        ]
+      }
     }
   }
 }

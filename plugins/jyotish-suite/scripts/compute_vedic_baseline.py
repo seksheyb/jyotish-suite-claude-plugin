@@ -142,27 +142,34 @@ def compute_ashtakavarga(planet_sign_idx, lagna_sign_idx):
     """Compute classical Parashari Sarvashtakavarga.
 
     `planet_sign_idx` maps each of the 7 planets to its D1 sign index (0-11).
-    Returns (bav, sav) where bav[planet][sign_name] is the Bhinnashtakavarga
-    per sign and sav[sign_name] is the per-sign Sarvashtakavarga total.
+    Returns (bav, sav, prastara) where bav[planet][sign_name] is the
+    Bhinnashtakavarga per sign, sav[sign_name] is the per-sign Sarvashtakavarga
+    total, and prastara[planet][sign_name] lists the contributors (in table
+    order) that gave a bindu to that sign.
     """
     contributors = dict(planet_sign_idx)
     contributors["Lagna"] = lagna_sign_idx
 
     bav = {}
+    prastara = {}
     for subject in AV_PLANETS:
         per_sign = [0] * 12
+        who = [[] for _ in range(12)]
         table = CONTRIB_HOUSES[subject]
         for contributor, houses in table.items():
             csi = contributors[contributor]
             for h in houses:
                 target = jp.sign_n_from(csi, h)  # h-th sign from contributor (inclusive)
                 per_sign[target] += 1
+                if contributor not in who[target]:
+                    who[target].append(contributor)
         bav[subject] = {jp.SIGNS[i]: per_sign[i] for i in range(12)}
+        prastara[subject] = {jp.SIGNS[i]: who[i] for i in range(12)}
 
     sav = {}
     for i in range(12):
         sav[jp.SIGNS[i]] = sum(bav[p][jp.SIGNS[i]] for p in AV_PLANETS)
-    return bav, sav
+    return bav, sav, prastara
 
 
 # ====================================================================
@@ -450,7 +457,7 @@ def build_baseline(chart, asof_dt):
     # Ashtakavarga uses the 7 visible planets' D1 sign indices.
     planet_sign_idx = {p: jp.SIGNS.index(planets_raw[p]["sign"])
                        for p in AV_PLANETS}
-    bav, sav = compute_ashtakavarga(planet_sign_idx, lagna_si)
+    bav, sav, prastara = compute_ashtakavarga(planet_sign_idx, lagna_si)
 
     return {
         "chart_type": "vedic_parashari_baseline",
@@ -481,6 +488,7 @@ def build_baseline(chart, asof_dt):
             "sav_per_sign": sav,
             "sav_total": sum(sav.values()),
             "bav_per_planet": bav,
+            "prastara": prastara,
         },
     }
 
