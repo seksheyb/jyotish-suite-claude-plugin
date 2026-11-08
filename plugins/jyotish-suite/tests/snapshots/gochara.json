@@ -237,7 +237,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2025-12-31T18:30:00"
+            "evaluated_at": "2025-12-31T18:30:00",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         }
       ],
@@ -618,7 +623,63 @@
             "obstructed_by": [
               "Rahu"
             ],
-            "evaluated_at": "2025-12-31T18:30:00"
+            "evaluated_at": "2025-12-31T18:30:00",
+            "intervals": [
+              {
+                "planet": "Rahu",
+                "start": "2025-12-31T18:30:00",
+                "end": "2026-06-01T20:06:05.020752"
+              },
+              {
+                "planet": "Moon",
+                "start": "2026-01-20T20:05:24.007416",
+                "end": "2026-01-23T03:03:37.000581"
+              },
+              {
+                "planet": "Mercury",
+                "start": "2026-02-03T16:20:24.069214",
+                "end": "2026-04-10T19:44:13.005983"
+              },
+              {
+                "planet": "Venus",
+                "start": "2026-02-05T19:39:22.060547",
+                "end": "2026-03-01T19:24:44.033204"
+              },
+              {
+                "planet": "Sun",
+                "start": "2026-02-12T22:36:10.074464",
+                "end": "2026-03-14T19:30:21.038819"
+              },
+              {
+                "planet": "Moon",
+                "start": "2026-02-17T03:35:41.001893",
+                "end": "2026-02-19T09:29:59.011231"
+              },
+              {
+                "planet": "Mars",
+                "start": "2026-02-23T06:16:58.048096",
+                "end": "2026-04-02T09:56:36.038819"
+              },
+              {
+                "planet": "Moon",
+                "start": "2026-03-16T12:44:17.015992",
+                "end": "2026-03-18T18:06:04.018250"
+              },
+              {
+                "planet": "Moon",
+                "start": "2026-04-12T22:14:42.016755",
+                "end": "2026-04-15T04:07:34.003144"
+              },
+              {
+                "planet": "Moon",
+                "start": "2026-05-10T06:42:53.011780",
+                "end": "2026-05-12T13:54:56.015169"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -648,7 +709,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-06-01T20:06:05.020752"
+            "evaluated_at": "2026-06-01T20:06:05.020752",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         }
       ],
@@ -1043,7 +1109,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2025-12-31T18:30:00"
+            "evaluated_at": "2025-12-31T18:30:00",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         }
       ],
@@ -1321,7 +1392,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2025-12-31T18:30:00"
+            "evaluated_at": "2025-12-31T18:30:00",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         }
       ],
@@ -1617,7 +1693,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2025-12-31T18:30:00"
+            "evaluated_at": "2025-12-31T18:30:00",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -1648,7 +1729,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-01-15T22:55:17.047120"
+            "evaluated_at": "2026-01-15T22:55:17.047120",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -1678,7 +1764,18 @@
           "vedha": {
             "house": 12,
             "obstructed_by": [],
-            "evaluated_at": "2026-02-23T06:16:58.048096"
+            "evaluated_at": "2026-02-23T06:16:58.048096",
+            "intervals": [
+              {
+                "planet": "Moon",
+                "start": "2026-03-09T03:59:46.006165",
+                "end": "2026-03-11T16:30:14.014436"
+              }
+            ],
+            "obstructed_to_end": false,
+            "clear_at": "2026-03-11T16:30:14.014436",
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -1708,7 +1805,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-04-02T09:56:36.038819"
+            "evaluated_at": "2026-04-02T09:56:36.038819",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -1738,7 +1840,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-05-11T07:05:35.083009"
+            "evaluated_at": "2026-05-11T07:05:35.083009",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -1771,7 +1878,23 @@
               "Moon",
               "Ketu"
             ],
-            "evaluated_at": "2026-06-20T18:25:16.058350"
+            "evaluated_at": "2026-06-20T18:25:16.058350",
+            "intervals": [
+              {
+                "planet": "Ketu",
+                "start": "2026-06-20T18:25:16.058350",
+                "end": "2026-06-30T18:30:00"
+              },
+              {
+                "planet": "Moon",
+                "start": "2026-06-20T18:25:16.058350",
+                "end": "2026-06-21T10:09:57.003938"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         }
       ],
@@ -3257,7 +3380,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2025-12-31T18:30:00"
+            "evaluated_at": "2025-12-31T18:30:00",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -3288,7 +3416,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-01-14T09:34:54.076539"
+            "evaluated_at": "2026-01-14T09:34:54.076539",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -3320,7 +3453,23 @@
             "obstructed_by": [
               "Ketu"
             ],
-            "evaluated_at": "2026-02-12T22:36:10.074464"
+            "evaluated_at": "2026-02-12T22:36:10.074464",
+            "intervals": [
+              {
+                "planet": "Ketu",
+                "start": "2026-02-12T22:36:10.074464",
+                "end": "2026-03-14T19:30:21.038819"
+              },
+              {
+                "planet": "Moon",
+                "start": "2026-03-02T02:21:31.003419",
+                "end": "2026-03-04T08:15:36.014557"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -3350,7 +3499,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-03-14T19:30:21.038819"
+            "evaluated_at": "2026-03-14T19:30:21.038819",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -3380,7 +3534,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-04-14T04:00:16.040040"
+            "evaluated_at": "2026-04-14T04:00:16.040040",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -3410,7 +3569,18 @@
           "vedha": {
             "house": 12,
             "obstructed_by": [],
-            "evaluated_at": "2026-05-15T00:49:41.002808"
+            "evaluated_at": "2026-05-15T00:49:41.002808",
+            "intervals": [
+              {
+                "planet": "Moon",
+                "start": "2026-05-30T01:08:48.016662",
+                "end": "2026-06-01T13:38:33.013459"
+              }
+            ],
+            "obstructed_to_end": false,
+            "clear_at": "2026-06-01T13:38:33.013459",
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -3440,7 +3610,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-06-15T07:19:57.042848"
+            "evaluated_at": "2026-06-15T07:19:57.042848",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         }
       ],
@@ -4709,7 +4884,12 @@
           "vedha": {
             "house": 12,
             "obstructed_by": [],
-            "evaluated_at": "2025-12-31T18:30:00"
+            "evaluated_at": "2025-12-31T18:30:00",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -4739,7 +4919,12 @@
           "vedha": {
             "house": 2,
             "obstructed_by": [],
-            "evaluated_at": "2026-01-02T03:55:53.006745"
+            "evaluated_at": "2026-01-02T03:55:53.006745",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -4769,7 +4954,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-01-04T04:13:02.006836"
+            "evaluated_at": "2026-01-04T04:13:02.006836",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -4797,7 +4987,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-01-06T06:47:44.019013"
+            "evaluated_at": "2026-01-06T06:47:44.019013",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -4827,7 +5022,18 @@
             "obstructed_by": [
               "Saturn"
             ],
-            "evaluated_at": "2026-01-08T13:09:11.005555"
+            "evaluated_at": "2026-01-08T13:09:11.005555",
+            "intervals": [
+              {
+                "planet": "Saturn",
+                "start": "2026-01-08T13:09:11.005555",
+                "end": "2026-01-10T23:22:31.009370"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -4855,7 +5061,12 @@
           "vedha": {
             "house": 8,
             "obstructed_by": [],
-            "evaluated_at": "2026-01-10T23:22:31.009370"
+            "evaluated_at": "2026-01-10T23:22:31.009370",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -4883,7 +5094,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-01-13T11:51:11.015169"
+            "evaluated_at": "2026-01-13T11:51:11.015169",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -4913,7 +5129,12 @@
           "vedha": {
             "house": 5,
             "obstructed_by": [],
-            "evaluated_at": "2026-01-16T00:17:44.005281"
+            "evaluated_at": "2026-01-16T00:17:44.005281",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -4944,7 +5165,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-01-18T11:10:59.014893"
+            "evaluated_at": "2026-01-18T11:10:59.014893",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -4976,7 +5202,18 @@
             "obstructed_by": [
               "Ketu"
             ],
-            "evaluated_at": "2026-01-20T20:05:24.007416"
+            "evaluated_at": "2026-01-20T20:05:24.007416",
+            "intervals": [
+              {
+                "planet": "Ketu",
+                "start": "2026-01-20T20:05:24.007416",
+                "end": "2026-01-23T03:03:37.000581"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -5006,7 +5243,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-01-23T03:03:37.000581"
+            "evaluated_at": "2026-01-23T03:03:37.000581",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5036,7 +5278,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-01-25T08:05:45.018769"
+            "evaluated_at": "2026-01-25T08:05:45.018769",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5066,7 +5313,12 @@
           "vedha": {
             "house": 12,
             "obstructed_by": [],
-            "evaluated_at": "2026-01-27T11:14:57.019959"
+            "evaluated_at": "2026-01-27T11:14:57.019959",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5100,7 +5352,28 @@
               "Mars",
               "Venus"
             ],
-            "evaluated_at": "2026-01-29T13:01:00.019685"
+            "evaluated_at": "2026-01-29T13:01:00.019685",
+            "intervals": [
+              {
+                "planet": "Mars",
+                "start": "2026-01-29T13:01:00.019685",
+                "end": "2026-01-31T14:31:07.002869"
+              },
+              {
+                "planet": "Sun",
+                "start": "2026-01-29T13:01:00.019685",
+                "end": "2026-01-31T14:31:07.002869"
+              },
+              {
+                "planet": "Venus",
+                "start": "2026-01-29T13:01:00.019685",
+                "end": "2026-01-31T14:31:07.002869"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -5130,7 +5403,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-01-31T14:31:07.002869"
+            "evaluated_at": "2026-01-31T14:31:07.002869",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5158,7 +5436,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-02-02T17:17:41.011506"
+            "evaluated_at": "2026-02-02T17:17:41.011506",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5188,7 +5471,18 @@
             "obstructed_by": [
               "Saturn"
             ],
-            "evaluated_at": "2026-02-04T22:49:51.000367"
+            "evaluated_at": "2026-02-04T22:49:51.000367",
+            "intervals": [
+              {
+                "planet": "Saturn",
+                "start": "2026-02-04T22:49:51.000367",
+                "end": "2026-02-07T07:51:48.004762"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -5216,7 +5510,12 @@
           "vedha": {
             "house": 8,
             "obstructed_by": [],
-            "evaluated_at": "2026-02-07T07:51:48.004762"
+            "evaluated_at": "2026-02-07T07:51:48.004762",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5244,7 +5543,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-02-09T19:41:07.014314"
+            "evaluated_at": "2026-02-09T19:41:07.014314",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5274,7 +5578,12 @@
           "vedha": {
             "house": 5,
             "obstructed_by": [],
-            "evaluated_at": "2026-02-12T08:12:16.015320"
+            "evaluated_at": "2026-02-12T08:12:16.015320",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5305,7 +5614,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-02-14T19:12:14.010315"
+            "evaluated_at": "2026-02-14T19:12:14.010315",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5337,7 +5651,18 @@
             "obstructed_by": [
               "Ketu"
             ],
-            "evaluated_at": "2026-02-17T03:35:41.001893"
+            "evaluated_at": "2026-02-17T03:35:41.001893",
+            "intervals": [
+              {
+                "planet": "Ketu",
+                "start": "2026-02-17T03:35:41.001893",
+                "end": "2026-02-19T09:29:59.011231"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -5367,7 +5692,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-02-19T09:29:59.011231"
+            "evaluated_at": "2026-02-19T09:29:59.011231",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5397,7 +5727,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-02-21T13:37:05.012971"
+            "evaluated_at": "2026-02-21T13:37:05.012971",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5427,7 +5762,12 @@
           "vedha": {
             "house": 12,
             "obstructed_by": [],
-            "evaluated_at": "2026-02-23T16:42:20.018464"
+            "evaluated_at": "2026-02-23T16:42:20.018464",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5457,7 +5797,12 @@
           "vedha": {
             "house": 2,
             "obstructed_by": [],
-            "evaluated_at": "2026-02-25T19:24:43.003235"
+            "evaluated_at": "2026-02-25T19:24:43.003235",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5487,7 +5832,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-02-27T22:22:25.008089"
+            "evaluated_at": "2026-02-27T22:22:25.008089",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5515,7 +5865,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-03-02T02:21:31.003419"
+            "evaluated_at": "2026-03-02T02:21:31.003419",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5546,7 +5901,23 @@
               "Venus",
               "Saturn"
             ],
-            "evaluated_at": "2026-03-04T08:15:36.014557"
+            "evaluated_at": "2026-03-04T08:15:36.014557",
+            "intervals": [
+              {
+                "planet": "Saturn",
+                "start": "2026-03-04T08:15:36.014557",
+                "end": "2026-03-06T16:48:39.005586"
+              },
+              {
+                "planet": "Venus",
+                "start": "2026-03-04T08:15:36.014557",
+                "end": "2026-03-06T16:48:39.005586"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -5574,7 +5945,12 @@
           "vedha": {
             "house": 8,
             "obstructed_by": [],
-            "evaluated_at": "2026-03-06T16:48:39.005586"
+            "evaluated_at": "2026-03-06T16:48:39.005586",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5602,7 +5978,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-03-09T03:59:46.006165"
+            "evaluated_at": "2026-03-09T03:59:46.006165",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5632,7 +6013,12 @@
           "vedha": {
             "house": 5,
             "obstructed_by": [],
-            "evaluated_at": "2026-03-11T16:30:14.014436"
+            "evaluated_at": "2026-03-11T16:30:14.014436",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5663,7 +6049,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-03-14T04:03:02.009126"
+            "evaluated_at": "2026-03-14T04:03:02.009126",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5695,7 +6086,18 @@
             "obstructed_by": [
               "Ketu"
             ],
-            "evaluated_at": "2026-03-16T12:44:17.015992"
+            "evaluated_at": "2026-03-16T12:44:17.015992",
+            "intervals": [
+              {
+                "planet": "Ketu",
+                "start": "2026-03-16T12:44:17.015992",
+                "end": "2026-03-18T18:06:04.018250"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -5725,7 +6127,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-03-18T18:06:04.018250"
+            "evaluated_at": "2026-03-18T18:06:04.018250",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5755,7 +6162,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-03-20T20:57:48.006135"
+            "evaluated_at": "2026-03-20T20:57:48.006135",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5785,7 +6197,12 @@
           "vedha": {
             "house": 12,
             "obstructed_by": [],
-            "evaluated_at": "2026-03-22T22:43:57.000276"
+            "evaluated_at": "2026-03-22T22:43:57.000276",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5815,7 +6232,12 @@
           "vedha": {
             "house": 2,
             "obstructed_by": [],
-            "evaluated_at": "2026-03-25T00:47:16.003876"
+            "evaluated_at": "2026-03-25T00:47:16.003876",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5845,7 +6267,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-03-27T04:05:59.019471"
+            "evaluated_at": "2026-03-27T04:05:59.019471",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5873,7 +6300,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-03-29T09:07:54.018860"
+            "evaluated_at": "2026-03-29T09:07:54.018860",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5904,7 +6336,28 @@
               "Sun",
               "Saturn"
             ],
-            "evaluated_at": "2026-03-31T16:02:47.012788"
+            "evaluated_at": "2026-03-31T16:02:47.012788",
+            "intervals": [
+              {
+                "planet": "Saturn",
+                "start": "2026-03-31T16:02:47.012788",
+                "end": "2026-04-03T00:58:43.013307"
+              },
+              {
+                "planet": "Sun",
+                "start": "2026-03-31T16:02:47.012788",
+                "end": "2026-04-03T00:58:43.013307"
+              },
+              {
+                "planet": "Mars",
+                "start": "2026-04-02T09:56:36.038819",
+                "end": "2026-04-03T00:58:43.013307"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -5932,7 +6385,12 @@
           "vedha": {
             "house": 8,
             "obstructed_by": [],
-            "evaluated_at": "2026-04-03T00:58:43.013307"
+            "evaluated_at": "2026-04-03T00:58:43.013307",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5960,7 +6418,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-04-05T11:57:56.019288"
+            "evaluated_at": "2026-04-05T11:57:56.019288",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -5992,7 +6455,18 @@
             "obstructed_by": [
               "Venus"
             ],
-            "evaluated_at": "2026-04-08T00:23:50.014802"
+            "evaluated_at": "2026-04-08T00:23:50.014802",
+            "intervals": [
+              {
+                "planet": "Venus",
+                "start": "2026-04-08T00:23:50.014802",
+                "end": "2026-04-10T12:33:56.006929"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -6023,7 +6497,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-04-10T12:33:56.006929"
+            "evaluated_at": "2026-04-10T12:33:56.006929",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6055,7 +6534,18 @@
             "obstructed_by": [
               "Ketu"
             ],
-            "evaluated_at": "2026-04-12T22:14:42.016755"
+            "evaluated_at": "2026-04-12T22:14:42.016755",
+            "intervals": [
+              {
+                "planet": "Ketu",
+                "start": "2026-04-12T22:14:42.016755",
+                "end": "2026-04-15T04:07:34.003144"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -6085,7 +6575,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-04-15T04:07:34.003144"
+            "evaluated_at": "2026-04-15T04:07:34.003144",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6115,7 +6610,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-04-17T06:32:19.004518"
+            "evaluated_at": "2026-04-17T06:32:19.004518",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6145,7 +6645,12 @@
           "vedha": {
             "house": 12,
             "obstructed_by": [],
-            "evaluated_at": "2026-04-19T07:01:07.002869"
+            "evaluated_at": "2026-04-19T07:01:07.002869",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6175,7 +6680,12 @@
           "vedha": {
             "house": 2,
             "obstructed_by": [],
-            "evaluated_at": "2026-04-21T07:30:50.001526"
+            "evaluated_at": "2026-04-21T07:30:50.001526",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6205,7 +6715,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-04-23T09:43:17.010042"
+            "evaluated_at": "2026-04-23T09:43:17.010042",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6233,7 +6748,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-04-25T14:34:49.002229"
+            "evaluated_at": "2026-04-25T14:34:49.002229",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6264,7 +6784,23 @@
               "Mars",
               "Saturn"
             ],
-            "evaluated_at": "2026-04-27T22:05:47.010042"
+            "evaluated_at": "2026-04-27T22:05:47.010042",
+            "intervals": [
+              {
+                "planet": "Mars",
+                "start": "2026-04-27T22:05:47.010042",
+                "end": "2026-04-30T07:44:11.007844"
+              },
+              {
+                "planet": "Saturn",
+                "start": "2026-04-27T22:05:47.010042",
+                "end": "2026-04-30T07:44:11.007844"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -6292,7 +6828,12 @@
           "vedha": {
             "house": 8,
             "obstructed_by": [],
-            "evaluated_at": "2026-04-30T07:44:11.007844"
+            "evaluated_at": "2026-04-30T07:44:11.007844",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6320,7 +6861,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-05-02T18:59:54.019319"
+            "evaluated_at": "2026-05-02T18:59:54.019319",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6352,7 +6898,18 @@
             "obstructed_by": [
               "Sun"
             ],
-            "evaluated_at": "2026-05-05T07:24:41.005097"
+            "evaluated_at": "2026-05-05T07:24:41.005097",
+            "intervals": [
+              {
+                "planet": "Sun",
+                "start": "2026-05-05T07:24:41.005097",
+                "end": "2026-05-07T19:56:28.011933"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -6383,7 +6940,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-05-07T19:56:28.011933"
+            "evaluated_at": "2026-05-07T19:56:28.011933",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6415,7 +6977,18 @@
             "obstructed_by": [
               "Ketu"
             ],
-            "evaluated_at": "2026-05-10T06:42:53.011780"
+            "evaluated_at": "2026-05-10T06:42:53.011780",
+            "intervals": [
+              {
+                "planet": "Ketu",
+                "start": "2026-05-10T06:42:53.011780",
+                "end": "2026-05-12T13:54:56.015169"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -6445,7 +7018,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-05-12T13:54:56.015169"
+            "evaluated_at": "2026-05-12T13:54:56.015169",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6475,7 +7053,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-05-14T17:03:57.016297"
+            "evaluated_at": "2026-05-14T17:03:57.016297",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6505,7 +7088,12 @@
           "vedha": {
             "house": 12,
             "obstructed_by": [],
-            "evaluated_at": "2026-05-16T17:16:38.018647"
+            "evaluated_at": "2026-05-16T17:16:38.018647",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6535,7 +7123,12 @@
           "vedha": {
             "house": 2,
             "obstructed_by": [],
-            "evaluated_at": "2026-05-18T16:34:51.014100"
+            "evaluated_at": "2026-05-18T16:34:51.014100",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6565,7 +7158,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-05-20T17:08:48.002930"
+            "evaluated_at": "2026-05-20T17:08:48.002930",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6593,7 +7191,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-05-22T20:38:04.016419"
+            "evaluated_at": "2026-05-22T20:38:04.016419",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6623,7 +7226,18 @@
             "obstructed_by": [
               "Saturn"
             ],
-            "evaluated_at": "2026-05-25T03:37:15.017395"
+            "evaluated_at": "2026-05-25T03:37:15.017395",
+            "intervals": [
+              {
+                "planet": "Saturn",
+                "start": "2026-05-25T03:37:15.017395",
+                "end": "2026-05-27T13:29:59.018098"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -6651,7 +7265,12 @@
           "vedha": {
             "house": 8,
             "obstructed_by": [],
-            "evaluated_at": "2026-05-27T13:29:59.018098"
+            "evaluated_at": "2026-05-27T13:29:59.018098",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6679,7 +7298,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-05-30T01:08:48.016662"
+            "evaluated_at": "2026-05-30T01:08:48.016662",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6711,7 +7335,18 @@
             "obstructed_by": [
               "Mars"
             ],
-            "evaluated_at": "2026-06-01T13:38:33.013459"
+            "evaluated_at": "2026-06-01T13:38:33.013459",
+            "intervals": [
+              {
+                "planet": "Mars",
+                "start": "2026-06-01T13:38:33.013459",
+                "end": "2026-06-04T02:11:36.011353"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -6742,7 +7377,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-06-04T02:11:36.011353"
+            "evaluated_at": "2026-06-04T02:11:36.011353",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6774,7 +7414,18 @@
             "obstructed_by": [
               "Ketu"
             ],
-            "evaluated_at": "2026-06-06T13:33:45.013733"
+            "evaluated_at": "2026-06-06T13:33:45.013733",
+            "intervals": [
+              {
+                "planet": "Ketu",
+                "start": "2026-06-06T13:33:45.013733",
+                "end": "2026-06-08T22:06:30.000916"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -6804,7 +7455,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-06-08T22:06:30.000916"
+            "evaluated_at": "2026-06-08T22:06:30.000916",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6834,7 +7490,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-06-11T02:46:24.004212"
+            "evaluated_at": "2026-06-11T02:46:24.004212",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6864,7 +7525,12 @@
           "vedha": {
             "house": 12,
             "obstructed_by": [],
-            "evaluated_at": "2026-06-13T03:55:23.014070"
+            "evaluated_at": "2026-06-13T03:55:23.014070",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6894,7 +7560,12 @@
           "vedha": {
             "house": 2,
             "obstructed_by": [],
-            "evaluated_at": "2026-06-15T03:10:48.001099"
+            "evaluated_at": "2026-06-15T03:10:48.001099",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6924,7 +7595,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-06-17T02:43:18.012544"
+            "evaluated_at": "2026-06-17T02:43:18.012544",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6952,7 +7628,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-06-19T04:36:51.005403"
+            "evaluated_at": "2026-06-19T04:36:51.005403",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -6982,7 +7663,18 @@
             "obstructed_by": [
               "Saturn"
             ],
-            "evaluated_at": "2026-06-21T10:09:57.003938"
+            "evaluated_at": "2026-06-21T10:09:57.003938",
+            "intervals": [
+              {
+                "planet": "Saturn",
+                "start": "2026-06-21T10:09:57.003938",
+                "end": "2026-06-23T19:22:49.006349"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -7013,7 +7705,23 @@
               "Jupiter",
               "Venus"
             ],
-            "evaluated_at": "2026-06-23T19:22:49.006349"
+            "evaluated_at": "2026-06-23T19:22:49.006349",
+            "intervals": [
+              {
+                "planet": "Jupiter",
+                "start": "2026-06-23T19:22:49.006349",
+                "end": "2026-06-26T07:03:05.016634"
+              },
+              {
+                "planet": "Venus",
+                "start": "2026-06-23T19:22:49.006349",
+                "end": "2026-06-26T07:03:05.016634"
+              }
+            ],
+            "obstructed_to_end": true,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": true
           }
         },
         {
@@ -7041,7 +7749,12 @@
           "vedha": {
             "house": null,
             "obstructed_by": [],
-            "evaluated_at": "2026-06-26T07:03:05.016634"
+            "evaluated_at": "2026-06-26T07:03:05.016634",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         },
         {
@@ -7071,7 +7784,12 @@
           "vedha": {
             "house": 5,
             "obstructed_by": [],
-            "evaluated_at": "2026-06-28T19:38:48.009798"
+            "evaluated_at": "2026-06-28T19:38:48.009798",
+            "intervals": [],
+            "obstructed_to_end": false,
+            "clear_at": null,
+            "clear_at_excluding_moon": null,
+            "obstructed_to_end_excluding_moon": false
           }
         }
       ],

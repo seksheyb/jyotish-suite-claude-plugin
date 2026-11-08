@@ -303,6 +303,52 @@ def vedha_block(body, verdict, at_utc, ref, signs):
             "evaluated_at": at_utc.isoformat()}
 
 
+def vedha_intervals(body, house, stay_start, stay_end, ref, all_stays):
+    """Vedha as intervals, not a single instant: for a favourable sign stay
+    [stay_start, stay_end], every stretch during which another graha sits in
+    the vedha house (counted from the natal Moon). Exempt pairs
+    (Sun-Saturn, Moon-Mercury) never obstruct each other. Returns
+    {intervals: [{planet, start, end}], obstructed_to_end: bool,
+    clear_at: ISO | None, clear_at_excluding_moon: ISO | None,
+    obstructed_to_end_excluding_moon: bool} — clear_at is the instant after
+    which no obstruction remains inside the stay (None when none ever occurs,
+    or when one runs to the end of the stay); the *_excluding_moon pair
+    repeats that reading without the Moon's brief passes."""
+    vedha_sign = jp.sign_n_from(ref["moon_sign_idx"], house)
+    intervals = []
+    for other in ALL_BODIES:
+        if other == body or jp.is_vedha_exempt(body, other):
+            continue
+        for st in all_stays[other]:
+            if st["sign_idx"] != vedha_sign:
+                continue
+            o_start = parse_iso_utc(st["entry_date"])
+            o_end = parse_iso_utc(st["exit_date"])
+            lo, hi = max(stay_start, o_start), min(stay_end, o_end)
+            if lo < hi:
+                intervals.append({"planet": other, "start": lo.isoformat(),
+                                  "end": hi.isoformat()})
+    intervals.sort(key=lambda x: (x["start"], x["planet"]))
+
+    def _clear(ivs):
+        if not ivs:
+            return False, None
+        last_end = max(parse_iso_utc(x["end"]) for x in ivs)
+        if last_end >= stay_end:
+            return True, None
+        return False, last_end.isoformat()
+
+    to_end, clear_at = _clear(intervals)
+    # The Moon crosses every sign in ~2.3 days and so re-obstructs briefly
+    # again and again; this second reading ignores it so the clearing of the
+    # substantive (non-Moon) obstruction is visible at a glance.
+    _to_end_xm, clear_xm = _clear([x for x in intervals if x["planet"] != "Moon"])
+    return {"intervals": intervals, "obstructed_to_end": to_end,
+            "clear_at": clear_at,
+            "clear_at_excluding_moon": clear_xm,
+            "obstructed_to_end_excluding_moon": _to_end_xm}
+
+
 def touched_signs(sign_idx, offsets):
     return {jp.sign_n_from(sign_idx, n) for n in offsets}
 
@@ -436,6 +482,10 @@ def main():
     pada_sp = te.pada_spans() if args.d9 else None
 
     d9_bodies = [b.strip() for b in args.d9_overlay_bodies.split(",") if b.strip()]
+    # Every graha's sign stays across the window, for vedha intervals. Cheap:
+    # sign arcs are 30 deg, so the engine's default steps suffice for all 9.
+    all_stays = {b: te.ingress_events(b, start_utc, end_utc, sign_sp, mode)
+                 for b in ALL_BODIES}
     out_bodies = {}
     for body in bodies:
         kakshya_on = body in KAKSHYA_BODIES
@@ -453,6 +503,15 @@ def main():
             at = (start_utc if h["entry_before_window"]
                   else parse_iso_utc(h["entry_date"]))
             h["vedha"] = vedha_block(body, h["gochara"], at, ref, signs)
+            if h["vedha"]["house"] is not None:
+                h["vedha"].update(vedha_intervals(
+                    body, h["vedha"]["house"], at,
+                    parse_iso_utc(h["exit_date"]), ref, all_stays))
+            else:
+                h["vedha"].update({"intervals": [], "obstructed_to_end": False,
+                                   "clear_at": None,
+                                   "clear_at_excluding_moon": None,
+                                   "obstructed_to_end_excluding_moon": False})
 
         nak_stays = scan(body, series, nak_sp, lon_fn)
         for h in nak_stays:

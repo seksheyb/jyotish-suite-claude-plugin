@@ -389,6 +389,20 @@ def build_dasha_block(chart, asof_dt):
                                 "end": b["end"]} for b in md["bhuktis"]]
                     break
             block["current_mahadasha_bhuktis"] = bhuktis
+            # Pratyantar (antara) timeline of the running antardasha, so a
+            # timing analyst need not hand-compute sub-period dates.
+            pratyantars = []
+            for md in tree:
+                if md["start"] != running["md_period"][0]:
+                    continue
+                for b in md["bhuktis"]:
+                    if b["start"] == running["bd_period"][0]:
+                        pratyantars = [{"ad_lord": a["ad_lord"],
+                                        "start": a["start"], "end": a["end"]}
+                                       for a in b["antaras"]]
+                        break
+                break
+            block["current_antardasha_pratyantars"] = pratyantars
         else:
             block["running"] = None
             block["note"] = ("asof date falls outside the 9-mahadasha span; "

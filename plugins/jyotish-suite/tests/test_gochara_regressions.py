@@ -82,6 +82,7 @@ with tempfile.TemporaryDirectory() as tmp:
           proc.stderr)
     with open(base_path, "w") as fh:
         fh.write(proc.stdout)
+    base = json.loads(proc.stdout) if proc.returncode == 0 else {}
 
     g_path = os.path.join(tmp, "transits.json")
     proc = run([sys.executable, os.path.join(SCRIPTS, "compute_gochara.py"),
@@ -226,6 +227,49 @@ if out is not None:
           and "modern" in out["d9_overlay_note"])
 
 if off is not None:
+    # Vedha intervals: inside the stay, sorted, never exempt, consistent with
+    # the at-entry obstructor list and with clear_at / obstructed_to_end.
+    bad = []
+    for bname, v in out["bodies"].items():
+        for h in v["sign_stays"]:
+            vd = h["vedha"]
+            for k in ("intervals", "obstructed_to_end", "clear_at"):
+                if k not in vd:
+                    bad.append((bname, h["sign"], "missing " + k))
+            ivs = vd.get("intervals", [])
+            if vd["house"] is None and ivs:
+                bad.append((bname, h["sign"], "intervals on non-favourable stay"))
+            starts = [x["start"] for x in ivs]
+            if starts != sorted(starts):
+                bad.append((bname, h["sign"], "unsorted intervals"))
+            for x in ivs:
+                if not (h["entry_date"] <= x["start"] < x["end"] <= h["exit_date"]):
+                    bad.append((bname, h["sign"], "interval outside stay", x))
+                if x["planet"] == bname or jp.is_vedha_exempt(bname, x["planet"]):
+                    bad.append((bname, h["sign"], "exempt/self obstructor", x["planet"]))
+            at_entry = {x["planet"] for x in ivs if x["start"] == h["entry_date"]}
+            if set(vd["obstructed_by"]) != at_entry:
+                bad.append((bname, h["sign"], "obstructed_by != intervals at entry",
+                            vd["obstructed_by"], sorted(at_entry)))
+            if (vd["clear_at"] is None) != (not ivs or vd["obstructed_to_end"]):
+                bad.append((bname, h["sign"], "clear_at inconsistent"))
+            if vd["clear_at"] is not None and vd["clear_at"] != max(x["end"] for x in ivs):
+                bad.append((bname, h["sign"], "clear_at != last interval end"))
+            xm = [x for x in ivs if x["planet"] != "Moon"]
+            if (vd["clear_at_excluding_moon"] is None) != (not xm or vd["obstructed_to_end_excluding_moon"]):
+                bad.append((bname, h["sign"], "clear_at_excluding_moon inconsistent"))
+            if xm and vd["clear_at_excluding_moon"] is not None \
+                    and vd["clear_at_excluding_moon"] != max(x["end"] for x in xm):
+                bad.append((bname, h["sign"], "clear_at_excluding_moon != last non-Moon end"))
+    check("vedha intervals consistent on every sign stay", not bad, str(bad[:4]))
+    check("pinned: Jupiter in Gemini vedha by Rahu runs to the end of the stay",
+          any(h["sign"] == "Gemini" and h["vedha"]["obstructed_to_end"]
+              and any(x["planet"] == "Rahu" for x in h["vedha"]["intervals"])
+              for h in out["bodies"]["Jupiter"]["sign_stays"]))
+    check("vedic baseline carries dasha.current_antardasha_pratyantars incl. running PD",
+          any(x["ad_lord"] == base["dasha"]["running"]["pratyantardasha"]["lord"]
+              and x["start"] == base["dasha"]["running"]["pratyantardasha"]["start"]
+              for x in base["dasha"]["current_antardasha_pratyantars"]))
     check("default run: Moon has no d9_overlay (excluded by default), Sun does",
           out["bodies"]["Moon"]["d9_overlay"] is None
           and isinstance(out["bodies"]["Sun"]["d9_overlay"], list)

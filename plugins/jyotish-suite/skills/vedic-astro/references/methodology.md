@@ -162,7 +162,11 @@ Run the complete Step 2 sequence (a through f) within D9:
 
 - **Mahadasha lord** — which house does it rule? Which house does it sit in? Is it connected to the question houses?
 - **Antardasha lord** — same analysis. Does it support or contradict the Mahadasha theme?
-- **Pratyantar** — fine-timing layer for near-term events
+- **Pratyantar** — fine-timing layer for near-term events. The baseline lists
+  the running antardasha's full pratyantar timeline in
+  `dasha.current_antardasha_pratyantars` (`{ad_lord, start, end}`) and the
+  current MD's antardashas in `dasha.current_mahadasha_bhuktis` — read the
+  dates from there, never hand-compute them
 
 **Dasha lord checks:**
 - Is the Dasha lord involved in a tight planetary aspect? The aspecting planet co-delivers (or blocks) results
@@ -212,9 +216,15 @@ helps.
 **Vedha (obstruction).** A favourable transit is cancelled when another
 transiting planet sits in its vedha house from the Moon (`gochara.vedha_house`;
 `vedha.obstructed_by` lists who is there). Sun–Saturn and Moon–Mercury never
-obstruct each other (already excluded by the script). Vedha is evaluated at the
-stay's entry instant (`vedha.evaluated_at`, or window start); across a long
-slow-planet stay, re-check fast obstructors against their own `sign_stays`.
+obstruct each other (already excluded by the script). `vedha.obstructed_by` is
+the snapshot at the stay's entry instant (`vedha.evaluated_at`, or window
+start); `vedha.intervals` lists every obstruction stretch inside the stay
+(`{planet, start, end}`), `vedha.clear_at` is the instant after which the stay
+is unobstructed (`null` when it never is, or when `obstructed_to_end` is true).
+The Moon re-obstructs for ~2 days every month, so read
+`clear_at_excluding_moon` for when the substantive obstruction lifts — the
+favourable result is usable from that date, with the Moon's passes as brief
+pauses only.
 
 **Saturn from the Moon** (`saturn_phase`): 12th / 1st / 2nd = Sade Sati
 (`sade_sati_rising` / `_peak` / `_setting`), 4th = Kantaka Shani, 8th =
@@ -257,7 +267,8 @@ only for a window of a few days — the Moon changes pada every ~6 hours).
 1. Start from `reference` — Moon sign/nakshatra, Lagna, running MD/AD/PD
    (`running_dasha`, as of `dasha_asof`).
 2. For each slow body (Saturn, Jupiter, Rahu, Ketu) read `sign_stays`:
-   `house_from_moon`, `gochara.favourable`, `vedha.obstructed_by`,
+   `house_from_moon`, `gochara.favourable`, `vedha.obstructed_by` and
+   `vedha.clear_at_excluding_moon` (when the obstruction lifts),
    `sav_bindus` / `bav_bindus`, `natal_planets_in_sign`, `is_dasha_lord`,
    `saturn_phase`.
 3. Narrow inside a favourable stay with `kakshya_stays` (`fruitful: true`) and

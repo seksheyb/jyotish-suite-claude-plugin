@@ -42,6 +42,23 @@ def run(asof):
     return json.loads(out)
 
 
+
+# --- pratyantar list of the running antardasha -------------------------
+try:
+    _pd = out["dasha"]["current_antardasha_pratyantars"]
+    _ad = out["dasha"]["running"]["antardasha"]
+    _run_pd = out["dasha"]["running"]["pratyantardasha"]
+    check("bnn: 9 pratyantars listed for the running antardasha", len(_pd) == 9, str(len(_pd)))
+    check("bnn: pratyantars span exactly the running antardasha",
+          _pd[0]["start"] == _ad["start"] and _pd[-1]["end"] == _ad["end"])
+    check("bnn: pratyantars are contiguous",
+          all(_pd[i]["end"] == _pd[i + 1]["start"] for i in range(len(_pd) - 1)))
+    check("bnn: running pratyantardasha appears in the list",
+          any(x["ad_lord"] == _run_pd["lord"] and x["start"] == _run_pd["start"] for x in _pd))
+except (KeyError, NameError, TypeError) as e:  # noqa: BLE001
+    check("bnn: pratyantar block readable", False, repr(e))
+
+
 def test_no_regressions():
     d = run(ASOF)["dasha"]
     run_ = d["running"]

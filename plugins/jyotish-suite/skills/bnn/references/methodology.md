@@ -168,6 +168,9 @@ BNN structural readings activate through Vimshottari Dasha.
 
 **Timing output:**
 - Current Mahadasha + Antardasha: activates Karaka directly / indirectly / not at all
+  (read `dasha.running`; sub-period dates come from
+  `dasha.current_mahadasha_bhuktis` and `dasha.current_antardasha_pratyantars`
+  in the baseline — never hand-compute them)
 - Most favorable upcoming Dasha period for this question — which planet, why (what Karaka it is or allies with), when it begins
 
 ---
