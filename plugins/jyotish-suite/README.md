@@ -37,8 +37,13 @@ agents/              shared roles: chart-calculator, chart-verifier, baseline-ru
                      unit-analyzer (sonnet) · synthesizer (opus)
 scripts/             compute_<school>_baseline.py per school + delta scripts
                      (compute_transits.py, find_fruitful_window.py, lk_upaay_check.py)
+                     per-school transit scripts, each in its own frame:
+                     compute_gochara.py — Parashari gochara: transits from natal Moon and Lagna, Vedha, Sade Sati, Ashtakavarga bindus + kakshya, Tara Bala, pada→navamsha D9 overlay (labelled modern)
+                     compute_bnn_transits.py — BNN: Jupiter/Saturn/Rahu/Ketu over natal planets, BNN aspects, exact-degree passes, Jupiter 12-year cycle
+                     compute_jaimini_transits.py — Jaimini: transits on the running Chara Dasha Rasi, Arudha Lagna, Upapada and Karakamsha by Rasi Drishti, Argala, double transit
 lib/                 jyotish_primitives.py (pure math) · ephemeris.py (pyswisseph)
                      · chart_io.py (pasted-chart expansion)
+                     · transit_engine.py (school-agnostic transit sampling engine: ingress/exit instants of any body through sign, nakshatra, pada or kakshya arcs, Lahiri or KP ayanamsa)
 tests/               golden-chart regression harness (run_golden.py)
 ```
 

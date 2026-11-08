@@ -168,9 +168,13 @@ treat that as a P0, not a snapshot problem. `kp_horary`'s chart row is always
 - **Reading quality.** A baseline can be numerically identical and still feed
   a worse synthesis if the synthesizer prompt, model, or effort earmark
   regresses. That's the gate below.
-- **The delta scripts** (`compute_transits.py`, `find_fruitful_window.py`,
-  `lk_upaay_check.py`) — not baselines in the six-school sense, not covered
-  here.
+- **The delta scripts** are not covered by `run_golden.py`; they have dedicated
+  regression files instead — `test_transit_engine_regressions.py` (engine + KP
+  `compute_transits.py` snapshot `snapshots/kp_transits.json`),
+  `test_gochara_regressions.py` (`snapshots/gochara.json`),
+  `test_bnn_transits_regressions.py` (`snapshots/bnn_transits.json`),
+  `test_jaimini_transits_regressions.py` (`snapshots/jaimini_transits.json`),
+  all run by `python3 -m pytest tests/`.
 
 ## Synthesis-quality eval (manual gate)
 
