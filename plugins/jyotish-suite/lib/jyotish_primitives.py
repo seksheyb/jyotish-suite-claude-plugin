@@ -196,28 +196,30 @@ def deg_in_sign(lon):
 def get_nakshatra(lon):
     """Return (nak_idx, name, star_lord, nak_start_deg)."""
     lon = norm360(lon)
-    idx = int(lon // NAK_ARC)
+    # Exact division: 27 nakshatras of 360/27 deg. Flooring by the float
+    # NAK_ARC puts exact boundaries (30.0, 120.0, 240.0 ...) in the previous
+    # nakshatra; integer arithmetic on lon*27 does not.
+    idx = int(lon * 27 // 360) % 27
     name, star_lord = NAKSHATRAS[idx]
     return idx, name, star_lord, idx * NAK_ARC
 
 
 def get_pada(lon):
     """Return the nakshatra pada (1-4) for a longitude."""
-    _idx, _n, _sl, nak_start = get_nakshatra(lon)
-    pos = norm360(lon) - nak_start
-    return int(pos // (NAK_ARC / 4)) + 1
+    # 108 padas of 3deg20' — exact integer division (see get_nakshatra).
+    return int(norm360(lon) * 108 // 360) % 4 + 1
 
 
 def gana_of(lon):
     """Return the Gana (Deva / Manushya / Rakshasa) of the nakshatra at lon."""
-    return NAKSHATRA_GANA[int(norm360(lon) // NAK_ARC)]
+    return NAKSHATRA_GANA[get_nakshatra(lon)[0]]
 
 
 def get_sub_and_subsub(lon):
     """Return (sub_lord, sub_sub_lord) — KP-style Vimshottari subdivisions."""
     lon = norm360(lon)
     _ni, _name, star_lord, nak_start = get_nakshatra(lon)
-    pos = lon - nak_start
+    pos = max(0.0, lon - nak_start)   # nak_start may exceed lon by ~1e-14 at exact boundaries
     start_idx = VIM_SEQ.index(star_lord)
     cum = 0.0
     sub_lord, sub_start, sub_arc = None, 0.0, 0.0
@@ -300,7 +302,7 @@ def navamsa_sign(lon):
     """Return (d9_sign_idx, d9_sign_name) for a D1 sidereal longitude."""
     si = int(norm360(lon) // 30)
     start = _NAVAMSA_START[SIGN_ELEMENT[si]]
-    nav_idx = int(deg_in_sign(lon) // NAVAMSA_ARC)
+    nav_idx = int(deg_in_sign(lon) * 9 // 30) % 9   # exact: 9 navamsas of 30/9 deg
     d9 = (start + nav_idx) % 12
     return d9, SIGNS[d9]
 
@@ -477,7 +479,7 @@ def vimshottari_balance(moon_lon):
     """Return (mahadasha_lord, balance_years, elapsed_years) at birth from the
     Moon's sidereal longitude."""
     _ni, _name, star_lord, nak_start = get_nakshatra(moon_lon)
-    fraction = (norm360(moon_lon) - nak_start) / NAK_ARC
+    fraction = max(0.0, norm360(moon_lon) - nak_start) / NAK_ARC
     total = VIM_YEARS[star_lord]
     return star_lord, total * (1 - fraction), total * fraction
 
@@ -693,11 +695,12 @@ def saturn_moon_phase(saturn_sign_idx, moon_sign_idx):
 def jaimini_drishti_matrix():
     """Precompute the full 12x12 Jaimini Rasi Drishti map.
 
-    Movable aspects all Fixed except the next zodiacal Fixed sign (which is the
-    sign immediately after it, n=2); Fixed aspects all Movable except the next
-    zodiacal Movable sign (n=3 from a Fixed sign, since the n=2 sign is Dual);
-    Dual aspects all other Dual signs. The adjacent-sign exception breaks mutual
-    symmetry, leaving one-way aspects. The map records directional aspects.
+    Movable aspects all Fixed except the adjacent one (the Fixed sign
+    immediately after it, n=2); Fixed aspects all Movable except the adjacent
+    one (the Movable sign immediately before it, n=12); Dual aspects all other
+    Dual signs. Because "adjacent" is the same pair seen from either side, the
+    map is symmetric: every Rasi Drishti is mutual and `one_way` is empty (kept
+    in the output shape for compatibility).
 
     Returns {"matrix": 12x12 list (matrix[a][b] == 1 means sign a aspects
     sign b), "by_sign": {sign_name: [aspected sign names]},
@@ -717,7 +720,7 @@ def jaimini_drishti_matrix():
                 if sign_n_from(a, 2) != b:        # skip next Fixed (n=2)
                     aspects[a].append(b)
             elif qa == "Fixed" and qb == "Movable":
-                if sign_n_from(a, 3) != b:        # skip next Movable (n=3)
+                if sign_n_from(a, 12) != b:       # skip adjacent Movable (the sign before, n=12)
                     aspects[a].append(b)
     # matrix[a][b] == 1 means sign a aspects sign b
     matrix = [[1 if b in aspects[a] else 0 for b in range(12)] for a in range(12)]

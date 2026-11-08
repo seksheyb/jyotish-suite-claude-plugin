@@ -14,11 +14,11 @@ Covers:
      is the lib builder's output (the move is structural only).
   7. pada_to_navamsa input validation.
 
-NOTE: the Jaimini matrix is deliberately NOT asserted symmetric and Taurus is
-NOT asserted to aspect Cancer: the builder (moved verbatim) skips n=3 from a
-Fixed sign, so Taurus aspects Aries/Libra/Capricorn and there are one-way
-aspects. Changing that would alter the pinned jaimini golden snapshot, so it
-is tracked as a separate finding rather than asserted here.
+The Jaimini matrix is asserted symmetric with an empty one_way list (fixed
+signs skip the ADJACENT movable sign — the one before them — so Taurus aspects
+Cancer/Libra/Capricorn, never Aries). get_nakshatra/get_pada/navamsa_sign are
+asserted exact at pada boundaries (30.0, 120.0, 240.0 ...), which the old
+float-flooring implementation got wrong.
 """
 
 import os
@@ -45,11 +45,9 @@ def check(name, cond, detail=""):
 
 
 def nak_pada(lon):
-    """(nak_idx, pada) via exact pada counting (108 padas of 3deg20').
-
-    Not jp.get_nakshatra/get_pada: those floor by the float NAK_ARC and land in
-    the previous pada at exact boundaries such as 30.0/120.0/240.0 (a separate
-    lib finding, checked away from boundaries below)."""
+    """(nak_idx, pada) via exact pada counting (108 padas of 3deg20') —
+    independent of the lib so the lib can be checked against it, including at
+    exact boundaries."""
     p = int(jp.norm360(lon) * 108 // 360) % 108
     return p // 4, p % 4 + 1
 
@@ -62,9 +60,13 @@ lons += [rng.uniform(0, 360) for _ in range(10)]
 bad = [(lon, jp.pada_to_navamsa(*nak_pada(lon)), jp.navamsa_sign(lon))
        for lon in lons if jp.pada_to_navamsa(*nak_pada(lon)) != jp.navamsa_sign(lon)]
 check("pada_to_navamsa identity with navamsa_sign (20 lons)", not bad, str(bad))
-bad = [lon for lon in lons if lon not in BOUNDARY
-       and (jp.get_nakshatra(lon)[0], jp.get_pada(lon)) != nak_pada(lon)]
-check("lib get_nakshatra/get_pada agree with exact pada count off-boundary", not bad, str(bad))
+bad = [lon for lon in lons + BOUNDARY
+       if (jp.get_nakshatra(lon)[0], jp.get_pada(lon)) != nak_pada(lon)]
+check("lib get_nakshatra/get_pada agree with exact pada count incl. boundaries", not bad, str(bad))
+check("get_nakshatra(120.0) is Magha (idx 9), not Ashlesha", jp.get_nakshatra(120.0)[0] == 9)
+check("get_pada(30.0) is pada 2 of Krittika", jp.get_pada(30.0) == 2)
+check("navamsa_sign at 10deg Aries is Cancer (4th navamsa)", jp.navamsa_sign(10.0) == (3, "Cancer"))
+check("get_sub_and_subsub(120.0) starts Magha at Ketu sub", jp.get_sub_and_subsub(120.0)[0] == "Ketu")
 
 # --- 2. kakshya_of ------------------------------------------------------
 for lon, exp in [(0.0, (0, "Saturn")), (3.75, (1, "Jupiter")), (26.25, (7, "Lagna")),
@@ -109,7 +111,14 @@ def aspects(a):
 
 check("drishti Aries -> Leo/Scorpio/Aquarius, not Taurus",
       aspects(0) == {4, 7, 10} and not m[0][1], str(aspects(0)))
-check("drishti Taurus -> Libra, Capricorn", {6, 9} <= aspects(1), str(aspects(1)))
+check("drishti Taurus -> Cancer/Libra/Capricorn, not Aries", aspects(1) == {3, 6, 9}, str(aspects(1)))
+check("drishti Aquarius -> Aries/Cancer/Libra, not Capricorn", aspects(10) == {0, 3, 6}, str(aspects(10)))
+check("drishti matrix symmetric (every rasi drishti is mutual)",
+      all(m[a][b] == m[b][a] for a in range(12) for b in range(12)))
+check("drishti one_way is empty", dm["one_way"] == [], str(dm["one_way"]))
+check("drishti movable never aspects movable, fixed never fixed",
+      all(not m[a][b] for a in range(12) for b in range(12)
+          if a != b and jp.SIGN_QUALITY[a] == jp.SIGN_QUALITY[b] and jp.SIGN_QUALITY[a] != "Dual"))
 check("drishti Gemini -> Virgo/Sagittarius/Pisces", aspects(2) == {5, 8, 11}, str(aspects(2)))
 check("drishti no self-aspect", all(m[i][i] == 0 for i in range(12)))
 check("drishti dual signs mutually symmetric",

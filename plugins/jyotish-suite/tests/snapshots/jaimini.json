@@ -2876,10 +2876,10 @@
         0
       ],
       [
+        0,
+        0,
+        0,
         1,
-        0,
-        0,
-        0,
         0,
         0,
         1,
@@ -2921,10 +2921,10 @@
         1,
         0,
         0,
+        0,
+        0,
+        0,
         1,
-        0,
-        0,
-        0,
         0,
         0,
         1,
@@ -2966,10 +2966,10 @@
         1,
         0,
         0,
+        0,
+        0,
+        0,
         1,
-        0,
-        0,
-        0,
         0,
         0
       ],
@@ -3002,9 +3002,6 @@
         0
       ],
       [
-        0,
-        0,
-        0,
         1,
         0,
         0,
@@ -3012,6 +3009,9 @@
         0,
         0,
         1,
+        0,
+        0,
+        0,
         0,
         0
       ],
@@ -3037,7 +3037,7 @@
         "Aquarius"
       ],
       "Taurus": [
-        "Aries",
+        "Cancer",
         "Libra",
         "Capricorn"
       ],
@@ -3053,7 +3053,7 @@
       ],
       "Leo": [
         "Aries",
-        "Cancer",
+        "Libra",
         "Capricorn"
       ],
       "Virgo": [
@@ -3069,7 +3069,7 @@
       "Scorpio": [
         "Aries",
         "Cancer",
-        "Libra"
+        "Capricorn"
       ],
       "Sagittarius": [
         "Gemini",
@@ -3082,9 +3082,9 @@
         "Scorpio"
       ],
       "Aquarius": [
+        "Aries",
         "Cancer",
-        "Libra",
-        "Capricorn"
+        "Libra"
       ],
       "Pisces": [
         "Gemini",
@@ -3092,40 +3092,7 @@
         "Sagittarius"
       ]
     },
-    "one_way": [
-      {
-        "from": "Aries",
-        "to": "Aquarius"
-      },
-      {
-        "from": "Taurus",
-        "to": "Aries"
-      },
-      {
-        "from": "Cancer",
-        "to": "Taurus"
-      },
-      {
-        "from": "Leo",
-        "to": "Cancer"
-      },
-      {
-        "from": "Libra",
-        "to": "Leo"
-      },
-      {
-        "from": "Scorpio",
-        "to": "Libra"
-      },
-      {
-        "from": "Capricorn",
-        "to": "Scorpio"
-      },
-      {
-        "from": "Aquarius",
-        "to": "Capricorn"
-      }
-    ]
+    "one_way": []
   },
   "planets": {
     "Sun": {
