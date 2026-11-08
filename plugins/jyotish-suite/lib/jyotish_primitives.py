@@ -684,3 +684,50 @@ def saturn_moon_phase(saturn_sign_idx, moon_sign_idx):
     "sade_sati_setting" (2nd), "kantaka_shani" (4th), "ashtama_shani" (8th).
     """
     return _SATURN_MOON_PHASES.get(count_signs(moon_sign_idx, saturn_sign_idx))
+
+
+# ====================================================================
+# Jaimini rashi drishti
+# ====================================================================
+
+def jaimini_drishti_matrix():
+    """Precompute the full 12x12 Jaimini Rasi Drishti map.
+
+    Movable aspects all Fixed except the next zodiacal Fixed sign (which is the
+    sign immediately after it, n=2); Fixed aspects all Movable except the next
+    zodiacal Movable sign (n=3 from a Fixed sign, since the n=2 sign is Dual);
+    Dual aspects all other Dual signs. The adjacent-sign exception breaks mutual
+    symmetry, leaving one-way aspects. The map records directional aspects.
+
+    Returns {"matrix": 12x12 list (matrix[a][b] == 1 means sign a aspects
+    sign b), "by_sign": {sign_name: [aspected sign names]},
+    "one_way": [{"from": sign_name, "to": sign_name}, ...]}.
+    """
+    aspects = {i: [] for i in range(12)}
+    for a in range(12):
+        qa = SIGN_QUALITY[a]
+        for b in range(12):
+            if a == b:
+                continue
+            qb = SIGN_QUALITY[b]
+            if qa == "Dual":
+                if qb == "Dual":
+                    aspects[a].append(b)
+            elif qa == "Movable" and qb == "Fixed":
+                if sign_n_from(a, 2) != b:        # skip next Fixed (n=2)
+                    aspects[a].append(b)
+            elif qa == "Fixed" and qb == "Movable":
+                if sign_n_from(a, 3) != b:        # skip next Movable (n=3)
+                    aspects[a].append(b)
+    # matrix[a][b] == 1 means sign a aspects sign b
+    matrix = [[1 if b in aspects[a] else 0 for b in range(12)] for a in range(12)]
+    one_way = []
+    for a in range(12):
+        for b in range(12):
+            if matrix[a][b] and not matrix[b][a]:
+                one_way.append({"from": SIGNS[a], "to": SIGNS[b]})
+    return {
+        "matrix": matrix,
+        "by_sign": {SIGNS[a]: [SIGNS[b] for b in aspects[a]] for a in range(12)},
+        "one_way": one_way,
+    }
