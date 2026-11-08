@@ -13,7 +13,7 @@ import os
 import sys
 import json
 import argparse
-from datetime import datetime
+from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "lib"))
 import jyotish_primitives as jp  # noqa: E402
@@ -339,10 +339,75 @@ def build_karaka_positions(chart, planets):
 
 
 # ---------------------------------------------------------------------------
+# Vimshottari dasha - resolved at the reading date, not at birth
+# ---------------------------------------------------------------------------
+
+def build_dasha_block(chart, asof_dt):
+    """Resolve the Vimshottari dasha running at `asof_dt`. The tree is anchored
+    at birth (Moon longitude + birth datetime) and spans 9 mahadashas so any
+    reasonable reading date is covered. Mirrors compute_vedic_baseline.py.
+    Emits the running MD/AD/PD/SD, the mahadasha timeline, and the antardasha
+    timeline of the current MD."""
+    raw = chart.get("dasha") or {}
+    birth_iso = chart.get("datetime_utc")
+    moon = chart.get("d1", {}).get("planets", {}).get("Moon")
+
+    if birth_iso and moon:
+        birth_dt = datetime.fromisoformat(birth_iso)
+        moon_lon = moon["longitude"]
+        tree = jp.build_dasha_tree(moon_lon, birth_dt, n_md=9)
+        running = jp.find_running(tree, asof_dt)
+        start_lord, balance, _elapsed = jp.vimshottari_balance(moon_lon)
+        block = {
+            "available": True,
+            "asof": asof_dt.isoformat(),
+            "starting_mahadasha": start_lord,
+            "balance_years": round(balance, 3),
+            "mahadasha_sequence": [
+                {"md_lord": md["md_lord"], "start": md["start"], "end": md["end"]}
+                for md in tree],
+        }
+        if running:
+            block["running"] = {
+                "mahadasha": {"lord": running["md_lord"],
+                              "start": running["md_period"][0],
+                              "end": running["md_period"][1]},
+                "antardasha": {"lord": running["bd_lord"],
+                               "start": running["bd_period"][0],
+                               "end": running["bd_period"][1]},
+                "pratyantardasha": {"lord": running["ad_lord"],
+                                    "start": running["ad_period"][0],
+                                    "end": running["ad_period"][1]},
+                "sookshma": {"lord": running["sd_lord"],
+                             "start": running["sd_period"][0],
+                             "end": running["sd_period"][1]},
+            }
+            bhuktis = []
+            for md in tree:
+                if md["start"] == running["md_period"][0]:
+                    bhuktis = [{"bd_lord": b["bd_lord"], "start": b["start"],
+                                "end": b["end"]} for b in md["bhuktis"]]
+                    break
+            block["current_mahadasha_bhuktis"] = bhuktis
+        else:
+            block["running"] = None
+            block["note"] = ("asof date falls outside the 9-mahadasha span; "
+                             "no running dasha resolved.")
+        return block
+
+    if raw.get("source") == "user-supplied":
+        return {"available": True, "source": "user-supplied",
+                **{k: v for k, v in raw.items() if k != "source"}}
+
+    return {"available": False,
+            "note": "No birth datetime supplied - Vimshottari dasha omitted."}
+
+
+# ---------------------------------------------------------------------------
 # Assembly
 # ---------------------------------------------------------------------------
 
-def build_baseline(chart):
+def build_baseline(chart, asof_dt):
     planets = build_planets(chart)
 
     natural_karakas = {}
@@ -357,7 +422,6 @@ def build_baseline(chart):
 
     aspects = build_aspects(planets)
     karaka_positions = build_karaka_positions(chart, planets)
-    running = chart.get("dasha", {}).get("running")
 
     return {
         "school": "bnn",
@@ -373,11 +437,7 @@ def build_baseline(chart):
         "planets": planets,
         "karaka_positions": karaka_positions,
         "aspects": aspects,
-        "dasha": {
-            "starting_mahadasha": chart.get("dasha", {}).get("starting_mahadasha"),
-            "balance_years": chart.get("dasha", {}).get("balance_years"),
-            "running": running,
-        },
+        "dasha": build_dasha_block(chart, asof_dt),
     }
 
 
@@ -388,7 +448,14 @@ def main():
     ap.add_argument("--lat", type=float, help="Latitude")
     ap.add_argument("--lon", type=float, help="Longitude")
     ap.add_argument("--chart", help="Path to a pre-computed parashari_natal_chart JSON")
+    ap.add_argument("--asof", help="Reading date (ISO) the Vimshottari dasha is "
+                                   "resolved at. Default: today (UTC).")
     args = ap.parse_args()
+
+    if args.asof:
+        asof_dt = datetime.fromisoformat(args.asof)
+    else:
+        asof_dt = datetime.now(timezone.utc).replace(tzinfo=None)
 
     if args.chart:
         with open(args.chart) as fh:
@@ -398,7 +465,7 @@ def main():
             ap.error("provide --chart, or all of --datetime --tz --lat --lon")
         chart = eph.parashari_natal_chart(args.datetime, args.tz, args.lat, args.lon)
 
-    baseline = build_baseline(chart)
+    baseline = build_baseline(chart, asof_dt)
     json.dump(baseline, sys.stdout, indent=2, ensure_ascii=False)
     sys.stdout.write("\n")
 

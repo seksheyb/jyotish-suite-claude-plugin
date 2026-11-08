@@ -1,17 +1,20 @@
 {
   "school": "bnn",
   "script": "compute_bnn_baseline.py",
-  "description": "bnn baseline — natal chart only, no moment-of-reading parameter (script has no clock dependency at all).",
+  "description": "bnn baseline - natal chart plus the Vimshottari dasha resolved at the pinned --asof reading date (the script defaults --asof to now, so it is pinned here).",
   "args": {
     "--datetime": "1990-05-15T10:30:00",
     "--tz": "Asia/Kolkata",
     "--lat": "28.6139",
-    "--lon": "77.2090"
+    "--lon": "77.2090",
+    "--asof": "2026-01-01T09:00:00"
   },
   "chart_path": {
     "description": "Same pinned birth chart, entered as a hand-authored pasted chart instead of ephemeris inputs, expanded via lib/chart_io.py --mode parashari and fed to the baseline via --chart. Only chart_meta.ayanamsa.mode/value_dms differ from the ephemeris-path snapshot (pasted charts don't carry an ayanamsa value).",
     "mode": "parashari",
     "positions": "chart_io/parashari_positions.json",
-    "args": {}
+    "args": {
+      "--asof": "2026-01-01T09:00:00"
+    }
   }
 }

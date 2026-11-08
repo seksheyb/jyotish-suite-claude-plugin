@@ -25,7 +25,7 @@ needs, including the values that would otherwise default to "now":
 | School      | Script                              | What's pinned |
 | ----------- | ------------------------------------ | -------------- |
 | `vedic`     | `compute_vedic_baseline.py`         | Birth data (1990-05-15 10:30 IST, Delhi) + `--asof` (script calls `datetime.now(timezone.utc)` if this is omitted) |
-| `bnn`       | `compute_bnn_baseline.py`           | Birth data only — no clock dependency in this script |
+| `bnn`       | `compute_bnn_baseline.py`           | Birth data + `--asof` (script calls `datetime.now(timezone.utc)` if this is omitted, to resolve the running Vimshottari dasha) |
 | `jaimini`   | `compute_jaimini_baseline.py`       | Birth data + `--target-date` (without it or `--age`, no running Chara Dasha window resolves at all) |
 | `kp_natal`  | `compute_kp_natal_baseline.py`      | Birth data + `--rp-datetime` (script calls `datetime.now()` for Ruling Planets if this is omitted) |
 | `kp_horary` | `compute_kp_horary_baseline.py`     | Horary number **108** + `--datetime` (the moment-of-reading, 2026-01-01T09:00:00 IST — for horary this parameter is inherently "now", so it's a required flag, not a hidden default) |
