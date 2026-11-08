@@ -10,6 +10,6 @@ Workflow:
 2. If the user has not yet given their chart or birth data, ask for either a pasted D1 chart with degrees (D9 is derived automatically) or their birth date, exact time, and place.
 3. Echo the parsed chart back for verification.
 4. Compute the Jaimini baseline: Chara Karakas, Arudha Padas, Swamsha, Argala, Chara Dasha.
-5. Deliver the Jaimini reading using the rigorous methodology defined in the skill.
+5. Deliver the Jaimini reading using the rigorous methodology defined in the skill. For timing questions, add the transit triggers from `scripts/compute_jaimini_transits.py` (slow transits on/aspecting the Chara Dasha Rasi, Arudha Lagna, Upapada and Karakamsha) — they narrow the Chara Dasha period, never override it.
 
 Any extra context the user passed: $ARGUMENTS

@@ -82,12 +82,12 @@ Wave 1. State the classification in one line to the user:
 
 | Question Type | How to Handle | Wave 1 dispatch |
 |--------------|---------------|--------------|
-| Yes/No (binary) | Full methodology + reverse question analysis | D1 + D9 + reverse-question analyst (all medium); Chara-Dasha-timeline analyst if a timeframe is in play |
+| Yes/No (binary) | Full methodology + reverse question analysis | D1 + D9 + reverse-question analyst (all medium); Chara-Dasha-timeline analyst if a timeframe is in play, plus `compute_jaimini_transits.py` → transits.json (step 3b) |
 | Domain-specific | Map to primary Karaka + Arudha per Section 2 of methodology | D1 + D9 analyst, each scoped to the topic's Karaka/Arudha/secondaries |
 | Swamsha / Karakamsha (narrow, single-Karaka) | Lead with Step D + Step E of methodology | **Inline, zero agents** — answer directly from the baseline |
-| Dasha question | Lead with Chara Dasha interpretation (Section 4B) | Chara-Dasha-timeline analyst + D1/D9 analysts scoped to the activated Karakas/Arudhas |
+| Dasha question | Lead with Chara Dasha interpretation (Section 4B) | Chara-Dasha-timeline analyst + D1/D9 analysts scoped to the activated Karakas/Arudhas + `compute_jaimini_transits.py` → transits.json (step 3b) |
 | Arudha specific | Lead with Step B of methodology for that Arudha | D1 + D9 analyst scoped to that Arudha + its lord (+ DK if marriage) |
-| Full reading | Full baseline + all Karakas + all Arudhas | All four: D1 analyst (all 7 Karakas + 8 Arudhas) + D9 analyst (same) + reverse-question analyst (if yes/no) + Chara-Dasha-timeline analyst |
+| Full reading | Full baseline + all Karakas + all Arudhas | All four: D1 analyst (all 7 Karakas + 8 Arudhas) + D9 analyst (same) + reverse-question analyst (if yes/no) + Chara-Dasha-timeline analyst + `compute_jaimini_transits.py` → transits.json (step 3b) |
 | UL / marriage | Run Step C in full | D1 + D9 analyst scoped to UL, A7, DK, 7th Bhava |
 
 D1 and D9 analysts always run together (never D9 alone); the
@@ -254,6 +254,12 @@ Wave 1 until the user has been shown the baseline and has answered the question.
 10. **Flag missing data** — the D9 is always derived (see the D9 note above),
     so the real gates are missing **degrees** or absent Dasha balance: note
     and proceed with caveats.
+10b. **Transit facts come from transits.json, never recomputed** — transit
+    signs, ingress/exit dates, houses from AL/UL/dasha Rasi, Rasi Drishti,
+    Argala/Virodha and the Jupiter+Saturn double transit are read from the
+    `compute_jaimini_transits.py` output (methodology Section 4C). Chara Dasha
+    sets the period; a transit only narrows it and never overrides an inactive
+    Rasi. The `karakamsha_overlay` layer is lineage-specific — label it so.
 11. **Tone** — analytical, structured, formal; Jaimini terminology throughout;
     define terms on first use; no fatalism, no sensationalism.
 12. **Cross-check recommendation** — Jagannatha Hora (free, supports Jaimini
@@ -266,11 +272,12 @@ Wave 1 until the user has been shown the baseline and has answered the question.
 | Wave | Methodology section | Owner |
 |------|--------------------|-------|
 | Wave 0 baseline | Step 0 (0A–0F) — Karakas, Swamsha, Karakamsha, Arudhas, Argala pre-map, Chara Dasha | `baseline-runner` (sidecar) |
+| Wave 0 — `compute_jaimini_transits.py` | Section 4C (transits from the Dasha Rasi and Arudhas) → transits.json | `baseline-runner` (haiku/low) |
 | Wave 1 — D1 analyst | Section 1 (core mechanics), Section 2 (mapping), Section 3 Steps A–F on D1 data | `unit-analyzer` (medium) |
 | Wave 1 — D9 analyst | Section 3 Steps A–F on D9 data, Step D (Swamsha), Step E (Karakamsha) | `unit-analyzer` (medium) |
 | Wave 1 — reverse-question analyst | Section 5 Step 5 (yes/no questions only) | `unit-analyzer` (medium) |
-| Wave 1 — Chara-Dasha-timeline analyst | Section 4A/4B, Step 7 | `unit-analyzer` (medium) |
-| Wave 2 synthesis | Section 4B (Dasha interpretation), Section 5 (execution sequence, composite priority, Dasha timing output) | single `synthesizer` (opus, high) |
+| Wave 1 — Chara-Dasha-timeline analyst | Section 4A/4B/4C, Step 7 (reads transits.json when produced) | `unit-analyzer` (medium) |
+| Wave 2 synthesis | Section 4B (Dasha interpretation), Section 4C (transit triggers, when transits.json exists), Section 5 (execution sequence, composite priority, Dasha timing output) | single `synthesizer` (opus, high) |
 
 The synthesizer executes the mandatory sequence: D1 → D9 → reverse check
 (yes/no only) → composite reading (priority order in methodology Section 5) →
