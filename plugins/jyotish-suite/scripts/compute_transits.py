@@ -74,6 +74,7 @@ from datetime import timedelta
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "lib"))
 import jyotish_primitives as jp  # noqa: E402
 import ephemeris as eph  # noqa: E402
+import transit_engine as te  # noqa: E402
 
 TRANSIT_BODIES = ["Jupiter", "Sun", "Moon"]
 AYAN_MODE = "kp"  # KP-New — same mode name compute_kp_natal_baseline.py uses.
@@ -84,7 +85,9 @@ AYAN_MODE = "kp"  # KP-New — same mode name compute_kp_natal_baseline.py uses.
 # even at peak direct speed, essentially motionless near stations).
 STEP_DAYS = {"Moon": 0.25, "Sun": 1.0, "Jupiter": 2.0}
 
-BISECT_ITERS = 20  # collapses a multi-day bracket to well under a minute.
+# Sampling + bisection live in lib/transit_engine.py (shared by every school's
+# transit script); this script only supplies KP spans and the KP ayanamsa.
+BISECT_ITERS = te.BISECT_ITERS
 
 
 # ====================================================================
@@ -143,86 +146,31 @@ def load_significators(path):
 
 
 # ====================================================================
-# Transit longitude sampling + crossing refinement
+# Transit longitude sampling + crossing refinement (lib/transit_engine.py)
 # ====================================================================
 
 def lon_at(body, dt_utc):
     """Sidereal longitude of `body` at a naive-UTC instant, KP-New ayanamsa."""
-    jd = eph.julian_day(dt_utc)
-    ayan = eph.ayanamsa(jd, AYAN_MODE)
-    lon, _retro, _spd = eph.planet_position(jd, body, ayan)
-    return lon
-
-
-def in_span(lon, lo, hi):
-    """lo/hi are plain (non-wrapping) degrees-in-zodiac — every nakshatra arc
-    fits inside a single 0-360 pass, so no 360-wraparound handling needed."""
-    return lo <= lon < hi
+    return te.lon_at(body, dt_utc, AYAN_MODE)
 
 
 def sample_series(body, start_utc, end_utc, step_days):
-    """[(dt_utc, lon), ...] across [start_utc, end_utc], step in days,
-    always including the exact end instant."""
-    series = []
-    t = start_utc
-    step = timedelta(days=step_days)
-    while t < end_utc:
-        series.append((t, lon_at(body, t)))
-        t += step
-    series.append((end_utc, lon_at(body, end_utc)))
-    return series
-
-
-def refine_crossing(body, lo, hi, t_lo, t_hi, target):
-    """Binary-search the instant in (t_lo, t_hi) where in_span(lon, lo, hi)
-    first equals `target` (a bool), assuming it differs from the value at
-    t_lo. Returns a datetime close to the true crossing."""
-    for _ in range(BISECT_ITERS):
-        mid = t_lo + (t_hi - t_lo) / 2
-        if in_span(lon_at(body, mid), lo, hi) == target:
-            t_hi = mid
-        else:
-            t_lo = mid
-    return t_hi
+    """[(dt_utc, lon), ...] across the window, KP ayanamsa (engine wrapper)."""
+    return te.sample_series(body, start_utc, end_utc, step_days, lon_at)
 
 
 def find_hits(body, series, span):
-    """Scan a precomputed (body) sample series for every entry/exit through
-    one nakshatra arc. Returns a list of hit dicts (nakshatra, entry_date,
-    exit_date, entry_before_window, exit_after_window)."""
-    lo, hi = span["start_deg"], span["end_deg"]
-    hits = []
-    run_start = series[0][0] if in_span(series[0][1], lo, hi) else None
-    entry_before_window = run_start is not None
-
-    for i in range(1, len(series)):
-        t_prev, lon_prev = series[i - 1]
-        t_cur, lon_cur = series[i]
-        prev_in = in_span(lon_prev, lo, hi)
-        cur_in = in_span(lon_cur, lo, hi)
-        if not prev_in and cur_in:
-            run_start = refine_crossing(body, lo, hi, t_prev, t_cur, True)
-            entry_before_window = False
-        elif prev_in and not cur_in:
-            exit_t = refine_crossing(body, lo, hi, t_prev, t_cur, False)
-            hits.append({
-                "nakshatra": span["nakshatra"],
-                "entry_date": run_start.isoformat() if run_start else None,
-                "entry_before_window": entry_before_window,
-                "exit_date": exit_t.isoformat(),
-                "exit_after_window": False,
-            })
-            run_start, entry_before_window = None, False
-
-    if run_start is not None and in_span(series[-1][1], lo, hi):
-        hits.append({
-            "nakshatra": span["nakshatra"],
-            "entry_date": run_start.isoformat(),
-            "entry_before_window": entry_before_window,
-            "exit_date": series[-1][0].isoformat(),
-            "exit_after_window": True,
-        })
-    return hits
+    """Every entry/exit of `body` through one KP nakshatra arc, via
+    te.find_hits. The engine's extra `label` key is dropped so emitted hits
+    keep the original KP key set and order (nakshatra, entry_date,
+    entry_before_window, exit_date, exit_after_window)."""
+    engine_span = {"label": span["nakshatra"], **span}
+    return [{"nakshatra": h["nakshatra"],
+             "entry_date": h["entry_date"],
+             "entry_before_window": h["entry_before_window"],
+             "exit_date": h["exit_date"],
+             "exit_after_window": h["exit_after_window"]}
+            for h in te.find_hits(body, series, engine_span, lon_at)]
 
 
 def position_snapshot(body, dt_utc, label):
